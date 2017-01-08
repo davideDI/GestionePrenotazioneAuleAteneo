@@ -1,0 +1,37 @@
+<html lang="it">
+
+    <head>
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <meta name="description" content="Occupazione Aule e Laboratori Univaq">
+            <meta name="author" content="Davide De Innocentis">
+
+            <link rel="favicon" href="{{URL::to('/lib/images/favicon.png')}}">
+
+            <title>Occupazione Aule e Laboratori</title>
+
+            <!-- Caricamento librerie -->
+            @include('layouts.layout-libs')
+
+    </head>
+
+    <body>      
+            <div class="container container-top">
+                <div class="container">
+
+                    <!-- Sezione Menu -->
+                    @include('layouts.layout-menu')
+                    
+                    <!-- Corpo della pagina -->
+                    @yield('content')
+
+                    <!-- Footer pagina -->
+                    @include('layouts.layout-footer')
+
+                </div>
+            </div>
+    </body>
+   
+</html>
