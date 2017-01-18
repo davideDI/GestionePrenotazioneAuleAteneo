@@ -5,10 +5,10 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <meta name="description" content="Occupazione Aule e Laboratori Univaq">
+            <meta name="description" content="Occupazione Aule e Laboratori - Univaq">
             <meta name="author" content="Davide De Innocentis">
 
-            <link rel="favicon" href="{{URL::to('/lib/images/favicon.png')}}">
+            <link rel="icon" href="{{URL::to('lib/images/favicon.jpg')}}">
 
             <title>Occupazione Aule e Laboratori</title>
 
