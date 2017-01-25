@@ -13,5 +13,5 @@
 
 /* Pagine principale */
 Route::get('/', function () {
-    return view('layouts.layout-index');
+    return view('layouts/pages/index');
 });
