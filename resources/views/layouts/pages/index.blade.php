@@ -1,4 +1,7 @@
 @extends('layouts.layout')
 @section('content')
-<p>body</p>
+<div id="calendar">
+    
+    
+</div>
 @endsection

@@ -33,5 +33,16 @@
                 </div>
             </div>
     </body>
+    
+    <!-- Caricamento script calendario -->
+    <script type="text/javascript">
+    
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                // Definizione opzioni calendario
+            });
+        });
+        
+    </script>
    
 </html>

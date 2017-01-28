@@ -2,10 +2,10 @@
 <script src="{{URL::to('/lib/js/jquery-3.1.0.min.js')}}"></script>
 
 <!-- Bootstrap -->
-<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="{{URL::to('/css/bootstrap.min.css')}}">
-<link rel="stylesheet" href="{{URL::to('/css/bootstrap-theme.css')}}" media="screen">
+<link href="{{URL::to('lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+<script src="{{URL::to('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+<link rel="stylesheet" href="{{URL::to('/lib/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{URL::to('/lib/bootstrap/css/bootstrap-theme.css')}}" media="screen">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -15,5 +15,15 @@
 <![endif]-->
 
 <!-- Select2 -->
-<link href="lib/select2-4.0.3/dist/css/select2.min.css" rel="stylesheet" />
-<script src="lib/select2-4.0.3/dist/js/select2.min.js"></script>
+<link href="{{URL::to('lib/select2-4.0.3/dist/css/select2.min.css')}}" rel="stylesheet" />
+<script src="{{URL::to('lib/select2-4.0.3/dist/js/select2.min.js')}}"></script>
+
+<!-- Full Calendar Javascript -->
+<link rel='stylesheet' href="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.css')}}" />
+<!-- Libreria già presente (in caso di non compatibilità di versioni valutare caricamento unica libreria) </script>-->
+<!-- <script src='lib/jquery.min.js'></script> -->
+<script src="{{URL::to('/lib/fullcalendar-3.1.0/lib/moment.min.js')}}"></script>
+<script src="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.js')}}"></script>
+
+<!-- Foglio di stile per classi personalizzate -->
+<link href="{{URL::to('lib/css/style.css')}}" rel="stylesheet" />
