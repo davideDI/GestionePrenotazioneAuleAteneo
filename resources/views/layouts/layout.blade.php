@@ -35,14 +35,6 @@
     </body>
     
     <!-- Caricamento script calendario -->
-    <script type="text/javascript">
-    
-        $(document).ready(function() {
-            $('#calendar').fullCalendar({
-                // Definizione opzioni calendario
-            });
-        });
-        
-    </script>
-   
+    <script src="{{URL::to('lib/custom-js/index-calendar.js')}}" ></script>
+       
 </html>
