@@ -19,11 +19,16 @@
 <script src="{{URL::to('lib/select2-4.0.3/dist/js/select2.min.js')}}"></script>
 
 <!-- Full Calendar Javascript -->
-<link rel='stylesheet' href="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.css')}}" />
+<link rel='stylesheet' href="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.min.css')}}" />
+<link rel='stylesheet' href="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.print.min.css')}}" media='print' />
 <!-- Libreria già presente (in caso di non compatibilità di versioni valutare caricamento unica libreria) </script>-->
 <!-- <script src='lib/jquery.min.js'></script> -->
 <script src="{{URL::to('/lib/fullcalendar-3.1.0/lib/moment.min.js')}}"></script>
-<script src="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.js')}}"></script>
+<script src="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.min.js')}}"></script>
+<script src="{{URL::to('/lib/fullcalendar-3.1.0/locale-all.js')}}"></script>
+
+
+
 
 <!-- Foglio di stile per classi personalizzate -->
 <link href="{{URL::to('lib/css/style.css')}}" rel="stylesheet" />

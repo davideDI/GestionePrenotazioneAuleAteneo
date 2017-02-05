@@ -35,6 +35,6 @@
     </body>
     
     <!-- Caricamento script calendario -->
-    <script src="{{URL::to('lib/custom-js/index-calendar.js')}}" ></script>
+    @include('pages.index-calendar')
        
 </html>

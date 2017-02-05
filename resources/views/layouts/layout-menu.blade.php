@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">
-                <img src="{{URL::asset('lib/images/Logo_Top_Left.png')}}" width="94%" height="194%" style="margin-top: -10;" alt="profile Pic">
+                <img src="{{URL::asset('lib/images/Logo_Top_Left.png')}}" width="94%" height="194%" style="margin-top: -10;" alt="Univaq">
             </a>
         </div>
 
@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <!-- Home -->
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li>
                     <a href="#">
                         {{ trans('messages.home') }}
-                        <span class="sr-only">(current)</span>
+                        <span class="sr-only"></span>
                     </a>
                 </li>
             </ul>
@@ -38,7 +38,7 @@
                     <ul class="dropdown-menu">
                         @foreach (Config::get('languages') as $lang => $language)
                             <li>
-                                <a href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
+                                <a onclick="changeCalendarLocale({{$language}})" href="{{ route('lang.switch', $lang) }}">{{$language}}</a>
                             </li>
                         @endforeach
                     </ul>

@@ -1,7 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-<div id="calendar">
+    <div id="calendar">
     
-    
-</div>
+    </div>
 @endsection

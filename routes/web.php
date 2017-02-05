@@ -13,13 +13,13 @@
 
 /* Home */
 Route::get('/', function () {
-    return view('layouts/pages/index');
+    return view('pages/index');
 });
 
 Route::get('/tipevento', function () {
     
     $tipiEvento = App\TipEvent::all();
-    return view('layouts/pages/tipevento', [ 'tipiEvento' => $tipiEvento ]); 
+    return view('pages/tipevento', [ 'tipiEvento' => $tipiEvento ]); 
     
 });
 
