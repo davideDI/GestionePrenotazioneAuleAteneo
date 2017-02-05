@@ -11,7 +11,7 @@
 |
 */
 
-/* Pagine principale */
+/* Home */
 Route::get('/', function () {
     return view('layouts/pages/index');
 });
@@ -22,3 +22,5 @@ Route::get('/tipevento', function () {
     return view('layouts/pages/tipevento', [ 'tipiEvento' => $tipiEvento ]); 
     
 });
+
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);

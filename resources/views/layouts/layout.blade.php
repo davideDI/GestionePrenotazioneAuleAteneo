@@ -10,7 +10,7 @@
 
             <link rel="icon" href="{{URL::to('lib/images/favicon.jpg')}}">
 
-            <title>Occupazione Aule e Laboratori</title>
+            <title>{{ trans('messages.home_title') }}</title>
 
             <!-- Caricamento librerie -->
             @include('layouts.layout-libs')
