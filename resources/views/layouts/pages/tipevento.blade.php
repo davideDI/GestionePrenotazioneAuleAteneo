@@ -3,7 +3,7 @@
 <div>
     
     @foreach ($tipiEvento as $tipoEvento)
-        <p>{{ $tipoEvento->nome }}</p>
+        <p>{{ $tipoEvento->name }}</p>
     @endforeach
     
 </div>
