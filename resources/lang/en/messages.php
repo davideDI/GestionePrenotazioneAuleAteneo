@@ -1,8 +1,10 @@
 <?php
 
+    //   INGLESE
+
     return [
         
-        //Message from home page
+        //Message from menu
         'home' => 'Home',
         'home_title' => 'Booking Rooms and Laboratory',
         'home_report' => 'Report',
@@ -11,6 +13,11 @@
         'home_rooms' => 'Rooms',
         'home_find_rooms' => 'Find Rooms',
         'home_login' => 'Login',
+        'home_meta_description' => 'Booking Rooms and Laboratory - Univaq',
+        
+        //Message from home page
+        'home_welcome' => 'Welcome to the management system and reservation classrooms and teaching laboratories',
+        'home_sub_section' => 'Select the area of ​​your relevance',
         
         //Message from footer
         'footer_title' => 'Booking system for Rooms and Labs',

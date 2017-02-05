@@ -5,7 +5,7 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
-            <meta name="description" content="Occupazione Aule e Laboratori - Univaq">
+            <meta name="description" content="{{ trans('messages.home_meta_description') }}">
             <meta name="author" content="Davide De Innocentis">
 
             <link rel="icon" href="{{URL::to('lib/images/favicon.jpg')}}">
@@ -18,8 +18,8 @@
     </head>
 
     <body>      
-            <div class="container container-top">
-                <div class="container">
+            <div class="container">
+                <div class="container-fluid">
 
                     <!-- Sezione Menu -->
                     @include('layouts.layout-menu')
@@ -34,7 +34,4 @@
             </div>
     </body>
     
-    <!-- Caricamento script calendario -->
-    @include('pages.index-calendar')
-       
 </html>

@@ -13,9 +13,14 @@
 
 /* Home */
 Route::get('/', function () {
-    return view('pages/index');
+    
+    //carico la lista di Groups per la selezione dell'utente
+    $groupsList = App\Group::all();
+    return view('pages/index', [ 'groupsList' => $groupsList ]);
+    
 });
 
+/* Route di test */
 Route::get('/tipevento', function () {
     
     $tipiEvento = App\TipEvent::all();
@@ -23,4 +28,12 @@ Route::get('/tipevento', function () {
     
 });
 
+/* Route di test visualizzazione calendario */
+Route::get('/calendar', function () {
+    
+    return view('pages/index-calendar'); 
+    
+});
+
+/* Route che gestisce il cambio di lingua */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
