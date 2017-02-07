@@ -14,6 +14,14 @@
 
             <!-- Caricamento librerie -->
             @include('layouts.layout-libs')
+            
+            <!-- CSRF Token -->
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <script>
+                window.Laravel = <?php echo json_encode([
+                    'csrfToken' => csrf_token(),
+                ]); ?>
+            </script>
 
     </head>
 

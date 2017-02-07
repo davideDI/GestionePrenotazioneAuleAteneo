@@ -70,18 +70,70 @@
                 </li>
         
                 <!-- Login -->
-                <li class="dropdown">
+                <li id="dropdown_login_error" class="dropdown">
+                    @if (Auth::guest())
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-log-in"></span> 
                             {{ trans('messages.home_login') }}
                     </a>
                     <div class="dropdown-menu" style="padding: 15px; padding-bottom: 10px;">
-                        <form class="form-horizontal"  method="post" accept-charset="UTF-8">
-                            <input id="sp_uname" class="form-control marginBottom5px" type="text" name="sp_uname" placeholder="Email.." />
-                            <input id="sp_pass" class="form-control marginBottom5px" type="password" name="sp_pass" placeholder="Password.."/>
-                            <input class="btn btn-primary" type="submit" name="submit" value="Login" />
+                        <form class="form-inline"  method="post" action="{{ url('/login') }}" accept-charset="UTF-8">
+                            {{ csrf_field() }}
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="email.." required autofocus="">
+
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                        <script>
+                                            $("#dropdown_login_error").addClass("dropdown open");
+                                        </script>
+                                    @endif
+                            </div>
+
+                            <div style="margin-top: 5px;" class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <input id="password" type="password" class="form-control" name="password" placeholder="password.." required>
+
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                        <script>
+                                            $("#dropdown_login_error").addClass("dropdown open");
+                                        </script>
+                                    @endif
+                            </div>
+                            
+                            <div style="margin-top: 10px;" class="text-center">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Login" />
+                                <a class="btn btn-primary" href="{{ url('/register') }}">Register</a>
+                            </div>
                         </form>
                     </div>
+                    
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ url('/logout') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                    
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

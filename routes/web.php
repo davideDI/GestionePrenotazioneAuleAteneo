@@ -37,3 +37,7 @@ Route::get('/calendar', function () {
 
 /* Route che gestisce il cambio di lingua */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
