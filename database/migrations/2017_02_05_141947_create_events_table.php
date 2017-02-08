@@ -17,7 +17,8 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->dateTime('event_date');
+            $table->dateTime('event_date_start');
+            $table->dateTime('event_date_end');
             $table->integer('id_tip_event')->unsigned();
             $table->foreign('id_tip_event')->references('id_tip_event')->on('tip_events');
             $table->timestamps();

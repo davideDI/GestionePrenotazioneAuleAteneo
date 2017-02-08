@@ -21,7 +21,9 @@
     <div class="row">
         @foreach ($groupsList as $group)
             <div class="col-xs-4 col-sm-4 col-md-4">
-                <p class="text-center"><b>{{ $group->name }}</b></p>
+                <a href="{{URL::to('/bookings', $group->id)}}">
+                    <p class="text-center"><b>{{ $group->name }}</b></p>
+                </a>
                 <p class="text-center">{{ $group->description }}</p>
             </div>        
         @endforeach

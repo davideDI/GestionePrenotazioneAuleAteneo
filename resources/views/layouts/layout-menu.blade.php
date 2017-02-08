@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{URL::to('/')}}">
                 <img src="{{URL::asset('lib/images/Logo_Top_Left.png')}}" width="94%" height="194%" style="margin-top: -10;" alt="Univaq">
             </a>
         </div>
@@ -19,7 +19,7 @@
             <!-- Home -->
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">
+                    <a href="{{URL::to('/')}}">
                         {{ trans('messages.home') }}
                         <span class="sr-only"></span>
                     </a>

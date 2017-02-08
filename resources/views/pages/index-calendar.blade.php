@@ -1,5 +1,8 @@
 @extends('layouts.layout')
     @section('content')
+    
+        <p class="text-center">{{ $group->name }}</p>
+        
         <!-- Div principale contenitore del calendario -->
         <div id="calendar">
 

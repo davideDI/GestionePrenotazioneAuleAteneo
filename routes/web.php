@@ -28,12 +28,8 @@ Route::get('/tipevento', function () {
     
 });
 
-/* Route di test visualizzazione calendario */
-Route::get('/calendar', function () {
-    
-    return view('pages/index-calendar'); 
-    
-});
+/* Visualizzazione eventi in base a id group */
+Route::get('/bookings/{idGroup}', 'BookingController@getGroupById');
 
 /* Route che gestisce il cambio di lingua */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
