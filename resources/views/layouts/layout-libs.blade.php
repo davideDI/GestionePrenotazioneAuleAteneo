@@ -27,8 +27,5 @@
 <script src="{{URL::to('/lib/fullcalendar-3.1.0/fullcalendar.min.js')}}"></script>
 <script src="{{URL::to('/lib/fullcalendar-3.1.0/locale-all.js')}}"></script>
 
-
-
-
 <!-- Foglio di stile per classi personalizzate -->
 <link href="{{URL::to('lib/css/style.css')}}" rel="stylesheet" />

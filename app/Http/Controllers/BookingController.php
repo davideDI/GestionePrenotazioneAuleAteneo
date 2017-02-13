@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Group;
 
 class BookingController extends Controller {
 
@@ -17,7 +18,17 @@ class BookingController extends Controller {
             ->where('groups.id', '=', $idGroup)
             ->get();
         
-        return view('pages/index-calendar', [ 'bookings' => $bookings]);
+        $resources = DB::table('resources')
+            ->select('resources.id', 'resources.name')
+            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
+            ->where('groups.id', '=', $idGroup)
+            ->get();
+        
+        $group = Group::find($idGroup);
+        
+        return view('pages/index-calendar', [ 'bookings' => $bookings,
+                                              'resources' => $resources,
+                                              'group' => $group]);
         
     }
 

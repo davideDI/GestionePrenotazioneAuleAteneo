@@ -1,11 +1,36 @@
 @extends('layouts.layout')
     @section('content')
         
-        <!-- Div principale contenitore del calendario -->
-        <div id="calendar">
+        <div class="row">
+            
+            <!-- Filtri Applicabili -->
+            <div class="col-md-3">
+                <p>{{$group->name}}</p> 
+                <select class="listOfGroups" style="width: 50%">
+                    <option></option>
+                    @foreach($resources as $resource)
+                        <option value="{{$resource->id}}">
+                            {{$resource->name}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <!-- Div principale contenitore del calendario -->
+            <div class="col-md-9" id="calendar">
 
+            </div>
         </div>
 
+        <!-- Select 2 -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+              $(".listOfGroups").select2({
+                  placeholder: "Select a room"
+              });
+            });
+        </script>
+    
         <!-- Caricamento script calendario -->
         <script type="text/javascript">
             //Al caricamento della pagina viene inserito il calendario
@@ -19,11 +44,17 @@
                     header: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'month,basicWeek,basicDay'
+                        right: 'month,basicWeek,basicDay,listDay,agendaWeek'
                             },
+                    
+                    minTime: "08:00:00",
+                    maxTime: "20:30:00",
+                         
+                            
                     //defaultDate: '2016-12-12', Se non impostata la data di default viene presa la data odierna
                     navLinks: true, // can click day/week names to navigate views
                     editable: true,
+                    defaultView: 'month',
                     eventLimit: true, // Quando ci sono più eventi per una data compare il link view more
                     events: [
                         
