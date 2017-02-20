@@ -22,7 +22,10 @@
         //Message from footer
         'footer_title' => 'Sistema Prenotazione Aule Didattiche e Laboratori',
         'footer_title_univaq' => 'Università degli Studi dell\'Aquila',
-        'footer_privacy_cookies' => 'Informativa su Privacy ed Uso dei Cookies'
+        'footer_privacy_cookies' => 'Informativa su Privacy ed Uso dei Cookies',
+        
+        //index-calendar.blade
+        'index_calendar_select_room' => 'Seleziona una risorsa'
     
     ];
 

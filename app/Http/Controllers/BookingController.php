@@ -11,7 +11,10 @@ class BookingController extends Controller {
     public function getGroupById($idGroup) {
         
         $bookings = DB::table('bookings')
-            ->select('bookings.name as book_name', 'events.event_date_start as start_date', 'events.event_date_end as end_date')
+            ->select('bookings.name as book_name', 
+                     'events.event_date_start as start_date', 
+                     'events.event_date_end as end_date',
+                     'events.id as id_event')
             ->leftJoin('resources', 'bookings.id_resource', '=', 'resources.id')
             ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
             ->leftJoin('events', 'bookings.id_event', '=', 'events.id')

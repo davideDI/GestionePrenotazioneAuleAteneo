@@ -22,5 +22,9 @@
         //Message from footer
         'footer_title' => 'Booking system for Rooms and Labs',
         'footer_title_univaq' => 'University of L\'Aquila',
-        'footer_privacy_cookies' => 'Privacy and Cookies'
+        'footer_privacy_cookies' => 'Privacy and Cookies',
+
+        //index-calendar.blade
+        'index_calendar_select_room' => 'Select a room'
+        
     ];

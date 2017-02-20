@@ -13,12 +13,23 @@
 
 /* Home */
 Route::get('/', function () {
-    
+   
     //carico la lista di Groups per la selezione dell'utente
     $groupsList = App\Group::all();
     return view('pages/index', [ 'groupsList' => $groupsList ]);
     
 });
+
+Route::get('/home', 'HomeController@index');
+
+/* Visualizzazione eventi in base a id group */
+Route::get('/bookings/{idGroup}', 'BookingController@getGroupById');
+
+/* Route che gestisce il cambio di lingua */
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
+
+/* Route utilizzata per l'autenticazione */
+Auth::routes();
 
 /* Route di test */
 Route::get('/tipevento', function () {
@@ -27,13 +38,3 @@ Route::get('/tipevento', function () {
     return view('pages/tipevento', [ 'tipiEvento' => $tipiEvento ]); 
     
 });
-
-/* Visualizzazione eventi in base a id group */
-Route::get('/bookings/{idGroup}', 'BookingController@getGroupById');
-
-/* Route che gestisce il cambio di lingua */
-Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
