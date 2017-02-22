@@ -31,6 +31,12 @@
             });
         </script>
     
+        <script type="text/javascript">
+            $.ajaxSetup({
+               headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
+            });
+        </script>
+
         <!-- Caricamento script calendario -->
         <script type="text/javascript">
             //Al caricamento della pagina viene inserito il calendario
@@ -49,15 +55,21 @@
                         right: 'month,basicWeek,basicDay,listDay,agendaWeek'
                             },
                     
+                    //Definizione orari min e max
                     minTime: "08:00:00",
-                    maxTime: "20:30:00",
-                         
+                    maxTime: "20:30:00",                       
                             
                     //defaultDate: '2016-12-12', Se non impostata la data di default viene presa la data odierna
                     navLinks: true, // can click day/week names to navigate views
                     editable: true,
+                    
+                    //Vista di default
                     defaultView: 'month',
-                    eventLimit: true, // Quando ci sono più eventi per una data compare il link view more
+                    
+                    // Quando ci sono più eventi per una data compare il link view more
+                    eventLimit: true, 
+                    
+                    //Caricamento eventi
                     events: [
                         
                         @foreach($bookings as $booking) 
@@ -70,97 +82,85 @@
                         @endforeach
                         
                         ],
-
-                    /*
-                     * Esempio caricamento lista eventi con chiamata ajax
-                     * events: {
-                        url: '/myfeed.php',
-                        type: 'POST',
-                        data: {
-                            custom_param1: 'something',
-                            custom_param2: 'somethingelse'
-                        },
-                        error: function() {
-                            alert('there was an error while fetching events!');
-                        },
-                        color: 'yellow',   // a non-ajax option
-                        textColor: 'black' // a non-ajax option
-                        }
-                     */
                     
                     color: 'yellow',   // an option!
                     textColor: 'black', // an option!
+                    
+                    //Lingua testi (da correggere)
                     locale: initialLocaleCode,
                     
-                    //******************************************************************************
-                    //Funzionalità di test
+                    //Permette il drop
                     droppable: true,
+                    
+                    //Eventi client
                     drop: function(date, jsEvent, ui) { 
-                        console.log('Function : drop');
-                        console.log(date);
-                        console.log(jsEvent);
-                        console.log(ui);
-                    },
-                    eventReceive: function( event ) { 
-                        console.log('Function : eventReceive');
-                        console.log(event);
-                    },
-                    eventDrop: function( calEvent, dayDelta, minuteDelta, allDay,
- 			 			revertFunc, jsEvent, ui, view ) {  
-                        console.log('Function : eventDrop');
-                        console.log(event);
-                        console.log(dayDelta);
-                        console.log(minuteDelta);
-                        console.log(allDay);
-                        console.log(revertFunc);
-                        console.log(jsEvent);
-                        console.log(ui);
-                        console.log(view);
-                    },
-                    eventDragStart: function( event, jsEvent, ui, view ) {
-                        console.log('Function : eventDragStart');
-                        console.log(event); 
-                        console.log(jsEvent); 
-                        console.log(ui); 
-                        console.log(view);
-                    },
-                    eventDragStop: function( event, jsEvent, ui, view ) { 
-                        console.log('Function : eventDragStop');
-                        console.log(event); 
-                        console.log(jsEvent); 
-                        console.log(ui); 
-                        console.log(view);
-                    },
-                    eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
-                        console.log('Function : eventResize');
-                        console.log(event);
-                        console.log(delta);
-                        console.log(revertFunc);
-                        console.log(jsEvent);
-                        console.log(ui);
-                        console.log(view);
-                    },
-                    viewRender: function() {
-                        console.log('Function : viewRender');
-                        //?????
+                        
                     },
                     
-                    //******************************************************************************
+                    eventReceive: function( event ) { 
+                        
+                    },
+                    
+                    //Evento chiamato al termine del drop evento
+                    eventDrop: function( calEvent, dayDelta, minuteDelta, allDay,
+ 			 			revertFunc, jsEvent, ui, view ) {  
+                        
+                        //Recupero dati per update evento
+                        var idEvento = calEvent.id;
+                        var start = moment(calEvent.start).format("YYYY-MM-DD HH:mm:ss");
+                        var end = moment(calEvent.end).format("YYYY-MM-DD HH:mm:ss");
+                        
+                        //Tramite chiamata ajax vengono modificati i dati dell'evento
+                        $.ajax({
+                            
+                            url: "{{URL::to('/updateEvent')}}",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                'id_evento': idEvento,
+                                'data_inizio': start,
+                                'data_fine': end
+                            },
+                            success: function() {
+                                alert('Modifica evento avvenuta con successo!');
+                            },
+                            error: function() {
+                                alert('Modifica evento non riuscita!');
+                            },
+                            
+                        });
+                        
+                    },
+                    
+                    eventDragStart: function( event, jsEvent, ui, view ) {
+                        
+                    },
+                    
+                    eventDragStop: function( event, jsEvent, ui, view ) { 
+                        
+                    },
+                    
+                    eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
+                        
+                    },
+                    
+                    //Quando viene caricata la pagine e si visualizza il calendario viene richiamato questo evento
+                    viewRender: function() {
+                        
+                    },
+                    
                     // gestione click su evento
                     eventClick: function(calEvent, jsEvent, view) {
 
                         //alert('Event: ' + calEvent.title);
-                        alert('Event: ' + moment(calEvent.start).format("DD-MM-YYYY HH:mm:ss"));
-                        alert('Event: ' + moment(calEvent.end).format("DD-MM-YYYY HH:mm:ss"));
-                        alert('Event: ' + calEvent.id);
-
-                        // change the border color just for fun
-                        //$(this).css('border-color', 'red');
+                        //alert('Event: ' + moment(calEvent.start).format("DD-MM-YYYY HH:mm:ss"));
+                        //alert('Event: ' + moment(calEvent.end).format("DD-MM-YYYY HH:mm:ss"));
+                        //alert('Event: ' + calEvent.id);
 
                         //modifico il titolo
-                        calEvent.title = "CLICKED!";
+                        //calEvent.title = "CLICKED!";
                         //viene apportata la modifica nel calendario
-                        $('#calendar').fullCalendar('updateEvent', calEvent);
+                        //$('#calendar').fullCalendar('updateEvent', calEvent);
 
                     }
 

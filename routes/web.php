@@ -31,10 +31,5 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@swit
 /* Route utilizzata per l'autenticazione */
 Auth::routes();
 
-/* Route di test */
-Route::get('/tipevento', function () {
-    
-    $tipiEvento = App\TipEvent::all();
-    return view('pages/tipevento', [ 'tipiEvento' => $tipiEvento ]); 
-    
-});
+/* Route di test update evento from drop */
+Route::post('/updateEvent', 'BookingController@updateEvent'); 

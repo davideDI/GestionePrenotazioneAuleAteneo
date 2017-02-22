@@ -34,5 +34,40 @@ class BookingController extends Controller {
                                               'group' => $group]);
         
     }
+    
+    public function updateEvent() {
+        
+        //prendo le info dall'array superglobale POST (da ristrutturare)
+        $idEvent    = $_POST['id_evento'];
+        $startEvent = $_POST['data_inizio'];
+        $endEvent   = $_POST['data_fine'];
+        
+        try {
+            //Effettuo l'udate
+            DB::table('events')
+                        ->where('id', $idEvent)
+                        ->update(
+                            array
+                                ('event_date_start' => $startEvent,
+                                 'event_date_end'   => $endEvent)
+                        );
+            
+            $response = array(
+                'status' => 'success',
+                'msg' => 'A cannone',
+            );
+            return \Response::json($response);
+            
+        } catch(Exception $ex) {
+            
+            $response = array(
+                'status' => 'error',
+                'msg' => $ex,
+            );
+            return \Response::json($response);
+            
+        }
+        
+    }
 
 }
