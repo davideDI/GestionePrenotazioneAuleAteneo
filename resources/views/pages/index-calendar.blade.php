@@ -6,7 +6,8 @@
             <!-- Filtri Applicabili -->
             <div class="col-md-2">
                 <p>{{$group->name}}</p> 
-                <select id="resourceSelect" onChange="window.location.href=this.value" class="listOfGroups" style="width: 70%">
+                <select id="resourceSelect" onChange="window.location.href=this.value" 
+                        class="listOfGroups" style="width: 70%">
                     <option></option>
                     @foreach($resources as $resource)
                     <option value="{{URL::to('/bookings', [$group->id, $resource->id])}}">
@@ -22,12 +23,6 @@
             </div>
         </div>
     
-        <script type="text/javascript">
-            function ciao() {
-                alert(document.getElementById("resourceSelect").value);
-            }
-        </script>
-
         <!-- Select 2 -->
         <script type="text/javascript">
             $(document).ready(function() {
@@ -37,6 +32,7 @@
             });
         </script>
     
+        <!-- Gestione X-CSRF-Token per chiamata Ajax -->
         <script type="text/javascript">
             $.ajaxSetup({
                headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
@@ -107,7 +103,7 @@
                         
                     },
                     
-                    //Evento chiamato al termine del drop evento
+                    //Spostamento casella rappresentante l'evento
                     eventDrop: function( calEvent, dayDelta, minuteDelta, allDay,
  			 			revertFunc, jsEvent, ui, view ) {  
                         
@@ -116,25 +112,15 @@
                         var start = moment(calEvent.start).format("YYYY-MM-DD HH:mm:ss");
                         var end = moment(calEvent.end).format("YYYY-MM-DD HH:mm:ss");
                         
-                        //Tramite chiamata ajax vengono modificati i dati dell'evento
-                        $.ajax({
-                            
-                            url: "{{URL::to('/updateEvent')}}",
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
+                        //creazione json per chiamata ajax
+                        var dataEvent = {
                                 'id_evento': idEvento,
                                 'data_inizio': start,
                                 'data_fine': end
-                            },
-                            success: function() {
-                                alert('Modifica evento avvenuta con successo!');
-                            },
-                            error: function() {
-                                alert('Modifica evento non riuscita!');
-                            },
-                            
-                        });
+                            };
+                        
+                        //RIchiamo la funzione che effettua la modifica all'evento
+                        updateEvent(dataEvent);
                         
                     },
                     
@@ -146,7 +132,23 @@
                         
                     },
                     
+                    //Modifica "dimensione" casella (durata evento)
                     eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
+                        
+                        //Recupero dati per update evento
+                        var idEvento = event.id;
+                        var start = moment(event.start).format("YYYY-MM-DD HH:mm:ss");
+                        var end = moment(event.end).format("YYYY-MM-DD HH:mm:ss");
+                        
+                        //creazione json per chiamata ajax
+                        var dataEvent = {
+                            'id_evento': idEvento,
+                            'data_inizio': start,
+                            'data_fine': end
+                        };
+                        
+                        //RIchiamo la funzione che effettua la modifica all'evento
+                        updateEvent(dataEvent);
                         
                     },
                     
@@ -173,6 +175,26 @@
                 });
 
             });
+            
+            function updateEvent(event) {
+                
+                //Tramite chiamata ajax vengono modificati i dati dell'evento
+                $.ajax({
+
+                    url: "{{URL::to('/updateEvent')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: event,
+                    success: function() {
+                        alert('Modifica evento avvenuta con successo!');
+                    },
+                    error: function() {
+                        alert('Modifica evento non riuscita!');
+                    },
+
+                });
+                        
+            }
 
             // when the selected option changes, dynamically change the calendar option
             function changeCalendarLocale(locale) {
