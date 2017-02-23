@@ -6,10 +6,10 @@
             <!-- Filtri Applicabili -->
             <div class="col-md-2">
                 <p>{{$group->name}}</p> 
-                <select class="listOfGroups" style="width: 50%">
+                <select id="resourceSelect" onChange="window.location.href=this.value" class="listOfGroups" style="width: 70%">
                     <option></option>
                     @foreach($resources as $resource)
-                        <option value="{{$resource->id}}">
+                    <option value="{{URL::to('/bookings', [$group->id, $resource->id])}}">
                             {{$resource->name}}
                         </option>
                     @endforeach
@@ -21,6 +21,12 @@
 
             </div>
         </div>
+    
+        <script type="text/javascript">
+            function ciao() {
+                alert(document.getElementById("resourceSelect").value);
+            }
+        </script>
 
         <!-- Select 2 -->
         <script type="text/javascript">

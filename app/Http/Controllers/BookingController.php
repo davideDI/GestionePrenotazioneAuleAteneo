@@ -8,7 +8,7 @@ use App\Group;
 
 class BookingController extends Controller {
 
-    public function getGroupById($idGroup) {
+    public function getEventByIdGroup($idGroup) {
         
         $bookings = DB::table('bookings')
             ->select('bookings.name as book_name', 
@@ -19,6 +19,34 @@ class BookingController extends Controller {
             ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
             ->leftJoin('events', 'bookings.id_event', '=', 'events.id')
             ->where('groups.id', '=', $idGroup)
+            ->get();
+        
+        $resources = DB::table('resources')
+            ->select('resources.id', 'resources.name')
+            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
+            ->where('groups.id', '=', $idGroup)
+            ->get();
+        
+        $group = Group::find($idGroup);
+        
+        return view('pages/index-calendar', [ 'bookings' => $bookings,
+                                              'resources' => $resources,
+                                              'group' => $group]);
+        
+    }
+    
+    public function getEventByIdGroupIdResource($idGroup, $idResource) {
+        
+        $bookings = DB::table('bookings')
+            ->select('bookings.name as book_name', 
+                     'events.event_date_start as start_date', 
+                     'events.event_date_end as end_date',
+                     'events.id as id_event')
+            ->leftJoin('resources', 'bookings.id_resource', '=', 'resources.id')
+            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
+            ->leftJoin('events', 'bookings.id_event', '=', 'events.id')
+            ->where('groups.id', '=', $idGroup)
+            ->where('resources.id', '=', $idResource)
             ->get();
         
         $resources = DB::table('resources')

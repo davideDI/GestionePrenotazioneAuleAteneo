@@ -23,7 +23,10 @@ Route::get('/', function () {
 Route::get('/home', 'HomeController@index');
 
 /* Visualizzazione eventi in base a id group */
-Route::get('/bookings/{idGroup}', 'BookingController@getGroupById');
+Route::get('/bookings/{idGroup}', 'BookingController@getEventByIdGroup');
+
+/* Visualizzazione eventi in base a id group e id resource */
+Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getEventByIdGroupIdResource');
 
 /* Route che gestisce il cambio di lingua */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
