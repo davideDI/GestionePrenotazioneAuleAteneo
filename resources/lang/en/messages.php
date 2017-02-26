@@ -25,6 +25,14 @@
         'footer_privacy_cookies' => 'Privacy and Cookies',
 
         //index-calendar.blade
-        'index_calendar_select_room' => 'Select a room'
+        'index_calendar_select_room' => 'Select a room',
+        'index_calendar_new_event' => 'New Event',
+        'index_calendar_new_booking' => 'New Reservation',
+        
+        //common
+        'common_save' => 'Save',
+        'common_close' => 'Close',
+        'common_title' => 'Title',
+        'common_description' => 'Description'
         
     ];

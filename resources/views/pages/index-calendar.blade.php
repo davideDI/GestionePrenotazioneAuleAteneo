@@ -11,8 +11,10 @@
                     <div class="col-md-12">
 
                         <p>{{$group->name}}</p> 
-                        <select id="resourceSelect" onChange="window.location.href=this.value" 
-                                class="listOfGroups" style="width: 70%">
+                        <select id="resourceSelect" 
+                                onChange="window.location.href=this.value" 
+                                class="listOfGroups" 
+                                style="width: 70%">
                             <option></option>
                             @foreach($resources as $resource)
                             <option value="{{URL::to('/bookings', [$group->id, $resource->id])}}">
@@ -36,9 +38,11 @@
                             può essere visualizzato solo se l'utente è loggato
                         -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                            Nuovo evento
+                            {{ trans('messages.index_calendar_new_event') }}
                         </button>
 
+                        <br>
+                        
                     </div>
                     
                     <!-- Modal -->
@@ -47,27 +51,34 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Effettua prenotazione</h4>
+                            <h4 class="modal-title" id="myModalLabel">
+                                {{ trans('messages.index_calendar_new_booking') }}
+                            </h4>
                           </div>
                             
-                          <div class="modal-body">
                             <form class="form-inline"  method="post" action="{{ url('/insert-booking') }}" accept-charset="UTF-8">
-                                {{ csrf_field() }}
                                 
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="nome.." required >
-                                <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" placeholder="description.." required >
-                                <input id="bookingDate" type="text" class="form-control" name="bookingDate" value="2017-02-23 00:00:00" placeholder="bookingDate.." required >
-                                <input id="iduser" type="text" class="form-control" name="iduser" value="1" placeholder="iduser.." required >
-                                <input id="idresource" type="text" class="form-control" name="idresource" value="2" placeholder="idresource.." required >
-                                <input id="idEvent" type="text" class="form-control" name="idEvent" value="5" placeholder="idEvent.." required >
-                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                
-                                </form>
-                            </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                  <button type="button" class="btn btn-primary">Save changes</button>
+                                <div class="modal-body">
+                                    {{ csrf_field() }}
+
+                                    <label for="name">{{ trans('messages.common_title') }}</label>
+                                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="{{ trans('messages.common_title') }}" required >
+                                    <label for="name">{{ trans('messages.common_description') }}</label>
+                                    <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" placeholder="{{ trans('messages.common_description') }}" required >
+                                    <input id="bookingDate" type="text" class="form-control" name="bookingDate" value="2017-02-23 00:00:00" placeholder="bookingDate.." required >
+                                    <input id="idresource" type="text" class="form-control" name="idresource" value="2" placeholder="idresource.." required >
+                                    <input id="idEvent" type="text" class="form-control" name="idEvent" value="5" placeholder="idEvent.." required >
+
                                 </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">
+                                      {{ trans('messages.common_close') }}
+                                  </button>
+                                  <button type="submit" class="btn btn-primary">
+                                      {{ trans('messages.common_save') }}
+                                  </button>
+                                </div>
+                                
                             </form>
                         </div>
                       </div>

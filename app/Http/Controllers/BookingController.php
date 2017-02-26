@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Group;
 
@@ -105,7 +106,6 @@ class BookingController extends Controller {
         $name    = $_POST['name'];
         $description = $_POST['description'];
         $bookingDate   = $_POST['bookingDate'];
-        $iduser   = $_POST['iduser'];
         $idresource   = $_POST['idresource'];
         $idEvent   = $_POST['idEvent'];
         
@@ -116,7 +116,7 @@ class BookingController extends Controller {
                             'name' => $name,
                             'description' => $description,
                             'booking_date' => $bookingDate,
-                            'id_user' => $iduser,
+                            'id_user' =>  1,
                             'id_resource' => $idresource,
                             'id_event' => $idEvent
                         ]);

@@ -25,7 +25,15 @@
         'footer_privacy_cookies' => 'Informativa su Privacy ed Uso dei Cookies',
         
         //index-calendar.blade
-        'index_calendar_select_room' => 'Seleziona una risorsa'
+        'index_calendar_select_room' => 'Seleziona una risorsa',
+        'index_calendar_new_event' => 'Nuovo Evento',
+        'index_calendar_new_booking' => 'Effettua prenotazione',
+        
+        //common
+        'common_save' => 'Salva',
+        'common_close' => 'Chiudi',
+        'common_title' => 'Titolo',
+        'common_description' => 'Descrizione'
     
     ];
 
