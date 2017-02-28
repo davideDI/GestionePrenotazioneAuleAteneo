@@ -138,7 +138,7 @@
                     editable: true,
                     
                     //Vista di default
-                    defaultView: 'month',
+                    defaultView: 'agendaWeek',
                     
                     // Quando ci sono più eventi per una data compare il link view more
                     eventLimit: true, 

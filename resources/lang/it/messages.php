@@ -11,6 +11,7 @@
         'home_print' => 'Stampa',
         'home_help' => 'Aiuto',
         'home_rooms' => 'Aule',
+        'home_search' => 'Ricerca',
         'home_find_rooms' => 'Cerca Aule',
         'home_login' => 'Login',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
@@ -24,16 +25,31 @@
         'footer_title_univaq' => 'Università degli Studi dell\'Aquila',
         'footer_privacy_cookies' => 'Informativa su Privacy ed Uso dei Cookies',
         
-        //index-calendar.blade
+        //Message from index-calendar.blade
         'index_calendar_select_room' => 'Seleziona una risorsa',
         'index_calendar_new_event' => 'Nuovo Evento',
         'index_calendar_new_booking' => 'Effettua prenotazione',
         
-        //common
+        //Message from common
         'common_save' => 'Salva',
         'common_close' => 'Chiudi',
         'common_title' => 'Titolo',
-        'common_description' => 'Descrizione'
-    
+        'common_description' => 'Descrizione',
+        
+        //Message from help page
+        'help_contact' => 'Contatti',
+        'help_contact_text' => 'Per informazioni in merito all\'assegnazione delle aule, contattare:',
+        'help_contact_list1' => 'Segreteria Area Didattica del vostro dipartimento o responsabile della vostra struttura',
+        'help_contact_list2' => 'Responsabile Area Gestione Logistica per la Didattica: dott. Luca Testa',
+        'help_contact_list3' => 'Segreteria del Direttore Generale: dott.ssa Anna Maria Nardecchia',
+        'help_auth' => 'Autenticazione',
+        'help_auth_text' => 'L\'accesso al sistema è riservato al personale delle Strutture. '
+        . '                  Contatta l\'amministratore se hai problemi di autenticazione. '
+        . '                  Alcune funzionalità sono accessibili solo per i gestori della Struttura, gli altri riceveranno '
+        . '                  questo messaggio Non hai i permessi per modificare questo ogetto. '
+        . '                  Contatta l\'amministratore per ulteriori informazioni. '
+        . '                  Se il sistema è configurato per utilizzare l\'autenticazione LDAP, significa che devi utilizzare '
+        . '                  le stesse credenziali che utilizzi per accedere all\'email.',
+        
     ];
 

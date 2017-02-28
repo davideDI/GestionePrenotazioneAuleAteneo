@@ -63,9 +63,8 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">{{ trans('messages.home_help') }}</a></li>
-                        <li><a href="#">{{ trans('messages.home_rooms') }}</a></li>
-                        <li><a href="#">{{ trans('messages.home_find_rooms') }}</a></li>
+                        <li><a href="{{URL::to('/help')}}">{{ trans('messages.home_help') }}</a></li>
+                        <li><a href="#">{{ trans('messages.home_search') }}</a></li>
                     </ul>
                 </li>
         

@@ -11,7 +11,7 @@
 |
 */
 
-/* Home */
+/**************** HOME ******************************/
 Route::get('/', function () {
    
     //carico la lista di Groups per la selezione dell'utente
@@ -20,30 +20,36 @@ Route::get('/', function () {
     
 });
 
-Route::get('/home', 'HomeController@index');
+/**************** LANG ******************************/
+/* Route che gestisce il cambio di lingua */
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 
+/**************** AUTH ******************************/
+/* Route utilizzata per l'autenticazione */
+Auth::routes();
+
+/**************** BOOKING ******************************/
 /* Visualizzazione eventi in base a id group */
 Route::get('/bookings/{idGroup}', 'BookingController@getEventByIdGroup');
 
 /* Visualizzazione eventi in base a id group e id resource */
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getEventByIdGroupIdResource');
 
-/* TEST */
+/**************** HELP ******************************/
+Route::get('/help', function () {
+    return view('pages/help');
+});
+
+/**************** TEST ******************************/
 /* Inserimento nuova prenotazione */
 Route::post('/insert-booking', 'BookingController@createNewBooking');
-
-/* Route che gestisce il cambio di lingua */
-Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
-
-/* Route utilizzata per l'autenticazione */
-Auth::routes();
 
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
 
 
 
-/* Test eposizione servizi rest */
+/**************** TEST ESPOSIZIONE SERVIZI ******************************/
 // API routes
 // Test esposizione servizio lista di groups in base ad id
 Route::get('/api/v1/groups/{id?}', ['middleware' => 'auth.basic', function($id = null) {
