@@ -40,14 +40,27 @@ Route::get('/help', function () {
     return view('pages/help');
 });
 
+/**************** REPORT ******************************/
+Route::get('/report', function () {
+    return view('pages/report');
+});
+
+/**************** PRINT ******************************/
+Route::get('/print', function () {
+    return view('pages/print');
+});
+
+/**************** SEARCH ******************************/
+Route::get('/search', function () {
+    return view('pages/search');
+});
+
 /**************** TEST ******************************/
 /* Inserimento nuova prenotazione */
 Route::post('/insert-booking', 'BookingController@createNewBooking');
 
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
-
-
 
 /**************** TEST ESPOSIZIONE SERVIZI ******************************/
 // API routes

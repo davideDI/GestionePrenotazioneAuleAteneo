@@ -51,8 +51,8 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">{{ trans('messages.home_report') }}</a></li>
-                        <li><a href="#">{{ trans('messages.home_print') }}</a></li>
+                        <li><a href="{{URL::to('/report')}}">{{ trans('messages.home_report') }}</a></li>
+                        <li><a href="{{URL::to('/print')}}">{{ trans('messages.home_print') }}</a></li>
                     </ul>
                 </li>
         
@@ -64,7 +64,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{URL::to('/help')}}">{{ trans('messages.home_help') }}</a></li>
-                        <li><a href="#">{{ trans('messages.home_search') }}</a></li>
+                        <li><a href="{{URL::to('/search')}}">{{ trans('messages.home_search') }}</a></li>
                     </ul>
                 </li>
         
