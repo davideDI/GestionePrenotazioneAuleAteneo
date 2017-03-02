@@ -55,6 +55,11 @@ Route::get('/search', function () {
     return view('pages/search');
 });
 
+/**************** NEW EVENT ******************************/
+Route::get('/insert-event', function() {
+    return view('pages/new-event');
+});
+
 /**************** TEST ******************************/
 /* Inserimento nuova prenotazione */
 Route::post('/insert-booking', 'BookingController@createNewBooking');

@@ -30,60 +30,11 @@
                 <br>
                 
                 <div class="row">
-        
                     <div class="col-md-12">
-
-                        <!-- 
-                            Il button per l'inserimento di un nuovo utente 
-                            può essere visualizzato solo se l'utente è loggato
-                        -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        <a class="btn btn-primary" href="{{URL::to('/insert-event')}}">
                             {{ trans('messages.index_calendar_new_event') }}
-                        </button>
-
-                        <br>
-                        
+                        </a>
                     </div>
-                    
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">
-                                {{ trans('messages.index_calendar_new_booking') }}
-                            </h4>
-                          </div>
-                            
-                            <form class="form-inline"  method="post" action="{{ url('/insert-booking') }}" accept-charset="UTF-8">
-                                
-                                <div class="modal-body">
-                                    {{ csrf_field() }}
-
-                                    <label for="name">{{ trans('messages.common_title') }}</label>
-                                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="{{ trans('messages.common_title') }}" required >
-                                    <label for="name">{{ trans('messages.common_description') }}</label>
-                                    <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" placeholder="{{ trans('messages.common_description') }}" required >
-                                    <input id="bookingDate" type="text" class="form-control" name="bookingDate" value="2017-02-23 00:00:00" placeholder="bookingDate.." required >
-                                    <input id="idresource" type="text" class="form-control" name="idresource" value="2" placeholder="idresource.." required >
-                                    <input id="idEvent" type="text" class="form-control" name="idEvent" value="5" placeholder="idEvent.." required >
-
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">
-                                      {{ trans('messages.common_close') }}
-                                  </button>
-                                  <button type="submit" class="btn btn-primary">
-                                      {{ trans('messages.common_save') }}
-                                  </button>
-                                </div>
-                                
-                            </form>
-                        </div>
-                      </div>
-                    </div>
-
                 </div>
                 
             </div>

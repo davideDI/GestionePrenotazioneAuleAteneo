@@ -4,7 +4,7 @@
 
     return [
         
-        //Message from menu
+        //Messages from menu
         'home' => 'Home',
         'home_title' => 'Prenotazione Aule e Laboratori',
         'home_report' => 'Report',
@@ -16,27 +16,36 @@
         'home_login' => 'Login',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
         
-        //Message from home page
+        //Messages from home page
         'home_welcome' => 'Benvenuti nel sistema di gestione e prenotazione aule e laboratori didattici di Ateneo',
         'home_sub_section' => 'Selezionare l\'area di vostra pertinenza',
         
-        //Message from footer
+        //Messages from footer
         'footer_title' => 'Sistema Prenotazione Aule Didattiche e Laboratori',
         'footer_title_univaq' => 'Università degli Studi dell\'Aquila',
         'footer_privacy_cookies' => 'Informativa su Privacy ed Uso dei Cookies',
         
-        //Message from index-calendar.blade
+        //Messages from index-calendar.blade
         'index_calendar_select_room' => 'Seleziona una risorsa',
         'index_calendar_new_event' => 'Nuovo Evento',
         'index_calendar_new_booking' => 'Effettua prenotazione',
         
-        //Message from common
+        //Messages from common
         'common_save' => 'Salva',
         'common_close' => 'Chiudi',
         'common_title' => 'Titolo',
         'common_description' => 'Descrizione',
         
-        //Message from help page
+        //Messages from insert event
+        'event_date_hour_start' => 'Dalle ore',
+        'event_date_hour_end' => 'Alle ore',
+        'event_date_day_start' => 'Data inizio evento',
+        'event_date_day_end' => 'Data fine evento',
+        'event_date_booking' => 'Data prenotazione',
+        'event_date_resource' => 'Risorsa',
+        'event_date_group' => 'Gruppo',
+        
+        //Messages from help page
         'help_contact' => 'Contatti',
         'help_contact_text' => 'Per informazioni in merito all\'assegnazione delle aule, contattare:',
         'help_contact_list1' => 'Segreteria Area Didattica del vostro dipartimento o responsabile della vostra struttura',
