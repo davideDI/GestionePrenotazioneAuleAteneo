@@ -36,14 +36,17 @@
         'common_title' => 'Title',
         'common_description' => 'Description',
         
-        //Messages from insert event
-        'event_date_hour_start' => 'From',
-        'event_date_hour_end' => 'To',
-        'event_date_day_start' => 'Date from',
-        'event_date_day_end' => 'Date end',
-        'event_date_booking' => 'Booking date',
-        'event_date_resource' => 'Resource',
-        'event_date_group' => 'Group',
+        //Messages from insert booking
+        'booking_title' => 'Insert new Booking',
+        'booking_date_hour_start' => 'From',
+        'booking_date_hour_end' => 'To',
+        'booking_date_day_start' => 'Date from',
+        'booking_date_day_end' => 'Date end',
+        'booking_date_booking' => 'Booking date',
+        'booking_date_resource' => 'Resource',
+        'booking_date_group' => 'Group',
+        'booking_date_select_group' => 'Selece a group',
+        'booking_date_select_resource' => 'Select a resource',
         
         //Messages from help page
         'help_contact' => 'Contact',

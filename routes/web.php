@@ -56,14 +56,21 @@ Route::get('/search', function () {
 });
 
 /**************** NEW EVENT ******************************/
-Route::get('/insert-event', function() {
-    return view('pages/new-event');
+Route::get('/new-booking', function() {
+
+    $groupsList = App\Group::all();
+    $resourceList = App\Resource::all();
+    
+    return view('pages/new-booking', [ 'groupsList'   => $groupsList,
+                                     'resourceList' => $resourceList]);
+
+    
 });
 
-/**************** TEST ******************************/
 /* Inserimento nuova prenotazione */
 Route::post('/insert-booking', 'BookingController@createNewBooking');
 
+/**************** TEST ******************************/
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
 

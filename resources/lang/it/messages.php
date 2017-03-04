@@ -37,13 +37,16 @@
         'common_description' => 'Descrizione',
         
         //Messages from insert event
-        'event_date_hour_start' => 'Dalle ore',
-        'event_date_hour_end' => 'Alle ore',
-        'event_date_day_start' => 'Data inizio evento',
-        'event_date_day_end' => 'Data fine evento',
-        'event_date_booking' => 'Data prenotazione',
-        'event_date_resource' => 'Risorsa',
-        'event_date_group' => 'Gruppo',
+        'booking_title' => 'Inserisci una nuova prenotazione',
+        'booking_date_hour_start' => 'Dalle ore',
+        'booking_date_hour_end' => 'Alle ore',
+        'booking_date_day_start' => 'Data inizio evento',
+        'booking_date_day_end' => 'Data fine evento',
+        'booking_date_booking' => 'Data prenotazione',
+        'booking_date_resource' => 'Risorsa',
+        'booking_date_group' => 'Gruppo',
+        'booking_date_select_group' => 'Seleziona un gruppo',
+        'booking_date_select_resource' => 'Seleziona una risorsa',
         
         //Messages from help page
         'help_contact' => 'Contatti',

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Group;
+use App\Event;
+use App\Booking;
 
 class BookingController extends Controller {
 
@@ -102,32 +103,63 @@ class BookingController extends Controller {
     
     public function createNewBooking() {
         
-        //prendo le info dall'array superglobale POST (da ristrutturare)
-        $name    = $_POST['name'];
-        $description = $_POST['description'];
-        $bookingDate   = $_POST['bookingDate'];
-        $idresource   = $_POST['idresource'];
-        $idEvent   = $_POST['idEvent'];
-        
         try {
-            //Effettuo l'udate
-            DB::table('bookings')
-                        ->insert([
-                            'name' => $name,
-                            'description' => $description,
-                            'booking_date' => $bookingDate,
-                            'id_user' =>  1,
-                            'id_resource' => $idresource,
-                            'id_event' => $idEvent
-                        ]);
+            
+            //prendo le info dall'array superglobale POST (TODO da ristrutturare)
+            $name                    = $_POST['name'];
+            $description             = $_POST['description'];
+            $booking_date_day_start  = $_POST['booking_date_day_start'];
+            $booking_date_day_end    = $_POST['booking_date_day_end'];
+            $booking_date_hour_start = $_POST['booking_date_hour_start'];
+            $booking_date_hour_end   = $_POST['booking_date_hour_end'];
+            $resourceSelect          = $_POST['resourceSelect'];
+            $groupSelect             = $_POST['groupSelect'];
+
+            //Impostazione parametri evento
+            $event = new Event();
+            $event->name="";
+            $event->description="";
+            $event_start_date = $booking_date_day_start." ".$booking_date_hour_start.":00";
+            $event_start_end = $booking_date_day_end." ".$booking_date_hour_end.":00";
+            $event->event_date_start = $event_start_date;
+            $event->event_date_end = $event_start_end;
+            $event->id_tip_event = 1;
+
+            //Effettuo l'inserimento di un evento
+            $event-> save();
+
+            $booking = new Booking;
+            $booking->name = $name;
+            $booking->description = $description;
+            $booking->booking_date = date('Y-m-d H:i:s');
+            $booking->id_user = 5;
+            $booking->id_event = $event->id;
+            $booking->id_resource = $resourceSelect;
+            $booking->id_status = 1;
+
+            //Effettuo l'inserimento della prenotazione
+            $booking-> save();
+        
             
         } catch(Exception $ex) {
             
+            print_r($ex);
             
         }
-        
+
         return Redirect::back();
         
+        /*
+        return view('pages/test', [ 'name' => $name,
+                                              'description' => $description,
+                                              'booking_date_day_start' => $booking_date_day_start,
+            'booking_date_day_end' => $booking_date_day_end,
+            'booking_date_hour_start' => $booking_date_hour_start,
+            'booking_date_hour_end' => $booking_date_hour_end,
+            'resourceSelect' => $resourceSelect,
+            'groupSelect' => $groupSelect
+            ]);
+        */
     }
 
 }

@@ -17,7 +17,7 @@
                                 style="width: 70%">
                             <option></option>
                             @foreach($resources as $resource)
-                            <option value="{{URL::to('/bookings', [$group->id, $resource->id])}}">
+                                <option value="{{URL::to('/bookings', [$group->id, $resource->id])}}">
                                     {{$resource->name}}
                                 </option>
                             @endforeach
@@ -31,7 +31,7 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <a class="btn btn-primary" href="{{URL::to('/insert-event')}}">
+                        <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                             {{ trans('messages.index_calendar_new_event') }}
                         </a>
                     </div>

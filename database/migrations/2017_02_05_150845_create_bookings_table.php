@@ -28,6 +28,9 @@ class CreateBookingsTable extends Migration
             $table->integer('id_resource')->unsigned();
             $table->foreign('id_resource')->references('id')->on('resources');
             
+            $table->integer('id_status')->unsigned();
+            $table->foreign('id_status')->references('id')->on('tip_booking_status');
+            
             $table->timestamps();
         });
     }
