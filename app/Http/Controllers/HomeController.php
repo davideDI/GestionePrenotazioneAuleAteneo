@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -21,8 +20,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
+        
+        Log::info('HomeController - index()');
+        
         //imposto la lingua di base, settata nel file di config app.php
         //Se non è presente in sessione la vado ad inserire
         if(Session::has('applocale')) {

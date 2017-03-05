@@ -14,6 +14,10 @@
 /**************** HOME ******************************/
 Route::get('/', function () {
    
+    Log::info('web.php: [/]');
+    
+    Session::set('applocale', Config::get('app.locale'));
+    
     //carico la lista di Groups per la selezione dell'utente
     $groupsList = App\Group::all();
     return view('pages/index', [ 'groupsList' => $groupsList ]);
@@ -37,27 +41,33 @@ Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getEventByIdGr
 
 /**************** HELP ******************************/
 Route::get('/help', function () {
+    Log::info('web.php: [/help]');
     return view('pages/help');
 });
 
 /**************** REPORT ******************************/
 Route::get('/report', function () {
+    Log::info('web.php: [/report]');
     return view('pages/report');
 });
 
 /**************** PRINT ******************************/
 Route::get('/print', function () {
+    Log::info('web.php: [/print]');
     return view('pages/print');
 });
 
 /**************** SEARCH ******************************/
 Route::get('/search', function () {
+    Log::info('web.php: [/search]');
     return view('pages/search');
 });
 
 /**************** NEW EVENT ******************************/
 Route::get('/new-booking', function() {
 
+    Log::info('web.php: [/new-booking]');
+    
     $groupsList = App\Group::all();
     $resourceList = App\Resource::all();
     

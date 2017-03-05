@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use App\Group;
 use App\Event;
@@ -12,6 +13,8 @@ use App\Booking;
 class BookingController extends Controller {
 
     public function getEventByIdGroup($idGroup) {
+        
+        Log::info('BookingController - getEventByIdGroup('.$idGroup.')');
         
         $bookings = DB::table('bookings')
             ->select('bookings.name as book_name', 
@@ -39,6 +42,8 @@ class BookingController extends Controller {
     }
     
     public function getEventByIdGroupIdResource($idGroup, $idResource) {
+        
+        Log::info('BookingController - getEventByIdGroupIdResource)'.$idGroup.', '.$idResource.')');
         
         $bookings = DB::table('bookings')
             ->select('bookings.name as book_name', 
@@ -68,6 +73,8 @@ class BookingController extends Controller {
     
     public function updateEvent() {
         
+        Log::info('BookingController - updateEvent()');
+        
         //prendo le info dall'array superglobale POST (da ristrutturare)
         $idEvent    = $_POST['id_evento'];
         $startEvent = $_POST['data_inizio'];
@@ -91,6 +98,7 @@ class BookingController extends Controller {
             
         } catch(Exception $ex) {
             
+            Log::error('BookingController - updateEvent() : '.$ex);
             $response = array(
                 'status' => 'error',
                 'msg' => $ex,
@@ -102,6 +110,8 @@ class BookingController extends Controller {
     }
     
     public function createNewBooking() {
+        
+        Log::info('BookingController - createNewBooking()');
         
         try {
             
@@ -143,23 +153,12 @@ class BookingController extends Controller {
             
         } catch(Exception $ex) {
             
-            print_r($ex);
+            Log::error('BookingController - createNewBooking() : '.$ex);
             
         }
 
         return Redirect::back();
         
-        /*
-        return view('pages/test', [ 'name' => $name,
-                                              'description' => $description,
-                                              'booking_date_day_start' => $booking_date_day_start,
-            'booking_date_day_end' => $booking_date_day_end,
-            'booking_date_hour_start' => $booking_date_hour_start,
-            'booking_date_hour_end' => $booking_date_hour_end,
-            'resourceSelect' => $resourceSelect,
-            'groupSelect' => $groupSelect
-            ]);
-        */
     }
 
 }
