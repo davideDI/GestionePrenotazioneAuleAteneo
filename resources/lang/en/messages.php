@@ -14,6 +14,8 @@
         'home_search' => 'Search',
         'home_find_rooms' => 'Find Rooms',
         'home_login' => 'Login',
+        'home_logout' => 'Logout',
+        'home_console' => 'Console',
         'home_meta_description' => 'Booking Rooms and Laboratory - Univaq',
         
         //Messages from home page

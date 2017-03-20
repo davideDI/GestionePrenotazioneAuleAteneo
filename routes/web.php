@@ -80,6 +80,12 @@ Route::get('/new-booking', function() {
 /* Inserimento nuova prenotazione */
 Route::post('/insert-booking', 'BookingController@createNewBooking');
 
+/**************** CONSOLE ADMIN ******************************/
+Route::get('/console', function () {
+    Log::info('web.php: [/console]');
+    return view('pages/console');
+});
+
 /**************** TEST ******************************/
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 

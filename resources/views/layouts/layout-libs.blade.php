@@ -2,10 +2,10 @@
 <script src="{{URL::to('/lib/js/jquery-3.1.0.min.js')}}"></script>
 
 <!-- Bootstrap -->
-<link href="{{URL::to('lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-<script src="{{URL::to('lib/bootstrap/js/bootstrap.min.js')}}"></script>
-<link rel="stylesheet" href="{{URL::to('/lib/bootstrap/css/bootstrap.min.css')}}">
-<link rel="stylesheet" href="{{URL::to('/lib/bootstrap/css/bootstrap-theme.css')}}" media="screen">
+<link href="{{URL::asset('lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+<script src="{{URL::asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+<link rel="stylesheet" href="{{URL::asset('/lib/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{URL::asset('/lib/bootstrap/css/bootstrap-theme.css')}}" media="screen">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

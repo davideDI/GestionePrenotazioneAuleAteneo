@@ -14,6 +14,8 @@
         'home_search' => 'Ricerca',
         'home_find_rooms' => 'Cerca Aule',
         'home_login' => 'Login',
+        'home_logout' => 'Logout',
+        'home_console' => 'Console',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
         
         //Messages from home page
