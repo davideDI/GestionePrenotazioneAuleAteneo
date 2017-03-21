@@ -13,7 +13,7 @@ Web-application per la gestione della prenotazione delle aule e laboratori nell'
 
 Università degli studi de L'Aquila [Univaq](http://univaq.it). 
 
-##How to
+## How to
 
 1. Scarica e installa [Wampserver] (http://www.wampserver.com/en/)   
 2. Scarica e installa [Composer] (https://getcomposer.org/download/)
