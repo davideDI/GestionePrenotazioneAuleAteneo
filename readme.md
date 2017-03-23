@@ -21,3 +21,7 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it).
 4. Vai da prompt nella cartella appena creata ed esegui il comando "composer install"
 5. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
 6. "php artisan db:seed" per l'inserimento dei dati iniziali
+
+Prerequisiti
+1. Git
+2. NodeJs 
