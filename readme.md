@@ -15,8 +15,8 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it).
 
 ## How to
 
-1. Scarica e installa [Wampserver] (http://www.wampserver.com/en/).   
-2. Scarica e installa [Composer] (https://getcomposer.org/download/).
+1. Scarica e installa [Wampserver](http://www.wampserver.com/en/).   
+2. Scarica e installa [Composer](https://getcomposer.org/download/).
 3. Importa da Git il progetto -> git clone https://github.com/davideDI/GestionePrenotazioneAuleAteneo
 4. Vai da prompt nella cartella appena creata ed esegui il comando "composer install"
 5. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
