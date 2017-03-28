@@ -22,6 +22,11 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it)
 5. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
 6. "php artisan db:seed" per l'inserimento dei dati iniziali
 
+N.B. 
+ 1. Se eseguendo il comando "php artisan db:seed" si presenta una "ReflectionException" esegui il comando "composer dump-autoload"
+ 2. Se avviando l'applicazione si presenta un messaggio "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths"
+    eseguire i seguenti comandi "php artisan config:clear" e successivamente "php artisan config:cache"
+
 Prerequisiti
 1. Git
 2. NodeJs 

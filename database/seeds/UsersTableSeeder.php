@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder {
         // check if table users is empty
         if(DB::table('users')->get()->count() == 0){
             
-            DB::table('users')->insert(
+            DB::table('users')->insert([
                 [
                     'id'          => 1,
                     'name'        => 'davide',
@@ -19,8 +19,8 @@ class UsersTableSeeder extends Seeder {
                     'email'       => 'davide@davide.it',
                     'password'    => 'davide@davide.it',
                     'id_tip_user' => 1,
-                    'created_at'  => timestamp(),
-                    'updated_at'  => timestamp()
+                    'created_at'  => date("Y-m-d G:i:s"),
+                    'updated_at'  => date("Y-m-d G:i:s")
                 ],
                 [
                     'id'          => 2,
@@ -29,8 +29,8 @@ class UsersTableSeeder extends Seeder {
                     'email'       => 'luigi@marrone.it',
                     'password'    => 'luigi@marrone.it',
                     'id_tip_user' => 2,
-                    'created_at'  => timestamp(),
-                    'updated_at'  => timestamp()
+                    'created_at'  => date("Y-m-d G:i:s"),
+                    'updated_at'  => date("Y-m-d G:i:s")
                 ],
                 [
                     'id'          => 3,
@@ -39,8 +39,8 @@ class UsersTableSeeder extends Seeder {
                     'email'       => 'ateneo@ateneo.it',
                     'password'    => 'ateneo@ateneo.it',
                     'id_tip_user' => 3,
-                    'created_at'  => timestamp(),
-                    'updated_at'  => timestamp()
+                    'created_at'  => date("Y-m-d G:i:s"),
+                    'updated_at'  => date("Y-m-d G:i:s")
                 ],
                 [
                     'id'          => 4,
@@ -49,10 +49,10 @@ class UsersTableSeeder extends Seeder {
                     'email'       => 'mario@bianchi.it',
                     'password'    => 'mario@bianchi.it',
                     'id_tip_user' => 1,
-                    'created_at'  => timestamp(),
-                    'updated_at'  => timestamp()
+                    'created_at'  => date("Y-m-d G:i:s"),
+                    'updated_at'  => date("Y-m-d G:i:s")
                 ]
-            );
+            ]);
             
         }
         

@@ -11,15 +11,15 @@ class TipGroupsTableSeeder extends Seeder {
         // check if table users is empty
         if(DB::table('tip_groups')->get()->count() == 0){
             
-            DB::table('tip_groups')->insert(
+            DB::table('tip_groups')->insert([
                 [
                     'id_tip_group' => 1,
                     'name'         => 'generico',
                     'description'  => 'palazzina generica',
-                    'created_at'  => timestamp(),
-                    'updated_at'  => timestamp()
+                    'created_at'   => date("Y-m-d G:i:s"),
+                    'updated_at'   => date("Y-m-d G:i:s")
                 ]
-            );
+            ]);
             
         }
         

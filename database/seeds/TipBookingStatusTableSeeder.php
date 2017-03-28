@@ -11,7 +11,7 @@ class TipBookingStatusTableSeeder extends Seeder {
         // check if table users is empty
         if(DB::table('tip_booking_status')->get()->count() == 0){
             
-            DB::table('tip_booking_status')->insert(
+            DB::table('tip_booking_status')->insert([
                 [
                     'id' => 1,
                     'description'  => 'richiesta',
@@ -28,7 +28,7 @@ class TipBookingStatusTableSeeder extends Seeder {
                     'id' => 4,
                     'description'  => 'scartata',
                 ]
-            );
+            ]);
             
         }
         
