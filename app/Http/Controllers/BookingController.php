@@ -17,7 +17,8 @@ class BookingController extends Controller {
         Log::info('BookingController - getEventByIdGroup('.$idGroup.')');
         
         $bookings = DB::table('bookings')
-            ->select('bookings.name as book_name', 
+            ->select('bookings.name as book_name',
+                     'bookings.description as book_description',
                      'events.event_date_start as start_date', 
                      'events.event_date_end as end_date',
                      'events.id as id_event')

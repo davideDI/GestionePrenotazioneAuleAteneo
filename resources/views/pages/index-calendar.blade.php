@@ -99,10 +99,11 @@
                         
                         @foreach($bookings as $booking) 
                             {
-                                id:    '{{$booking->id_event}}',
-                                title: '{{$booking->book_name}}',
-                                start: '{{$booking->start_date}}',
-                                end:   '{{$booking->end_date}}'
+                                id         : '{{$booking->id_event}}',
+                                title      : '{{$booking->book_name}}',
+                                description: '{{$booking->book_description}}',
+                                start      : '{{$booking->start_date}}',
+                                end        : '{{$booking->end_date}}'
                             }, 
                         @endforeach
                         
@@ -123,6 +124,26 @@
                     },
                     
                     eventReceive: function( event ) { 
+                        
+                    },
+                    
+                    //Al passaggio del mouse sulla prenotazione visualizzo il popover
+                    eventMouseover: function( event, jsEvent, view ) { 
+                    
+                        //Set attributi per la visualizzazione del popover
+                        $(this).attr("data-toggle", "popover");
+                        $(this).attr("data-placement", "right");
+                        $(this).attr("data-content", event.description);
+                        
+                        //Visualizzo il "popover"
+                        $(this).popover('show');
+                       
+                    },
+                    
+                    //Togliendo il mouse sulla prenotazione il popover verrà nascosto
+                    eventMouseout: function( event, jsEvent, view ) { 
+                    
+                        $(this).popover('hide');
                         
                     },
                     

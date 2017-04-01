@@ -22,12 +22,12 @@
                     <!-- Event : data inizio evento -->
                         <div class="col-md-6">
                             <label for="booking_date_day_start">{{ trans('messages.booking_date_day_start') }}</label>
-                            <input id="booking_date_day_start" type="text" class="form-control" name="booking_date_day_start" value="" placeholder="2017-02-21" required >
+                            <input id="booking_date_day_start" type="text" class="form-control datepicker" name="booking_date_day_start" value="" placeholder="2017-02-21" required >
                         </div>
                     <!-- Event : data fine evento -->
                         <div class="col-md-6">
                             <label for="booking_date_day_end">{{ trans('messages.booking_date_day_end') }}</label>
-                            <input id="booking_date_day_end" type="text" class="form-control" name="booking_date_day_end" value="" placeholder="2017-02-21" required >
+                            <input id="booking_date_day_end" type="text" class="form-control datepicker" name="booking_date_day_end" value="" placeholder="2017-02-21" required >
                         </div>
                     </div>
                     

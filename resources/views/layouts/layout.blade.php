@@ -22,7 +22,14 @@
                     'csrfToken' => csrf_token(),
                 ]); ?>
             </script>
-
+            <script>
+                $( function() {
+                    $( ".datepicker" ).datepicker({
+                            dateFormat: 'yy-mm-dd',
+                            showAnim  : "drop"
+                        });
+                });
+            </script>
     </head>
 
     <body>      
