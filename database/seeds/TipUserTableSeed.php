@@ -2,32 +2,33 @@
 
 use Illuminate\Database\Seeder;
 
-class TipUsersTableSeeder extends Seeder {
+class TipUserTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Tip_users
+    //Caricamento dati iniziali tabella Tip_user
     public function run() {
         
+        date_default_timezone_set('Europe/Rome');
+        
         //Si verifica la presenza di dati
-        // check if table users is empty
-        if(DB::table('tip_users')->get()->count() == 0){
+        if(DB::table('tip_user')->get()->count() == 0){
             
-            DB::table('tip_users')->insert([
+            DB::table('tip_user')->insert([
                 [
-                    'id_tip_user' => 1,
+                    'id'          => 1,
                     'name'        => 'admin dipartimento',
                     'description' => 'utente admin per la gestione delle risorse del dipartimento',
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
                 [
-                    'id_tip_user' => 2,
+                    'id'          => 2,
                     'name'        => 'admin ateneo',
                     'description' => 'utente admin per la gestione delle risorse dell\'ateneo',
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
                 [
-                    'id_tip_user' => 3,
+                    'id'          => 3,
                     'name'        => 'professore',
                     'description' => 'utente che effettua la richiesta di prenotazione della risorsa',
                     'created_at'  => date("Y-m-d G:i:s"),
@@ -38,5 +39,4 @@ class TipUsersTableSeeder extends Seeder {
         }
         
     }
-    
 }

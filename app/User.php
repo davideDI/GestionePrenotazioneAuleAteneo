@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'password', 'id_tip_user'
+        'name', 'surname', 'email', 'password', 'tip_user_id'
     ];
 
     /**
@@ -26,4 +26,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    //Relazione con la tabella tip_user
+    public function tipUser() {
+        return $this->belongsTo('App\TipUser');
+    }
+    
+    //Relazione con la tabella bookings
+    public function bookings() {
+        return $this->hasMany('App\Booking');
+    }
+    
 }

@@ -2,13 +2,14 @@
 
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder {
+class UserTableSeed extends Seeder {
     
     //Caricamento dati iniziali tabella Users
     public function run() {
         
+        date_default_timezone_set('Europe/Rome');
+        
         //Si verifica la presenza di dati
-        // check if table users is empty
         if(DB::table('users')->get()->count() == 0){
             
             DB::table('users')->insert([
@@ -18,7 +19,7 @@ class UsersTableSeeder extends Seeder {
                     'surname'     => 'ddi',
                     'email'       => 'davide@davide.it',
                     'password'    => 'davide@davide.it',
-                    'id_tip_user' => 1,
+                    'tip_user_id' => 1,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
@@ -28,7 +29,7 @@ class UsersTableSeeder extends Seeder {
                     'surname'     => 'marrone',
                     'email'       => 'luigi@marrone.it',
                     'password'    => 'luigi@marrone.it',
-                    'id_tip_user' => 2,
+                    'tip_user_id' => 2,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
@@ -38,7 +39,7 @@ class UsersTableSeeder extends Seeder {
                     'surname'     => 'ateneo',
                     'email'       => 'ateneo@ateneo.it',
                     'password'    => 'ateneo@ateneo.it',
-                    'id_tip_user' => 3,
+                    'tip_user_id' => 3,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
@@ -48,7 +49,7 @@ class UsersTableSeeder extends Seeder {
                     'surname'     => 'bianchi',
                     'email'       => 'mario@bianchi.it',
                     'password'    => 'mario@bianchi.it',
-                    'id_tip_user' => 1,
+                    'tip_user_id' => 1,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ]
@@ -57,5 +58,4 @@ class UsersTableSeeder extends Seeder {
         }
         
     }
-    
 }

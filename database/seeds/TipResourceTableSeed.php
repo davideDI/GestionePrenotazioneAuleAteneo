@@ -2,39 +2,40 @@
 
 use Illuminate\Database\Seeder;
 
-class TipResourcesTableSeeder extends Seeder {
+class TipResourceTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Tip_resources
+    //Caricamento dati iniziali tabella Tip_resource
     public function run() {
         
+        date_default_timezone_set('Europe/Rome');
+        
         //Si verifica la presenza di dati
-        // check if table users is empty
-        if(DB::table('tip_resources')->get()->count() == 0){
+        if(DB::table('tip_resource')->get()->count() == 0){
             
-            DB::table('tip_resources')->insert([
+            DB::table('tip_resource')->insert([
                 [
-                    'id_tip_resource' => 1,
+                    'id'              => 1,
                     'name'            => 'aula',
-                    'description'     => 'palazzina generica',
+                    'description'     => '',
                     'created_at'      => date("Y-m-d G:i:s"),
                     'updated_at'      => date("Y-m-d G:i:s")
                 ],
                 [
-                    'id_tip_resource' => 2,
+                    'id'              => 2,
                     'name'            => 'palestra',
                     'description'     => '',
                     'created_at'      => date("Y-m-d G:i:s"),
                     'updated_at'      => date("Y-m-d G:i:s")
                 ],
                 [
-                    'id_tip_resource' => 3,
+                    'id'              => 3,
                     'name'            => 'laboratorio',
                     'description'     => '',
                     'created_at'      => date("Y-m-d G:i:s"),
                     'updated_at'      => date("Y-m-d G:i:s")
                 ],
                 [
-                    'id_tip_resource' => 4,
+                    'id'              => 4,
                     'name'            => 'aula magna',
                     'description'     => '',
                     'created_at'      => date("Y-m-d G:i:s"),
@@ -45,5 +46,4 @@ class TipResourcesTableSeeder extends Seeder {
         }
         
     }
-    
 }

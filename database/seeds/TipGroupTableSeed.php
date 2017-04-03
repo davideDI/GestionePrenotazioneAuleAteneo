@@ -2,18 +2,19 @@
 
 use Illuminate\Database\Seeder;
 
-class TipGroupsTableSeeder extends Seeder {
+class TipGroupTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Tip_groups
+    //Caricamento dati iniziali tabella Tip_group
     public function run() {
         
+        date_default_timezone_set('Europe/Rome');
+        
         //Si verifica la presenza di dati
-        // check if table users is empty
-        if(DB::table('tip_groups')->get()->count() == 0){
+        if(DB::table('tip_group')->get()->count() == 0){
             
-            DB::table('tip_groups')->insert([
+            DB::table('tip_group')->insert([
                 [
-                    'id_tip_group' => 1,
+                    'id' => 1,
                     'name'         => 'generico',
                     'description'  => 'palazzina generica',
                     'created_at'   => date("Y-m-d G:i:s"),
@@ -24,5 +25,4 @@ class TipGroupsTableSeeder extends Seeder {
         }
         
     }
-    
 }

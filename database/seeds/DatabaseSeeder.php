@@ -7,29 +7,34 @@ class DatabaseSeeder extends Seeder {
     public function run() {
         
         //tabella TipEvents
-        $this->call(TipEventsTableSeeder::class);
+        $this->call(TipEventTableSeed::class);
         
         //tabella TipBookingStatus
-        $this->call(TipBookingStatusTableSeeder::class);
+        $this->call(TipBookingStatusTableSeed::class);
         
         //tabella TipGroups
-        $this->call(TipGroupsTableSeeder::class);
+        $this->call(TipGroupTableSeed::class);
         
         //tabella TipResources
-        $this->call(TipResourcesTableSeeder::class);
+        $this->call(TipResourceTableSeed::class);
         
         //tabella TipUsers
-        $this->call(TipUsersTableSeeder::class);
+        $this->call(TipUserTableSeed::class);
         
         //tabella Groups
-        $this->call(GroupsTableSeeder::class);
+        $this->call(GroupTableSeed::class);
         
         //tabella Resources
-        $this->call(ResourcesTableSeeder::class);
+        $this->call(ResourceTableSeed::class);
         
         //tabella Users
-        $this->call(UsersTableSeeder::class);
+        $this->call(UserTableSeed::class);
+        
+        //tabella Bookings
+        $this->call(BookingTableSeed::class);
+        
+        //tabella Events
+        $this->call(EventTableSeed::class);
         
     }
-    
 }

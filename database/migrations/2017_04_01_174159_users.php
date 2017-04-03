@@ -4,15 +4,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
+//Definizione tabella users
+class Users extends Migration {
+    
+    public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -20,19 +15,17 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('id_tip_user')->unsigned();
-            $table->foreign('id_tip_user')->references('id_tip_user')->on('tip_users');
+            
+            //foreign con la tabella tip_user
+            $table->integer('tip_user_id')->unsigned();
+            $table->foreign('tip_user_id')->references('id')->on('tip_user');
+            
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('users');
     }
+    
 }
