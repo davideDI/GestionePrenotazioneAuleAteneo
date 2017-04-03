@@ -33,8 +33,5 @@ class DatabaseSeeder extends Seeder {
         //tabella Bookings
         $this->call(BookingTableSeed::class);
         
-        //tabella Events
-        $this->call(EventTableSeed::class);
-        
     }
 }

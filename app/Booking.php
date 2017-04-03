@@ -21,9 +21,9 @@ class Booking extends Model {
         return $this->belongsTo('App\Resource');
     }
     
-    //Relazione con la tabella events
-    public function event() {
-        return $this->hasOne('App\Event');
+    //Relazione con la tabella tip_event
+    public function tipEvent() {
+        return $this->belongsTo('App\TipEvent');
     }
     
     /*public static function store(Booking $booking) {

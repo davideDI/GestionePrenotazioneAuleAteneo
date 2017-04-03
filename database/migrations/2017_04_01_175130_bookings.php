@@ -14,6 +14,13 @@ class Bookings extends Migration {
             $table->string('description', 100)->nullble();
             $table->dateTime('booking_date');
             
+            $table->dateTime('event_date_start');
+            $table->dateTime('event_date_end');
+            
+            //foreign con la tabella tip_event
+            $table->integer('tip_event_id')->unsigned();
+            $table->foreign('tip_event_id')->references('id')->on('tip_event');
+            
             //foreign con la tabella user
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

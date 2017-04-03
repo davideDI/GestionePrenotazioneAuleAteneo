@@ -96,19 +96,17 @@
                     
                     //Caricamento eventi
                     events: [
-                        
-                        @foreach($bookings as $booking) 
+                        @foreach($bookings as $booking)
                             {
-                                id         : '{{$booking->id_event}}',
-                                title      : '{{$booking->book_name}}',
-                                description: '{{$booking->book_description}}',
-                                start      : '{{$booking->start_date}}',
-                                end        : '{{$booking->end_date}}'
-                            }, 
+                                id         : '{{$booking->id}}',
+                                title      : '{{$booking->name}}',
+                                description: '{{$booking->description}}',
+                                start      : '{{$booking->event_date_start}}',
+                                end        : '{{$booking->event_date_end}}'
+                            },
                         @endforeach
-                        
                         ],
-                    
+                        
                     color: 'yellow',   // an option!
                     textColor: 'black', // an option!
                     

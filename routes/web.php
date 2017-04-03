@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file is where you may define all of the routes that are handled
-| by your application. Just tell Laravel the URIs it should respond
-| to using a Closure or controller method. Build something great!
-|
-*/
-
 /**************** HOME ******************************/
 Route::get('/', function () {
    
@@ -31,13 +20,6 @@ Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@swit
 /**************** AUTH ******************************/
 /* Route utilizzata per l'autenticazione */
 Auth::routes();
-
-/**************** BOOKING ******************************/
-/* Visualizzazione eventi in base a id group */
-Route::get('/bookings/{idGroup}', 'BookingController@getEventByIdGroup');
-
-/* Visualizzazione eventi in base a id group e id resource */
-Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getEventByIdGroupIdResource');
 
 /**************** HELP ******************************/
 Route::get('/help', function () {
@@ -63,7 +45,13 @@ Route::get('/search', function () {
     return view('pages/search');
 });
 
-/**************** NEW EVENT ******************************/
+/**************** BOOKING ******************************/
+/* Visualizzazione eventi in base a id group */
+Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup');
+
+/* Visualizzazione eventi in base a id group e id resource */
+Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource');
+
 Route::get('/new-booking', function() {
 
     Log::info('web.php: [/new-booking]');
@@ -111,3 +99,6 @@ Route::get('/api/v1/groups/{id?}', ['middleware' => 'auth.basic', function($id =
                 'status_code' => 200
             ));
 }]);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

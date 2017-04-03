@@ -12,61 +12,35 @@ use App\Booking;
 
 class BookingController extends Controller {
 
-    public function getEventByIdGroup($idGroup) {
+    //Lista di tutte le prenotazioni per id group
+    public function getBookingsByIdGroup($idGroup) {
         
-        Log::info('BookingController - getEventByIdGroup('.$idGroup.')');
+        Log::info('BookingController - getBookingsByIdGroup('.$idGroup.')');
         
-        $bookings = DB::table('bookings')
-            ->select('bookings.name as book_name',
-                     'bookings.description as book_description',
-                     'events.event_date_start as start_date', 
-                     'events.event_date_end as end_date',
-                     'events.id as id_event')
-            ->leftJoin('resources', 'bookings.id_resource', '=', 'resources.id')
-            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
-            ->leftJoin('events', 'bookings.id_event', '=', 'events.id')
-            ->where('groups.id', '=', $idGroup)
-            ->get();
+        $group = \App\Group::find($idGroup);
+        $resources = $group->resources;
+
+        $listIdResource = array();
+        foreach ($resources as $resource) {
+            array_push($listIdResource, $resource->id);
+        }
+        $bookings = \App\Booking::whereIn('resource_id', $listIdResource)->get();
         
-        $resources = DB::table('resources')
-            ->select('resources.id', 'resources.name')
-            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
-            ->where('groups.id', '=', $idGroup)
-            ->get();
-        
-        $group = Group::find($idGroup);
-        
-        return view('pages/index-calendar', [ 'bookings' => $bookings,
-                                              'resources' => $resources,
-                                              'group' => $group]);
+        return view('pages/index-calendar', [ 'resources' => $resources, 'group' => $group, 'bookings' => $bookings]);
         
     }
     
-    public function getEventByIdGroupIdResource($idGroup, $idResource) {
+    public function getBookingsByIdGroupIdResource($idGroup, $idResource) {
         
-        Log::info('BookingController - getEventByIdGroupIdResource)'.$idGroup.', '.$idResource.')');
+        Log::info('BookingController - getBookingsByIdGroupIdResource('.$idGroup.', '.$idResource.')');
         
-        $bookings = DB::table('bookings')
-            ->select('bookings.name as book_name', 
-                     'events.event_date_start as start_date', 
-                     'events.event_date_end as end_date',
-                     'events.id as id_event')
-            ->leftJoin('resources', 'bookings.id_resource', '=', 'resources.id')
-            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
-            ->leftJoin('events', 'bookings.id_event', '=', 'events.id')
-            ->where('groups.id', '=', $idGroup)
-            ->where('resources.id', '=', $idResource)
-            ->get();
-        
-        $resources = DB::table('resources')
-            ->select('resources.id', 'resources.name')
-            ->leftJoin('groups', 'resources.id_group', '=', 'groups.id')
-            ->where('groups.id', '=', $idGroup)
-            ->get();
-        
-        $group = Group::find($idGroup);
+        $group = \App\Group::find($idGroup);
+        $resources = $group->resources;
+        $resource = \App\Resource::find($idResource);
+        $bookings = \App\Booking::where('resource_id', '=', $idResource)->get();
         
         return view('pages/index-calendar', [ 'bookings' => $bookings,
+                                              'resource' => $resource,
                                               'resources' => $resources,
                                               'group' => $group]);
         

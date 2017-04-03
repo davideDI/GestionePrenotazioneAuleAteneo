@@ -8,9 +8,9 @@ class TipEvent extends Model {
     
     protected $table = "tip_event";
     
-    //Relazione con la tabella events
-    public function events() {
-        return $this->hasMany('App\Event');
+    //Relazione con la tabella bookings
+    public function bookings() {
+        return $this->hasMany('App\Booking');
     }
     
 }

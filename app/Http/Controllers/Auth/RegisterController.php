@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             //TODO id settato manualmente in attesa della gestione dei gruppi di utenza
-            'id_tip_user' => '1',
+            'tip_user_id' => '1',
         ]);
     }
 }
