@@ -18,7 +18,7 @@ class UserTableSeed extends Seeder {
                     'name'        => 'davide',
                     'surname'     => 'ddi',
                     'email'       => 'davide@davide.it',
-                    'password'    => 'davide@davide.it',
+                    'password'    => bcrypt('davide@davide.it'),
                     'tip_user_id' => 1,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
@@ -28,7 +28,7 @@ class UserTableSeed extends Seeder {
                     'name'        => 'luigi',
                     'surname'     => 'marrone',
                     'email'       => 'luigi@marrone.it',
-                    'password'    => 'luigi@marrone.it',
+                    'password'    => bcrypt('luigi@marrone.it'),
                     'tip_user_id' => 2,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
@@ -38,7 +38,7 @@ class UserTableSeed extends Seeder {
                     'name'        => 'ateneo',
                     'surname'     => 'ateneo',
                     'email'       => 'ateneo@ateneo.it',
-                    'password'    => 'ateneo@ateneo.it',
+                    'password'    => bcrypt('ateneo@ateneo.it'),
                     'tip_user_id' => 3,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
@@ -48,7 +48,7 @@ class UserTableSeed extends Seeder {
                     'name'        => 'mario',
                     'surname'     => 'bianchi',
                     'email'       => 'mario@bianchi.it',
-                    'password'    => 'mario@bianchi.it',
+                    'password'    => bcrypt('mario@bianchi.it'),
                     'tip_user_id' => 1,
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
