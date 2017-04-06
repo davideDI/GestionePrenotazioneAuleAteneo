@@ -5,9 +5,9 @@ Web-application per la gestione della prenotazione delle aule e laboratori nell'
 
 ## Risorse
 
-[Laravel website](http://laravel.com)
-[Full Calendar JS](http://fullcalendar.io)
-[Bootstrap](http://getbootstrap.com)   
+[Laravel website](http://laravel.com).
+[Full Calendar JS](http://fullcalendar.io).
+[Bootstrap](http://getbootstrap.com).
 
 ## Links
 
@@ -19,8 +19,11 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it)
 2. Scarica e installa [Composer](https://getcomposer.org/download/)
 3. Importa da Git il progetto -> git clone https://github.com/davideDI/GestionePrenotazioneAuleAteneo
 4. Vai da prompt nella cartella appena creata ed esegui il comando "composer install"
-5. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
-6. "php artisan db:seed" per l'inserimento dei dati iniziali
+5. Nel file config/database.php ci sono le informazioni per la creazione del DB locale
+6. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
+7. "php artisan db:seed" per l'inserimento dei dati iniziali
+8. da prompt digita "copy .env.example" (Windows) / "cp .env.example" (Linux) per generare il file .env
+9. "php artisan generate:key"
 
 N.B. 
  1. Se eseguendo il comando "php artisan db:seed" si presenta una "ReflectionException" esegui il comando "composer dump-autoload"
