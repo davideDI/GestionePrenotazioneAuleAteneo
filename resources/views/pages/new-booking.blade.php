@@ -5,75 +5,75 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>Inserisci una nuova prenotazione</h3>
-                <form method="post" action="{{ url('/insert-booking') }}" accept-charset="UTF-8">
-                    {{ csrf_field() }}
-
-                    <!-- Event : name -->
+                {!! Form::model($booking, ['url' => '/new-booking', 'method' => 'post']) !!} 
+                
+                    <!-- Booking : name -->
                     <div class="form-group">
-                        <label for="name">{{ trans('messages.common_title') }}</label>
-                        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="{{ trans('messages.common_title') }}" required >
+                        {!! Form::label('name', trans('messages.common_title')); !!}
+                        {!! Form::text('name', trans('messages.common_title'), ['class' => 'form-control']); !!}
                     </div>
-                    <!-- Event : description -->
+                    <!-- Booking : description -->
                     <div class="form-group">
-                        <label for="description">{{ trans('messages.common_description') }}</label>
-                        <input id="description" type="text" class="form-control" name="description" value="{{ old('description') }}" placeholder="{{ trans('messages.common_description') }}" required >
+                        {!! Form::label('description', trans('messages.common_description')); !!}
+                        {!! Form::text('description', trans('messages.common_description'), ['class' => 'form-control']); !!}
                     </div>
                     <div class="form-group row">
-                    <!-- Event : data inizio evento -->
+                    <!-- Booking : data inizio evento -->
                         <div class="col-md-6">
-                            <label for="booking_date_day_start">{{ trans('messages.booking_date_day_start') }}</label>
-                            <input id="booking_date_day_start" type="text" class="form-control datepicker" name="booking_date_day_start" value="" placeholder="2017-02-21" required >
+                            {!! Form::label('booking_date_day_start', trans('messages.booking_date_day_start')); !!}
+                            {!! Form::text('booking_date_day_start', '2017-02-21', ['class' => 'form-control']); !!}
                         </div>
-                    <!-- Event : data fine evento -->
+                    <!-- Booking : data fine evento -->
                         <div class="col-md-6">
-                            <label for="booking_date_day_end">{{ trans('messages.booking_date_day_end') }}</label>
-                            <input id="booking_date_day_end" type="text" class="form-control datepicker" name="booking_date_day_end" value="" placeholder="2017-02-21" required >
+                            {!! Form::label('booking_date_day_end', trans('messages.booking_date_day_end')); !!}
+                            {!! Form::text('booking_date_day_end', '2017-02-21', ['class' => 'form-control']); !!}
                         </div>
                     </div>
                     
                     <div class="form-group row">
-                    <!-- Event : ora inizio evento -->
+                    <!-- Booking : ora inizio evento -->
                         <div class="col-md-6">
-                            <label for="booking_date_hour_start">{{ trans('messages.booking_date_hour_start') }}</label>
-                            <input id="booking_date_hour_start" type="text" class="form-control" name="booking_date_hour_start" value="" placeholder="10:30" required >
+                            {!! Form::label('booking_date_hour_start', trans('messages.booking_date_hour_start')); !!}
+                            {!! Form::text('booking_date_hour_start', '10:30', ['class' => 'form-control']); !!}
                         </div>
-                    <!-- Event : ora fine evento -->
+                    <!-- Booking : ora fine evento -->
                         <div class="col-md-6">
-                            <label for="booking_date_hour_end">{{ trans('messages.booking_date_hour_end') }}</label>
-                            <input id="booking_date_hour_end" type="text" class="form-control" name="booking_date_hour_end" value="" placeholder="12:30" required >
+                            {!! Form::label('booking_date_hour_end', trans('messages.booking_date_hour_end')); !!}
+                            {!! Form::text('booking_date_hour_end', '12:30', ['class' => 'form-control']); !!}
                         </div>
                     </div>
                     
                     <div class="form-group row">
                     <!-- Booking : id group -->
                         <div class="col-md-6">
-                            <label for="idGroup">{{ trans('messages.booking_date_group') }}</label>
-                            <select id="groupSelect" name="groupSelect" class="listOfGroupsItems" style="width: 70%">
-                                <option></option>
-                                @foreach($groupsList as $group)
-                                    <option value="{{$group->id}}">
-                                        {{$group->name}}
-                                    </option>
-                                @endforeach
-                            </select>
+                            {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
+                            
+                            {!! Form::select(
+                                    'group_id', 
+                                    $groupsList, 
+                                    null, 
+                                    ['class' => 'listOfGroupsItems',
+                                     'style' => 'width: 70%']
+                                ); !!}
                         </div>
                     <!-- Booking : id risorsa -->
                         <div class="col-md-6">
-                            <label for="idresource">{{ trans('messages.booking_date_resource') }}</label>
-                            <select id="resourceSelect" name="resourceSelect" class="listOfResourcesItems" style="width: 70%">
-                                <option></option>
-                                @foreach($resourceList as $resource)
-                                    <option value="{{$resource->id}}">
-                                        {{$resource->name}}
-                                    </option>
-                                @endforeach
-                            </select>
+                            {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
+                            
+                            {!! Form::select(
+                                    'resource_id', 
+                                    $resourceList, 
+                                    null, 
+                                    ['class' => 'listOfGroupsItems',
+                                     'style' => 'width: 70%']
+                                ); !!}
+                                
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        {{ trans('messages.common_save') }}
-                    </button>
-                </form>
+                    
+                    {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                    
+                {!! Form::close() !!}
             </div>
             <div class="col-md-2"></div>
         </div>

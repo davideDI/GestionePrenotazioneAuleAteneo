@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model {
     
+    protected $fillable = ['name', 'description', 'booking_date_day_start', 'booking_date_day_end', 'booking_date_hour_start', 'booking_date_hour_end', 'group_id', 'resource_id'];
+    protected $table = 'bookings';
+
     //Relazione con la tabella tip_booking_status
     public function tipBookingStatus() {
         return $this->belongsTo('App\TipBookingStatus');

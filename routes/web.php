@@ -53,16 +53,20 @@ Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup');
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource');
 
 Route::get('/new-booking', function() {
+    Log::info('web.php: get() [/new-booking]');
+    $booking = new App\Booking;
+    $groupsList = App\Group::pluck('name', 'id');
+    $resourceList = App\Resource::pluck('name', 'id');
+    return view('pages/new-booking', ['booking'      => $booking,
+                                      'groupsList'   => $groupsList,
+                                      'resourceList' => $resourceList]);
+});
 
-    Log::info('web.php: [/new-booking]');
-    
-    $groupsList = App\Group::all();
-    $resourceList = App\Resource::all();
-    
-    return view('pages/new-booking', [ 'groupsList'   => $groupsList,
-                                     'resourceList' => $resourceList]);
-
-    
+Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
+    Log::info('web.php: post() [/new-booking]');
+    $booking = new App\Booking; 
+    $booking->fill($request->all());
+    return view('pages/test', ['booking' => $booking]);
 });
 
 /* Inserimento nuova prenotazione */
