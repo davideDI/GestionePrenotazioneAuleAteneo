@@ -10,36 +10,35 @@
                     <!-- Booking : name -->
                     <div class="form-group">
                         {!! Form::label('name', trans('messages.common_title')); !!}
-                        {!! Form::text('name', trans('messages.common_title'), ['class' => 'form-control']); !!}
+                        {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_title')]); !!}
                     </div>
                     <!-- Booking : description -->
                     <div class="form-group">
                         {!! Form::label('description', trans('messages.common_description')); !!}
-                        {!! Form::text('description', trans('messages.common_description'), ['class' => 'form-control']); !!}
+                        {!! Form::text('description', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_description')]); !!}
                     </div>
                     <div class="form-group row">
                     <!-- Booking : data inizio evento -->
                         <div class="col-md-6">
-                            {!! Form::label('booking_date_day_start', trans('messages.booking_date_day_start')); !!}
-                            {!! Form::text('booking_date_day_start', '2017-02-21', ['class' => 'form-control']); !!}
+                            {!! Form::label('event_date_start', trans('messages.booking_date_day_start')); !!}
+                            <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
+                                <input data-format="yyyy-MM-dd hh:mm:ss" class="form-control" id="event_date_start" name="event_date_start" type="text" placeholder="2017-02-24 12:00:00"></input>
+                                <span class="add-on">
+                                <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                </i>
+                              </span>
+                            </div>
                         </div>
                     <!-- Booking : data fine evento -->
                         <div class="col-md-6">
-                            {!! Form::label('booking_date_day_end', trans('messages.booking_date_day_end')); !!}
-                            {!! Form::text('booking_date_day_end', '2017-02-21', ['class' => 'form-control']); !!}
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                    <!-- Booking : ora inizio evento -->
-                        <div class="col-md-6">
-                            {!! Form::label('booking_date_hour_start', trans('messages.booking_date_hour_start')); !!}
-                            {!! Form::text('booking_date_hour_start', '10:30', ['class' => 'form-control']); !!}
-                        </div>
-                    <!-- Booking : ora fine evento -->
-                        <div class="col-md-6">
-                            {!! Form::label('booking_date_hour_end', trans('messages.booking_date_hour_end')); !!}
-                            {!! Form::text('booking_date_hour_end', '12:30', ['class' => 'form-control']); !!}
+                            {!! Form::label('event_date_end', trans('messages.booking_date_day_end')); !!}
+                            <div id="event_date_end" class="input-append date datetimepicker1">
+                                <input data-format="yyyy-MM-dd hh:mm:ss" class="form-control" id="event_date_end" name="event_date_end" type="text" placeholder="2017-02-24 14:00:00"></input>
+                                <span class="add-on">
+                                <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                </i>
+                              </span>
+                            </div>
                         </div>
                     </div>
                     
@@ -70,7 +69,21 @@
                                 
                         </div>
                     </div>
-                    
+                    <div class="form-group row">
+                        <!-- Booking : id tip evento -->
+                        <div class="col-md-6">
+                            {!! Form::label('tip_event_id', trans('messages.booking_event')); !!}
+                            
+                            {!! Form::select(
+                                    'tip_event_id', 
+                                    $tipEventList, 
+                                    null, 
+                                    ['class' => 'listOfTipEventsItems',
+                                     'style' => 'width: 70%']
+                                ); !!}
+                                
+                        </div>
+                    </div>
                     {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
                     
                 {!! Form::close() !!}
@@ -91,6 +104,20 @@
                   placeholder: "{{ trans('messages.booking_date_select_resource') }}"
               });
             });
+            
+            $(document).ready(function() {
+              $(".listOfTipEventsItems").select2({
+                  placeholder: "{{ trans('messages.booking_type_event') }}"
+              });
+            });
         </script>
         
+        <!-- Date time picker -->
+        <script type="text/javascript">
+            $(function() {
+                $('.datetimepicker1').datetimepicker({
+                    language: 'pt-BR'
+                });
+            });
+        </script>
     @endsection

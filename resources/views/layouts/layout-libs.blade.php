@@ -33,3 +33,6 @@
 
 <!-- Foglio di stile per classi personalizzate -->
 <link href="{{URL::to('lib/css/style.css')}}" rel="stylesheet" />
+
+<link href="{{URL::to('lib/datetimepicker/css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" />
+<script src="{{URL::to('lib/datetimepicker/js/bootstrap-datetimepicker.min.js')}}" ></script>

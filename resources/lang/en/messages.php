@@ -49,6 +49,8 @@
         'booking_date_group' => 'Group',
         'booking_date_select_group' => 'Selece a group',
         'booking_date_select_resource' => 'Select a resource',
+        'booking_type_event' => 'Select a type event',
+        'booking_event' => 'Event',
         
         //Messages from help page
         'help_contact' => 'Contact',
