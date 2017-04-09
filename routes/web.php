@@ -98,10 +98,8 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
 });
 
 /**************** CONSOLE ADMIN ******************************/
-Route::get('/console', function () {
-    Log::info('web.php: [/console]');
-    return view('pages/console');
-});
+//Ricerca prenotazione in base a "Groups" amministrati
+Route::get('/console', 'AdminController@getBookingByIdAdmin');
 
 /**************** TEST ******************************/
 /* Route di test update evento from drop */

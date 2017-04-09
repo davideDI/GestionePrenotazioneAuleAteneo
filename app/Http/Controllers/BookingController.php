@@ -29,6 +29,7 @@ class BookingController extends Controller {
         
     }
     
+    //Lista di tutte le prenotazioni per id group e id resource
     public function getBookingsByIdGroupIdResource($idGroup, $idResource) {
         
         Log::info('BookingController - getBookingsByIdGroupIdResource('.$idGroup.', '.$idResource.')');
@@ -45,6 +46,9 @@ class BookingController extends Controller {
         
     }
     
+    //metodo di test per l'update di una prenotazione tramite drug&drop o resize
+    //TODO da modificare campi viste le modifiche alle tabelle
+    //TODO commentare chiamata a metodo, non più richiesto
     public function updateEvent() {
         
         Log::info('BookingController - updateEvent()');
