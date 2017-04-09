@@ -17,6 +17,10 @@ class Groups extends Migration {
             $table->integer('tip_group_id')->unsigned();
             $table->foreign('tip_group_id')->references('id')->on('tip_group');
             
+            //foreign con la tabella user
+            $table->integer('admin_id')->unsigned();
+            $table->foreign('admin_id')->references('id')->on('users');
+            
             $table->timestamps();
         });
     }

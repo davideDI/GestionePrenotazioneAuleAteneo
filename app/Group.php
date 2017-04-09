@@ -16,4 +16,9 @@ class Group extends Model {
         return $this->hasMany('App\Resource');
     }
     
+    //Relazione con la tabella users
+    public function admin() {
+        return $this->belongsTo('App\User');
+    }
+    
 }

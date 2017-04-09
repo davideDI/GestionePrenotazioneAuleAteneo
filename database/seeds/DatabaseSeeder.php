@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder {
         //tabella TipUsers
         $this->call(TipUserTableSeed::class);
         
+        //tabella Users
+        $this->call(UserTableSeed::class);
+        
         //tabella Groups
         $this->call(GroupTableSeed::class);
         
         //tabella Resources
         $this->call(ResourceTableSeed::class);
-        
-        //tabella Users
-        $this->call(UserTableSeed::class);
         
         //tabella Bookings
         $this->call(BookingTableSeed::class);
