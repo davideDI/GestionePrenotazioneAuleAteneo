@@ -31,9 +31,15 @@
                 
                 <div class="row">
                     <div class="col-md-12">
-                        <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
-                            {{ trans('messages.index_calendar_new_event') }}
-                        </a>
+                        <!-- TODO -->
+                        <!-- Al momento solo gli utenti registrati richiedono prenotazioni -->
+                        @if(Auth::check())
+                            <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
+                                {{ trans('messages.index_calendar_new_event') }}
+                            </a>
+                        @else
+                            
+                        @endif
                     </div>
                 </div>
                 
