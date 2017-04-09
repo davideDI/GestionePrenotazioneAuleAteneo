@@ -64,4 +64,12 @@
         . '                  Many options are avaible only for the admins. '
         . '                  If the system is configured with LDAP, you must use the same email\'s credentials.',
         
+        //Success Messages [from 100 to 299]
+        '100' => 'Reservation saved!',
+        
+        //Warning Messages [from 300 to 499]
+        
+        //Error Messages [from 500 to 699]
+        '500' => 'Error in the inclusion of reservation',
+        
     ];

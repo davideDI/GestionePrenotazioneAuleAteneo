@@ -67,5 +67,13 @@
         . '                  Se il sistema è configurato per utilizzare l\'autenticazione LDAP, significa che devi utilizzare '
         . '                  le stesse credenziali che utilizzi per accedere all\'email.',
         
+        //Success Messages [from 100 to 299]
+        '100' => 'Prenotazione effettuata! ',
+        
+        //Warning Messages [from 300 to 499]
+        
+        //Error Messages [from 500 to 699]
+        '500' => 'Errore nell\'inserimento della prenotazione',
+        
     ];
 

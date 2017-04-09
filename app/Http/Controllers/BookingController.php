@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 class BookingController extends Controller {
 
     //Lista di tutte le prenotazioni per id group
-    public function getBookingsByIdGroup($idGroup) {
+    public function getBookingsByIdGroup($idGroup, $messageCode = null) {
         
         Log::info('BookingController - getBookingsByIdGroup('.$idGroup.')');
         
@@ -22,7 +22,10 @@ class BookingController extends Controller {
         }
         $bookings = \App\Booking::whereIn('resource_id', $listIdResource)->get();
         
-        return view('pages/index-calendar', [ 'resources' => $resources, 'group' => $group, 'bookings' => $bookings]);
+        return view('pages/index-calendar', [ 'resources'   => $resources, 
+                                              'group'       => $group, 
+                                              'bookings'    => $bookings,
+                                              'messageCode' => $messageCode]);
         
     }
     

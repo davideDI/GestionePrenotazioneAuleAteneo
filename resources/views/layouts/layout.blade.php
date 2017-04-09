@@ -39,6 +39,9 @@
                     <!-- Sezione Menu -->
                     @include('layouts.layout-menu')
                     
+                    <!-- Gestione centralizzata messaggi informativi -->
+                    @include('layouts.message')
+                    
                     <!-- Corpo della pagina -->
                     @yield('content')
 

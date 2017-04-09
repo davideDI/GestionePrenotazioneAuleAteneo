@@ -45,9 +45,14 @@
                 
             </div>
             
-            <!-- Div principale contenitore del calendario -->
-            <div class="col-md-10" id="calendar">
+            <!-- Div principale -->
+            <div class="col-md-10">
 
+                <!-- Div contenitore calendario -->
+                <div class="row">
+                    <div class="col-md-12" id="calendar"></div>
+                </div>
+                
             </div>
             
         </div>

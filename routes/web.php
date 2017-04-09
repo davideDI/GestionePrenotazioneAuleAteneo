@@ -47,37 +47,54 @@ Route::get('/search', function () {
 
 /**************** BOOKING ******************************/
 /* Visualizzazione prenotazioni in base a id group */
-Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
+Route::get('/bookings/{idGroup}/{messageCode?}', 'BookingController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
 
 /* Visualizzazione prenotazioni in base a id group e id resource */
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
 
-Route::get('/new-booking', function() {
+Route::get('/new-booking/{messageCode?}', function($messageCode = null) {
+    
     Log::info('web.php: get() [/new-booking]');
+    
     $booking = new App\Booking;
     $groupsList = App\Group::pluck('name', 'id');
     $resourceList = App\Resource::pluck('name', 'id');
     $tipEventList = App\TipEvent::pluck('name', 'id');
+    
     return view('pages/new-booking', ['booking'      => $booking,
                                       'groupsList'   => $groupsList,
                                       'resourceList' => $resourceList,
-                                      'tipEventList' => $tipEventList]);
-});
+                                      'tipEventList' => $tipEventList,
+                                      'messageCode'  => $messageCode]);
+})->name('newbooking-form');
 
 /* Inserimento nuova prenotazione e reindirizzamento verso il calendario prenotazioni */
 Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
+    
     Log::info('web.php: post() [/new-booking]');
+    
+    //Recupero la risorsa selezioneta per la redirect()
     $booking = new App\Booking; 
     $booking->fill($request->all());
-    Log::info('web.php: [/new-booking] - Inserimento prenotazione ['.$booking.']');
-    //Di default viene inserita la data di sistema
-    $booking->booking_date = date("Y-m-d G:i:s");
-    $booking->user_id = Auth::user()->id;
-    //Quando viene effettuata una prenotazione lo stato viene settato su "RICHIESTA"
-    $booking->tip_booking_status_id = 1;
-    $booking->save();
-    $resourceOfBooking=  App\Resource::find($booking->resource_id);
-    return redirect()->route('bookings', ['idGroup' => $resourceOfBooking->group_id]);
+    $resourceOfBooking = App\Resource::find($booking->resource_id);
+    
+    try {
+        Log::info('web.php: [/new-booking] - Inserimento prenotazione ['.$booking.']');
+        //Di default viene inserita la data di sistema
+        $booking->booking_date = date("Y-m-d G:i:s");
+        $booking->user_id = Auth::user()->id;
+        //Quando viene effettuata una prenotazione lo stato viene settato su "RICHIESTA"
+        $booking->tip_booking_status_id = 1;
+        //TODO
+        //Sviluppare validazione campi
+        $booking->save();
+        return redirect()->route('bookings', ['idGroup'     => $resourceOfBooking->group_id,
+                                              'messageCode' => 100]);
+    } catch(Exception $ex) {
+        Log::error('web.php: [/new-booking] - errore nell\'inserimento della prenotazione '.$ex->getMessage());
+        return redirect()->route('newbooking-form', ['messageCode' => 500]);
+    }
+    
 });
 
 /**************** CONSOLE ADMIN ******************************/
@@ -111,6 +128,3 @@ Route::get('/api/v1/groups/{id?}', ['middleware' => 'auth.basic', function($id =
                 'status_code' => 200
             ));
 }]);
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
