@@ -6,11 +6,12 @@
             <!-- Div con filtri e buttons -->
             <div class="col-md-2">
                 
+                <!-- Select resource associate al group -->
                 <div class="row">
                         
                     <div class="col-md-12">
 
-                        <p>{{$group->name}}</p> 
+                        <legend>{{$group->name}}</legend> 
                         <select id="resourceSelect" 
                                 onChange="window.location.href=this.value" 
                                 class="listOfGroups" 
@@ -29,6 +30,7 @@
                 
                 <br>
                 
+                <!-- Tasto Nuovo Evento -->
                 <div class="row">
                     <div class="col-md-12">
                         <!-- TODO -->
@@ -40,6 +42,19 @@
                         @else
                             
                         @endif
+                    </div>
+                </div>
+                
+                <br><br>
+                
+                <!-- Legenda stati prenotazione -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <legend>Stati prenotazione</legend>
+                        <p>Richiesta &nbsp;&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" /></p>
+                        <p>In Lavorazione&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" /></p>
+                        <p>Gestita&nbsp;&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" /></p>
+                        <p>Scartata&nbsp;&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" /></p>
                     </div>
                 </div>
                 
@@ -113,7 +128,16 @@
                                 title      : '{{$booking->name}}',
                                 description: '{{$booking->description}}',
                                 start      : '{{$booking->event_date_start}}',
-                                end        : '{{$booking->event_date_end}}'
+                                end        : '{{$booking->event_date_end}}',
+                                @if($booking->tip_booking_status_id == 1) 
+                                    color : '#0000FF'
+                                @elseif($booking->tip_booking_status_id == 2) 
+                                    color : '#FFFF00'
+                                @elseif($booking->tip_booking_status_id == 3) 
+                                    color : '#00FF00'
+                                @else
+                                    color : '#FF0000'
+                                @endif
                             },
                         @endforeach
                         ],
@@ -143,7 +167,7 @@
                         $(this).attr("data-toggle", "popover");
                         $(this).attr("data-placement", "right");
                         $(this).attr("data-content", event.description);
-                        
+                        $(this).attr("data-container", "body");
                         //Visualizzo il "popover"
                         $(this).popover('show');
                        

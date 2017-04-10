@@ -2,15 +2,16 @@
     @section('content')
         
         <div class="row">
-            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <legend>{{ trans('messages.home_console') }}</legend>
+            </div>
             <div class="col-md-6">
-                <p>{{ trans('messages.home_console') }}</p>
+              
+               @foreach($bookings as $booking)
+                            {{$booking}}
+                        @endforeach
             </div>
             <div class="col-md-3"></div>
         </div>
-        @foreach($bookings as $booking)
-            {{$booking}}    
-        @endforeach
-        
 
     @endsection

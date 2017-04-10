@@ -8,7 +8,7 @@
             <meta name="description" content="{{ trans('messages.home_meta_description') }}">
             <meta name="author" content="Davide De Innocentis">
 
-            <link rel="icon" href="{{URL::to('lib/images/favicon.jpg')}}">
+            <link rel="icon" href="{{URL::asset('lib/images/favicon.jpg')}}">
 
             <title>{{ trans('messages.home_title') }}</title>
 
