@@ -24,9 +24,9 @@
                             <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
                                 <input data-format="yyyy-MM-dd hh:mm:ss" class="form-control" id="event_date_start" name="event_date_start" type="text" placeholder="2017-02-24 12:00:00"></input>
                                 <span class="add-on">
-                                <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
-                                </i>
-                              </span>
+                                    <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                    </i>
+                                </span>
                             </div>
                         </div>
                     <!-- Booking : data fine evento -->
