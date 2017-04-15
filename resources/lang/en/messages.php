@@ -64,6 +64,14 @@
         . '                  Many options are avaible only for the admins. '
         . '                  If the system is configured with LDAP, you must use the same email\'s credentials.',
         
+        //Console page
+        'console_booking_ok' => 'Bookings confirmed',
+        'console_booking_working' => 'Bookings in workings',
+        'console_booking_request' => 'Bookings in queque',
+        'console_booking_ko' => 'Bookings rejected',
+        'console_booking_there_are' => 'There are ',
+        'console_booking_there_arent' => 'There aren\'t ',
+        
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',
         

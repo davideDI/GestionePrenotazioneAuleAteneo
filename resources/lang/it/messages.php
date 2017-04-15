@@ -67,6 +67,14 @@
         . '                  Se il sistema è configurato per utilizzare l\'autenticazione LDAP, significa che devi utilizzare '
         . '                  le stesse credenziali che utilizzi per accedere all\'email.',
         
+        //Console page
+        'console_booking_ok' => 'Prenotazioni Accolte',
+        'console_booking_working' => 'Prenotazioni in lavorazione',
+        'console_booking_request' => 'Prenotazioni richieste',
+        'console_booking_ko' => 'Prenotazioni respinte',
+        'console_booking_there_are' => 'Ci sono ',
+        'console_booking_there_arent' => 'Non ci sono ',
+        
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',
         

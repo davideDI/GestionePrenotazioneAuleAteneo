@@ -18,7 +18,11 @@ class AdminController extends Controller {
         //Groups amministrati dall'utente
         $groups = \App\Group::where('admin_id', $user->id)->get();
    
-        $bookings = array();
+        $quequedBookings   = array();
+        $workingBookings   = array();
+        $confirmedBookings = array();
+        $rejectedBookings  = array();
+        
         //Per ogni gruppo
         foreach($groups as $group) {
             //Per ogni risorsa associata ad un gruppo
@@ -27,12 +31,27 @@ class AdminController extends Controller {
                 foreach($resource->bookings as $booking) {
                     //Se lo stato della prenotazione è RICHIESTA
                     if($booking->tip_booking_status_id == 1) {
-                        array_push($bookings, $booking);
+                        array_push($quequedBookings, $booking);
+                    }
+                    //Se lo stato della prenotazione è RICHIESTA
+                    if($booking->tip_booking_status_id == 2) {
+                        array_push($workingBookings, $booking);
+                    }
+                    //Se lo stato della prenotazione è RICHIESTA
+                    if($booking->tip_booking_status_id == 3) {
+                        array_push($confirmedBookings, $booking);
+                    }
+                    //Se lo stato della prenotazione è RICHIESTA
+                    if($booking->tip_booking_status_id == 4) {
+                        array_push($rejectedBookings, $booking);
                     }
                 }    
             }
         }
-        return view('pages/console', ['bookings' => $bookings]);
+        return view('pages/console', [  'quequedBookings' => $quequedBookings,
+                                        'workingBookings' => $workingBookings,
+                                        'confirmedBookings' => $confirmedBookings,
+                                        'rejectedBookings' => $rejectedBookings,]);
         
     }
     

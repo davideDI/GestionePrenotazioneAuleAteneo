@@ -167,7 +167,9 @@ return [
          * Package Service Providers...
          */
         App\Providers\BootstrapServiceProvider::class,
-        //
+        
+        //Laravel Soap Provider
+        'Artisaninweb\SoapWrapper\ServiceProvider',
 
         /*
          * Application Service Providers...
@@ -232,6 +234,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         
+        //'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facades\SoapWrapper',
+        'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facade',
     ],
 
 ];

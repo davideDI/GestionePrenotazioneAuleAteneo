@@ -105,6 +105,10 @@ Route::get('/console', 'AdminController@getBookingByIdAdmin');
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
 
+/**************** TEST SOAP ******************************/
+/* Route di test per la chiamata al servizio login segreteria virtuale */
+Route::get('/testSoap', 'SoapController@wsLogin'); 
+
 /**************** TEST ESPOSIZIONE SERVIZI ******************************/
 // API routes
 // Test esposizione servizio lista di groups in base ad id
