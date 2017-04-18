@@ -32,4 +32,3 @@ N.B.
 
 Prerequisiti
 1. Git
-2. NodeJs 
