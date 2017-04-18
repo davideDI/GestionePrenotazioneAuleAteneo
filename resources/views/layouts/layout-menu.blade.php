@@ -70,7 +70,7 @@
         
                 <!-- Login -->
                 <li id="dropdown_login_error" class="dropdown">
-                    @if (Auth::guest())
+                    @if(!Session::has('matricola'))
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-log-in"></span> 
                             {{ trans('messages.home_login') }}
@@ -78,12 +78,12 @@
                     <div class="dropdown-menu" style="padding: 15px; padding-bottom: 10px;">
                         <form class="form-inline"  method="post" action="{{ url('/login') }}" accept-charset="UTF-8">
                             {{ csrf_field() }}
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="email.." required autofocus="">
+                            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="username.." required autofocus="">
 
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('username'))
                                         <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
+                                            <strong>{{ $errors->first('username') }}</strong>
                                         </span>
                                         <script>
                                             $("#dropdown_login_error").addClass("dropdown open");
@@ -106,7 +106,6 @@
                             
                             <div style="margin-top: 10px;" class="text-center">
                                 <input class="btn btn-primary" type="submit" name="submit" value="Login" />
-                                <a class="btn btn-primary" href="{{ url('/register') }}">Register</a>
                             </div>
                         </form>
                     </div>
@@ -114,7 +113,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ session('cognome') }} {{ session('nome') }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

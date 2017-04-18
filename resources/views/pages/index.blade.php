@@ -16,7 +16,7 @@
     </div>
     
     <hr>
-    
+  
     <!-- Seconda sezione : elenco gruppi edifici -->
     <div class="row">
         @foreach ($groupsList as $group)

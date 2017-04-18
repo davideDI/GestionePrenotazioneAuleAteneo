@@ -105,9 +105,13 @@ Route::get('/console', 'AdminController@getBookingByIdAdmin');
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
 
-/**************** TEST SOAP ******************************/
+/**************** LOGIN ******************************/
 /* Route di test per la chiamata al servizio login segreteria virtuale */
-Route::get('/testSoap', 'SoapController@wsLogin'); 
+Route::post('/login', 'SoapController@wsLogin'); 
+
+/**************** LOGOUT ******************************/
+Route::get('/logout', 'SoapController@wsLogout'); 
+
 
 /**************** TEST ESPOSIZIONE SERVIZI ******************************/
 // API routes
