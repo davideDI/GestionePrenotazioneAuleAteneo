@@ -83,5 +83,18 @@
         //Error Messages [from 500 to 699]
         '500' => 'Errore nell\'inserimento della prenotazione',
         
+        //Response code
+        //WS LOGIN
+        '-1' => 'Errore nel recupero dei dati',
+        '1003' => 'Autenticazione fallita',
+        '1004' => 'Fallita la creazione del componente',
+        '1007' => 'Fallita la connessione al DB',
+        '1110' => 'Utente disabilitato',
+        '1112' => 'La password deve essere impostata (cambio password al primo login)',
+        '1116' => 'User_id non valido o nullo',
+        '1119' => 'Il gruppo a cui appartiene l\'utente non è abilitato ad utilizzare questo tipo di client',
+        '1126' => 'Errore generico di LDAP',
+        '1130' => 'Password scaduta',
+        
     ];
 

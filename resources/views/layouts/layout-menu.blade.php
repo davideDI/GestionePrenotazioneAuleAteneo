@@ -70,7 +70,7 @@
         
                 <!-- Login -->
                 <li id="dropdown_login_error" class="dropdown">
-                    @if(!Session::has('matricola'))
+                    @if(!Session::has('session_id'))
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                         <span class="glyphicon glyphicon-log-in"></span> 
                             {{ trans('messages.home_login') }}

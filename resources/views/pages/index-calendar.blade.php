@@ -35,7 +35,7 @@
                     <div class="col-md-12">
                         <!-- TODO -->
                         <!-- Al momento solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Auth::check())
+                        @if(Session::has('session_id'))
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>

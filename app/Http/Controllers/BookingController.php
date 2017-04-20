@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 class BookingController extends Controller {
 
     //Lista di tutte le prenotazioni per id group
-    public function getBookingsByIdGroup($idGroup, $messageCode = null) {
+    public function getBookingsByIdGroup($idGroup) {
         
         Log::info('BookingController - getBookingsByIdGroup('.$idGroup.')');
         
@@ -24,8 +24,7 @@ class BookingController extends Controller {
         
         return view('pages/index-calendar', [ 'resources'   => $resources, 
                                               'group'       => $group, 
-                                              'bookings'    => $bookings,
-                                              'messageCode' => $messageCode]);
+                                              'bookings'    => $bookings]);
         
     }
     

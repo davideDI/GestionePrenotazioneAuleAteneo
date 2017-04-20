@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class SoapController extends Controller {
 
@@ -32,24 +33,36 @@ class SoapController extends Controller {
             'params'   => $sid
         ]);
         
-        $response = new  \SimpleXMLElement($fn_retrieve_xml_p['xml']);
-        $row = $response->children()->children()->children();
-        $sourceID = (string) $row->SOURCE_ID;
-        $nome = (string) $row->NOME;
-        $cognome = (string) $row->COGNOME;
-        $codFis = (string) $row->COD_FIS;
-        $ruolo = (string) $row->RUOLO;
-        $matricola = (string) $row->MATRICOLA;
+        //Codice di risposta
+        $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
         
-        session(['session_id' => $sessionID]);
-        session(['source_id' => $sourceID]);
-        session(['nome'      => $nome]);
-        session(['cognome'   => $cognome]);
-        session(['cod_fis'   => $codFis]);
-        session(['ruolo'     => $ruolo]);
-        session(['matricola' => $matricola]);
+        //se il codice di risposta è 1 non ci sono stati errori
+        if($responseCode == 1) {
         
-        return redirect('/');
+            //Xml di risposta
+            $response = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
+
+            $row = $response->children()->children()->children();
+            $sourceID = (string) $row->SOURCE_ID;
+            $nome = (string) $row->NOME;
+            $cognome = (string) $row->COGNOME;
+            $codFis = (string) $row->COD_FIS;
+            $ruolo = (string) $row->RUOLO;
+            $matricola = (string) $row->MATRICOLA;
+
+            session(['session_id' => $sessionID]);
+            session(['source_id' => $sourceID]);
+            session(['nome'      => $nome]);
+            session(['cognome'   => $cognome]);
+            session(['cod_fis'   => $codFis]);
+            session(['ruolo'     => $ruolo]);
+            session(['matricola' => $matricola]);
+        
+            return redirect('/');
+            
+        } else {
+            return Redirect::back()->withErrors([$responseCode]);
+        }
 
     }
     
