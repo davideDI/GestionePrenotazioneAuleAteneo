@@ -14,7 +14,7 @@
                         <legend>{{$group->name}}</legend> 
                         <select id="resourceSelect" 
                                 onChange="window.location.href=this.value" 
-                                class="listOfGroups" 
+                                class="listOfResources" 
                                 style="width: 70%">
                             <option></option>
                             @foreach($resources as $resource)
@@ -75,9 +75,9 @@
         <!-- Select 2 -->
         <script type="text/javascript">
             $(document).ready(function() {
-              $(".listOfGroups").select2({
-                  placeholder: "{{ trans('messages.index_calendar_select_room') }}"
-              });
+              $(".listOfResources").select2({
+                  placeholder: "{{ $selectedResource->name }}"
+              })
             });
         </script>
     

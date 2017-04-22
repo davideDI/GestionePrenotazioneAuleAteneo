@@ -42,7 +42,7 @@ class ResourceTableSeed extends Seeder {
                 ],
                 [
                     'id'                => 4,
-                    'name'              => '101',
+                    'name'              => '102',
                     'description'       => 'piano terra',
                     'tip_resource_id'   => 1,
                     'group_id'          => 2,

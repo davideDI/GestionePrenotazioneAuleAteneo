@@ -15,14 +15,11 @@ class BookingController extends Controller {
         
         $group = \App\Group::find($idGroup);
         $resources = $group->resources;
-
-        $listIdResource = array();
-        foreach ($resources as $resource) {
-            array_push($listIdResource, $resource->id);
-        }
-        $bookings = \App\Booking::whereIn('resource_id', $listIdResource)->get();
+        $firstResource = $resources->first();
+        $bookings = \App\Booking::where('resource_id', $firstResource->id)->get();
         
-        return view('pages/index-calendar', [ 'resources'   => $resources, 
+        return view('pages/index-calendar', [ 'selectedResource'    => $firstResource,
+                                              'resources'   => $resources, 
                                               'group'       => $group, 
                                               'bookings'    => $bookings]);
         
@@ -39,15 +36,14 @@ class BookingController extends Controller {
         $bookings = \App\Booking::where('resource_id', '=', $idResource)->get();
         
         return view('pages/index-calendar', [ 'bookings' => $bookings,
-                                              'resource' => $resource,
+                                              'selectedResource' => $resource,
                                               'resources' => $resources,
                                               'group' => $group]);
         
     }
     
-    //metodo di test per l'update di una prenotazione tramite drug&drop o resize
+    //metodo di test per l'update di una prenotazione tramite drug&drop o resize (disabilitato)
     //TODO da modificare campi viste le modifiche alle tabelle
-    //TODO commentare chiamata a metodo, non più richiesto
     public function updateEvent() {
         
         Log::info('BookingController - updateEvent()');
