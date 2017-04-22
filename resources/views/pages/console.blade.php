@@ -88,7 +88,9 @@
                         @endfor
                     </ul>
                 @endif
-                <div id="test"></div>
+                
+                <div class="table-responsive" id="content"></div>
+                
             </div>
             
         </div>
@@ -97,47 +99,57 @@
             
             $(window).on('load', function() {
                 var idItemLoaded = $(".active").attr("id");
-                
-                var data = {'id_group': idItemLoaded};
-                $.ajax({
-
-                    url: "{{URL::to('/bookings')}}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function(e) {
-                        $("#test").html("<p>"+e.name+"</p>"+"<p>"+e.description+"</p>");
-                    },
-                    error: function() {
-                        console.log("console.balde.php - search bookings by id group : ajax error");
-                    }
-
-                });
+                getBookings(idItemLoaded);
             });
             
             $(".groupTab").click(function() {
-                
                 $(".groupTab").removeClass("active");
                 var idItemSelected = $(this).attr("id");
                 $("#"+idItemSelected).addClass("active");
-                
-                var data = {'id_group': idItemSelected};
+                getBookings(idItemSelected);
+            }); 
+            
+            function getBookings(id_group) {
+            
+                var data = {'id_group': id_group};
                 $.ajax({
 
                     url: "{{URL::to('/bookings')}}",
                     type: 'POST',
                     dataType: 'json',
                     data: data,
-                    success: function(e) {
-                        $("#test").html("<p>"+e.name+"</p>"+"<p>"+e.description+"</p>");
+                    success: function(bookings) {
+                        var result = "<table class='table table-hover'>";
+                        result += "<thead>";
+                            result += "<th>Name</th>";
+                            result += "<th>Description</th>";
+                            result += "<th></th>";
+                        result += "</thead>";
+                        result += "<tbody>";
+                        for(var j=0; j < bookings.length; j++) {
+                            result += "<tr>";
+                                result += "<td>";
+                                    result += bookings[j].name;
+                                result += "</td>";
+                                result += "<td>";
+                                    result += bookings[j].description;
+                                result += "</td>";
+                                result += "<td>";
+                                    result += "<a class='btn btn-primary'>Gestisci prenotazione</a>";
+                                result += "</td>";
+                            result += "</tr>";
+                        }
+                        result += "</tbody>";
+                        result += "</table>";
+                        $("#content").html(result);
                     },
                     error: function() {
                         console.log("console.balde.php - search bookings by id group : ajax error");
                     }
 
                 });
-                
-            }); 
+            
+            }
                 
         </script>
         
