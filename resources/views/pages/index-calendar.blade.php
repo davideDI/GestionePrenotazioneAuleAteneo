@@ -35,12 +35,10 @@
                     <div class="col-md-12">
                         <!-- TODO -->
                         <!-- Al momento solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Session::has('session_id'))
+                        @if(Session::has('session_id') && Session::get('ruolo') == 'admin')
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>
-                        @else
-                            
                         @endif
                     </div>
                 </div>
@@ -50,11 +48,19 @@
                 <!-- Legenda stati prenotazione -->
                 <div class="row">
                     <div class="col-md-12">
-                        <legend>Stati prenotazione</legend>
-                        <p>Richiesta &nbsp;&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" /></p>
-                        <p>In Lavorazione&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" /></p>
-                        <p>Gestita&nbsp;&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" /></p>
-                        <p>Scartata&nbsp;&nbsp;<img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" /></p>
+                        <legend>{{ trans('messages.index_calendar_booking_status')}}</legend>
+                        <p>{{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
+                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
+                        </p>
+                        <p>{{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
+                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
+                        </p>
+                        <p>{{ trans('messages.index_calendar_managed')}}&nbsp;&nbsp;
+                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" />
+                        </p>
+                        <p>{{ trans('messages.index_calendar_rejected')}}&nbsp;&nbsp;
+                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" />
+                        </p>
                     </div>
                 </div>
                 

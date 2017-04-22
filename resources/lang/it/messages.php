@@ -31,6 +31,11 @@
         'index_calendar_select_room' => 'Seleziona una risorsa',
         'index_calendar_new_event' => 'Nuovo Evento',
         'index_calendar_new_booking' => 'Effettua prenotazione',
+        'index_calendar_booking_status' => 'Stati prenotazione',
+        'index_calendar_requested' => 'Richiesta',
+        'index_calendar_in_process' => 'In lavorazione',
+        'index_calendar_managed' => 'Gestista',
+        'index_calendar_rejected' => 'Scartata',
         
         //Messages from common
         'common_save' => 'Salva',

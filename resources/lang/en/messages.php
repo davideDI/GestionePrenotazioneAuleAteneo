@@ -31,6 +31,11 @@
         'index_calendar_select_room' => 'Select a room',
         'index_calendar_new_event' => 'New Event',
         'index_calendar_new_booking' => 'New Reservation',
+        'index_calendar_booking_status' => 'Booking status',
+        'index_calendar_requested' => 'Requested',
+        'index_calendar_in_process' => 'In process',
+        'index_calendar_managed' => 'Managed',
+        'index_calendar_rejected' => 'Rejected',
         
         ///Messages from common
         'common_save' => 'Save',
