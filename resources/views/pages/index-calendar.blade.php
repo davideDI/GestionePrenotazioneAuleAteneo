@@ -94,8 +94,6 @@
             $(document).ready(function() {
 
                 var initialLocaleCode = "{{Session::get('applocale')}}";
-                //Test di visualizzazione lingua
-                //console.log(initialLocaleCode);
 
                 $('#calendar').fullCalendar({
                        
@@ -105,20 +103,16 @@
                         center: 'title',
                         right: 'month,basicWeek,basicDay,listDay,agendaWeek'
                             },
-                    
-                    //Definizione orari min e max
-                    minTime: "08:00:00",
-                    maxTime: "20:30:00",                       
-                            
+                    minTime: "08:00:00", //Definizione orari min
+                    maxTime: "20:30:00", //Definizione orari max             
                     //defaultDate: '2016-12-12', Se non impostata la data di default viene presa la data odierna
                     navLinks: true, // can click day/week names to navigate views
-                    editable: true,
-                    
-                    //Vista di default
-                    defaultView: 'agendaWeek',
-                    
-                    // Quando ci sono più eventi per una data compare il link view more
-                    eventLimit: true, 
+                    editable: false, // onclick sull'evento
+                    locale: initialLocaleCode, //Lingua testi
+                    eventDroppableEditable: false, //disabilitato il drop dell'evento
+                    eventDurationEditable: false,  //disabilitato il resize dell'evento
+                    defaultView: 'agendaWeek', //Vista di default
+                    eventLimit: true, // Quando ci sono più eventi per una data compare il link view more
                     
                     //Caricamento eventi
                     events: [
@@ -142,16 +136,6 @@
                         @endforeach
                         ],
                         
-                    color: 'yellow',   // an option!
-                    textColor: 'black', // an option!
-                    
-                    //Lingua testi (da correggere)
-                    locale: initialLocaleCode,
-                    
-                    //Permette il drop
-                    droppable: true,
-                    
-                    //Eventi client
                     drop: function(date, jsEvent, ui) { 
                         
                     },
@@ -162,7 +146,6 @@
                     
                     //Al passaggio del mouse sulla prenotazione visualizzo il popover
                     eventMouseover: function( event, jsEvent, view ) { 
-                    
                         //Set attributi per la visualizzazione del popover
                         $(this).attr("data-toggle", "popover");
                         $(this).attr("data-placement", "right");
@@ -170,17 +153,14 @@
                         $(this).attr("data-container", "body");
                         //Visualizzo il "popover"
                         $(this).popover('show');
-                       
                     },
                     
                     //Togliendo il mouse sulla prenotazione il popover verrà nascosto
                     eventMouseout: function( event, jsEvent, view ) { 
-                    
                         $(this).popover('hide');
-                        
                     },
                     
-                    //Spostamento casella rappresentante l'evento
+                    //Spostamento casella rappresentante l'evento (disabilitato)
                     eventDrop: function( calEvent, dayDelta, minuteDelta, allDay,
  			 			revertFunc, jsEvent, ui, view ) {  
                         
@@ -196,7 +176,7 @@
                                 'data_fine': end
                             };
                         
-                        //RIchiamo la funzione che effettua la modifica all'evento
+                        //Si richiama la funzione che effettua la modifica all'evento
                         updateEvent(dataEvent);
                         
                     },
@@ -209,7 +189,7 @@
                         
                     },
                     
-                    //Modifica "dimensione" casella (durata evento)
+                    //Modifica "dimensione" (durata evento) casella (disabilitato)
                     eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
                         
                         //Recupero dati per update evento
@@ -224,7 +204,7 @@
                             'data_fine': end
                         };
                         
-                        //RIchiamo la funzione che effettua la modifica all'evento
+                        //Si richiama la funzione che effettua la modifica all'evento
                         updateEvent(dataEvent);
                         
                     },
@@ -234,18 +214,18 @@
                         
                     },
                     
-                    // gestione click su evento
+                    // gestione click su evento (disabilitato)
                     eventClick: function(calEvent, jsEvent, view) {
 
-                        //alert('Event: ' + calEvent.title);
-                        //alert('Event: ' + moment(calEvent.start).format("DD-MM-YYYY HH:mm:ss"));
-                        //alert('Event: ' + moment(calEvent.end).format("DD-MM-YYYY HH:mm:ss"));
-                        //alert('Event: ' + calEvent.id);
+                        alert('Event: ' + calEvent.title);
+                        alert('Event: ' + moment(calEvent.start).format("DD-MM-YYYY HH:mm:ss"));
+                        alert('Event: ' + moment(calEvent.end).format("DD-MM-YYYY HH:mm:ss"));
+                        alert('Event: ' + calEvent.id);
 
                         //modifico il titolo
-                        //calEvent.title = "CLICKED!";
+                        calEvent.title = "CLICKED!";
                         //viene apportata la modifica nel calendario
-                        //$('#calendar').fullCalendar('updateEvent', calEvent);
+                        $('#calendar').fullCalendar('updateEvent', calEvent);
 
                     }
 
