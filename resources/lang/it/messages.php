@@ -79,6 +79,7 @@
         'console_booking_ko' => 'Prenotazioni respinte',
         'console_booking_there_are' => 'Ci sono ',
         'console_booking_there_arent' => 'Non ci sono ',
+        'console_no_groups' => 'Lei non ha Gruppi da amministrare!',
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',

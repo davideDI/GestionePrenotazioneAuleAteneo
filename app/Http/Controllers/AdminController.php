@@ -4,24 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller {
 
     //Ricerca prenotazione in base a "Groups" amministrati
-    public function getBookingByIdAdmin() {
+    public function getBookings() {
         
-        Log::info('AdminController - getBookingByIdAdmin()');
+        Log::info('AdminController - getBookings()');
         
-        $user = Auth::user();
+        $user_id = session('source_id');
         
-        //Groups amministrati dall'utente
-        $groups = \App\Group::where('admin_id', $user->id)->get();
-   
         $quequedBookings   = array();
         $workingBookings   = array();
         $confirmedBookings = array();
         $rejectedBookings  = array();
+        
+        //Groups amministrati dall'utente
+        $groups = \App\Group::where('admin_id', $user_id)->get();
         
         //Per ogni gruppo
         foreach($groups as $group) {
@@ -48,10 +47,22 @@ class AdminController extends Controller {
                 }    
             }
         }
-        return view('pages/console', [  'quequedBookings' => $quequedBookings,
-                                        'workingBookings' => $workingBookings,
+        
+        return view('pages/console', [  'quequedBookings'   => $quequedBookings,
+                                        'workingBookings'   => $workingBookings,
                                         'confirmedBookings' => $confirmedBookings,
-                                        'rejectedBookings' => $rejectedBookings,]);
+                                        'rejectedBookings'  => $rejectedBookings,
+                                        'groups'        => $groups]);
+        
+    }
+    
+    public function getBookingsByIdGroup() {
+        
+        Log::info('AdminController - getBookingsByIdGroup()');
+        
+        $idGroup = $_POST['id_group'];
+        $group = \App\Group::find($idGroup);
+        return $group;
         
     }
     

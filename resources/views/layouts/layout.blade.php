@@ -30,6 +30,13 @@
                         });
                 });
             </script>
+            
+            <!-- Gestione X-CSRF-Token per chiamata Ajax -->
+            <script type="text/javascript">
+                $.ajaxSetup({
+                   headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
+                });
+            </script>
     </head>
 
     <body>      

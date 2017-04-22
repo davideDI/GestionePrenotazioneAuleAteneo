@@ -87,13 +87,6 @@
             });
         </script>
     
-        <!-- Gestione X-CSRF-Token per chiamata Ajax -->
-        <script type="text/javascript">
-            $.ajaxSetup({
-               headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
-            });
-        </script>
-
         <!-- Caricamento script calendario -->
         <script type="text/javascript">
             //Al caricamento della pagina viene inserito il calendario
@@ -222,7 +215,7 @@
                     
                     // gestione click su evento (disabilitato)
                     eventClick: function(calEvent, jsEvent, view) {
-
+                        /*
                         alert('Event: ' + calEvent.title);
                         alert('Event: ' + moment(calEvent.start).format("DD-MM-YYYY HH:mm:ss"));
                         alert('Event: ' + moment(calEvent.end).format("DD-MM-YYYY HH:mm:ss"));
@@ -232,7 +225,8 @@
                         calEvent.title = "CLICKED!";
                         //viene apportata la modifica nel calendario
                         $('#calendar').fullCalendar('updateEvent', calEvent);
-
+                        */
+                       return false;
                     }
 
                 });
@@ -261,7 +255,6 @@
 
             // when the selected option changes, dynamically change the calendar option
             function changeCalendarLocale(locale) {
-                console.log(locale);
                 $('#calendar').fullCalendar('option', 'locale', locale);
             }
             

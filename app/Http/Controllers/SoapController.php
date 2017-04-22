@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 
 class SoapController extends Controller {
 
@@ -18,7 +19,7 @@ class SoapController extends Controller {
         
         if($username == 'davide@davide.it') {
             session(['session_id' => '999ooo888iii']);
-            session(['source_id' => '654321']);
+            session(['source_id' => '1']); //Look at UserTableSeed.php
             session(['nome'      => 'DAVIDE']);
             session(['cognome'   => 'DAVIDE']);
             session(['cod_fis'   => 'DAVIDEDAVIDE33']);
@@ -29,7 +30,7 @@ class SoapController extends Controller {
         
         else if($username == 'ateneo@ateneo.it') {
             session(['session_id' => '222eee333rrr']);
-            session(['source_id' => '123456']);
+            session(['source_id' => '3']); //Look at UserTableSeed.php
             session(['nome'      => 'ATENEO']);
             session(['cognome'   => 'ATENEO']);
             session(['cod_fis'   => 'ATENEOATENEO33']);
@@ -44,6 +45,8 @@ class SoapController extends Controller {
     }
     
     public function wsLogin() {
+        
+        Log::info('SoapController - wsLogin()');
         
         $username = $_POST['username'];
         $password = $_POST['password'];
@@ -118,6 +121,8 @@ class SoapController extends Controller {
     }
     
     public function wsLogout() {
+        
+        Log::info('SoapController - wsLogout()');
         
         if(!$this->checkFakeUsersForLogout()) {
             

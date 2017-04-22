@@ -49,6 +49,8 @@ Route::get('/search', function () {
 /* Visualizzazione prenotazioni in base a id group */
 Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
 
+Route::post('/bookings', 'AdminController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
+
 /* Visualizzazione prenotazioni in base a id group e id resource */
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
 
@@ -97,7 +99,7 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
 
 /**************** CONSOLE ADMIN ******************************/
 //Ricerca prenotazione in base a "Groups" amministrati
-Route::get('/console', 'AdminController@getBookingByIdAdmin');
+Route::get('/console', 'AdminController@getBookings');
 
 /**************** TEST ******************************/
 /* Route di test update evento from drop */

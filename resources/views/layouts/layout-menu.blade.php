@@ -128,11 +128,13 @@
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
+                                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }}
                                     </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
                     @endif
