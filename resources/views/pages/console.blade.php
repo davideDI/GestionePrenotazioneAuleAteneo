@@ -110,7 +110,7 @@
                     },
                     error: function() {
                         console.log("console.balde.php - search bookings by id group : ajax error");
-                    },
+                    }
 
                 });
             });
@@ -133,7 +133,7 @@
                     },
                     error: function() {
                         console.log("console.balde.php - search bookings by id group : ajax error");
-                    },
+                    }
 
                 });
                 
