@@ -3,7 +3,7 @@
         
         <div class="row">
             
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <legend>{{ trans('messages.home_console') }}</legend>
                 
                 <!-- Sezione prenotazioni richieste -->
@@ -41,7 +41,7 @@
                 </div>
             </div>
             
-            <div class="col-md-9">
+            <div class="col-md-10">
 
                 @if(count($groups) == 0)
                     {{ trans('messages.console_no_groups') }}
@@ -172,8 +172,9 @@
                                     result += bookings[j].resource_id;
                                 result += "</td>";
                                 result += "<td>";
-                                    result += "<a href='#' class='btn btn-primary' onclick='confirmBooking(" + bookings[j].id + ")'>{{trans('messages.console_manage')}}</a>";
-                                    result += "<a href='#' class='btn btn-primary' onclick='rejectBooking(" + bookings[j].id + ")'>{{trans('messages.console_reject')}}</a>";
+                                    result += "<a href='#' onclick='confirmBooking(" + bookings[j].id + ")'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></a>";
+                                    result += "&nbsp;&nbsp;";
+                                    result += "<a href='#' onclick='rejectBooking(" + bookings[j].id + ")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></a>";
                                 result += "</td>";
                             result += "</tr>";
                         }

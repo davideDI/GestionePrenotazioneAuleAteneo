@@ -49,10 +49,10 @@ Route::get('/search', function () {
 /* Visualizzazione prenotazioni in base a id group */
 Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
 
-Route::post('/bookings', 'AdminController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
+Route::post('/bookings', 'AdminController@getBookingsByIdGroup');
 
 /* Visualizzazione prenotazioni in base a id group e id resource */
-Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
+Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->name('bookings2')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
 
 Route::get('/new-booking', function() {
     
@@ -80,7 +80,7 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
     $resourceOfBooking = App\Resource::find($booking->resource_id);
     
     try {
-        Log::info('web.php: [/new-booking] - Inserimento prenotazione ['.$booking.']');
+        
         //Di default viene inserita la data di sistema
         $booking->booking_date = date("Y-m-d G:i:s");
         $booking->user_id = session('source_id');
@@ -88,8 +88,9 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
         $booking->tip_booking_status_id = 1;
         //TODO
         //Sviluppare validazione campi
+        Log::info('web.php: [/new-booking] - Inserimento prenotazione ['.$booking.']');
         $booking->save();
-        return redirect()->route('bookings', ['idGroup' => $resourceOfBooking->group_id]);
+        return redirect()->route('bookings2', [$resourceOfBooking->group_id, $booking->resource_id])->with('success', 100);
     } catch(Exception $ex) {
         Log::error('web.php: [/new-booking] - errore nell\'inserimento della prenotazione '.$ex->getMessage());
         return Redirect::back()->withErrors([500]);
