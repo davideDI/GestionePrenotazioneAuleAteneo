@@ -77,6 +77,8 @@
         'console_booking_there_are' => 'There are ',
         'console_booking_there_arent' => 'There aren\'t ',
         'console_no_groups' => 'You don\'t have any groups to manage!',
+        'console_manage' => 'Approve',
+        'console_reject' => 'Reject',
         
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',

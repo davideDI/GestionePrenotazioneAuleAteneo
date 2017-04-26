@@ -7,6 +7,36 @@ use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller {
 
+    //Search Bookings By Id Status
+    public function getBookingsByIdStatus() {
+    
+        Log::info('AdminController - getBookingsByIdStatus()');
+        
+        $user_id = session('source_id');
+        $idStatus = $_POST['id_status'];
+        
+        //Groups amministrati dall'utente
+        $groups = \App\Group::where('admin_id', $user_id)->get();
+        
+        $bookingsList = array();
+        
+        //Per ogni gruppo
+        foreach($groups as $group) {
+            //Per ogni risorsa associata ad un gruppo
+            foreach($group->resources as $resource) {
+                //Per ogni prenotazione associata ad una risorsa
+                foreach($resource->bookings as $booking) {
+                    if($booking->tip_booking_status_id == $idStatus) {
+                        array_push($bookingsList, $booking);
+                    }
+                }    
+            }
+        }
+        
+        return $bookingsList;
+        
+    }
+    
     //Ricerca prenotazione in base a "Groups" amministrati
     public function getBookings() {
         
@@ -52,7 +82,7 @@ class AdminController extends Controller {
                                         'workingBookings'   => $workingBookings,
                                         'confirmedBookings' => $confirmedBookings,
                                         'rejectedBookings'  => $rejectedBookings,
-                                        'groups'        => $groups]);
+                                        'groups'            => $groups]);
         
     }
     
@@ -75,7 +105,34 @@ class AdminController extends Controller {
                 }
             }    
         }
+        
         return $bookings;
+        
+    }
+    
+    public function confirmBooking() {
+        
+        Log::info('AdminController - confirmBooking()');
+        
+        $id_booking = $_POST['id_booking'];
+        $booking = \App\Booking::find($id_booking);
+        $booking->tip_booking_status_id = 3;
+        $booking->save();
+        
+        return $booking;
+        
+    }
+    
+    public function rejectBooking() {
+        
+        Log::info('AdminController - rejectBooking()');
+        
+        $id_booking = $_POST['id_booking'];
+        $booking = \App\Booking::find($id_booking);
+        $booking->tip_booking_status_id = 4;
+        $booking->save();
+        
+        return $booking;
         
     }
     

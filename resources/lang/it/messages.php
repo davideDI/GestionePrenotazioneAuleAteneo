@@ -80,6 +80,8 @@
         'console_booking_there_are' => 'Ci sono ',
         'console_booking_there_arent' => 'Non ci sono ',
         'console_no_groups' => 'Lei non ha Gruppi da amministrare!',
+        'console_manage' => 'Approva',
+        'console_reject' => 'Respingi',
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',
@@ -91,7 +93,7 @@
         
         //Response code
         //WS LOGIN
-        '-1' => 'Errore nel recupero dei dati',
+        '-1'   => 'Errore nel recupero dei dati',
         '1003' => 'Autenticazione fallita',
         '1004' => 'Fallita la creazione del componente',
         '1007' => 'Fallita la connessione al DB',

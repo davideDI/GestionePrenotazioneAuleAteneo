@@ -101,6 +101,15 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
 //Ricerca prenotazione in base a "Groups" amministrati
 Route::get('/console', 'AdminController@getBookings');
 
+//Ricerca prenotazione in base a stato prenotazione e admin autenticato
+Route::post('/search-bookings-by-status', 'AdminController@getBookingsByIdStatus');
+
+//Booking to "gestita" 
+Route::post('/confirm-booking', 'AdminController@confirmBooking');
+
+//Booking to "scartata" 
+Route::post('/reject-booking', 'AdminController@rejectBooking');
+
 /**************** TEST ******************************/
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
