@@ -136,4 +136,12 @@ class AdminController extends Controller {
         
     }
     
+    public function test() {
+        
+        $bookings = \App\Booking::where('user_id', 1)->simplePaginate(3);
+        
+        return view('pages/test', [  'bookings'   => $bookings]);
+        
+    }
+    
 }

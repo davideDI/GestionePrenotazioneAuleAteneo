@@ -51,6 +51,8 @@ Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup')->nam
 
 Route::post('/bookings', 'AdminController@getBookingsByIdGroup');
 
+Route::get('/test', 'AdminController@test');
+
 /* Visualizzazione prenotazioni in base a id group e id resource */
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->name('bookings2')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
 

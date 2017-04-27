@@ -205,6 +205,7 @@
                         searchBookingsByIdStatus(1);
                         searchBookingsByIdStatus(2);
                         searchBookingsByIdStatus(3);
+                        $("#message-success").fadeIn('fast').delay(1000).fadeOut('fast');
                     },
                     error: function(e) {
                         console.log(e);
@@ -230,6 +231,7 @@
                         searchBookingsByIdStatus(1);
                         searchBookingsByIdStatus(2);
                         searchBookingsByIdStatus(4);
+                        $("#message-danger").fadeIn('fast').delay(1000).fadeOut('fast');
                     },
                     error: function(e) {
                         console.log(e);

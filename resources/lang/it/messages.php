@@ -42,6 +42,8 @@
         'common_close' => 'Chiudi',
         'common_title' => 'Titolo',
         'common_description' => 'Descrizione',
+        'common_danger' => 'Prenotazione Respinta!',
+        'common_success' => 'Prenotazione Accettata!',
         
         //Messages from insert event
         'booking_title' => 'Inserisci una nuova prenotazione',

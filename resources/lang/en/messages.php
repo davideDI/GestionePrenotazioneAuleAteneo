@@ -42,6 +42,8 @@
         'common_close' => 'Close',
         'common_title' => 'Title',
         'common_description' => 'Description',
+        'common_danger' => 'Reservation Not Accepted!',
+        'common_success' => 'Accepted Booking!',
         
         //Messages from insert booking
         'booking_title' => 'Insert new Booking',
