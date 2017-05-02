@@ -32,10 +32,15 @@
         'index_calendar_new_event' => 'New Event',
         'index_calendar_new_booking' => 'New Reservation',
         'index_calendar_booking_status' => 'Booking status',
+        'index_calendar_types_event' => 'Event types',
         'index_calendar_requested' => 'Requested',
         'index_calendar_in_process' => 'In process',
         'index_calendar_managed' => 'Managed',
         'index_calendar_rejected' => 'Rejected',
+        'index_calendar_generic' => 'Generic',
+        'index_calendar_seminary' => 'Seminary',
+        'index_calendar_exam' => 'Exam',
+        'index_calendar_lesson' => 'Lesson',
         
         ///Messages from common
         'common_save' => 'Save',

@@ -110,6 +110,10 @@
                   placeholder: "{{ trans('messages.booking_type_event') }}"
               });
             });
+            
+            $("#group_id").on("change", function() {
+               alert($(this).attr("id")); 
+            });
         </script>
         
         <!-- Date time picker -->

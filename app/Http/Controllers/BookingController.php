@@ -17,11 +17,15 @@ class BookingController extends Controller {
         $resources = $group->resources;
         $firstResource = $resources->first();
         $bookings = \App\Booking::where('resource_id', $firstResource->id)->get();
+        $eventsType = \App\TipEvent::all();
+        $bookingsStatus = \App\TipBookingStatus::all();
         
-        return view('pages/index-calendar', [ 'selectedResource'    => $firstResource,
-                                              'resources'   => $resources, 
-                                              'group'       => $group, 
-                                              'bookings'    => $bookings]);
+        return view('pages/index-calendar', [ 'selectedResource' => $firstResource,
+                                              'resources'    => $resources, 
+                                              'group'        => $group,
+                                              'eventsType'   => $eventsType,
+                                              'bookingsStatus'=> $bookingsStatus,
+                                              'bookings'     => $bookings]);
         
     }
     
@@ -34,10 +38,14 @@ class BookingController extends Controller {
         $resources = $group->resources;
         $resource = \App\Resource::find($idResource);
         $bookings = \App\Booking::where('resource_id', '=', $idResource)->get();
+        $eventsType = \App\TipEvent::all();
+        $bookingsStatus = \App\TipBookingStatus::all();
         
         return view('pages/index-calendar', [ 'bookings' => $bookings,
                                               'selectedResource' => $resource,
                                               'resources' => $resources,
+                                              'eventsType'   => $eventsType,
+                                              'bookingsStatus'=> $bookingsStatus,
                                               'group' => $group]);
         
     }

@@ -33,8 +33,7 @@
                 <!-- Tasto Nuovo Evento -->
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- TODO -->
-                        <!-- Al momento solo gli utenti registrati richiedono prenotazioni -->
+                        <!-- Solo gli utenti registrati richiedono prenotazioni -->
                         @if(Session::has('session_id') && Session::get('ruolo') == 'admin')
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
@@ -45,22 +44,53 @@
                 
                 <br><br>
                 
-                <!-- Legenda stati prenotazione -->
                 <div class="row">
                     <div class="col-md-12">
-                        <legend>{{ trans('messages.index_calendar_booking_status')}}</legend>
-                        <p>{{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
-                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
-                        </p>
-                        <p>{{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
-                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
-                        </p>
-                        <p>{{ trans('messages.index_calendar_managed')}}&nbsp;&nbsp;
-                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" />
-                        </p>
-                        <p>{{ trans('messages.index_calendar_rejected')}}&nbsp;&nbsp;
-                            <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" />
-                        </p>
+                        <!-- Solo gli utenti NON studenti visualizzano la legenda stati prenotazione -->
+                        @if(Session::has('session_id') && Session::get('ruolo') != 'Studenti')
+                            <legend>{{ trans('messages.index_calendar_booking_status')}}</legend>
+                            @foreach($bookingsStatus as $bookingStatus)
+                                @if($bookingStatus->id == 1)
+                                    <p>{{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
+                                    </p>
+                                @elseif($bookingStatus->id == 2)
+                                    <p>{{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
+                                    </p>
+                                @elseif($bookingStatus->id == 3)
+                                    <p>{{ trans('messages.index_calendar_managed')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" />
+                                    </p>
+                                @else
+                                    <p>{{ trans('messages.index_calendar_rejected')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" />
+                                    </p>
+                                @endif
+                            @endforeach
+                        <!-- Gli utenti studenti visualizzano le tipologie di eventi -->
+                        @else
+                            <legend>{{ trans('messages.index_calendar_types_event')}}</legend>
+                            @foreach($eventsType as $eventType)
+                                @if($eventType->id == 1)
+                                    <p>{{ trans('messages.index_calendar_exam')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" />
+                                    </p>
+                                @elseif($eventType->id == 2)
+                                     <p>{{ trans('messages.index_calendar_lesson')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" />
+                                    </p>
+                                @elseif($eventType->id == 3)
+                                    <p>{{ trans('messages.index_calendar_seminary')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
+                                    </p>
+                                @else
+                                    <p>{{ trans('messages.index_calendar_generic')}}&nbsp;&nbsp;
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
+                                    </p>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 
@@ -93,7 +123,8 @@
             $(document).ready(function() {
 
                 var initialLocaleCode = "{{Session::get('applocale')}}";
-
+                var typeUser = "{{Session::get('ruolo')}}";
+                
                 $('#calendar').fullCalendar({
                        
                     // Definizione opzioni calendario
@@ -116,22 +147,47 @@
                     //Caricamento eventi
                     events: [
                         @foreach($bookings as $booking)
-                            {
-                                id         : '{{$booking->id}}',
-                                title      : '{{$booking->name}}',
-                                description: '{{$booking->description}}',
-                                start      : '{{$booking->event_date_start}}',
-                                end        : '{{$booking->event_date_end}}',
-                                @if($booking->tip_booking_status_id == 1) 
-                                    color : '#0000FF'
-                                @elseif($booking->tip_booking_status_id == 2) 
-                                    color : '#FFFF00'
-                                @elseif($booking->tip_booking_status_id == 3) 
-                                    color : '#00FF00'
-                                @else
-                                    color : '#FF0000'
-                                @endif
-                            },
+                            //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
+                            //in stato 3 [Gestita]
+                            @if(!Session::has('ruolo') || Session::get('ruolo') == 'Studenti')
+                                @if($booking->tip_booking_status_id == 3)
+                                    {
+                                        id         : '{{$booking->id}}',
+                                        title      : '{{$booking->name}}',
+                                        description: '{{$booking->description}}',
+                                        start      : '{{$booking->event_date_start}}',
+                                        end        : '{{$booking->event_date_end}}',
+                                        @if($booking->tip_event_id == 1) 
+                                            color : '#00FF00'
+                                        @elseif($booking->tip_event_id == 2) 
+                                            color : '#FF0000'
+                                        @elseif($booking->tip_event_id == 3) 
+                                            color : '#FFFF00'
+                                        @else
+                                            color : '#0000FF'
+                                        @endif
+                                    },
+                                @endif 
+                            //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
+                            //in stato 3 [Gestita]
+                            @elseif(Session::has('ruolo') || Session::get('ruolo') != 'Studenti')
+                                    {
+                                        id         : '{{$booking->id}}',
+                                        title      : '{{$booking->name}}',
+                                        description: '{{$booking->description}}',
+                                        start      : '{{$booking->event_date_start}}',
+                                        end        : '{{$booking->event_date_end}}',
+                                        @if($booking->tip_booking_status_id == 1) 
+                                            color : '#0000FF'
+                                        @elseif($booking->tip_booking_status_id == 2) 
+                                            color : '#FFFF00'
+                                        @elseif($booking->tip_booking_status_id == 3) 
+                                            color : '#00FF00'
+                                        @else
+                                            color : '#FF0000'
+                                        @endif
+                                    },
+                            @endif  
                         @endforeach
                         ],
                         

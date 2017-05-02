@@ -32,10 +32,15 @@
         'index_calendar_new_event' => 'Nuovo Evento',
         'index_calendar_new_booking' => 'Effettua prenotazione',
         'index_calendar_booking_status' => 'Stati prenotazione',
+        'index_calendar_types_event' => 'Tipologie Eventi',
         'index_calendar_requested' => 'Richiesta',
         'index_calendar_in_process' => 'In lavorazione',
         'index_calendar_managed' => 'Gestista',
         'index_calendar_rejected' => 'Scartata',
+        'index_calendar_generic' => 'Generico',
+        'index_calendar_seminary' => 'Seminario',
+        'index_calendar_exam' => 'Esame',
+        'index_calendar_lesson' => 'Lezione',
         
         //Messages from common
         'common_save' => 'Salva',

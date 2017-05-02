@@ -128,7 +128,7 @@
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
-                                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                @if(Session::has('ruolo') && Session::get('ruolo') != 'Studenti')
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }}
