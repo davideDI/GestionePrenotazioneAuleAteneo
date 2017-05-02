@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
+//TipResource Table Seed
 class TipResourceTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Tip_resource
     public function run() {
         
         date_default_timezone_set('Europe/Rome');
         
-        //Si verifica la presenza di dati
         if(DB::table('tip_resource')->get()->count() == 0){
             
             DB::table('tip_resource')->insert([

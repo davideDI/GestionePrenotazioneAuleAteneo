@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
+//Resources Table Seed
 class ResourceTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Resources
     public function run() {
         
         date_default_timezone_set('Europe/Rome');
         
-        //Si verifica la presenza di dati
         if(DB::table('resources')->get()->count() == 0){
             
             DB::table('resources')->insert([

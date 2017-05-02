@@ -9,15 +9,15 @@ class Users extends Migration {
     
     public function up() {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('surname');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->increments('id')->comment('users id');  
+            $table->string('name')->comment('users name');  
+            $table->string('surname')->comment('users surname');  
+            $table->string('email')->unique()->comment('users email');  
+            $table->string('password')->comment('users password');  
+            $table->rememberToken()->comment('users remember Token');  
             
-            //foreign con la tabella tip_user
-            $table->integer('tip_user_id')->unsigned();
+            //foreign tip_user table
+            $table->integer('tip_user_id')->unsigned()->comment('foreign tip_user table');  
             $table->foreign('tip_user_id')->references('id')->on('tip_user');
             
             $table->timestamps();

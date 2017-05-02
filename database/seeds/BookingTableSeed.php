@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
+//Bookings Table Seed
 class BookingTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Bookings
     public function run() {
         
         date_default_timezone_set('Europe/Rome');
         
-        //Si verifica la presenza di dati
         if(DB::table('bookings')->get()->count() == 0){
             
             DB::table('bookings')->insert([
@@ -23,7 +22,10 @@ class BookingTableSeed extends Seeder {
                     'user_id'               => 1,
                     'resource_id'           => 1,
                     'tip_booking_status_id' => 1,
+                    'num_students'          => 15,
                     'booking_date'          => date("Y-m-d G:i:s"),
+                    'created_at'            => date("Y-m-d G:i:s"),
+                    'updated_at'            => date("Y-m-d G:i:s")
                 ]
             ]);
             

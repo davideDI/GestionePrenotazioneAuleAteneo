@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
+//TipUser Table Seed
 class TipUserTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Tip_user
     public function run() {
         
         date_default_timezone_set('Europe/Rome');
         
-        //Si verifica la presenza di dati
         if(DB::table('tip_user')->get()->count() == 0){
             
             DB::table('tip_user')->insert([

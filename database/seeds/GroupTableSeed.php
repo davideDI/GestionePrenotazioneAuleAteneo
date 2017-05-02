@@ -2,15 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
+//Groups Table Seed
 class GroupTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Groups
     public function run() {
         
         date_default_timezone_set('Europe/Rome');
         
-        //Si verifica la presenza di dati
-        // check if table users is empty
         if(DB::table('groups')->get()->count() == 0){
             
             DB::table('groups')->insert([

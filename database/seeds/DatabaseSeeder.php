@@ -2,35 +2,36 @@
 
 use Illuminate\Database\Seeder;
 
+//Order of Seeds to call
 class DatabaseSeeder extends Seeder {
     
     public function run() {
         
-        //tabella TipEvents
+        //Table TipEvents
         $this->call(TipEventTableSeed::class);
         
-        //tabella TipBookingStatus
+        //Table TipBookingStatus
         $this->call(TipBookingStatusTableSeed::class);
         
-        //tabella TipGroups
+        //Table TipGroups
         $this->call(TipGroupTableSeed::class);
         
-        //tabella TipResources
+        //Table TipResources
         $this->call(TipResourceTableSeed::class);
         
-        //tabella TipUsers
+        //Table TipUsers
         $this->call(TipUserTableSeed::class);
         
-        //tabella Users
+        //Table Users
         $this->call(UserTableSeed::class);
         
-        //tabella Groups
+        //Table Groups
         $this->call(GroupTableSeed::class);
         
-        //tabella Resources
+        //Table Resources
         $this->call(ResourceTableSeed::class);
         
-        //tabella Bookings
+        //Table Bookings
         $this->call(BookingTableSeed::class);
         
     }

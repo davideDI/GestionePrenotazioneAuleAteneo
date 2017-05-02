@@ -2,14 +2,13 @@
 
 use Illuminate\Database\Seeder;
 
+//TipGroup Table Seed
 class TipGroupTableSeed extends Seeder {
     
-    //Caricamento dati iniziali tabella Tip_group
     public function run() {
         
         date_default_timezone_set('Europe/Rome');
         
-        //Si verifica la presenza di dati
         if(DB::table('tip_group')->get()->count() == 0){
             
             DB::table('tip_group')->insert([
