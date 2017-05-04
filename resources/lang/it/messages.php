@@ -41,6 +41,7 @@
         'index_calendar_seminary' => 'Seminario',
         'index_calendar_exam' => 'Esame',
         'index_calendar_lesson' => 'Lezione',
+        'index_calendar_capacity' => 'Posti',
         
         //Messages from common
         'common_save' => 'Salva',

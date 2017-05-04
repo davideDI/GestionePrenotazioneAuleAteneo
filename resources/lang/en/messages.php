@@ -41,6 +41,7 @@
         'index_calendar_seminary' => 'Seminary',
         'index_calendar_exam' => 'Exam',
         'index_calendar_lesson' => 'Lesson',
+        'index_calendar_capacity' => 'Seats',
         
         ///Messages from common
         'common_save' => 'Save',

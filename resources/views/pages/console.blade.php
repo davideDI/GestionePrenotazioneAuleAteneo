@@ -57,7 +57,9 @@
                     </ul>
                 @endif
                 
-                <div class="table-responsive" id="content" style="margin-top: 10px"></div>
+                <div class="table-responsive" id="content" style="margin-top: 10px">
+                    <img src="{{URL::asset('lib/images/loading.gif')}}" width="100" height="70" style="margin-left: 35%; margin-top: 20%;" alt="loading">
+                </div>
                 
             </div>
             

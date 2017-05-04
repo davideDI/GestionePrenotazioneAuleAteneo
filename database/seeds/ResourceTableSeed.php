@@ -18,6 +18,7 @@ class ResourceTableSeed extends Seeder {
                     'description'       => 'primo piano',
                     'tip_resource_id'   => 1,
                     'group_id'          => 1,
+                    'capacity'          => 30,
                     'created_at'        => date("Y-m-d G:i:s"),
                     'updated_at'        => date("Y-m-d G:i:s")
                 ],
@@ -27,6 +28,7 @@ class ResourceTableSeed extends Seeder {
                     'description'       => 'primo piano',
                     'tip_resource_id'   => 1,
                     'group_id'          => 1,
+                    'capacity'          => 25,
                     'created_at'        => date("Y-m-d G:i:s"),
                     'updated_at'        => date("Y-m-d G:i:s")
                 ],
@@ -36,6 +38,7 @@ class ResourceTableSeed extends Seeder {
                     'description'       => 'piano terra',
                     'tip_resource_id'   => 1,
                     'group_id'          => 2,
+                    'capacity'          => 50,
                     'created_at'        => date("Y-m-d G:i:s"),
                     'updated_at'        => date("Y-m-d G:i:s")
                 ],
@@ -45,6 +48,7 @@ class ResourceTableSeed extends Seeder {
                     'description'       => 'piano terra',
                     'tip_resource_id'   => 1,
                     'group_id'          => 2,
+                    'capacity'          => 40,
                     'created_at'        => date("Y-m-d G:i:s"),
                     'updated_at'        => date("Y-m-d G:i:s")
                 ]

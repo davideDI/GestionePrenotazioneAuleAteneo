@@ -15,11 +15,11 @@
                         <select id="resourceSelect" 
                                 onChange="window.location.href=this.value" 
                                 class="listOfResources" 
-                                style="width: 70%">
+                                style="width: 90%">
                             <option></option>
                             @foreach($resources as $resource)
                                 <option value="{{URL::to('/bookings', [$group->id, $resource->id])}}">
-                                    {{$resource->name}}
+                                    {{$resource->name}} ({{$resource->capacity}} {{ trans('messages.index_calendar_capacity') }})
                                 </option>
                             @endforeach
                         </select>
@@ -112,7 +112,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
               $(".listOfResources").select2({
-                  placeholder: "{{ $selectedResource->name }}"
+                  placeholder: "{{ $selectedResource->name }} ({{ $selectedResource->capacity}} {{trans('messages.index_calendar_capacity')}}) "
               })
             });
         </script>

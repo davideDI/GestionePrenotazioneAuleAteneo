@@ -14,9 +14,8 @@ class Resources extends Migration {
             $table->string('description', 100)->nullable()->comment('resource description');  
             
             //Caratteristiche Risorsa
-            $table->integer('capacity')->default(0)->comment('Proiettore?');     
-            //`room_admin_email` text,
-            //`custom_html` text,
+            $table->integer('capacity')->default(0)->comment('Capienza?');  
+            $table->string('room_admin_email', 50)->default('')->comment('Room Admin Email'); 
             $table->tinyInteger('projector')->default(0)->comment('Projector?');           
             $table->tinyInteger('screen_motor')->default(0)->comment('Screen Motor?');
             $table->tinyInteger('screen_manual')->default(0)->comment('Screen manual?');
