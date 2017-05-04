@@ -62,7 +62,7 @@ Route::get('/new-booking', function() {
     
     $booking = new App\Booking;
     $groupsList = App\Group::pluck('name', 'id');
-    $resourceList = App\Resource::pluck('name', 'id');
+    $resourceList =  App\Resource::pluck('name', 'id');
     $tipEventList = App\TipEvent::pluck('name', 'id');
     
     return view('pages/new-booking', ['booking'      => $booking,
@@ -97,6 +97,13 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
         Log::error('web.php: [/new-booking] - errore nell\'inserimento della prenotazione '.$ex->getMessage());
         return Redirect::back()->withErrors([500]);
     }
+    
+});
+
+Route::post('/resource', function() {
+    
+    $idResource = $_POST['id_resource'];
+    return \App\Resource::find($idResource);
     
 });
 

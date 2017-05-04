@@ -51,7 +51,7 @@
         'common_danger' => 'Prenotazione Respinta!',
         'common_success' => 'Prenotazione Accettata!',
         
-        //Messages from insert event
+        //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
         'booking_date_hour_start' => 'Dalle ore',
         'booking_date_hour_end' => 'Alle ore',
@@ -64,6 +64,24 @@
         'booking_date_select_resource' => 'Seleziona una risorsa',
         'booking_type_event' => 'Seleziona tipo evento',
         'booking_event' => 'Evento',
+        'booking_num_students' => 'Numero Studenti',
+        'booking_capacity' => 'Capienza',
+        'booking_room_admin_email' => 'Email Admin',
+        'booking_projector' => 'Proiettore',
+        'booking_screen_motor' => 'Schermo Motorizzato',
+        'booking_screen_manual' => 'Schermo Manuale',
+        'booking_audio' => 'Impianto Audio',
+        'booking_pc' => 'PC Fisso',
+        'booking_wire_mic' => 'Microfono Collegato',
+        'booking_wireless_mic' => 'Microfono Wireless',
+        'booking_overhead_projector' => 'Videoproiettore',
+        'booking_visual_presenter' => 'Presentatore visivo',
+        'booking_wiring' => 'Cablaggio',
+        'booking_equipment' => 'Attrezzatura',
+        'booking_blackboard' => 'Lavagna',
+        'booking_note' => 'Note',
+        'booking_network' => 'Num prese rete',
+        'booking_resource_information' => 'Specifiche Risorsa',
         
         //Messages from help page
         'help_contact' => 'Contatti',

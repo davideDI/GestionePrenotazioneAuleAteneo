@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <h3>Inserisci una nuova prenotazione</h3>
+                <h3>{{ trans('messages.booking_title')}}</h3>
                 {!! Form::model($booking, ['url' => '/new-booking', 'method' => 'post']) !!} 
                 
                     <!-- Booking : name -->
@@ -16,6 +16,11 @@
                     <div class="form-group">
                         {!! Form::label('description', trans('messages.common_description')); !!}
                         {!! Form::text('description', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_description')]); !!}
+                    </div>
+                    <!-- Num Students -->
+                    <div class="form-group">
+                        {!! Form::label('num_students', trans('messages.booking_num_students')); !!}
+                        {!! Form::text('num_students', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_num_students')]); !!}
                     </div>
                     <div class="form-group row">
                     <!-- Booking : data inizio evento -->
@@ -55,22 +60,7 @@
                                      'style' => 'width: 70%']
                                 ); !!}
                         </div>
-                    <!-- Booking : id risorsa -->
-                        <div class="col-md-6">
-                            {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
-                            
-                            {!! Form::select(
-                                    'resource_id', 
-                                    $resourceList, 
-                                    null, 
-                                    ['class' => 'listOfGroupsItems',
-                                     'style' => 'width: 70%']
-                                ); !!}
-                                
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <!-- Booking : id tip evento -->
+                    <!-- Booking : id tip evento -->
                         <div class="col-md-6">
                             {!! Form::label('tip_event_id', trans('messages.booking_event')); !!}
                             
@@ -84,6 +74,27 @@
                                 
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <!-- Booking : id risorsa -->
+                        <div class="col-md-6">
+                            {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
+                            
+                            {!! Form::select(
+                                    'resource_id', 
+                                    $resourceList, 
+                                    null, 
+                                    ['class' => 'listOfGroupsItems',
+                                     'style' => 'width: 70%']
+                                ); !!}
+                                
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ trans('messages.booking_resource_information') }}</div>
+                        <div id="resourceSelected" class="panel-body">
+                            <img src="{{URL::asset('lib/images/loading.gif')}}" width="100" height="70" style="margin-left: 45%;" alt="loading">
+                        </div>
+                    </div>
                     {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
                     
                 {!! Form::close() !!}
@@ -94,26 +105,84 @@
         <!-- Select 2 -->
         <script type="text/javascript">
             $(document).ready(function() {
-              $(".listOfGroupsItems").select2({
-                  placeholder: "{{ trans('messages.booking_date_select_group') }}"
-              });
+                $(".listOfGroupsItems").select2({
+                    placeholder: "{{ trans('messages.booking_date_select_group') }}"
+                });
+                $(".listOfResourcesItems").select2({
+                    placeholder: "{{ trans('messages.booking_date_select_resource') }}"
+                });
+                $(".listOfTipEventsItems").select2({
+                    placeholder: "{{ trans('messages.booking_type_event') }}"
+                });
+                getInfoResource($("#resource_id").val());
             });
             
-            $(document).ready(function() {
-              $(".listOfResourcesItems").select2({
-                  placeholder: "{{ trans('messages.booking_date_select_resource') }}"
-              });
+            $("#resource_id").on("change", function() {
+                appendGifLoad();
+                getInfoResource($("#resource_id").val());
             });
             
-            $(document).ready(function() {
-              $(".listOfTipEventsItems").select2({
-                  placeholder: "{{ trans('messages.booking_type_event') }}"
-              });
-            });
             
-            $("#group_id").on("change", function() {
-               alert($(this).attr("id")); 
-            });
+            function appendGifLoad() {
+                $("#resourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
+            }
+            
+            function getInfoResource(idResource) {
+                
+                var selectedResource = {'id_resource': idResource};
+                $.ajax({
+                    url : "{{URL::to('/resource')}}",
+                    type: 'POST',
+                    data: selectedResource,
+                    dataType: "json",
+                    success : function(result) {
+                       $("#resourceSelected").html(createHtmlForResource(result));
+                    },
+                    error : function() {
+                        console.log("Errore recupero informazioni resource.");
+                    }
+                }); 
+                
+            }
+            
+            function createHtmlForResource(result) {
+            
+                var text = "";
+                text += "<div class='col-md-4'>";
+                text += "<p>{{trans('messages.booking_capacity')}} " + result.capacity+ "</p>";
+                text += "<p>{{trans('messages.booking_room_admin_email')}} " + result.room_admin_email+ "</p>";
+                text += "<p>{{trans('messages.booking_projector')}} " + getImgFromBoolean(result.projector) + "</p>";
+                text += "<p>{{trans('messages.booking_screen_motor')}} " + getImgFromBoolean(result.screen_motor) + "</p>";
+                text += "<p>{{trans('messages.booking_screen_manual')}} " + getImgFromBoolean(result.screen_manual) + "</p>";
+                text += "<p>{{trans('messages.booking_audio')}} " + getImgFromBoolean(result.audio) + "</p>";
+                text += "</div>";
+                text += "<div class='col-md-4'>";
+                text += "<p>{{trans('messages.booking_pc')}} " + getImgFromBoolean(result.pc) + "</p>";
+                text += "<p>{{trans('messages.booking_wire_mic')}} " + getImgFromBoolean(result.wire_mic) + "</p>";
+                text += "<p>{{trans('messages.booking_wireless_mic')}} " + getImgFromBoolean(result.wireless_mic) + "</p>";
+                text += "<p>{{trans('messages.booking_overhead_projector')}} " + getImgFromBoolean(result.overhead_projector) + "</p>";
+                text += "<p>{{trans('messages.booking_visual_presenter')}} " + getImgFromBoolean(result.visual_presenter) + "</p>";
+                text += "</div>";
+                text += "<div class='col-md-4'>";
+                text += "<p>{{trans('messages.booking_wiring')}} " + getImgFromBoolean(result.wiring) + "</p>";
+                text += "<p>{{trans('messages.booking_blackboard')}} " + result.blackboard+ "</p>";
+                text += "<p>{{trans('messages.booking_equipment')}} " + getImgFromBoolean(result.equipment) + "</p>";
+                text += "<p>{{trans('messages.booking_note')}} " + result.note+ "</p>";
+                text += "<p>{{trans('messages.booking_network')}} " + result.network+ "</p>";
+                text += "</div>";
+                return text;
+            
+            }
+            
+            function getImgFromBoolean(data) {
+            
+                if(data) {
+                    return "<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>";
+                } else {
+                    return "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
+                }
+            
+            }
         </script>
         
         <!-- Date time picker -->
