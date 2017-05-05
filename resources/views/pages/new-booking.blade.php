@@ -27,22 +27,34 @@
                         <div class="col-md-6">
                             {!! Form::label('event_date_start', trans('messages.booking_date_day_start')); !!}
                             <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
-                                <input data-format="yyyy-MM-dd hh:mm:ss" class="form-control" id="event_date_start" name="event_date_start" type="text" placeholder="2017-02-24 12:00:00"></input>
-                                <span class="add-on">
-                                    <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
-                                    </i>
-                                </span>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <span class="add-on">
+                                            <i style="margin: 7;" data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                            </i>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <input data-format="dd-MM-yyyy hh:mm" class="form-control" id="event_date_start" name="event_date_start" type="text" placeholder="24-02-2017 12:00"></input>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     <!-- Booking : data fine evento -->
                         <div class="col-md-6">
                             {!! Form::label('event_date_end', trans('messages.booking_date_day_end')); !!}
                             <div id="event_date_end" class="input-append date datetimepicker1">
-                                <input data-format="yyyy-MM-dd hh:mm:ss" class="form-control" id="event_date_end" name="event_date_end" type="text" placeholder="2017-02-24 14:00:00"></input>
-                                <span class="add-on">
-                                <i data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
-                                </i>
-                              </span>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <span class="add-on">
+                                            <i style="margin: 7;" data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                            </i>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <input data-format="dd-MM-yyyy hh:mm" class="form-control" id="event_date_end" name="event_date_end" type="text" placeholder="24-02-2017 14:00"></input>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

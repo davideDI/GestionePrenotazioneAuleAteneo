@@ -85,6 +85,9 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
         
         //Di default viene inserita la data di sistema
         $booking->booking_date = date("Y-m-d G:i:s");
+        $booking->event_date_start = date("Y-m-d G:i:s",strtotime($booking->event_date_start.":00"));
+        $booking->event_date_end = date("Y-m-d G:i:s",strtotime($booking->event_date_end.":00"));
+        
         $booking->user_id = session('source_id');
         //Quando viene effettuata una prenotazione lo stato viene settato su "RICHIESTA"
         $booking->tip_booking_status_id = 1;
@@ -99,6 +102,15 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
     }
     
 });
+
+function date_change_format($setDate, $from='d-m-Y', $to='Y-m-d') {
+    if ($setDate != '') {
+        $date = DateTime::createFromFormat($from, $setDate);
+        return $date->format($to);
+    } else {
+        return '';
+    }
+}
 
 Route::post('/resource', function() {
     
