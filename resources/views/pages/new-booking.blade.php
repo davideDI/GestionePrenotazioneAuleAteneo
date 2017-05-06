@@ -150,8 +150,8 @@
             
             function getResources(idGroup) {
                 $("#resource_id").val(null);
-                $("#resourceSelected").fadeOut('fast'); 
-                $("#noteResourceSelected").fadeOut('fast'); 
+                $("#resourceSelected").fadeOut('slow'); 
+                $("#noteResourceSelected").fadeOut('slow'); 
                 var selectedGroup = { 'idGroup' : idGroup};
                 $('#resource_id').select2({
                     placeholder : "{{ trans('messages.booking_date_select_resource') }}",
@@ -173,8 +173,8 @@
             
             function appendGifLoad() {
                 
-                $("#resourceSelected").fadeIn('fast'); 
-                $("#noteResourceSelected").fadeIn('fast'); 
+                $("#resourceSelected").fadeIn('slow'); 
+                $("#noteResourceSelected").fadeIn('slow'); 
                 $("#resourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
                 $("#noteResourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
  
