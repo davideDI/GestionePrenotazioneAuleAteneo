@@ -80,6 +80,7 @@
         'booking_equipment' => 'Attrezzatura',
         'booking_blackboard' => 'Lavagna',
         'booking_note' => 'Note',
+        'booking_note_nd' => 'Non definite',
         'booking_network' => 'Num prese rete',
         'booking_resource_information' => 'Specifiche Risorsa',
         

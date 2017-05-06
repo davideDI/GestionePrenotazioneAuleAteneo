@@ -80,6 +80,7 @@
         'booking_equipment' => 'Equipment',
         'booking_blackboard' => 'Blackboard',
         'booking_note' => 'Note',
+        'booking_note_nd' => 'Not defined',
         'booking_network' => 'Number of network sockets',
         'booking_resource_information' => 'Resource Information',
         

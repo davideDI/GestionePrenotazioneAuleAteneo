@@ -87,26 +87,36 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <!-- Booking : id risorsa -->
+                    <!-- Booking : id risorsa -->
                         <div class="col-md-6">
                             {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
                             
                             {!! Form::select(
                                     'resource_id', 
-                                    $resourceList, 
+                                    [], 
                                     null, 
-                                    ['class' => 'listOfGroupsItems',
+                                    ['class' => 'listOfResourcesItems',
                                      'style' => 'width: 70%']
                                 ); !!}
                                 
                         </div>
                     </div>
+                    
+                    <!-- Resource details -->
                     <div class="panel panel-default">
                         <div class="panel-heading">{{ trans('messages.booking_resource_information') }}</div>
-                        <div id="resourceSelected" class="panel-body">
+                        <div id="resourceSelected" class="panel-body" style="display: none">
                             <img src="{{URL::asset('lib/images/loading.gif')}}" width="100" height="70" style="margin-left: 45%;" alt="loading">
                         </div>
                     </div>
+                    <!-- Note -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ trans('messages.booking_note') }}</div>
+                        <div id="noteResourceSelected" class="panel-body" style="display: none">
+                            <img src="{{URL::asset('lib/images/loading.gif')}}" width="100" height="70" style="margin-left: 45%;" alt="loading">
+                        </div>
+                    </div>
+                    
                     {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
                     
                 {!! Form::close() !!}
@@ -114,8 +124,8 @@
             <div class="col-md-2"></div>
         </div>
         
-        <!-- Select 2 -->
         <script type="text/javascript">
+            
             $(document).ready(function() {
                 $(".listOfGroupsItems").select2({
                     placeholder: "{{ trans('messages.booking_date_select_group') }}"
@@ -126,7 +136,7 @@
                 $(".listOfTipEventsItems").select2({
                     placeholder: "{{ trans('messages.booking_type_event') }}"
                 });
-                getInfoResource($("#resource_id").val());
+                getResources($("#group_id").val());
             });
             
             $("#resource_id").on("change", function() {
@@ -134,9 +144,40 @@
                 getInfoResource($("#resource_id").val());
             });
             
+            $("#group_id").on("change", function() {
+                getResources($("#group_id").val());
+            });
+            
+            function getResources(idGroup) {
+                $("#resource_id").val(null);
+                $("#resourceSelected").fadeOut('fast'); 
+                $("#noteResourceSelected").fadeOut('fast'); 
+                var selectedGroup = { 'idGroup' : idGroup};
+                $('#resource_id').select2({
+                    placeholder : "{{ trans('messages.booking_date_select_resource') }}",
+                    ajax : {
+                        type: 'post',
+                        url: "{{URL::to('/resources')}}",
+                        dataType: 'json',
+                        data: selectedGroup,
+                        processResults: function (data) {
+                            return {
+                                results: data
+                            };
+                        },
+                        cache: false
+                    }
+                });
+                                
+            }
             
             function appendGifLoad() {
+                
+                $("#resourceSelected").fadeIn('fast'); 
+                $("#noteResourceSelected").fadeIn('fast'); 
                 $("#resourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
+                $("#noteResourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
+ 
             }
             
             function getInfoResource(idResource) {
@@ -149,6 +190,7 @@
                     dataType: "json",
                     success : function(result) {
                        $("#resourceSelected").html(createHtmlForResource(result));
+                       $("#noteResourceSelected").html(createHtmlForNoteResource(result));
                     },
                     error : function() {
                         console.log("Errore recupero informazioni resource.");
@@ -166,7 +208,6 @@
                 text += "<p>{{trans('messages.booking_projector')}} " + getImgFromBoolean(result.projector) + "</p>";
                 text += "<p>{{trans('messages.booking_screen_motor')}} " + getImgFromBoolean(result.screen_motor) + "</p>";
                 text += "<p>{{trans('messages.booking_screen_manual')}} " + getImgFromBoolean(result.screen_manual) + "</p>";
-                text += "<p>{{trans('messages.booking_audio')}} " + getImgFromBoolean(result.audio) + "</p>";
                 text += "</div>";
                 text += "<div class='col-md-4'>";
                 text += "<p>{{trans('messages.booking_pc')}} " + getImgFromBoolean(result.pc) + "</p>";
@@ -179,13 +220,27 @@
                 text += "<p>{{trans('messages.booking_wiring')}} " + getImgFromBoolean(result.wiring) + "</p>";
                 text += "<p>{{trans('messages.booking_blackboard')}} " + result.blackboard+ "</p>";
                 text += "<p>{{trans('messages.booking_equipment')}} " + getImgFromBoolean(result.equipment) + "</p>";
-                text += "<p>{{trans('messages.booking_note')}} " + result.note+ "</p>";
+                text += "<p>{{trans('messages.booking_audio')}} " + getImgFromBoolean(result.audio) + "</p>";
                 text += "<p>{{trans('messages.booking_network')}} " + result.network+ "</p>";
                 text += "</div>";
                 return text;
             
             }
             
+            function createHtmlForNoteResource(result) {
+            
+                var text = "";
+                text += "<div class='col-md-4'>";
+                if(result.note === '') {
+                    text += "<p>{{trans('messages.booking_note_nd')}} " + result.note + "</p>";
+                } else {
+                    text += "<p>" + result.note+ "</p>";
+                }
+                text += "</div>";
+                return text;
+                
+            }
+    
             function getImgFromBoolean(data) {
             
                 if(data) {
@@ -193,8 +248,9 @@
                 } else {
                     return "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
                 }
-            
+                
             }
+            
         </script>
         
         <!-- Date time picker -->
@@ -205,4 +261,5 @@
                 });
             });
         </script>
+        
     @endsection

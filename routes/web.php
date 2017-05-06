@@ -119,6 +119,13 @@ Route::post('/resource', function() {
     
 });
 
+Route::post('/resources', function() {
+    
+    $idGroup = $_POST['idGroup'];
+    return \App\Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
+    
+});
+
 /**************** CONSOLE ADMIN ******************************/
 //Ricerca prenotazione in base a "Groups" amministrati
 Route::get('/console', 'AdminController@getBookings');
