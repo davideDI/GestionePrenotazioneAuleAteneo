@@ -9,12 +9,12 @@ class Users extends Migration {
     
     public function up() {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id')->comment('users id');  
-            $table->string('name')->comment('users name');  
-            $table->string('surname')->comment('users surname');  
-            $table->string('email')->unique()->comment('users email');  
-            $table->string('password')->comment('users password');  
-            $table->rememberToken()->comment('users remember Token');  
+            $table->increments('id')->comment('user id');  
+            $table->string('name')->comment('user name');  
+            $table->string('surname')->comment('user surname');  
+            $table->string('email')->unique()->comment('user email');  
+            $table->string('password')->comment('user password');  
+            $table->rememberToken()->comment('user remember Token');  
             
             //foreign tip_user table
             $table->integer('tip_user_id')->unsigned()->comment('foreign tip_user table');  

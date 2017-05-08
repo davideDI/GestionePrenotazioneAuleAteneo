@@ -32,6 +32,13 @@ class TipUserTableSeed extends Seeder {
                     'description' => 'utente che effettua la richiesta di prenotazione della risorsa',
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
+                ],
+                [
+                    'id'          => 4,
+                    'name'        => 'inquirer',
+                    'description' => 'uscieri che verificano a campione l\'effettiva occupazione, e in che proporzione, delle risorse prenotate',
+                    'created_at'  => date("Y-m-d G:i:s"),
+                    'updated_at'  => date("Y-m-d G:i:s")
                 ]
             ]);
             

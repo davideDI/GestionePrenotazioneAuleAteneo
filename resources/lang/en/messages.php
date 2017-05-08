@@ -83,6 +83,14 @@
         'booking_note_nd' => 'Not defined',
         'booking_network' => 'Number of network sockets',
         'booking_resource_information' => 'Resource Information',
+        'booking_multiple_event' => 'Multiple Event',
+        'booking_single_event' => 'Single Event',
+        'booking_type_repeat_monday' => 'Monday',
+        'booking_type_repeat_tuesday' => 'Tuesday',
+        'booking_type_repeat_wednesday' => 'Wednesday',
+        'booking_type_repeat_thursday' => 'Thursday',
+        'booking_type_repeat_friday' => 'Friday',
+        'booking_type_repeat_saturday' => 'Saturday',
         
         //Messages from help page
         'help_contact' => 'Contact',

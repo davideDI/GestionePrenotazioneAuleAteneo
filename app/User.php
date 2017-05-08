@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Booking');
     }
     
+    //Relazione con la tabella surveys
+    public function surveys() {
+        return $this->hasMany('App\Survey');
+    }
+    
     //Relazione con la tabella groups
     public function groups() {
         return $this->hasMany('App\Group');

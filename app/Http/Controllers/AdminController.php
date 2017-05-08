@@ -26,8 +26,10 @@ class AdminController extends Controller {
             foreach($group->resources as $resource) {
                 //Per ogni prenotazione associata ad una risorsa
                 foreach($resource->bookings as $booking) {
-                    if($booking->tip_booking_status_id == $idStatus) {
-                        array_push($bookingsList, $booking);
+                    foreach($booking->repeats as $repeat) {
+                        if($repeat->tip_booking_status_id == $idStatus) {
+                            array_push($bookingsList, $booking);
+                        }
                     }
                 }    
             }
@@ -58,21 +60,23 @@ class AdminController extends Controller {
             foreach($group->resources as $resource) {
                 //Per ogni prenotazione associata ad una risorsa
                 foreach($resource->bookings as $booking) {
-                    //Se lo stato della prenotazione è RICHIESTA
-                    if($booking->tip_booking_status_id == 1) {
-                        array_push($quequedBookings, $booking);
-                    }
-                    //Se lo stato della prenotazione è IN LAVORAZIONE
-                    if($booking->tip_booking_status_id == 2) {
-                        array_push($workingBookings, $booking);
-                    }
-                    //Se lo stato della prenotazione è GESTITA
-                    if($booking->tip_booking_status_id == 3) {
-                        array_push($confirmedBookings, $booking);
-                    }
-                    //Se lo stato della prenotazione è SCARTATA
-                    if($booking->tip_booking_status_id == 4) {
-                        array_push($rejectedBookings, $booking);
+                    foreach($booking->repeats as $repeat) {
+                        //Se lo stato della prenotazione è RICHIESTA
+                        if($repeat->tip_booking_status_id == 1) {
+                            array_push($quequedBookings, $booking);
+                        }
+                        //Se lo stato della prenotazione è IN LAVORAZIONE
+                        if($repeat->tip_booking_status_id == 2) {
+                            array_push($workingBookings, $booking);
+                        }
+                        //Se lo stato della prenotazione è GESTITA
+                        if($repeat->tip_booking_status_id == 3) {
+                            array_push($confirmedBookings, $booking);
+                        }
+                        //Se lo stato della prenotazione è SCARTATA
+                        if($repeat->tip_booking_status_id == 4) {
+                            array_push($rejectedBookings, $booking);
+                        }
                     }
                 }    
             }
@@ -99,9 +103,11 @@ class AdminController extends Controller {
         foreach($group->resources as $resource) {
             //Per ogni prenotazione associata ad una risorsa
             foreach($resource->bookings as $booking) {
-                //Stato RICHIESTA o IN LAVORAZIONE
-                if($booking->tip_booking_status_id == 1 || $booking->tip_booking_status_id == 2) {
-                    array_push($bookings, $booking);
+                foreach($booking->repeats as $repeat) {
+                    //Stato RICHIESTA o IN LAVORAZIONE
+                    if($repeat->tip_booking_status_id == 1 || $booking->tip_booking_status_id == 2) {
+                        array_push($bookings, $booking);
+                    }
                 }
             }    
         }

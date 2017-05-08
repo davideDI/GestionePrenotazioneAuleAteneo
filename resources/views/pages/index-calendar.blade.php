@@ -147,47 +147,49 @@
                     //Caricamento eventi
                     events: [
                         @foreach($bookings as $booking)
-                            //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
-                            //in stato 3 [Gestita]
-                            @if(!Session::has('ruolo') || Session::get('ruolo') == 'Studenti')
-                                @if($booking->tip_booking_status_id == 3)
-                                    {
-                                        id         : '{{$booking->id}}',
-                                        title      : '{{$booking->name}}',
-                                        description: '{{$booking->description}}',
-                                        start      : '{{$booking->event_date_start}}',
-                                        end        : '{{$booking->event_date_end}}',
-                                        @if($booking->tip_event_id == 1) 
-                                            color : '#00FF00'
-                                        @elseif($booking->tip_event_id == 2) 
-                                            color : '#FF0000'
-                                        @elseif($booking->tip_event_id == 3) 
-                                            color : '#FFFF00'
-                                        @else
-                                            color : '#0000FF'
-                                        @endif
-                                    },
+                            @foreach($booking->repeats as $repeat)
+                                //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
+                                //in stato 3 [Gestita]
+                                @if(!Session::has('ruolo') || Session::get('ruolo') == 'Studenti')
+                                    @if($booking->tip_booking_status_id == 3)
+                                        {
+                                            id         : '{{$booking->id}}',
+                                            title      : '{{$booking->name}}',
+                                            description: '{{$booking->description}}',
+                                            start      : '{{$repeat->event_date_start}}',
+                                            end        : '{{$repeat->event_date_end}}',
+                                            @if($booking->tip_event_id == 1) 
+                                                color : '#00FF00'
+                                            @elseif($booking->tip_event_id == 2) 
+                                                color : '#FF0000'
+                                            @elseif($booking->tip_event_id == 3) 
+                                                color : '#FFFF00'
+                                            @else
+                                                color : '#0000FF'
+                                            @endif
+                                        },
+                                    @endif 
+                                //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
+                                //in stato 3 [Gestita]
+                                @elseif(Session::has('ruolo') || Session::get('ruolo') != 'Studenti')
+                                        {
+                                            id         : '{{$booking->id}}',
+                                            title      : '{{$booking->name}}',
+                                            description: '{{$booking->description}}',
+                                            start      : '{{$repeat->event_date_start}}',
+                                            end        : '{{$repeat->event_date_end}}',
+                                            @if($repeat->tip_booking_status_id == 1) 
+                                                color : '#0000FF'
+                                            @elseif($repeat->tip_booking_status_id == 2) 
+                                                color : '#FFFF00'
+                                            @elseif($repeat->tip_booking_status_id == 3) 
+                                                color : '#00FF00'
+                                            @else
+                                                color : '#FF0000'
+                                            @endif
+                                        },
                                 @endif 
-                            //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
-                            //in stato 3 [Gestita]
-                            @elseif(Session::has('ruolo') || Session::get('ruolo') != 'Studenti')
-                                    {
-                                        id         : '{{$booking->id}}',
-                                        title      : '{{$booking->name}}',
-                                        description: '{{$booking->description}}',
-                                        start      : '{{$booking->event_date_start}}',
-                                        end        : '{{$booking->event_date_end}}',
-                                        @if($booking->tip_booking_status_id == 1) 
-                                            color : '#0000FF'
-                                        @elseif($booking->tip_booking_status_id == 2) 
-                                            color : '#FFFF00'
-                                        @elseif($booking->tip_booking_status_id == 3) 
-                                            color : '#00FF00'
-                                        @else
-                                            color : '#FF0000'
-                                        @endif
-                                    },
-                            @endif  
+                            @endforeach
                         @endforeach
                         ],
                         

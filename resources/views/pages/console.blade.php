@@ -165,10 +165,10 @@
                                     result += bookings[j].description;
                                 result += "</td>";
                                 result += "<td>";
-                                    result += moment(bookings[j].event_date_start).format("DD-MM-YYYY HH:mm:ss");
+                                    //result += moment(bookings[j].event_date_start).format("DD-MM-YYYY HH:mm:ss");
                                 result += "</td>";
                                 result += "<td>";
-                                    result += moment(bookings[j].event_date_end).format("DD-MM-YYYY HH:mm:ss");
+                                    //result += moment(bookings[j].event_date_end).format("DD-MM-YYYY HH:mm:ss");
                                 result += "</td>";
                                 result += "<td>";
                                     result += bookings[j].resource_id;

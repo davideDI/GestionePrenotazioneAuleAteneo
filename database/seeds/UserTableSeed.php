@@ -18,7 +18,7 @@ class UserTableSeed extends Seeder {
                     'surname'     => 'ddi',
                     'email'       => 'davide@davide.it',
                     'password'    => bcrypt('davide@davide.it'),
-                    'tip_user_id' => 1,
+                    'tip_user_id' => 1, //Admin di dipartimento
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
@@ -28,7 +28,7 @@ class UserTableSeed extends Seeder {
                     'surname'     => 'marrone',
                     'email'       => 'luigi@marrone.it',
                     'password'    => bcrypt('luigi@marrone.it'),
-                    'tip_user_id' => 2,
+                    'tip_user_id' => 2, //Admin di ateneo
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
@@ -38,7 +38,7 @@ class UserTableSeed extends Seeder {
                     'surname'     => 'ateneo',
                     'email'       => 'ateneo@ateneo.it',
                     'password'    => bcrypt('ateneo@ateneo.it'),
-                    'tip_user_id' => 3,
+                    'tip_user_id' => 3, //Docente
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ],
@@ -48,7 +48,7 @@ class UserTableSeed extends Seeder {
                     'surname'     => 'bianchi',
                     'email'       => 'mario@bianchi.it',
                     'password'    => bcrypt('mario@bianchi.it'),
-                    'tip_user_id' => 1,
+                    'tip_user_id' => 4, //Inquirer
                     'created_at'  => date("Y-m-d G:i:s"),
                     'updated_at'  => date("Y-m-d G:i:s")
                 ]

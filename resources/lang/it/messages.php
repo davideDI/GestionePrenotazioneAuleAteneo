@@ -83,6 +83,14 @@
         'booking_note_nd' => 'Non definite',
         'booking_network' => 'Num prese rete',
         'booking_resource_information' => 'Specifiche Risorsa',
+        'booking_multiple_event' => 'Evento Ripetuto',
+        'booking_single_event' => 'Singolo Evento',
+        'booking_type_repeat_monday' => 'Lunedì',
+        'booking_type_repeat_tuesday' => 'Martedì',
+        'booking_type_repeat_wednesday' => 'Mercoledì',
+        'booking_type_repeat_thursday' => 'Giovedì',
+        'booking_type_repeat_friday' => 'Venerdi',
+        'booking_type_repeat_saturday' => 'Sabato',
         
         //Messages from help page
         'help_contact' => 'Contatti',

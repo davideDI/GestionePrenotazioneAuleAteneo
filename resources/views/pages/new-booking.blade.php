@@ -59,6 +59,28 @@
                         </div>
                     </div>
                     
+                <!-- Repet Options -->    
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            <input type="radio" name="repeat_event" onclick="closeDivEventRepeatDetails()" value="1" checked="checked">{{ trans('messages.booking_single_event') }}<br>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="repeat_event" onclick="openDivEventRepeatDetails()" value="2">{{ trans('messages.booking_multiple_event') }}<br>
+                        </div>
+                    </div>
+                
+                    <div id="event_repeat_details" class="form-group row" style="display:none">
+                        <div class="col-md-12">
+                            <input type="checkbox" name="type_repeat" value="1">&nbsp;{{ trans('messages.booking_type_repeat_monday') }} &nbsp;&nbsp;
+                            <input type="checkbox" name="type_repeat" value="2">&nbsp;{{ trans('messages.booking_type_repeat_tuesday') }} &nbsp;&nbsp;
+                            <input type="checkbox" name="type_repeat" value="3">&nbsp;{{ trans('messages.booking_type_repeat_wednesday') }} &nbsp;&nbsp;
+                            <input type="checkbox" name="type_repeat" value="4">&nbsp;{{ trans('messages.booking_type_repeat_thursday') }} &nbsp;&nbsp;
+                            <input type="checkbox" name="type_repeat" value="5">&nbsp;{{ trans('messages.booking_type_repeat_friday') }} &nbsp;&nbsp;
+                            <input type="checkbox" name="type_repeat" value="6">&nbsp;{{ trans('messages.booking_type_repeat_saturday') }}
+                        </div>
+                    </div>
+                <!-- End Repet Options --> 
+                
                     <div class="form-group row">
                     <!-- Booking : id group -->
                         <div class="col-md-6">
@@ -249,6 +271,18 @@
                     return "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
                 }
                 
+            }
+            
+            function closeDivEventRepeatDetails() {
+            
+                $("#event_repeat_details").fadeOut('slow'); 
+            
+            }
+            
+            function openDivEventRepeatDetails() {
+            
+                $("#event_repeat_details").fadeIn('slow'); 
+            
             }
             
         </script>

@@ -6,12 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model {
     
-    protected $fillable = ['name', 'description', 'num_students', 'booking_date', 'event_date_start', 'event_date_end', 'resource_id', 'tip_event_id'];
+    protected $fillable = ['name', 'description', 'num_students', 'booking_date', 'resource_id', 'tip_event_id'];
     protected $table = 'bookings';
 
-    //Relazione con la tabella tip_booking_status
-    public function tipBookingStatus() {
-        return $this->belongsTo('App\TipBookingStatus');
+    //Relazione con la tabella surveys
+    public function surveys() {
+        return $this->hasMany('App\Survey');
+    }
+    
+    //Relazione con la tabella repeats
+    public function repeats() {
+        return $this->hasMany('App\Repeat');
     }
     
     //Relazione con la tabella users
@@ -28,9 +33,5 @@ class Booking extends Model {
     public function tipEvent() {
         return $this->belongsTo('App\TipEvent');
     }
-    
-    /*public static function store(Booking $booking) {
-        $booking -> create();
-    }*/
-    
+        
 }

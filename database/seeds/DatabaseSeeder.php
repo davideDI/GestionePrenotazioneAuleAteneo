@@ -34,5 +34,8 @@ class DatabaseSeeder extends Seeder {
         //Table Bookings
         $this->call(BookingTableSeed::class);
         
+        //Table Repeats
+        $this->call(RepeatsTableSeeder::class);
+        
     }
 }

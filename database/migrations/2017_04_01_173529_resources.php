@@ -27,7 +27,7 @@ class Resources extends Migration {
             $table->tinyInteger('visual_presenter')->default(0)->comment('Visual Presenter?'); 
             $table->tinyInteger('wiring')->default(1)->comment('Wiring?'); 
             $table->tinyInteger('equipment')->default(1)->comment('Equipment?'); 
-            $table->string('blackboard', 10)->default('N.D.')->comment('Blackboard type'); 
+            $table->string('blackboard', 25)->default('N.D.')->comment('Blackboard type'); 
             $table->string('note', 50)->default('')->comment('Note'); 
             $table->integer('network')->default(1)->comment('Num network');
             

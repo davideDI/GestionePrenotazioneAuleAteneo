@@ -8,9 +8,9 @@ class TipBookingStatus extends Model {
     
     protected $table = "tip_booking_status";
     
-    //Relazione con la tabella bookings
-    public function bookings() {
-        return $this->hasMany('App\Booking');
+    //Relazione con la tabella repeats
+    public function repeats() {
+        return $this->hasMany('App\Repeat');
     }
     
 }

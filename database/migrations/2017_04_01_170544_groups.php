@@ -9,16 +9,16 @@ class Groups extends Migration {
     
     public function up() {
         Schema::create('groups', function (Blueprint $table) {
-            $table->increments('id')->comment('groups id');
-            $table->string('name', 50)->comment('groups name');
-            $table->string('description', 100)->nullable()->comment('groups description');
+            $table->increments('id')->comment('group id');
+            $table->string('name', 50)->comment('group name');
+            $table->string('description', 100)->nullable()->comment('group description');
             
             //foreign tip_group table
             $table->integer('tip_group_id')->unsigned()->comment('foreign tip_group table');
             $table->foreign('tip_group_id')->references('id')->on('tip_group');
             
             //foreign user table
-            $table->integer('admin_id')->unsigned()->comment('foreign admin table');
+            $table->integer('admin_id')->unsigned()->comment('foreign user table');
             $table->foreign('admin_id')->references('id')->on('users');
             
             $table->timestamps();

@@ -14,14 +14,11 @@ class BookingTableSeed extends Seeder {
             DB::table('bookings')->insert([
                 [
                     'id'                    => 1,
-                    'name'                  => 'book',
-                    'description'           => 'book desc',
-                    'event_date_start'      => date("Y-m-d G:i:s"),
-                    'event_date_end'        => date("Y-m-d G:i:s"),
+                    'name'                  => 'booking name',
+                    'description'           => 'booking desc',
                     'tip_event_id'          => 1,
                     'user_id'               => 1,
                     'resource_id'           => 1,
-                    'tip_booking_status_id' => 1,
                     'num_students'          => 15,
                     'booking_date'          => date("Y-m-d G:i:s"),
                     'created_at'            => date("Y-m-d G:i:s"),
