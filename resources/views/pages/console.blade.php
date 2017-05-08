@@ -157,34 +157,36 @@
                         result += "</thead>";
                         result += "<tbody>";
                         for(var j=0; j < bookings.length; j++) {
-                            result += "<tr id='"+bookings[j].id+"'>";
-                                result += "<td>";
-                                    result += bookings[j].name;
-                                result += "</td>";
-                                result += "<td>";
-                                    result += bookings[j].description;
-                                result += "</td>";
-                                result += "<td>";
-                                    //result += moment(bookings[j].event_date_start).format("DD-MM-YYYY HH:mm:ss");
-                                result += "</td>";
-                                result += "<td>";
-                                    //result += moment(bookings[j].event_date_end).format("DD-MM-YYYY HH:mm:ss");
-                                result += "</td>";
-                                result += "<td>";
-                                    result += bookings[j].resource_id;
-                                result += "</td>";
-                                result += "<td>";
-                                    result += "<a href='#' onclick='confirmBooking(" + bookings[j].id + ")'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></a>";
-                                    result += "&nbsp;&nbsp;";
-                                    result += "<a href='#' onclick='rejectBooking(" + bookings[j].id + ")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></a>";
-                                result += "</td>";
-                            result += "</tr>";
+                            for(var k=0; k < bookings[j].repeats.length; k++) {
+                                result += "<tr id='"+bookings[j].id+"'>";
+                                    result += "<td>";
+                                        result += bookings[j].name;
+                                    result += "</td>";
+                                    result += "<td>";
+                                        result += bookings[j].description;
+                                    result += "</td>";
+                                    result += "<td>";
+                                        result += moment(bookings[j].repeats[k].event_date_start).format("DD-MM-YYYY HH:mm:ss");
+                                    result += "</td>";
+                                    result += "<td>";
+                                        result += moment(bookings[j].repeats[k].event_date_end).format("DD-MM-YYYY HH:mm:ss");
+                                    result += "</td>";
+                                    result += "<td>";
+                                        result += bookings[j].resource.name;
+                                    result += "</td>";
+                                    result += "<td>";
+                                        result += "<a href='#' onclick='confirmBooking(" + bookings[j].repeats[k].id + ")'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></a>";
+                                        result += "&nbsp;&nbsp;";
+                                        result += "<a href='#' onclick='rejectBooking(" + bookings[j].repeats[k].id + ")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></a>";
+                                    result += "</td>";
+                                result += "</tr>";
+                            }
                         }
                         result += "</tbody>";
                         result += "</table>";
                         $("#content").html(result);
                     },
-                    error: function() {
+                    error: function(e) {
                         console.log("console.balde.php - search bookings by id group : ajax error");
                     }
 
@@ -192,9 +194,9 @@
             
             }
             
-            function confirmBooking(idBooking) {
+            function confirmBooking(idRepeat) {
             
-                var data = {'id_booking': idBooking};
+                var data = {'id_repeat': idRepeat};
                 $.ajax({
 
                     url: "{{URL::to('/confirm-booking')}}",
@@ -202,7 +204,7 @@
                     dataType: 'json',
                     data: data,
                     success: function() {
-                        var elementToChange = "#"+idBooking;
+                        var elementToChange = "#"+idRepeat;
                         $(elementToChange).addClass("collapse out"); 
                         searchBookingsByIdStatus(1);
                         searchBookingsByIdStatus(2);

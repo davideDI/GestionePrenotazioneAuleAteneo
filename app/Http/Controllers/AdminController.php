@@ -103,6 +103,7 @@ class AdminController extends Controller {
         foreach($group->resources as $resource) {
             //Per ogni prenotazione associata ad una risorsa
             foreach($resource->bookings as $booking) {
+                $booking->resource_name = $booking->resource->name;
                 foreach($booking->repeats as $repeat) {
                     //Stato RICHIESTA o IN LAVORAZIONE
                     if($repeat->tip_booking_status_id == 1 || $booking->tip_booking_status_id == 2) {
@@ -118,27 +119,29 @@ class AdminController extends Controller {
     
     public function confirmBooking() {
         
-        Log::info('AdminController - confirmBooking()');
+        $idRepeat = $_POST['id_repeat'];
         
-        $id_booking = $_POST['id_booking'];
-        $booking = \App\Booking::find($id_booking);
-        $booking->tip_booking_status_id = 3;
-        $booking->save();
+        Log::info('AdminController - confirmBooking('.$idRepeat.')');
         
-        return $booking;
+        $repeat = \App\Repeat::find($idRepeat);
+        $repeat->tip_booking_status_id = 3;
+        $repeat->save();
+        
+        return $repeat;
         
     }
     
     public function rejectBooking() {
         
-        Log::info('AdminController - rejectBooking()');
+        $idRepeat = $_POST['id_repeat'];
         
-        $id_booking = $_POST['id_booking'];
-        $booking = \App\Booking::find($id_booking);
-        $booking->tip_booking_status_id = 4;
-        $booking->save();
+        Log::info('AdminController - rejectBooking('.$idRepeat.')');
         
-        return $booking;
+        $repeat = \App\Repeat::find($idRepeat);
+        $repeat->tip_booking_status_id = 4;
+        $repeat->save();
+        
+        return $repeat;
         
     }
     
