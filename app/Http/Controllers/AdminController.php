@@ -103,7 +103,7 @@ class AdminController extends Controller {
         foreach($group->resources as $resource) {
             //Per ogni prenotazione associata ad una risorsa
             foreach($resource->bookings as $booking) {
-                $booking->resource_name = $booking->resource->name;
+                $booking->resource;
                 foreach($booking->repeats as $repeat) {
                     //Stato RICHIESTA o IN LAVORAZIONE
                     if($repeat->tip_booking_status_id == 1 || $booking->tip_booking_status_id == 2) {

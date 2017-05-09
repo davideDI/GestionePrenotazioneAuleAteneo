@@ -91,6 +91,7 @@
         'booking_type_repeat_thursday' => 'Thursday',
         'booking_type_repeat_friday' => 'Friday',
         'booking_type_repeat_saturday' => 'Saturday',
+        'booking_place_available' => 'Places Available',
         
         //Messages from help page
         'help_contact' => 'Contact',

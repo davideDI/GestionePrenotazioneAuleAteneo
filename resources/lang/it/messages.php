@@ -53,8 +53,8 @@
         
         //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
-        'booking_date_hour_start' => 'Dalle ore',
-        'booking_date_hour_end' => 'Alle ore',
+        'booking_date_hour_start' => 'Dalle',
+        'booking_date_hour_end' => 'Alle',
         'booking_date_day_start' => 'Data inizio evento',
         'booking_date_day_end' => 'Data fine evento',
         'booking_date_booking' => 'Data prenotazione',
@@ -91,6 +91,7 @@
         'booking_type_repeat_thursday' => 'Giovedì',
         'booking_type_repeat_friday' => 'Venerdi',
         'booking_type_repeat_saturday' => 'Sabato',
+        'booking_place_available' => 'Posti Disponibili',
         
         //Messages from help page
         'help_contact' => 'Contatti',

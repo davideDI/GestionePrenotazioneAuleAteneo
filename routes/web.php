@@ -74,27 +74,50 @@ Route::get('/new-booking', function() {
 /* Inserimento nuova prenotazione e reindirizzamento verso il calendario prenotazioni */
 Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
     
+    //TODO
+    //Sviluppare validazione campi
+    
     Log::info('web.php: post() [/new-booking]');
     
-    //Recupero la risorsa selezioneta per la redirect()
+    //Booking Object
     $booking = new App\Booking; 
     $booking->fill($request->all());
+    
+    //Repeat Object
+    $repeat = new App\Repeat;
+    $repeat->fill($request->all());
+    
+    //Resource Object
     $resourceOfBooking = App\Resource::find($booking->resource_id);
     
     try {
         
-        //Di default viene inserita la data di sistema
         $booking->booking_date = date("Y-m-d G:i:s");
-        $booking->event_date_start = date("Y-m-d G:i:s",strtotime($booking->event_date_start.":00"));
-        $booking->event_date_end = date("Y-m-d G:i:s",strtotime($booking->event_date_end.":00"));
-        
         $booking->user_id = session('source_id');
-        //Quando viene effettuata una prenotazione lo stato viene settato su "RICHIESTA"
-        $booking->tip_booking_status_id = 1;
-        //TODO
-        //Sviluppare validazione campi
-        Log::info('web.php: [/new-booking] - Inserimento prenotazione ['.$booking.']');
+        Log::info('web.php: [/new-booking] - Insert booking ['.$booking.']');
         $booking->save();
+        
+        $typeOfRepeat = $request['repeat_event'];
+        
+        //Single event
+        if($typeOfRepeat == 1) {
+            
+            $repeat->event_date_start = date("Y-m-d G:i:s",strtotime($repeat->event_date_start.":00"));
+            $repeat->event_date_end = date("Y-m-d G:i:s",strtotime($repeat->event_date_end.":00"));
+            $repeat->tip_booking_status_id = 1;
+            $repeat->booking_id= $booking->id;
+            Log::info('web.php: [/new-booking] - Insert repeat ['.$repeat.']');
+            $repeat->save();
+            
+        } 
+        
+        //Multiple event
+        if($typeOfRepeat == 2) {
+            
+            $weekRepeats = $request['type_repeat'];
+            
+        }
+        
         return redirect()->route('bookings2', [$resourceOfBooking->group_id, $booking->resource_id])->with('success', 100);
     } catch(Exception $ex) {
         Log::error('web.php: [/new-booking] - errore nell\'inserimento della prenotazione '.$ex->getMessage());
