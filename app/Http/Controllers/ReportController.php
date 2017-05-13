@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller {
     
-    public function getReportHome() {
+    public function getReportView() {
         
-        Log::info('ReportController - getReportHome()');
+        Log::info('ReportController - getReportView()');
         return view('pages/report');
         
     }

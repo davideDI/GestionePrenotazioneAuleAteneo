@@ -20,15 +20,15 @@ class BookingController extends Controller {
         try {
 
             //Booking Object
-            $booking = new App\Booking; 
+            $booking = new \App\Booking; 
             $booking->fill($request->all());
 
             //Repeat Object
-            $repeat = new App\Repeat;
+            $repeat = new \App\Repeat;
             $repeat->fill($request->all());
 
             //Resource Object
-            $resourceOfBooking = App\Resource::find($booking->resource_id);
+            $resourceOfBooking = \App\Resource::find($booking->resource_id);
 
             $booking->booking_date = date("Y-m-d G:i:s");
             $booking->user_id = session('source_id');
@@ -148,10 +148,10 @@ class BookingController extends Controller {
         
         Log::info('BookingController - getNewBookingForm()');
     
-        $booking = new App\Booking;
-        $groupsList = App\Group::pluck('name', 'id');
-        $resourceList =  App\Resource::pluck('name', 'id');
-        $tipEventList = App\TipEvent::pluck('name', 'id');
+        $booking = new \App\Booking;
+        $groupsList = \App\Group::pluck('name', 'id');
+        $resourceList =  \App\Resource::pluck('name', 'id');
+        $tipEventList = \App\TipEvent::pluck('name', 'id');
 
         return view('pages/new-booking', [  'booking'      => $booking,
                                             'groupsList'   => $groupsList,

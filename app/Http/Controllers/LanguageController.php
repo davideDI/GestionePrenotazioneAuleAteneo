@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 class LanguageController extends Controller {

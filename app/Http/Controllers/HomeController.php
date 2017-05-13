@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
 {
@@ -10,9 +13,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        //$this->middleware('auth');
     }
 
     /**
@@ -29,7 +31,7 @@ class HomeController extends Controller
         
         Log::info('HomeController - getHome()');
         Session::set('applocale', Config::get('app.locale'));
-        $groupsList = App\Group::all();
+        $groupsList = \App\Group::all();
         return view('pages/index', [ 'groupsList' => $groupsList ]);
         
     }
