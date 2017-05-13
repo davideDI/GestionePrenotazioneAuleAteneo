@@ -145,6 +145,7 @@ class AdminController extends Controller {
         
     }
     
+    //test paginazione
     public function test() {
         
         $bookings = \App\Booking::where('user_id', 1)->simplePaginate(3);

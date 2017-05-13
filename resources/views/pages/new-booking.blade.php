@@ -79,61 +79,61 @@
                 
                     <div id="event_repeat_details" class="form-group row" style="display:none">
                         <div class="col-md-12">
-                            <input id="day_1" type="checkbox" name="type_repeat[]" value="1" onclick="addRepeat('day_1', 'detail_day_1')">&nbsp;{{ trans('messages.booking_type_repeat_monday') }} &nbsp;&nbsp;
-                            <input id="day_2" type="checkbox" name="type_repeat[]" value="2" onclick="addRepeat('day_2', 'detail_day_2')">&nbsp;{{ trans('messages.booking_type_repeat_tuesday') }} &nbsp;&nbsp;
-                            <input id="day_3" type="checkbox" name="type_repeat[]" value="3" onclick="addRepeat('day_3', 'detail_day_3')">&nbsp;{{ trans('messages.booking_type_repeat_wednesday') }} &nbsp;&nbsp;
-                            <input id="day_4" type="checkbox" name="type_repeat[]" value="4" onclick="addRepeat('day_4', 'detail_day_4')">&nbsp;{{ trans('messages.booking_type_repeat_thursday') }} &nbsp;&nbsp;
-                            <input id="day_5" type="checkbox" name="type_repeat[]" value="5" onclick="addRepeat('day_5', 'detail_day_5')">&nbsp;{{ trans('messages.booking_type_repeat_friday') }} &nbsp;&nbsp;
-                            <input id="day_6" type="checkbox" name="type_repeat[]" value="6" onclick="addRepeat('day_6', 'detail_day_6')">&nbsp;{{ trans('messages.booking_type_repeat_saturday') }}
+                            <input id="day_0" type="checkbox" name="type_repeat[]" value="0" onclick="addRepeat('day_0', 'detail_day_0')">&nbsp;{{ trans('messages.booking_type_repeat_monday') }} &nbsp;&nbsp;
+                            <input id="day_1" type="checkbox" name="type_repeat[]" value="1" onclick="addRepeat('day_1', 'detail_day_1')">&nbsp;{{ trans('messages.booking_type_repeat_tuesday') }} &nbsp;&nbsp;
+                            <input id="day_2" type="checkbox" name="type_repeat[]" value="2" onclick="addRepeat('day_2', 'detail_day_2')">&nbsp;{{ trans('messages.booking_type_repeat_wednesday') }} &nbsp;&nbsp;
+                            <input id="day_3" type="checkbox" name="type_repeat[]" value="3" onclick="addRepeat('day_3', 'detail_day_3')">&nbsp;{{ trans('messages.booking_type_repeat_thursday') }} &nbsp;&nbsp;
+                            <input id="day_4" type="checkbox" name="type_repeat[]" value="4" onclick="addRepeat('day_4', 'detail_day_4')">&nbsp;{{ trans('messages.booking_type_repeat_friday') }} &nbsp;&nbsp;
+                            <input id="day_5" type="checkbox" name="type_repeat[]" value="5" onclick="addRepeat('day_5', 'detail_day_5')">&nbsp;{{ trans('messages.booking_type_repeat_saturday') }}
                         </div>
                     </div>
                 
-                    <div id="detail_day_1" class="form-group row" style="display:none">
+                    <div id="detail_day_0" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_monday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_from_0" class="form-control " /></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_to_0" class="form-control " /></div>
+                    </div>
+                
+                    <div id="detail_day_1" class="form-group row" style="display:none">
+                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_tuesday') }}</b></div>
+                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
+                        <div class="col-md-2"><input type="time" name="detail_day_from_1" class="form-control " /></div>
+                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
+                        <div class="col-md-2"><input type="time" name="detail_day_to_1" class="form-control " /></div>
                     </div>
                 
                     <div id="detail_day_2" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_tuesday') }}</b></div>
+                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_wednesday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_from_2" class="form-control " /></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_to_2" class="form-control " /></div>
                     </div>
                 
                     <div id="detail_day_3" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_wednesday') }}</b></div>
+                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_thursday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_from_3" class="form-control " /></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_to_3" class="form-control " /></div>
                     </div>
                 
                     <div id="detail_day_4" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_thursday') }}</b></div>
+                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_friday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_from_4" class="form-control " /></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_to_4" class="form-control " /></div>
                     </div>
                 
                     <div id="detail_day_5" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_friday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
-                    </div>
-                
-                    <div id="detail_day_6" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_saturday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_from_5" class="form-control " /></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" class="form-control " /></div>
+                        <div class="col-md-2"><input type="time" name="detail_day_to_5" class="form-control " /></div>
                     </div>
                 <!-- End Repet Options --> 
                 
@@ -350,12 +350,12 @@
                 $("#event_date_end_input").attr('placeholder', '24-02-2017 14:00');
                 $("#event_date_end_input").attr('data-format', 'dd-MM-yyyy hh:mm');
                 
+                $("#detail_day_0").fadeOut('slow'); 
                 $("#detail_day_1").fadeOut('slow'); 
                 $("#detail_day_2").fadeOut('slow'); 
                 $("#detail_day_3").fadeOut('slow'); 
                 $("#detail_day_4").fadeOut('slow'); 
                 $("#detail_day_5").fadeOut('slow'); 
-                $("#detail_day_6").fadeOut('slow'); 
             
             }
             
@@ -372,13 +372,9 @@
             function addRepeat(idDay, idDetailDay) {
                 
                 if($("#"+idDay)[0].checked == true) {
-                
                     $("#" + idDetailDay).fadeIn('slow');
-                    
                 } else {
-                    
                     $("#" + idDetailDay).fadeOut('slow');
-                    
                 }
                 
             }

@@ -1,6 +1,6 @@
 @extends('layouts.layout')
     @section('content')
-        
+        <!-- ************************ TEST PAGINAZIONE *********************** -->
         <div class="row">
             
             <div class="col-md-2"></div>

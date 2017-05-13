@@ -74,23 +74,25 @@ Route::get('/new-booking', function() {
 /* Inserimento nuova prenotazione e reindirizzamento verso il calendario prenotazioni */
 Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
     
+    date_default_timezone_set('Europe/Rome');
+    
     //TODO
     //Sviluppare validazione campi
     
     Log::info('web.php: post() [/new-booking]');
     
-    //Booking Object
-    $booking = new App\Booking; 
-    $booking->fill($request->all());
-    
-    //Repeat Object
-    $repeat = new App\Repeat;
-    $repeat->fill($request->all());
-    
-    //Resource Object
-    $resourceOfBooking = App\Resource::find($booking->resource_id);
-    
     try {
+    
+        //Booking Object
+        $booking = new App\Booking; 
+        $booking->fill($request->all());
+
+        //Repeat Object
+        $repeat = new App\Repeat;
+        $repeat->fill($request->all());
+
+        //Resource Object
+        $resourceOfBooking = App\Resource::find($booking->resource_id);
         
         $booking->booking_date = date("Y-m-d G:i:s");
         $booking->user_id = session('source_id');
@@ -102,8 +104,13 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
         //Single event
         if($typeOfRepeat == 1) {
             
-            $repeat->event_date_start = date("Y-m-d G:i:s",strtotime($repeat->event_date_start.":00"));
-            $repeat->event_date_end = date("Y-m-d G:i:s",strtotime($repeat->event_date_end.":00"));
+            $repeat_start_string = $repeat->event_date_start.":00";
+            $repeat_end_string = $repeat->event_date_end.":00";
+            $repeat_start = date("Y-m-d G:i:s",strtotime($repeat_start_string));
+            $repeat_end = date("Y-m-d G:i:s",strtotime($repeat_end_string));
+            
+            $repeat->event_date_start = $repeat_start;
+            $repeat->event_date_end = $repeat_end;
             $repeat->tip_booking_status_id = 1;
             $repeat->booking_id= $booking->id;
             Log::info('web.php: [/new-booking] - Insert repeat ['.$repeat.']');
@@ -114,7 +121,65 @@ Route::post('/new-booking', function(\Illuminate\Http\Request $request) {
         //Multiple event
         if($typeOfRepeat == 2) {
             
+            $test = array();
+            
+            //data inizio ripetizione
+            $repeat_start_string = substr($repeat->event_date_start, 0, 10)." 00:00";
+            $repeat_start = date("d-m-Y G:i:s",strtotime($repeat_start_string));
+            
+            //data fine ripetizione
+            $repeat_end_string = substr($repeat->event_date_end, 0, 10)." 23:59";
+            $repeat_end = date("d-m-Y G:i:s",strtotime($repeat_end_string));
+            
             $weekRepeats = $request['type_repeat'];
+            $coutnWeekRepeats = count($weekRepeats);
+            
+            if($weekRepeats != null && $coutnWeekRepeats > 0) {
+                
+                $dayofweekStartEvent = date('w', strtotime($repeat_start));
+                
+                for($i = 0; $i < $coutnWeekRepeats; $i++) {
+                    
+                    $newdate = strtotime ( $weekRepeats[$i].' day' , strtotime ( $repeat_start ) ) ; // facciamo l'operazione
+                    $newdate = date ( 'd-m-Y G:i:s', $newdate ); //trasformiamo la data nel formato accettato dal db YYYY-MM-DD
+                    $dayofweekRepeatTemp = date('w', strtotime($newdate));
+                    
+                    if($dayofweekStartEvent < $dayofweekRepeatTemp) {
+                        if($newdate <= $repeat_end) {
+                            array_push($test, $newdate);
+                        }
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+            /*
+            if($weekRepeats != null && count($weekRepeats) > 0) {
+                for($i = 0; $i < count($weekRepeats); $i++) {
+                    $multipleRepeat = new App\Repeat;
+                    
+                        //$dayofweek = date('w', strtotime($date));
+                        //$result    = date('Y-m-d', strtotime(($day - $dayofweek).' day', strtotime($date))); 
+                     
+                    $multipleRepeat->dayofweek = date('w', strtotime($repeat_start_string));
+                    $multipleRepeat->dayofweek2 = date('w', strtotime($repeat_end_string));
+                
+                    
+                    $multipleRepeat->booking_id= $booking->id;
+                    $multipleRepeat->tip_booking_status_id = 1;
+                    $date_from = 'detail_day_from_'.$weekRepeats[$i];
+                    $date_to = 'detail_day_to_'.$weekRepeats[$i];
+                    $multipleRepeat->day = $weekRepeats[$i];
+                    $multipleRepeat->from = $request[$date_from];
+                    $multipleRepeat->to = $request[$date_to];
+                    array_push($test, $multipleRepeat);
+                }
+            }
+            */
+            return view('pages/testInsert', ['testDate' => $test]);
             
         }
         

@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Session::has('session_id') && Session::get('ruolo') == 'admin')
+                        @if(Session::has('session_id') && Session::get('ruolo') != 'Studenti')
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>

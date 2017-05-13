@@ -35,7 +35,7 @@
         'index_calendar_types_event' => 'Tipologie Eventi',
         'index_calendar_requested' => 'Richiesta',
         'index_calendar_in_process' => 'In lavorazione',
-        'index_calendar_managed' => 'Gestista',
+        'index_calendar_managed' => 'Gestita',
         'index_calendar_rejected' => 'Scartata',
         'index_calendar_generic' => 'Generico',
         'index_calendar_seminary' => 'Seminario',

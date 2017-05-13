@@ -220,9 +220,9 @@
             
             }
             
-            function rejectBooking(idBooking) {
+            function rejectBooking(idRepeat) {
             
-                var data = {'id_booking': idBooking};
+                var data = {'id_repeat': idRepeat};
                 $.ajax({
 
                     url: "{{URL::to('/reject-booking')}}",
@@ -230,7 +230,7 @@
                     dataType: 'json',
                     data: data,
                     success: function() {
-                        var elementToChange = "#"+idBooking;
+                        var elementToChange = "#"+idRepeat;
                         $(elementToChange).addClass("collapse out"); 
                         searchBookingsByIdStatus(1);
                         searchBookingsByIdStatus(2);
