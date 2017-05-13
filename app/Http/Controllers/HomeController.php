@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -25,4 +24,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    
+    public function getHome() {
+        
+        Log::info('HomeController - getHome()');
+        Session::set('applocale', Config::get('app.locale'));
+        $groupsList = App\Group::all();
+        return view('pages/index', [ 'groupsList' => $groupsList ]);
+        
+    }
+    
 }

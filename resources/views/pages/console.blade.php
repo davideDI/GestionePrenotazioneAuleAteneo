@@ -158,7 +158,7 @@
                         result += "<tbody>";
                         for(var j=0; j < bookings.length; j++) {
                             for(var k=0; k < bookings[j].repeats.length; k++) {
-                                result += "<tr id='"+bookings[j].id+"'>";
+                                result += "<tr id='"+bookings[j].repeats[k].id+"'>";
                                     result += "<td>";
                                         result += bookings[j].name;
                                     result += "</td>";
