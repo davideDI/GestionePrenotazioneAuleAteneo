@@ -39,6 +39,13 @@ class SoapController extends Controller {
             return true;
         }
         
+        else if($username == 'rossi') {
+            
+            $this->wsGetUdDocPart();
+            return true;
+            
+        }
+        
         else {
             return false;
         }
@@ -112,7 +119,7 @@ class SoapController extends Controller {
         
         $matricola = session('matricola');
         
-        if($matricola == 'davide@davide.it' || $matricola == 'ateneo@ateneo.it') {
+        if($matricola == 'davide@davide.it' || $matricola == 'ateneo@ateneo.it' || $matricola == '001642') {
             return true;
         } else {
             return false;
@@ -149,6 +156,77 @@ class SoapController extends Controller {
         
         return redirect('/');
         
+    }
+    
+    public function wsGetUdDocPart() {
+        
+        $username = $_POST['username'];
+        $year = '2016';
+        Log::info('SoapController - wsGetUdDocPart('.$username.')');
+
+        $this->soapWrapper->add('GenericWSEsse3', function ($service) {
+            $service->wsdl('https://segreteriavirtuale.univaq.it/services/ESSE3WS?wsdl');
+        });
+
+        $params = 'AA_OFF_ID='.$year.';DOCENTE_MATRICOLA='.$username;
+
+        $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
+            'retrieve' => 'GET_UD_DOC_PART',
+            'params'   => $params
+        ]);
+
+        //Codice di risposta
+        $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
+
+        //se il codice di risposta è 1 non ci sono stati errori
+        if($responseCode == 1) {
+            $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
+            $list = $xml->children()->children();
+
+            $result = array();
+            $nome = "";
+            $cognome = "";
+            for($i = 0; $i < count($list); $i++) {
+                if((string)$list[$i]->AA_ORD_ID == $year) {
+                    $temp = (string)$list[$i]->CDS_COD." - ".(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD;
+                    Log::info('SoapController - wsGetUdDocPart('.$temp.')');
+                    $result += array(
+                        (string)$list[$i]->UD_COD => $temp,
+                        /*"CDS_COD" => (string)$list[$i]->CDS_COD,
+                        "CDS_DES" => (string)$list[$i]->CDS_DES,
+                        "DIP_COD" => (string)$list[$i]->DIP_COD,
+                        "DIP_DES" => (string)$list[$i]->DIP_DES,
+                        "AA_ORD_ID" => (string)$list[$i]->AA_ORD_ID,
+                        "PDS_COD" => (string)$list[$i]->PDS_COD,
+                        "PDS_DES" => (string)$list[$i]->PDS_DES,
+                        "AD_COD" => (string)$list[$i]->AD_COD,
+                        "AD_DES" => (string)$list[$i]->AD_DES,
+                        "UD_COD" => (string)$list[$i]->UD_COD,
+                        "UD_DES" => (string)$list[$i]->UD_DES,
+                        "AR_ID" => (string)$list[$i]->AR_ID,
+                        "DOCENTE_MATRICOLA" => (string)$list[$i]->DOCENTE_MATRICOLA,
+                        "DOCENTE_NOME" => (string)$list[$i]->DOCENTE_NOME,
+                        "DOCENTE_COGNOME" => (string)$list[$i]->DOCENTE_COGNOME,
+                        "SEDE_DES" => (string)$list[$i]->SEDE_DES,
+                        "MASTER_FLG" => (string)$list[$i]->MASTER_FLG,
+                        "TIPO_CORSO" => (string)$list[$i]->TIPO_CORSO,
+                        "CFU_TOTALI_AD" => (string)$list[$i]->CFU_TOTALI_AD,
+                        "ORE_PREVISTE_MODULO" => (string)$list[$i]->ORE_PREVISTE_MODULO,
+                        "ORE_PREVISTE_AD" => (string)$list[$i]->ORE_PREVISTE_AD   */                     
+                    );
+                    $nome = (string)$list[$i]->DOCENTE_NOME;
+                    $cognome = (string)$list[$i]->DOCENTE_COGNOME;
+                }
+            }
+            session(['session_id' => 'id_test']);
+            session(['source_id'  => $username]);
+            session(['nome'       => $nome]);
+            session(['cognome'    => $cognome]);
+            session(['matricola'  => $username]);
+            session(['ruolo'      => 'docente']);
+            session(['listOfTeachings' => $result]);
+            return redirect('/');
+        }
     }
 
 }

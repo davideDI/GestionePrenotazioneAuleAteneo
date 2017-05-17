@@ -71,7 +71,12 @@ Route::post('/updateEvent', 'BookingController@updateEvent');
 
 /**************** LOGIN ******************************/
 /* Route di test per la chiamata al servizio login segreteria virtuale */
-Route::post('/login', 'SoapController@wsLogin'); 
+//Login Esse3
+//Route::post('/login', 'SoapController@wsLogin'); 
+//Inserendo la matricola docente l'utente viene autenticato in modo fittizio e vengono inserite in sessione
+//le info sulle properie materie
+//TODO Autenticazione con LDAP
+Route::post('/login', 'SoapController@wsGetUdDocPart'); 
 
 /**************** LOGOUT ******************************/
 Route::get('/logout', 'SoapController@wsLogout'); 

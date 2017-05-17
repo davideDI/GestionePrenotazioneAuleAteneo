@@ -152,11 +152,17 @@ class BookingController extends Controller {
         $groupsList = \App\Group::pluck('name', 'id');
         $resourceList =  \App\Resource::pluck('name', 'id');
         $tipEventList = \App\TipEvent::pluck('name', 'id');
+        
+        $listOfTeachings = "";
+        if(session('ruolo') == 'docente') {
+            $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
+        }
 
         return view('pages/new-booking', [  'booking'      => $booking,
                                             'groupsList'   => $groupsList,
                                             'resourceList' => $resourceList,
-                                            'tipEventList' => $tipEventList]);
+                                            'tipEventList' => $tipEventList,
+                                            'listOfTeachings' => $listOfTeachings]);
         
     }
     

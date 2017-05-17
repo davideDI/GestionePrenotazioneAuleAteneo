@@ -180,6 +180,21 @@
                                 ); !!}
                                 
                         </div>
+                    <!-- Booking : materie prof -->
+                        @if(Session::has('session_id') && Session::get('ruolo') == 'docente')
+                        <div class="col-md-6">
+                            {!! Form::label('teaching_id', trans('messages.booking_date_teachings')); !!}
+                            
+                            {!! Form::select(
+                                    'teaching_id', 
+                                    $listOfTeachings, 
+                                    null, 
+                                    ['class' => 'listOfTeachings',
+                                     'style' => 'width: 70%']
+                                ); !!}
+                                
+                        </div>
+                        @endif
                     </div>
                     
                     <!-- Resource details -->
@@ -215,6 +230,9 @@
                 });
                 $(".listOfTipEventsItems").select2({
                     placeholder: "{{ trans('messages.booking_type_event') }}"
+                });
+                $(".listOfTeachings").select2({
+                    placeholder: "{{ trans('messages.booking_date_select_teachings') }}"
                 });
                 getResources($("#group_id").val());
             });
