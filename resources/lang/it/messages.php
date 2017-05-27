@@ -130,6 +130,18 @@
         'console_manage' => 'Approva',
         'console_reject' => 'Respingi',
         
+        //Manage-resource page
+        'manage_resource_title' => 'Gestione Risorse',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',
         

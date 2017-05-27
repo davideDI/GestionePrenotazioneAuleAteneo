@@ -127,6 +127,18 @@
         'console_manage' => 'Approve',
         'console_reject' => 'Reject',
         
+        //Manage-resource page
+        'manage_resource_title' => 'Manage Resources',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        'manage_resource_' => '',
+        
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',
         
