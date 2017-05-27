@@ -105,7 +105,26 @@
                 </div>
                 
             </div>
-            
+
+            <!-- Modal for set information -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div id="modalBody" class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
    
         <!-- Select 2 -->
@@ -137,7 +156,7 @@
                     maxTime: "20:30:00", //Definizione orari max             
                     //defaultDate: '2016-12-12', Se non impostata la data di default viene presa la data odierna
                     navLinks: true, // can click day/week names to navigate views
-                    editable: false, // onclick sull'evento
+                    editable: true, // onclick sull'evento
                     locale: initialLocaleCode, //Lingua testi
                     eventDroppableEditable: false, //disabilitato il drop dell'evento
                     eventDurationEditable: false,  //disabilitato il resize dell'evento
@@ -151,7 +170,7 @@
                                 //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
                                 //in stato 3 [Gestita]
                                 @if(!Session::has('ruolo') || Session::get('ruolo') == 'Studenti')
-                                    @if($booking->tip_booking_status_id == 3)
+                                    @if($repeat->tip_booking_status_id == 3)
                                         {
                                             id         : '{{$booking->id}}',
                                             title      : '{{$booking->name}}',
@@ -171,7 +190,7 @@
                                     @endif 
                                 //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
                                 //in stato 3 [Gestita]
-                                @elseif(Session::has('ruolo') || Session::get('ruolo') != 'Studenti')
+                                @elseif(Session::has('ruolo') && Session::get('ruolo') != 'Studenti')
                                         {
                                             id         : '{{$booking->id}}',
                                             title      : '{{$booking->name}}',
@@ -284,7 +303,35 @@
                         //viene apportata la modifica nel calendario
                         $('#calendar').fullCalendar('updateEvent', calEvent);
                         */
-                       return false;
+                        $.ajax({
+                            data : {'booking_id' : calEvent.id },
+                            url : "{{URL::to('/booking')}}",
+                            dataType : 'json',
+                            type : 'POST',
+                            success : function (result) {
+                                $('#myModalLabel').html("<p>" + result[0].name + "</p>");
+                                var textForModal = "";
+                                textForModal += "<p><strong>" + result[0].description + "</strong></p>";
+                                textForModal += "<p><strong>{{trans('messages.index_calendar_booked_at')}}</strong>" + moment(result[0].created_at).format("DD-MM-YYYY HH:mm:ss") + "</p>";
+                                textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user_id + "</p>";
+                                textForModal += "<p><strong>{{trans('messages.index_calendar_num_students')}}</strong>" + result[0].num_students + "</p>";
+                                textForModal += "<p><strong>{{trans('messages.index_calendar_event')}}</strong>" + result[0].tip_event.name + "</p>";
+                                textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
+                                for (var x=0; x < result[0].repeats.length; x++) {
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_event_start')}}</strong>" + moment(result[0].repeats[x].event_date_start).format("DD-MM-YYYY HH:mm:ss") + "</p>";
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
+                                }
+                                $('#modalBody').html(textForModal);
+                                $('#myModal').modal('show');
+                            },
+                            
+                            error : function(err) {
+                                console.log(err);
+                            }
+                        });
+                       
+                        return false;
+                        
                     }
 
                 });

@@ -16,6 +16,8 @@
         'home_login' => 'Login',
         'home_logout' => 'Logout',
         'home_console' => 'Console',
+        'home_acl' => 'ACL',
+        'home_manage_resources' => 'Gestione Risorse',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
         
         //Messages from home page
@@ -42,6 +44,13 @@
         'index_calendar_exam' => 'Esame',
         'index_calendar_lesson' => 'Lezione',
         'index_calendar_capacity' => 'Posti',
+        'index_calendar_booked_at' => 'Prenotato il : ',
+        'index_calendar_num_students' => 'Studenti previsti : ',
+        'index_calendar_event' => 'Evento : ',
+        'index_calendar_repeats' => 'Ripetizioni',
+        'index_calendar_event_start' => 'Inizio evento : ',
+        'index_calendar_event_end' => 'Fine evento : ',
+        'index_calendar_booked_by' => 'Prenotato da : ',
         
         //Messages from common
         'common_save' => 'Salva',

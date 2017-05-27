@@ -16,6 +16,8 @@
         'home_login' => 'Login',
         'home_logout' => 'Logout',
         'home_console' => 'Console',
+        'home_acl' => 'ACL',
+        'home_manage_resources' => 'Manage Resources',
         'home_meta_description' => 'Booking Rooms and Laboratory - Univaq',
         
         //Messages from home page
@@ -42,6 +44,13 @@
         'index_calendar_exam' => 'Exam',
         'index_calendar_lesson' => 'Lesson',
         'index_calendar_capacity' => 'Seats',
+        'index_calendar_booked_at' => 'Booked at : ',
+        'index_calendar_num_students' => 'Num Students : ',
+        'index_calendar_event' => 'Event : ',
+        'index_calendar_repeats' => 'Repeats',
+        'index_calendar_event_start' => 'Event start : ',
+        'index_calendar_event_end' => 'Event end : ',
+        'index_calendar_booked_by' => 'Booked by : ',
         
         ///Messages from common
         'common_save' => 'Save',

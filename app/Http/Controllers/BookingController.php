@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller {
 
+    public function getBooking(Request $request) {
+        
+        Log::info('BookingController - getBooking()');
+        $booking = \App\Booking::with('repeats', 'tipEvent')->where('id', $request['booking_id'])->get();
+        return $booking;
+        
+    }
+    
     public function insertNewBooking(Request $request) {
         
         date_default_timezone_set('Europe/Rome');
@@ -55,6 +63,9 @@ class BookingController extends Controller {
             } 
 
             //Multiple event
+            //TODO in sospeso : permettere l'inserimento di una singola prenotazione
+            //o al max di prenotazioni all'interno di una settimana
+            //Creare funzionalità di copia e incolla di una intera settimana ( per la segreteria )
             if($typeOfRepeat == 2) {
 
                 $test = array();
@@ -62,59 +73,53 @@ class BookingController extends Controller {
                 //data inizio ripetizione
                 $repeat_start_string = substr($repeat->event_date_start, 0, 10)." 00:00";
                 $repeat_start = date("d-m-Y G:i:s",strtotime($repeat_start_string));
-
+                
                 //data fine ripetizione
                 $repeat_end_string = substr($repeat->event_date_end, 0, 10)." 23:59";
                 $repeat_end = date("d-m-Y G:i:s",strtotime($repeat_end_string));
-
+                
                 $weekRepeats = $request['type_repeat'];
-                $coutnWeekRepeats = count($weekRepeats);
+                $countWeekRepeats = count($weekRepeats);
+                
+                $flagDate = $repeat_start;
+                Log::info('BookingController - inizio ripetizione ['.$flagDate.']');
+                if($weekRepeats != null && $countWeekRepeats > 0) {
 
-                if($weekRepeats != null && $coutnWeekRepeats > 0) {
+                    do {
+                        $dayofweekStartEvent = date('w', strtotime($repeat_start));
+                        
+                        for($i = 0; $i < $countWeekRepeats; $i++) {
 
-                    $dayofweekStartEvent = date('w', strtotime($repeat_start));
+                            $newdate = strtotime ( $weekRepeats[$i].' day' , strtotime ( $repeat_start ) ) ; // facciamo l'operazione
+                            $newdate = date ( 'd-m-Y G:i:s', $newdate ); //trasformiamo la data nel formato accettato dal db YYYY-MM-DD
+                            $dayofweekRepeatTemp = date('w', strtotime($newdate));
 
-                    for($i = 0; $i < $coutnWeekRepeats; $i++) {
-
-                        $newdate = strtotime ( $weekRepeats[$i].' day' , strtotime ( $repeat_start ) ) ; // facciamo l'operazione
-                        $newdate = date ( 'd-m-Y G:i:s', $newdate ); //trasformiamo la data nel formato accettato dal db YYYY-MM-DD
-                        $dayofweekRepeatTemp = date('w', strtotime($newdate));
-
-                        if($dayofweekStartEvent < $dayofweekRepeatTemp) {
-                            if($newdate <= $repeat_end) {
-                                array_push($test, $newdate);
+                            if($dayofweekStartEvent <= $dayofweekRepeatTemp) {
+                                if($newdate <= $repeat_end) {
+                                    array_push($test, $newdate);
+                                    $flagDate = $newdate;
+                                    Log::info('BookingController - data intermedia ['.$flagDate.']');
+                                }
                             }
+
                         }
-
-                    }
-
-
+                        
+                        $dayofweekFlagDate = date('w', strtotime($flagDate));
+                        Log::info('BookingController - Insert repeat ['.$dayofweekFlagDate.']');
+                        do {
+                           $flagDate = strtotime ( '1 day' , strtotime ($flagDate ) ) ;
+                           $flagDate = date ( 'd-m-Y G:i:s', $flagDate );
+                           $dayofweekFlagDate = date('w', strtotime($flagDate));
+                           Log::info('BookingController - new interval ['.$flagDate.']');
+                        } while($dayofweekFlagDate == 1);
+                        
+                        $repeat_start = strtotime ( '1 week' , strtotime ($repeat_start ) ) ;
+                        $repeat_start = date ( 'd-m-Y G:i:s', $repeat_start );
+                        
+                    } while($flagDate <= $repeat_end);
+                    
                 }
-
-
-                /*
-                if($weekRepeats != null && count($weekRepeats) > 0) {
-                    for($i = 0; $i < count($weekRepeats); $i++) {
-                        $multipleRepeat = new App\Repeat;
-
-                            //$dayofweek = date('w', strtotime($date));
-                            //$result    = date('Y-m-d', strtotime(($day - $dayofweek).' day', strtotime($date))); 
-
-                        $multipleRepeat->dayofweek = date('w', strtotime($repeat_start_string));
-                        $multipleRepeat->dayofweek2 = date('w', strtotime($repeat_end_string));
-
-
-                        $multipleRepeat->booking_id= $booking->id;
-                        $multipleRepeat->tip_booking_status_id = 1;
-                        $date_from = 'detail_day_from_'.$weekRepeats[$i];
-                        $date_to = 'detail_day_to_'.$weekRepeats[$i];
-                        $multipleRepeat->day = $weekRepeats[$i];
-                        $multipleRepeat->from = $request[$date_from];
-                        $multipleRepeat->to = $request[$date_to];
-                        array_push($test, $multipleRepeat);
-                    }
-                }
-                */
+                
                 return view('pages/testInsert', ['testDate' => $test]);
 
             }

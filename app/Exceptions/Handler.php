@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -46,11 +47,12 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         
-        if ($exception instanceof \SoapFault){
-            return redirect('/')->withErrors([-1]);
-        }
+//        if ($exception instanceof \SoapFault){
+//            return redirect('/')->withErrors([-1]);
+//        }
         
         if ($exception instanceof TokenMismatchException){
+            Log::error('Handler - TokenMismatchException : ['.$exception->getMessage().']');
             return redirect('/')->withErrors([-1]);
         }
         

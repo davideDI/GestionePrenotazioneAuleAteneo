@@ -2,7 +2,7 @@
     @section('content')
     
     @foreach($testDate as $t)
-        {{$t}}
+        {{$t}} <br>
     @endforeach
     
     

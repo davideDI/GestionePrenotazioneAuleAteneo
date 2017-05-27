@@ -23,7 +23,15 @@ Route::get('/print', 'PrintController@getPrintView')->name('printView');
 /**************** SEARCH ******************************/
 Route::get('/search', 'SearchController@getSearchView')->name('search');
 
+/**************** MANAGE RESOURCES ******************************/
+Route::get('/manage-resources', 'ResourceController@getResourceView')->name('manage_resources');
+
+/**************** ACL ******************************/
+Route::get('/acl', 'AclController@getAclView')->name('acl');
+
 /**************** BOOKING ******************************/
+Route::post('/booking', 'BookingController@getBooking')->name('booking');
+
 /* Visualizzazione prenotazioni in base a id group */
 Route::get('/bookings/{idGroup}', 'BookingController@getBookingsByIdGroup')->name('bookings')->where('idGroup', '[0-9]+');
 
@@ -72,15 +80,14 @@ Route::post('/updateEvent', 'BookingController@updateEvent');
 /**************** LOGIN ******************************/
 /* Route di test per la chiamata al servizio login segreteria virtuale */
 //Login Esse3
-//Route::post('/login', 'SoapController@wsLogin'); 
+Route::post('/login', 'SoapController@wsLogin'); 
 //Inserendo la matricola docente l'utente viene autenticato in modo fittizio e vengono inserite in sessione
 //le info sulle properie materie
 //TODO Autenticazione con LDAP
-Route::post('/login', 'SoapController@wsGetUdDocPart'); 
+//Route::post('/login', 'SoapController@wsGetUdDocPart'); 
 
 /**************** LOGOUT ******************************/
 Route::get('/logout', 'SoapController@wsLogout'); 
-
 
 /**************** TEST ESPOSIZIONE SERVIZI ******************************/
 // API routes

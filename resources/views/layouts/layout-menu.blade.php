@@ -117,17 +117,6 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ url('/logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        {{ trans('messages.home_logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
                                 @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
                                 <li>
                                     <a href="{{ url('/console') }}">
@@ -135,6 +124,34 @@
                                     </a>
                                 </li>
                                 @endif
+                                
+                                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                <li>
+                                    <a href="{{ url('/acl') }}">
+                                        {{ trans('messages.home_acl') }}
+                                    </a>
+                                </li>
+                                @endif
+                                
+                                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                <li>
+                                    <a href="{{ url('/manage-resources') }}">
+                                        {{ trans('messages.home_manage_resources') }}
+                                    </a>
+                                </li>
+                                @endif
+                                
+                                <li>
+                                    <a href="{{ url('/logout') }}"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                        {{ trans('messages.home_logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                     @endif
