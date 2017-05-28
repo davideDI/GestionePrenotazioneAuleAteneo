@@ -10,11 +10,20 @@
                         class="listOfGroups" 
                         style="width: 20%">
                     @foreach($groupList as $group)
-                        <option value="">
-                            {{$group->name}} 
+                        <option></option>
+                        <option value="{{URL::to('/manage-resources', $group->id)}}">
+                            {{$group->name}}
                         </option>
                     @endforeach
                 </select>
+                
+                <a class="btn btn-primary" href="{{URL::to('/insert-group')}}">
+                    {{ trans('messages.manage_resource_inset_group') }}
+                </a>
+                
+                <a class="btn btn-primary" href="{{URL::to('/insert-resource')}}">
+                    {{ trans('messages.manage_resource_inset_resource') }}
+                </a>
                 
             </div>
         </div>
@@ -69,19 +78,15 @@
                     </table>
                 </div>
                 @else
-                    <p>{{trans('messages.manage_resource_')}}</p>
+                <p style="text-align: center"><strong>{{trans('messages.manage_resource_no_resources')}}</strong></p>
                 @endif
             </div>
         </div>
     
         <script type="text/javascript">
-            $(document).ready(function() {
-                $(".listOfResources").select2({
-                   
-                });
-                
+            $(document).ready(function() {              
                 $(".listOfGroups").select2({
-                   
+                    placeholder: "{{ $selectedGroup->name }}"
                 });
             });
         </script>

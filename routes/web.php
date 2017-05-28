@@ -26,6 +26,16 @@ Route::get('/search', 'SearchController@getSearchView')->name('search');
 /**************** MANAGE RESOURCES ******************************/
 Route::get('/manage-resources', 'ResourceController@getResourceView')->name('manage_resources');
 
+Route::get('/manage-resources/{idGroup}', 'ResourceController@getResourceFromId')->name('manage_resources_from_id')->where('idGroup', '[0-9]+');
+
+Route::get('/insert-group', 'ResourceController@getInsertGroupView')->name('manage_resources_insert_resource');
+
+Route::post('/insert-group', 'ResourceController@insertGroup');
+
+Route::get('/insert-resource', 'ResourceController@getInsertResourceView')->name('manage_resources_insert_group');
+
+Route::post('/insert-resource', 'ResourceController@insertResource');
+
 /**************** ACL ******************************/
 Route::get('/acl', 'AclController@getAclView')->name('acl');
 
