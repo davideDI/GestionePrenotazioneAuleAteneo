@@ -82,7 +82,7 @@ class AdminController extends Controller {
             }
         }
         
-        return view('pages/console', [  'quequedBookings'   => $quequedBookings,
+        return view('pages/console/console', [  'quequedBookings'   => $quequedBookings,
                                         'workingBookings'   => $workingBookings,
                                         'confirmedBookings' => $confirmedBookings,
                                         'rejectedBookings'  => $rejectedBookings,
@@ -150,7 +150,7 @@ class AdminController extends Controller {
         
         $bookings = \App\Booking::where('user_id', 1)->simplePaginate(3);
         
-        return view('pages/test', [  'bookings'   => $bookings]);
+        return view('pages/test/test', [  'bookings'   => $bookings]);
         
     }
     

@@ -120,7 +120,7 @@ class BookingController extends Controller {
                     
                 }
                 
-                return view('pages/testInsert', ['testDate' => $test]);
+                return view('pages/test/testInsert', ['testDate' => $test]);
 
             }
 
@@ -163,11 +163,11 @@ class BookingController extends Controller {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
 
-        return view('pages/new-booking', [  'booking'      => $booking,
-                                            'groupsList'   => $groupsList,
-                                            'resourceList' => $resourceList,
-                                            'tipEventList' => $tipEventList,
-                                            'listOfTeachings' => $listOfTeachings]);
+        return view('pages/booking/new-booking', [  'booking'      => $booking,
+                                                    'groupsList'   => $groupsList,
+                                                    'resourceList' => $resourceList,
+                                                    'tipEventList' => $tipEventList,
+                                                    'listOfTeachings' => $listOfTeachings]);
         
     }
     
@@ -183,12 +183,12 @@ class BookingController extends Controller {
         $eventsType = \App\TipEvent::all();
         $bookingsStatus = \App\TipBookingStatus::all();
         
-        return view('pages/index-calendar', [ 'selectedResource' => $firstResource,
-                                              'resources'    => $resources, 
-                                              'group'        => $group,
-                                              'eventsType'   => $eventsType,
-                                              'bookingsStatus'=> $bookingsStatus,
-                                              'bookings'     => $bookings]);
+        return view('pages/booking/index-calendar', [   'selectedResource' => $firstResource,
+                                                        'resources'    => $resources, 
+                                                        'group'        => $group,
+                                                        'eventsType'   => $eventsType,
+                                                        'bookingsStatus'=> $bookingsStatus,
+                                                        'bookings'     => $bookings]);
         
     }
     
@@ -204,12 +204,12 @@ class BookingController extends Controller {
         $eventsType = \App\TipEvent::all();
         $bookingsStatus = \App\TipBookingStatus::all();
         
-        return view('pages/index-calendar', [ 'bookings' => $bookings,
-                                              'selectedResource' => $resource,
-                                              'resources' => $resources,
-                                              'eventsType'   => $eventsType,
-                                              'bookingsStatus'=> $bookingsStatus,
-                                              'group' => $group]);
+        return view('pages/booking/index-calendar', [   'bookings' => $bookings,
+                                                        'selectedResource' => $resource,
+                                                        'resources' => $resources,
+                                                        'eventsType'   => $eventsType,
+                                                        'bookingsStatus'=> $bookingsStatus,
+                                                        'group' => $group]);
         
     }
     

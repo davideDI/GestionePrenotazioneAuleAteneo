@@ -15,7 +15,7 @@ class ResourceController extends Controller {
         $groupDefault = $groupList->first();
         $resourceList = \App\Resource::where('group_id', $groupDefault->id)->get();
         
-        return view('pages/resources', ['selectedGroup' => $groupDefault, 'groupList' => $groupList, 'resourceList' => $resourceList]);
+        return view('pages/resources/resources', ['selectedGroup' => $groupDefault, 'groupList' => $groupList, 'resourceList' => $resourceList]);
         
     }
     
@@ -27,7 +27,7 @@ class ResourceController extends Controller {
         $groupList = \App\Group::all();
         $resourceList = \App\Resource::where('group_id', $group->id)->get();
         
-        return view('pages/resources', ['selectedGroup' => $group, 'groupList' => $groupList, 'resourceList' => $resourceList]);
+        return view('pages/resources/resources', ['selectedGroup' => $group, 'groupList' => $groupList, 'resourceList' => $resourceList]);
         
     }
     
@@ -36,7 +36,7 @@ class ResourceController extends Controller {
         $resource = new \App\Resource;
         $tipResourceList = \App\TipResource::pluck('name', 'id');
         $groupList = \App\Group::pluck('name', 'id');
-        return view('pages/insert-resource', ['resource' => $resource, 'groupList' => $groupList, 'tipResourceList' => $tipResourceList]);
+        return view('pages/resources/insert-resource', ['resource' => $resource, 'groupList' => $groupList, 'tipResourceList' => $tipResourceList]);
         
     }
     
@@ -57,11 +57,29 @@ class ResourceController extends Controller {
         
     }
     
+    public function updateResourceView($idResource) {
+        
+        $resource = \App\Resource::find($idResource);
+        $tipResourceList = \App\TipResource::pluck('name', 'id');
+        $groupList = \App\Group::pluck('name', 'id');
+        return view('pages/resources/update-resource', ['resource' => $resource, 'tipResourceList' => $tipResourceList, 'groupList' => $groupList]);
+        
+    }
+    
+    public function updateResource(Request $request) {
+        
+        $resource = \App\Resource::find($request->id);
+        $resource->fill($request->all());
+        $resource->save();
+        return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 100);
+        
+    }
+    
     public function getInsertGroupView() {
         
         $group = new \App\Group;
         $tipGroupList = \App\TipGroup::pluck('name', 'id');
-        return view('pages/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
+        return view('pages/resources/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
         
     }
     

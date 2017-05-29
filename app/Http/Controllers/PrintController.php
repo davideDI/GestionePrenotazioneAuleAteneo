@@ -9,7 +9,7 @@ class PrintController extends Controller {
     public function getPrintView() {
         
         Log::info('PrintController - getPrintView()');
-        return view('pages/print');
+        return view('pages/print/print');
     
     }
     

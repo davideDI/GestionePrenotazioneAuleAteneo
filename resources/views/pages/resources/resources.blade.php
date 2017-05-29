@@ -16,14 +16,15 @@
                         </option>
                     @endforeach
                 </select>
-                
-                <a class="btn btn-primary" href="{{URL::to('/insert-group')}}">
-                    {{ trans('messages.manage_resource_inset_group') }}
-                </a>
-                
-                <a class="btn btn-primary" href="{{URL::to('/insert-resource')}}">
-                    {{ trans('messages.manage_resource_inset_resource') }}
-                </a>
+                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                    <a class="btn btn-primary" href="{{URL::to('/insert-group')}}">
+                        {{ trans('messages.manage_resource_inset_group') }}
+                    </a>
+
+                    <a class="btn btn-primary" href="{{URL::to('/insert-resource')}}">
+                        {{ trans('messages.manage_resource_inset_resource') }}
+                    </a>
+                @endif
                 
             </div>
         </div>
@@ -34,6 +35,9 @@
                 <div class="table-responsive" id="content" style="margin-top: 10px">
                     <table class='table table-hover' style="font-size: 12px">
                         <thead>
+                            @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                            <th></th>
+                            @endif
                             <th>{{trans('messages.booking_date_resource')}}</th>
                             <th>{{trans('messages.booking_capacity')}}</th>
                             <th>{{trans('messages.booking_room_admin_email')}}</th>
@@ -55,6 +59,13 @@
                         <tbody>
                             @foreach($resourceList as $resource)
                                 <tr>    
+                                    @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                    <td>
+                                        <a href="{{URL::to('/resource', $resource->id)}}"
+                                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                        </a>
+                                    </td>
+                                    @endif
                                     <td>{{$resource->name}}</td>
                                     <td>{{$resource->capacity}}</td>
                                     <td>{{$resource->room_admin_email}}</td>

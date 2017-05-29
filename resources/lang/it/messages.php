@@ -104,6 +104,7 @@
         'booking_type_repeat_friday' => 'Venerdi',
         'booking_type_repeat_saturday' => 'Sabato',
         'booking_place_available' => 'Posti Disponibili',
+        'booking_warning_student' => 'Attenzione, la seguente prenotazione verrà registrata con la matricola associata al vostro account.',
         
         //Messages from help page
         'help_contact' => 'Contatti',

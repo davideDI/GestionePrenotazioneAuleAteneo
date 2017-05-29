@@ -9,7 +9,7 @@ class HelpController extends Controller {
     public function getHelpView() {
         
         Log::info('HelpController - getHelpView()');
-        return view('pages/help');
+        return view('pages/help/help');
         
     }
     

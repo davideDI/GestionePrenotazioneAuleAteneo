@@ -9,7 +9,7 @@ class SearchController extends Controller {
     public function getSearchView() {
         
         Log::info('SearchController - getSearchView()');
-        return view('pages/search');
+        return view('pages/search/search');
         
     }
     

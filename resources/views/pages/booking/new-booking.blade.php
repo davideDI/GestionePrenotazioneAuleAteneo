@@ -166,6 +166,7 @@
                                 
                         </div>
                     </div>
+                
                     <div class="form-group row">
                     <!-- Booking : id risorsa -->
                         <div class="col-md-6">
@@ -212,7 +213,16 @@
                         </div>
                     </div>
                     
-                    {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                            {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                        </div>
+                        @if(Session::has('session_id') && Session::get('ruolo') == 'Studenti')
+                        <div class="col-md-10">
+                            <b>{{ trans('messages.booking_warning_student') }}</b>
+                        </div>
+                        @endif
+                    </div>
                     
                 {!! Form::close() !!}
             </div>
@@ -250,6 +260,7 @@
                 $("#resource_id").val(null);
                 $("#resourceSelected").fadeOut('slow'); 
                 $("#noteResourceSelected").fadeOut('slow'); 
+                $("#capacityRoom").html("");
                 var selectedGroup = { 'idGroup' : idGroup};
                 $('#resource_id').select2({
                     placeholder : "{{ trans('messages.booking_date_select_resource') }}",

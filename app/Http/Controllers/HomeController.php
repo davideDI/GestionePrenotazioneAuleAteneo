@@ -32,7 +32,7 @@ class HomeController extends Controller
         Log::info('HomeController - getHome()');
         Session::set('applocale', Config::get('app.locale'));
         $groupsList = \App\Group::all();
-        return view('pages/index', [ 'groupsList' => $groupsList ]);
+        return view('pages/home/index', [ 'groupsList' => $groupsList ]);
         
     }
     

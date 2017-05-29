@@ -9,7 +9,7 @@ class AclController extends Controller {
     public function getAclView() {
         
         Log::info('AclController - getAclView()');
-        return view('pages/acl');
+        return view('pages/acl/acl');
         
     }
     

@@ -104,6 +104,7 @@
         'booking_type_repeat_friday' => 'Friday',
         'booking_type_repeat_saturday' => 'Saturday',
         'booking_place_available' => 'Places Available',
+        'booking_warning_student' => 'Please note that the following booking will be registered with the account number associated with your account.',
         
         //Messages from help page
         'help_contact' => 'Contact',

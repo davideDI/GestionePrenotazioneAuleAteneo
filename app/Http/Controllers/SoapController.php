@@ -187,11 +187,15 @@ class SoapController extends Controller {
             $nome = "";
             $cognome = "";
             for($i = 0; $i < count($list); $i++) {
-                if((string)$list[$i]->AA_ORD_ID == $year) {
-                    $temp = (string)$list[$i]->CDS_COD." - ".(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD;
-                    Log::info('SoapController - wsGetUdDocPart('.$temp.')');
+                if((string)$list[$i]->UD_COD != (string)$list[$i]->AD_COD) {
+                    $temp = (string)$list[$i]->CDS_COD." - ".(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID;
+                    Log::info('SoapController - wsGetUdDocPart('.(string)$list[$i]->UD_COD.':'.$temp.')');
                     $result += array(
-                        (string)$list[$i]->UD_COD => $temp,
+                        //TODO 
+                        //capire come gestire id della materia
+                        //se come chiave del json viene utilizzato il codice dell unita didattica
+                        //vengo creati elementi con chaive duplicata e quindi vengono eliminati automaticamente del json
+                        $i => $temp
                         /*"CDS_COD" => (string)$list[$i]->CDS_COD,
                         "CDS_DES" => (string)$list[$i]->CDS_DES,
                         "DIP_COD" => (string)$list[$i]->DIP_COD,
