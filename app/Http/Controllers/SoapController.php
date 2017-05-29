@@ -6,6 +6,7 @@ use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class SoapController extends Controller {
 
@@ -16,6 +17,8 @@ class SoapController extends Controller {
     }
   
     private function checkFakeUsersForLogin($username) {
+        
+        Log::info('SoapController - checkFakeUsersForLogin(username: '.$username.')');
         
         if($username == 'davide@davide.it') {
             session(['session_id' => '999ooo888iii']);
@@ -51,12 +54,12 @@ class SoapController extends Controller {
         }
     }
     
-    public function wsLogin() {
+    public function wsLogin(Request $request) {
         
         Log::info('SoapController - wsLogin()');
         
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = $request['username'];
+        $password = $request['password'];
         
         //gestione utenza fittizia per sviluppo
         if($this->checkFakeUsersForLogin($username)) {
@@ -117,6 +120,7 @@ class SoapController extends Controller {
     
     private function checkFakeUsersForLogout() {
         
+        Log::info('SoapController - checkFakeUsersForLogout()');
         $matricola = session('matricola');
         
         if($matricola == 'davide@davide.it' || $matricola == 'ateneo@ateneo.it' || $matricola == '001642') {
@@ -158,11 +162,13 @@ class SoapController extends Controller {
         
     }
     
-    public function wsGetUdDocPart() {
+    public function wsGetUdDocPart(Request $request) {
         
-        $username = $_POST['username'];
+        $username = $request['username'];
+        //TODO
+        //Inserire variabile anno per chiamata a servizio nel file di configurazione
         $year = '2016';
-        Log::info('SoapController - wsGetUdDocPart('.$username.')');
+        Log::info('SoapController - wsGetUdDocPart(username: '.$username.', year: '.$year.')');
 
         $this->soapWrapper->add('GenericWSEsse3', function ($service) {
             $service->wsdl('https://segreteriavirtuale.univaq.it/services/ESSE3WS?wsdl');

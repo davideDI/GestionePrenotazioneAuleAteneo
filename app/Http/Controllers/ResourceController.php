@@ -21,7 +21,7 @@ class ResourceController extends Controller {
     
     public function getResourceFromId($idGroup) {
         
-        Log::info('ResourcesController - getResourceFromId('.$idGroup.')');
+        Log::info('ResourcesController - getResourceFromId(idGroup: '.$idGroup.')');
         
         $group = \App\Group::find($idGroup);
         $groupList = \App\Group::all();
@@ -33,6 +33,8 @@ class ResourceController extends Controller {
     
     public function getInsertResourceView() {
         
+        Log::info('ResourcesController - getInsertResourceView()');
+        
         $resource = new \App\Resource;
         $tipResourceList = \App\TipResource::pluck('name', 'id');
         $groupList = \App\Group::pluck('name', 'id');
@@ -41,6 +43,8 @@ class ResourceController extends Controller {
     }
     
     public function insertResource(Request $request) {
+        
+        Log::info('ResourcesController - insertResource()');
         
         try {
             
@@ -59,6 +63,8 @@ class ResourceController extends Controller {
     
     public function updateResourceView($idResource) {
         
+        Log::info('ResourcesController - updateResourceView(idResource: '.$idResource.')');
+        
         $resource = \App\Resource::find($idResource);
         $tipResourceList = \App\TipResource::pluck('name', 'id');
         $groupList = \App\Group::pluck('name', 'id');
@@ -67,6 +73,8 @@ class ResourceController extends Controller {
     }
     
     public function updateResource(Request $request) {
+        
+        Log::info('ResourcesController - updateResource()');
         
         $resource = \App\Resource::find($request->id);
         $resource->fill($request->all());
@@ -77,6 +85,8 @@ class ResourceController extends Controller {
     
     public function getInsertGroupView() {
         
+        Log::info('ResourcesController - getInsertGroupView()');
+        
         $group = new \App\Group;
         $tipGroupList = \App\TipGroup::pluck('name', 'id');
         return view('pages/resources/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
@@ -84,6 +94,8 @@ class ResourceController extends Controller {
     }
     
     public function insertGroup(Request $request) {
+        
+        Log::info('ResourcesController - insertGroup()');
         
         try {
             

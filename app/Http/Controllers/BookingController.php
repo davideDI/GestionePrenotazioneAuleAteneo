@@ -10,8 +10,9 @@ class BookingController extends Controller {
 
     public function getBooking(Request $request) {
         
-        Log::info('BookingController - getBooking()');
-        $booking = \App\Booking::with('repeats', 'tipEvent')->where('id', $request['booking_id'])->get();
+        $bookingId = $request['booking_id'];
+        Log::info('BookingController - getBooking(bookingId: '.$bookingId.')');
+        $booking = \App\Booking::with('repeats', 'tipEvent')->where('id', $bookingId)->get();
         return $booking;
         
     }
@@ -133,18 +134,18 @@ class BookingController extends Controller {
         
     }
     
-    public function getListOfResourcesByIdGroup() {
+    public function getListOfResourcesByIdGroup(Request $request) {
         
-        $idGroup = $_POST['idGroup'];
-        Log::info('BookingController - getListOfResourcesByIdGroup('.$idGroup.')');
+        $idGroup = $request['idGroup'];
+        Log::info('BookingController - getListOfResourcesByIdGroup(idGroup: '.$idGroup.')');
         return \App\Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
         
     }
     
-    public function getSpecificResource() {
+    public function getSpecificResource(Request $request) {
         
-        $idResource = $_POST['id_resource'];
-        Log::info('BookingController - getSpecificResource('.$idResource.')');
+        $idResource = $request['id_resource'];
+        Log::info('BookingController - getSpecificResource(idResource: '.$idResource.')');
         return \App\Resource::find($idResource);
         
     }
@@ -174,7 +175,7 @@ class BookingController extends Controller {
     //Lista di tutte le prenotazioni per id group
     public function getBookingsByIdGroup($idGroup) {
         
-        Log::info('BookingController - getBookingsByIdGroup('.$idGroup.')');
+        Log::info('BookingController - getBookingsByIdGroup(idGroup: '.$idGroup.')');
         
         $group = \App\Group::find($idGroup);
         $resources = $group->resources;
@@ -195,7 +196,7 @@ class BookingController extends Controller {
     //Lista di tutte le prenotazioni per id group e id resource
     public function getBookingsByIdGroupIdResource($idGroup, $idResource) {
         
-        Log::info('BookingController - getBookingsByIdGroupIdResource('.$idGroup.', '.$idResource.')');
+        Log::info('BookingController - getBookingsByIdGroupIdResource(idGroup: '.$idGroup.', idResource: '.$idResource.')');
         
         $group = \App\Group::find($idGroup);
         $resources = $group->resources;
@@ -214,15 +215,14 @@ class BookingController extends Controller {
     }
     
     //metodo di test per l'update di una prenotazione tramite drug&drop o resize (disabilitato)
-    //TODO da modificare campi viste le modifiche alle tabelle
-    public function updateEvent() {
+    //TODO se da utilizzare aggiornare campi viste le modifiche alle tabelle
+    public function updateEvent(Request $request) {
         
         Log::info('BookingController - updateEvent()');
         
-        //prendo le info dall'array superglobale POST (da ristrutturare)
-        $idEvent    = $_POST['id_evento'];
-        $startEvent = $_POST['data_inizio'];
-        $endEvent   = $_POST['data_fine'];
+        $idEvent    = $request['id_evento'];
+        $startEvent = $request['data_inizio'];
+        $endEvent   = $request['data_fine'];
         
         try {
             //Effettuo l'udate
@@ -236,7 +236,7 @@ class BookingController extends Controller {
             
             $response = array(
                 'status' => 'success',
-                'msg' => 'A cannone',
+                'msg'    => 'A cannone',
             );
             return \Response::json($response);
             

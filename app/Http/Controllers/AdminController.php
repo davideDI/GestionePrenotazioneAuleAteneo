@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller {
 
     //Search Bookings By Id Status
-    public function getBookingsByIdStatus() {
-    
-        Log::info('AdminController - getBookingsByIdStatus()');
+    public function getBookingsByIdStatus(Request $request) {
         
         $user_id = session('source_id');
-        $idStatus = $_POST['id_status'];
+        $idStatus = $request['id_status'];
+        Log::info('AdminController - getBookingsByIdStatus(idStatus: '.$idStatus.')');
         
         //Groups amministrati dall'utente
         $groups = \App\Group::where('admin_id', $user_id)->get();
@@ -90,15 +90,14 @@ class AdminController extends Controller {
         
     }
     
-    public function getBookingsByIdGroup() {
+    public function getBookingsByIdGroup(Request $request) {
         
-        Log::info('AdminController - getBookingsByIdGroup()');
+        $idGroup = $request['id_group'];
+        Log::info('AdminController - getBookingsByIdGroup($idGroup: '.$idGroup.')');
         
-        $bookings   = array();
-        
-        $idGroup = $_POST['id_group'];
         $group = \App\Group::find($idGroup);
         
+        $bookings = array();
         //Per ogni risorsa associata ad un gruppo
         foreach($group->resources as $resource) {
             //Per ogni prenotazione associata ad una risorsa
@@ -117,11 +116,10 @@ class AdminController extends Controller {
         
     }
     
-    public function confirmBooking() {
+    public function confirmBooking(Request $request) {
         
-        $idRepeat = $_POST['id_repeat'];
-        
-        Log::info('AdminController - confirmBooking('.$idRepeat.')');
+        $idRepeat = $request['id_repeat'];
+        Log::info('AdminController - confirmBooking($idRepeat: '.$idRepeat.')');
         
         $repeat = \App\Repeat::find($idRepeat);
         $repeat->tip_booking_status_id = 3;
@@ -131,11 +129,10 @@ class AdminController extends Controller {
         
     }
     
-    public function rejectBooking() {
+    public function rejectBooking(Request $request) {
         
-        $idRepeat = $_POST['id_repeat'];
-        
-        Log::info('AdminController - rejectBooking('.$idRepeat.')');
+        $idRepeat = $request['id_repeat'];
+        Log::info('AdminController - rejectBooking($idRepeat: '.$idRepeat.')');
         
         $repeat = \App\Repeat::find($idRepeat);
         $repeat->tip_booking_status_id = 4;
@@ -148,8 +145,9 @@ class AdminController extends Controller {
     //test paginazione
     public function test() {
         
-        $bookings = \App\Booking::where('user_id', 1)->simplePaginate(3);
+        Log::info('AdminController - test()');
         
+        $bookings = \App\Booking::where('user_id', 1)->simplePaginate(3);
         return view('pages/test/test', [  'bookings'   => $bookings]);
         
     }
