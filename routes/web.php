@@ -61,15 +61,6 @@ Route::get('/new-booking', 'BookingController@getNewBookingForm')->name('newbook
 /* Inserimento nuova prenotazione e reindirizzamento verso il calendario prenotazioni */
 Route::post('/new-booking', 'BookingController@insertNewBooking');
 
-function date_change_format($setDate, $from='d-m-Y', $to='Y-m-d') {
-    if ($setDate != '') {
-        $date = DateTime::createFromFormat($from, $setDate);
-        return $date->format($to);
-    } else {
-        return '';
-    }
-}
-
 Route::post('/resource', 'BookingController@getSpecificResource');
 
 Route::post('/resources', 'BookingController@getListOfResourcesByIdGroup');
