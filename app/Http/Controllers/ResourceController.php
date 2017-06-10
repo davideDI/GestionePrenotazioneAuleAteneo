@@ -89,7 +89,7 @@ class ResourceController extends Controller {
         
         $group = new \App\Group;
         $tipGroupList = \App\TipGroup::pluck('name', 'id');
-        return view('pages/resources/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
+        return view('pages/group/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
         
     }
     
