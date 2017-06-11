@@ -72,44 +72,10 @@
                 <!-- Login -->
                 <li id="dropdown_login_error" class="dropdown">
                     @if(!Session::has('session_id'))
-                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-log-in"></span> 
-                            {{ trans('messages.home_login') }}
-                    </a>
-                    <div class="dropdown-menu" style="padding: 15px; padding-bottom: 10px;">
-                        <form class="form-inline"  method="post" action="{{ url('/login') }}" accept-charset="UTF-8">
-                            {{ csrf_field() }}
-                            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="username.." required autofocus="">
-
-                                    @if ($errors->has('username'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('username') }}</strong>
-                                        </span>
-                                        <script>
-                                            $("#dropdown_login_error").addClass("dropdown open");
-                                        </script>
-                                    @endif
-                            </div>
-
-                            <div style="margin-top: 5px;" class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <input id="password" type="password" class="form-control" name="password" placeholder="password.." required>
-
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                        <script>
-                                            $("#dropdown_login_error").addClass("dropdown open");
-                                        </script>
-                                    @endif
-                            </div>
-                            
-                            <div style="margin-top: 10px;" class="text-center">
-                                <input class="btn btn-primary" type="submit" name="submit" value="Login" />
-                            </div>
-                        </form>
-                    </div>
+                        <a class="dropdown-toggle" href="{{url('/login')}}">
+                            <span class="glyphicon glyphicon-log-in"></span> 
+                                {{ trans('messages.home_login') }}
+                        </a>
                     
                     @else
                         <li class="dropdown">

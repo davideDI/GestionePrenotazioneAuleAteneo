@@ -1,6 +1,6 @@
 <div class="row">
 
-    @if($errors->any())
+    @if(!empty($errors) && $errors->any())
     
         <div class="col-md-2"></div>
 
@@ -18,14 +18,14 @@
                     {{ trans('messages.'.$errors->first()) }}
                 </div>
 
-            <!-- Messaggi di Warning -->
+            <!-- Messaggi di Warning  -->
             @elseif($errors->first() >= 300 && $errors->first() < 500)
                 <div class="alert alert-warning" role="alert">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     {{ trans('messages.'.$errors->first()) }}
                 </div>
 
-            <!-- Messaggi di Errore -->
+            <!-- Messaggi di Errore  -->
             @elseif($errors->first() >= 500 && $errors->first() < 700)
                 <div class="alert alert-danger" role="alert">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

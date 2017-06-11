@@ -83,6 +83,8 @@ Route::post('/reject-booking', 'AdminController@rejectBooking');
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
 
 /**************** LOGIN ******************************/
+Route::get('/login', 'Auth\LoginController@getLoginView');
+
 /* Route di test per la chiamata al servizio login segreteria virtuale */
 //Login Esse3
 Route::post('/login', 'SoapController@wsLogin'); 

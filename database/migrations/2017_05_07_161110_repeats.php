@@ -13,7 +13,7 @@ class Repeats extends Migration {
             $table->increments('id')->comment('repeat id'); 
             
             $table->dateTime('event_date_start')->comment('start date');  
-            $table->dateTime('event_date_end')->comment('start end');  
+            $table->dateTime('event_date_end')->comment('end date');  
             
             //foreign bookings table
             $table->integer('booking_id')->unsigned()->comment('booking id'); 
@@ -30,7 +30,7 @@ class Repeats extends Migration {
 
     public function down() {
         
-        Schema::dropIfExists('surveys');
+        Schema::dropIfExists('repeats');
     
     }
     
