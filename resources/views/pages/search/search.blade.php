@@ -76,6 +76,7 @@
                         <br>
                         
                         <input type="button" class="btn btn-primary" value="{{ trans('messages.search_search_capacity') }}" onclick="searchByCapacity()">
+                        <br><br>
                         <input type="button" class="btn btn-primary" value="{{ trans('messages.search_search_free') }}" onclick="searchByFree()">
                         
                     </div>

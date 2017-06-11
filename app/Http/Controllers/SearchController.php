@@ -62,6 +62,23 @@ class SearchController extends Controller {
                 ->where('event_date_start', '>=', $date.' '.$date_start)
                 ->where('event_date_end', '<=',  $date.' '.$date_end)
                 ->get();
+                
+        /*
+         * 
+select * from resources left join bookings on bookings.resource_id = resources.id left join repeats on bookings.id = repeats.booking_id
+
+where 
+
+resources.group_id in (1)
+
+and 
+
+resources.capacity >= 11
+
+and
+
+not (repeats.event_date_start >= '2017-06-08 11:00:00' and repeats.event_date_end <= '2017-06-08 13:00:00')
+         */
         
         return $resourceList;
         
