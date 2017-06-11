@@ -147,6 +147,8 @@
         'search_group' => 'Groups',
         'search_date' => 'Day',
         'search_duration' => 'Duration',
+        'search_search_capacity' => 'Search for Capacities',
+        'search_search_free' => 'Search Free Rooms',
         
         
         //Success Messages [from 100 to 299]

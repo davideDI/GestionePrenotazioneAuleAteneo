@@ -150,6 +150,8 @@
         'search_group' => 'Gruppi',
         'search_date' => 'Giorno',
         'search_duration' => 'Durata',
+        'search_search_capacity' => 'Cerca Aule per Capienza',
+        'search_search_free' => 'Cerca Aule Libere',
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',

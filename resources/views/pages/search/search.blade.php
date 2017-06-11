@@ -12,7 +12,7 @@
                         <legend>{{ trans('messages.search_title') }}</legend> 
                         
                         <label for="groupSelected">{{ trans('messages.search_group') }}</label>
-                        <select id="list"  name="groupSelected"
+                        <select id="listOfGroups"  name="groupSelected"
                                 class="js-example-placeholder-multiple form-control"
                                 multiple="multiple"
                                 style="width: 100%">
@@ -71,7 +71,12 @@
                         <br>
                         
                         <label for="date_end">{{ trans('messages.index_calendar_event_end') }}</label>
-                        <input type="text" class="form-control" name="date_end" id="date_end" readonly="readonly" size="5">
+                        <input type="text" class="form-control" name="date_end" id="date_end" readonly="readonly" size="5" value="12:00">
+                        
+                        <br>
+                        
+                        <input type="button" class="btn btn-primary" value="{{ trans('messages.search_search_capacity') }}" onclick="searchByCapacity()">
+                        <input type="button" class="btn btn-primary" value="{{ trans('messages.search_search_free') }}" onclick="searchByFree()">
                         
                     </div>
                 </div>
@@ -81,13 +86,78 @@
             <!-- Sezione risultati -->
             <div class="col-md-9">
                 
-                
+                <div class="row">
+                        
+                    <div class="col-md-12" id="searchResult">
+                        
+                        
+                        
+                    </div>
+                    
+                </div>
                 
             </div>
         </div>
     
-         <!-- Select 2 -->
         <script type="text/javascript">
+            
+            function searchByCapacity() {
+                
+                var dataInput = {
+                    
+                    'listOfGroups' : $("#listOfGroups").val(),
+                    'capacity'     : $("#capacity").val(),
+                    'datepicker'   : $("#datepicker").val(),
+                    'date_start'   : $("#date_start").val(),
+                    'date_end'     : $("#date_end").val(),
+                    
+                };
+                
+                $.ajax({
+
+                    url: "{{URL::to('/search-by-capacity')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: dataInput,
+                    success: function(result) {
+                        console.log(result);
+                    },
+                    error: function(e) {
+                         console.log(e.responseText);
+                    },
+
+                });
+                
+            }
+            
+            function searchByFree() {
+                
+                var dataInput = {
+                    
+                    'listOfGroups' : $("#listOfGroups").val(),
+                    'capacity'     : $("#capacity").val(),
+                    'datepicker'   : $("#datepicker").val(),
+                    'date_start'   : $("#date_start").val(),
+                    'date_end'     : $("#date_end").val(),
+                    
+                };
+                
+                $.ajax({
+
+                    url: "{{URL::to('/search-by-free')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: dataInput,
+                    success: function(result) {
+                        console.log(result);
+                    },
+                    error: function(e) {
+                        console.log(e.responseText);
+                    },
+
+                });
+                
+            }
             
             $(document).ready(function() {
               $(".js-example-placeholder-multiple").select2({
@@ -100,16 +170,17 @@
             } );
             
             String.prototype.szZeroPad = function (i) {
-                    var str = this;
-                    var o = "";
-                    o = o+str;
-                    if (str.length<parseInt(i)) {
-                            for (var x=0; x<(parseInt(i) - str.length); x++) {
-                                    o = "0"+o;
-                            }
-                    }
-                    return o;
+                var str = this;
+                var o = "";
+                o = o+str;
+                if (str.length<parseInt(i)) {
+                        for (var x=0; x<(parseInt(i) - str.length); x++) {
+                                o = "0"+o;
+                        }
+                }
+                return o;
             }
+            
             function szAdjustEndTime() {
             
                 var i = document.getElementById('date_start').value;

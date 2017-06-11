@@ -23,6 +23,10 @@ Route::get('/print', 'PrintController@getPrintView')->name('printView');
 /**************** SEARCH ******************************/
 Route::get('/search', 'SearchController@getSearchView')->name('search');
 
+Route::post('/search-by-capacity', 'SearchController@searchByCapacity')->name('searchByCapacity');
+
+Route::post('/search-by-free', 'SearchController@searchByFree')->name('searchByFree');
+
 /**************** MANAGE RESOURCES ******************************/
 Route::get('/manage-resources', 'ResourceController@getResourceView')->name('manage_resources');
 
