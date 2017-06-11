@@ -144,6 +144,13 @@
         'manage_resource_' => '',
         'manage_resource_' => '',
         
+        //Search-page
+        'search_title' => 'Cerca Aule',
+        'search_capacity' => 'Capacità minima',
+        'search_group' => 'Gruppi',
+        'search_date' => 'Giorno',
+        'search_duration' => 'Durata',
+        
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',
         

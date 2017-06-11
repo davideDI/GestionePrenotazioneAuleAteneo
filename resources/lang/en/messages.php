@@ -141,6 +141,14 @@
         'manage_resource_' => '',
         'manage_resource_' => '',
         
+        //Search-page
+        'search_title' => 'Search Rooms',
+        'search_capacity' => 'Min capacity',
+        'search_group' => 'Groups',
+        'search_date' => 'Day',
+        'search_duration' => 'Duration',
+        
+        
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',
         

@@ -9,7 +9,10 @@ class SearchController extends Controller {
     public function getSearchView() {
         
         Log::info('SearchController - getSearchView()');
-        return view('pages/search/search');
+        
+        $groupList = \App\Group::all();
+       
+        return view('pages/search/search', ['groupsList' => $groupList]);
         
     }
     
