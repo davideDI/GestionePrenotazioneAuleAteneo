@@ -60,6 +60,10 @@
         'common_description' => 'Description',
         'common_danger' => 'Reservation Not Accepted!',
         'common_success' => 'Accepted Booking!',
+        'common_structure' => 'Strutcure',
+        'common_room_name' => 'Room\'s Name',
+        'common_email_adimn' => 'Email Admin',
+        'common_reservation' => 'Reserve',
         
         //Messages from insert booking
         'booking_title' => 'Insert new Booking',

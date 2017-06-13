@@ -60,6 +60,10 @@
         'common_description' => 'Descrizione',
         'common_danger' => 'Prenotazione Respinta!',
         'common_success' => 'Prenotazione Accettata!',
+        'common_structure' => 'Struttura',
+        'common_room_name' => 'Nome Aula',
+        'common_email_adimn' => 'Email Gestore',
+        'common_reservation' => 'Prenota',
         
         //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
@@ -152,6 +156,7 @@
         'search_duration' => 'Durata',
         'search_search_capacity' => 'Cerca Aule per Capienza',
         'search_search_free' => 'Cerca Aule Libere',
+        
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',

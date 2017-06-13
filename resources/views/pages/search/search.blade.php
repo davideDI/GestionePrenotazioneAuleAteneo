@@ -32,12 +32,12 @@
                         <br>
                         
                         <label for="date_search">{{ trans('messages.search_date') }}</label>
-                        <input type="text" class="form-control" name="date_search" id="datepicker" size="10">
+                        <input type="text" class="form-control" name="date_search" id="date_search" size="10">
                         
                         <br>
                         
                         <label for="date_start">{{ trans('messages.index_calendar_event_start') }}</label>
-                        <input type="time" class="form-control" name="date_start" id="date_start" min="08:00" max="20:30" value="10:00">
+                        <input type="time" class="form-control" name="date_start" id="date_start" onchange="szAdjustEndTime()" min="08:00" max="20:30" value="10:00">
                         
                         <br>
                         
@@ -108,9 +108,9 @@
                     
                     'listOfGroups' : $("#listOfGroups").val(),
                     'capacity'     : $("#capacity").val(),
-                    'datepicker'   : $("#datepicker").val(),
+                    'date_search'  : $("#date_search").val(),
                     'date_start'   : $("#date_start").val(),
-                    'date_end'     : $("#date_end").val(),
+                    'date_end'     : $("#date_end").val()
                     
                 };
                 
@@ -120,8 +120,49 @@
                     type: 'POST',
                     dataType: 'json',
                     data: dataInput,
-                    success: function(result) {
-                        console.log(result);
+                    success: function(resourcesList) {
+//                        console.log(resourcesList);
+                        var result = "";
+                        if(resourcesList.length > 0) {
+                            
+                            var result = "<table class='table table-hover'>";
+                                    result += "<thead>";
+                                        result += "<th>{{trans('messages.common_structure')}}</th>";
+                                        result += "<th>{{trans('messages.common_room_name')}}</th>";
+                                        result += "<th>{{trans('messages.common_description')}}</th>";
+                                        result += "<th>{{trans('messages.common_email_adimn')}}</th>";
+                                        result += "<th>{{trans('messages.booking_capacity')}}</th>";
+                                    result += "</thead>";
+                                    result += "<tbody>";
+                                    
+                                    for(var j=0; j < resourcesList.length; j++) {
+                                        
+                                        result += "<tr id='"+resourcesList[j].id+"'>";
+                                            result += "<td>";
+                                                result += resourcesList[j].name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].group.name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].description;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].room_admin_email;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].capacity;
+                                            result += "</td>";
+                                        result += "</tr>";
+                                        
+                                    }
+                                    
+                                    result += "</tbody>";
+                                result += "</table>";
+                        } else {
+                            result += "<p>{{ trans('') }}</p>";
+                        }
+                        $("#searchResult").html(result);
                     },
                     error: function(e) {
                          console.log(e.responseText);
@@ -137,7 +178,7 @@
                     
                     'listOfGroups' : $("#listOfGroups").val(),
                     'capacity'     : $("#capacity").val(),
-                    'datepicker'   : $("#datepicker").val(),
+                    'date_search'  : $("#date_search").val(),
                     'date_start'   : $("#date_start").val(),
                     'date_end'     : $("#date_end").val(),
                     
@@ -149,8 +190,53 @@
                     type: 'POST',
                     dataType: 'json',
                     data: dataInput,
-                    success: function(result) {
-                        console.log(result);
+                    success: function(resourcesList) {
+//                        console.log(resourcesList);
+                        var result = "";
+                        if(resourcesList.length > 0) {
+                            
+                            var result = "<table class='table table-hover'>";
+                                    result += "<thead>";
+                                        result += "<th>{{trans('messages.common_structure')}}</th>";
+                                        result += "<th>{{trans('messages.common_room_name')}}</th>";
+                                        result += "<th>{{trans('messages.common_description')}}</th>";
+                                        result += "<th>{{trans('messages.common_email_adimn')}}</th>";
+                                        result += "<th>{{trans('messages.booking_capacity')}}</th>";
+                                        result += "<th></th>";
+                                    result += "</thead>";
+                                    result += "<tbody>";
+                                    
+                                    for(var j=0; j < resourcesList.length; j++) {
+                                        
+                                        result += "<tr id='"+resourcesList[j].id+"'>";
+                                            result += "<td>";
+                                                result += resourcesList[j].name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].name_resource;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].description;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].room_admin_email;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += resourcesList[j].capacity;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += "<a href='{!!URL::to('/reserve'," + resourcesList[j].id + ")!!}'>{{trans('messages.common_reservation')}}</a>";
+                                            result += "</td>";
+                                        result += "</tr>";
+                                        
+                                    }
+                                    
+                                    result += "</tbody>";
+                                result += "</table>";
+                        } else {
+                            result += "<p>{{ trans('') }}</p>";
+                        }
+                        $("#searchResult").html(result);
                     },
                     error: function(e) {
                         console.log(e.responseText);
@@ -167,7 +253,7 @@
             });
         
             $( function() {
-                $( "#datepicker" ).datepicker({ dateFormat: 'dd-mm-yy' });
+                $( "#date_search" ).datepicker({ dateFormat: 'dd-mm-yy' });
             } );
             
             String.prototype.szZeroPad = function (i) {
