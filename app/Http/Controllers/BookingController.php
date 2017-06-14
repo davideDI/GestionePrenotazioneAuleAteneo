@@ -36,6 +36,11 @@ class BookingController extends Controller {
             $repeat = new \App\Repeat;
             $repeat->fill($request->all());
 
+            if(!is_numeric ( $booking->resource_id )) {
+                $resourceTemp  = \App\Resource::where('name', 'like', $booking->resource_id)->get();
+                $booking->resource_id = $resourceTemp[0]->id;
+            }
+            
             //Resource Object
             $resourceOfBooking = \App\Resource::find($booking->resource_id);
 
@@ -168,6 +173,28 @@ class BookingController extends Controller {
                                                     'groupsList'   => $groupsList,
                                                     'resourceList' => $resourceList,
                                                     'tipEventList' => $tipEventList,
+                                                    'listOfTeachings' => $listOfTeachings]);
+        
+    }
+    
+    public function getNewBookingFormWithResource($idResource) {
+        
+        Log::info('BookingController - getNewBookingFormWithResource('.$idResource.')');
+    
+        $booking = new \App\Booking;
+        $resource =  \App\Resource::find($idResource);
+        $group = \App\Group::find($resource->group_id);
+        $tipEventList = \App\TipEvent::pluck('name', 'id');
+        
+        $listOfTeachings = "";
+        if(session('ruolo') == 'docente') {
+            $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
+        }
+
+        return view('pages/booking/new-booking', [  'booking'         => $booking,
+                                                    'group'           => $group,
+                                                    'resource'        => $resource,
+                                                    'tipEventList'    => $tipEventList,
                                                     'listOfTeachings' => $listOfTeachings]);
         
     }

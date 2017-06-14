@@ -140,18 +140,26 @@
                 <hr>
                 
                     <div class="form-group row">
-                    <!-- Booking : id group -->
-                        <div class="col-md-6">
-                            {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
-                            
-                            {!! Form::select(
-                                    'group_id', 
-                                    $groupsList, 
-                                    null, 
-                                    ['class' => 'listOfGroupsItems',
-                                     'style' => 'width: 70%']
-                                ); !!}
-                        </div>
+                        @if(!empty($groupsList))
+                        <!-- Booking : id group - list -->
+                            <div class="col-md-6">
+                                {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
+
+                                {!! Form::select(
+                                        'group_id', 
+                                        $groupsList, 
+                                        null, 
+                                        ['class' => 'listOfGroupsItems',
+                                         'style' => 'width: 70%']
+                                    ); !!}
+                            </div>
+                        @else
+                        <!-- Booking : id group - single -->
+                            <div class="col-md-6">
+                                {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
+                                {!! Form::text('group_id', $group->name, ['class' => 'form-control', 'style' => 'width: 60%', 'readonly']); !!}
+                            </div>
+                        @endif
                     <!-- Booking : id tip evento -->
                         <div class="col-md-6">
                             {!! Form::label('tip_event_id', trans('messages.booking_event')); !!}
@@ -168,19 +176,27 @@
                     </div>
                 
                     <div class="form-group row">
-                    <!-- Booking : id risorsa -->
-                        <div class="col-md-6">
-                            {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
-                            
-                            {!! Form::select(
-                                    'resource_id', 
-                                    [], 
-                                    null, 
-                                    ['class' => 'listOfResourcesItems',
-                                     'style' => 'width: 70%']
-                                ); !!}
-                                
-                        </div>
+                        @if(!empty($resourceList))
+                        <!-- Booking : id risorsa - lista -->
+                            <div class="col-md-6">
+                                {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
+
+                                {!! Form::select(
+                                        'resource_id', 
+                                        [], 
+                                        null, 
+                                        ['class' => 'listOfResourcesItems',
+                                         'style' => 'width: 70%']
+                                    ); !!}
+
+                            </div>
+                        @else
+                        <!-- Booking : id risorsa - single -->
+                            <div class="col-md-6">
+                                {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
+                                {!! Form::text('resource_id', $resource->name, ['class' => 'form-control', 'style' => 'width: 60%', 'readonly']); !!}
+                            </div>
+                        @endif
                     <!-- Booking : materie prof -->
                         @if(Session::has('session_id') && Session::get('ruolo') == 'docente')
                         <div class="col-md-6">
@@ -244,7 +260,13 @@
                 $(".listOfTeachings").select2({
                     placeholder: "{{ trans('messages.booking_date_select_teachings') }}"
                 });
-                getResources($("#group_id").val());
+
+                @if(!empty($resourceList))
+                    getResources($("#group_id").val());
+                @else 
+                    appendGifLoad();
+                    getInfoResource({{$resource->id}});
+                @endif
             });
             
             $("#resource_id").on("change", function() {

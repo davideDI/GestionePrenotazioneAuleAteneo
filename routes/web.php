@@ -60,7 +60,19 @@ Route::get('/test', 'AdminController@test');
 /* Visualizzazione prenotazioni in base a id group e id resource */
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->name('bookings2')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
 
-Route::get('/new-booking', 'BookingController@getNewBookingForm')->name('newbooking-form');
+Route::get('/new-booking/{idResource?}', function($idResource = null) {
+    
+    if($idResource == null) {
+        return App::make('\App\Http\Controllers\BookingController')->getNewBookingForm();
+    } else {
+        return App::make('\App\Http\Controllers\BookingController')->getNewBookingFormWithResource($idResource);
+    }
+    
+});
+
+
+//array('as'=>'main','uses' => ($idResource != null ? 'BookingController@getNewBookingFormWithResource' : 'BookingController@getNewBookingForm')));
+//Route::get('/new-booking/{idResource?}', 'BookingController@getNewBookingForm')->name('newbooking-form');
 
 /* Inserimento nuova prenotazione e reindirizzamento verso il calendario prenotazioni */
 Route::post('/new-booking', 'BookingController@insertNewBooking');
