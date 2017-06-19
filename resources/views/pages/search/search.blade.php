@@ -191,7 +191,7 @@
                     dataType: 'json',
                     data: dataInput,
                     success: function(resourcesList) {
-//                        console.log(resourcesList);
+                        console.log(resourcesList);
                         var result = "";
                         if(resourcesList.length > 0) {
                             
@@ -210,7 +210,7 @@
                                     
                                     for(var j=0; j < resourcesList.length; j++) {
                                         
-                                        result += "<tr id='"+resourcesList[j].id+"'>";
+                                        result += "<tr id='"+resourcesList[j].id_resources+"'>";
                                             result += "<td>";
                                                 result += resourcesList[j].name;
                                             result += "</td>";
@@ -218,7 +218,7 @@
                                                 result += resourcesList[j].name_resource;
                                             result += "</td>";
                                             result += "<td>";
-                                                result += resourcesList[j].description;
+                                                result += resourcesList[j].description_resource;
                                             result += "</td>";
                                             result += "<td>";
                                                 result += resourcesList[j].room_admin_email;
@@ -229,7 +229,7 @@
                                             @if(Session::has('session_id'))
                                                 result += "<td>";
                                                     //TODO aggiustare link con utility di laravel
-                                                    result += "<a href='../public/new-booking/"+resourcesList[j].id+"'>{{trans('messages.common_reservation')}}</a>";
+                                                    result += "<a href='../public/new-booking/"+resourcesList[j].id_resources+"'>{{trans('messages.common_reservation')}}</a>";
                                                 result += "</td>";
                                             @endif
                                         result += "</tr>";

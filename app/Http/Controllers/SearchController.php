@@ -40,13 +40,7 @@ class SearchController extends Controller {
         Log::info('SearchController - searchByFree()');
         
         $listOfGroups = $request['listOfGroups'];
-        $listOfGroupsArray = '';
-
-        if($listOfGroups != null && count($listOfGroups) > 0) {
-            foreach ($listOfGroups as $key => $value) {
-                $listOfGroupsArray += $value.',';
-            }
-        }
+        $qMarks = str_repeat('?,', count($listOfGroups) - 1) . '?';
         
         $capacity = $request['capacity'];
         if($capacity == '') {
@@ -60,43 +54,92 @@ class SearchController extends Controller {
         $date_end_string = $date_sring.' '.$date_end;
         $repeat_start = date("Y-m-d G:i:s",strtotime($date_start_string));
         $repeat_end = date("Y-m-d G:i:s",strtotime($date_end_string));
-               
+        
+        $listOfParameters = array();
+        
+        array_push($listOfParameters, $capacity);
+        for($i = 0; $i < count($listOfGroups); $i++) {
+            array_push($listOfParameters, $listOfGroups[$i]);
+        }
+                
+        array_push($listOfParameters, $capacity);
+        for($i = 0; $i < count($listOfGroups); $i++) {
+            array_push($listOfParameters, $listOfGroups[$i]);
+        }
+        
+        
+        array_push($listOfParameters, $repeat_start);
+        array_push($listOfParameters, $repeat_end);
+        array_push($listOfParameters, $repeat_start);
+        array_push($listOfParameters, $repeat_end);
+        
+        Log::info($listOfParameters);
+        
         $resourceList = DB::select
                         ( DB::raw
-                            ("  select resources.id, resources.name as name_resource, resources.description, resources.capacity, resources.room_admin_email,  groups.name
-                                from 
-                                    resources 
-                                left join groups on groups.id = resources.group_id 
-                                left join bookings on bookings.resource_id = resources.id 
-                                left join repeats on bookings.id = repeats.booking_id
-                                where 
-                                    resources.group_id in (:idGroupList)
-                                and 
-                                    resources.capacity >= :capacity
-                                and 
-                                    not 
-                                    
-                                    (
-                                        (repeats.event_date_start > :date_start and repeats.event_date_start < :date_end)
-                                            ||
-                                        (repeats.event_date_end > :date_start1 and repeats.event_date_end < :date_end1)
-                                    )
+                            ("  
+                                select 
 
-                                    ")
+                                    groups.name, 
+                                    groups.id as id_group, 
+                                    resources.name as name_resource, 
+                                    resources.id as id_resources,
+                                    resources.description as description_resource, 
+                                    resources.room_admin_email, 
+                                    resources.capacity  
+
+                                from resources, groups
+
+                                where 
+                                    resources.group_id = groups.id
+                                AND
+
+                                    resources.capacity >= ?
+                                and 
+
+                                    groups.id in ({$qMarks})
+
+                                and 
+
+                                resources.id not in (
+
+                                select distinct resources.id
+                                from resources, groups, bookings, repeats
+                                WHERE
+
+                                resources.group_id = groups.id
+
+                                AND
+
+                                resources.capacity >= ?
+
+                                and 
+
+                                groups.id in ({$qMarks})
+
+                                AND
+
+                                bookings.resource_id = resources.id
+
+                                AND
+
+                                repeats.booking_id = bookings.id
+
+                                AND
+                                (
+                                (repeats.event_date_start >= ? and repeats.event_date_start <= ?)
+                                        or
+                                (repeats.event_date_end >= ? and repeats.event_date_end <= ?))
+
+                                    )
+                            ")
+                            , 
+                            $listOfParameters
+                        );
                                     
-                                    , 
-                                array(
-                                    'idGroupList' => $listOfGroupsArray,
-                                    'capacity'    => $capacity,
-                                    'date_start'  => $repeat_start,
-                                    'date_end'    => $repeat_end,
-                                     'date_start1'  => $repeat_start,
-                                    'date_end1'    => $repeat_end,
-                            ));
-        
         return $resourceList;
         
     }
-    
+     
 }
 
