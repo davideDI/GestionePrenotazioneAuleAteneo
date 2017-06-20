@@ -21,7 +21,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::label('capacity', trans('messages.booking_capacity')); !!}
-                            {!! Form::text('capacity', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_capacity')]); !!}
+                            {!! Form::number('capacity', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_capacity'), 'min' => '0']); !!}
                         </div>
                         <div class="col-md-6">
                             {!! Form::label('room_admin_email', trans('messages.booking_room_admin_email')); !!}
@@ -83,7 +83,7 @@
                     <div class="form-group row">
                         <div class="col-md-6">    
                             {!! Form::label('network', trans('messages.booking_network')); !!}
-                            {!! Form::text('network', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_network')]); !!}
+                            {!! Form::number('network', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_network'), 'min' => '0']); !!}
                         </div>
                     </div>
                 

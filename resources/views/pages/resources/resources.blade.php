@@ -66,21 +66,96 @@
                                         </a>
                                     </td>
                                     @endif
+                                    
                                     <td>{{$resource->name}}</td>
                                     <td>{{$resource->capacity}}</td>
                                     <td>{{$resource->room_admin_email}}</td>
-                                    <td>{{$resource->projector}}</td>
-                                    <td>{{$resource->screen_motor}}</td>
-                                    <td>{{$resource->screen_manual}}</td>
-                                    <td>{{$resource->pc}}</td>
-                                    <td>{{$resource->wire_mic}}</td>
-                                    <td>{{$resource->wireless_mic}}</td>
-                                    <td>{{$resource->overhead_projector}}</td>
-                                    <td>{{$resource->visual_presenter}}</td>
-                                    <td>{{$resource->wiring}}</td>
-                                    <td>{{$resource->blackboard}}</td>
-                                    <td>{{$resource->equipment}}</td>
-                                    <td>{{$resource->audio}}</td>
+                                    <td>
+                                        @if($resource->projector)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->screen_motor)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    
+                                    <td>
+                                        @if($resource->screen_manual)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->pc)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->wire_mic)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->wireless_mic)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->overhead_projector)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->visual_presenter)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->wiring)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->blackboard)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->equipment)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($resource->audio)
+                                           <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                        @else
+                                            <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                        @endif
+                                    </td>
+                                    
                                     <td>{{$resource->network}}</td>
                                     <td>{{$resource->note}}</td>
                                 </tr>
