@@ -36,7 +36,7 @@ class BookingController extends Controller {
             $repeat = new \App\Repeat;
             $repeat->fill($request->all());
 
-            if(!is_numeric ( $booking->resource_id )) {
+            if(isset($request['flag_search_resource'])) {
                 $resourceTemp  = \App\Resource::where('name', 'like', $booking->resource_id)->get();
                 $booking->resource_id = $resourceTemp[0]->id;
             }
@@ -177,9 +177,9 @@ class BookingController extends Controller {
         
     }
     
-    public function getNewBookingFormWithResource($idResource) {
+    public function getNewBookingFormWithResource($idResource, $date_start, $date_end) {
         
-        Log::info('BookingController - getNewBookingFormWithResource('.$idResource.')');
+        Log::info('BookingController - getNewBookingFormWithResource('.$idResource.','.$date_start.','.$date_end.')');
     
         $booking = new \App\Booking;
         $resource =  \App\Resource::find($idResource);
@@ -195,7 +195,9 @@ class BookingController extends Controller {
                                                     'group'           => $group,
                                                     'resource'        => $resource,
                                                     'tipEventList'    => $tipEventList,
-                                                    'listOfTeachings' => $listOfTeachings]);
+                                                    'listOfTeachings' => $listOfTeachings,
+                                                    'date_start'      => $date_start,
+                                                    'date_end'        => $date_end]);
         
     }
     

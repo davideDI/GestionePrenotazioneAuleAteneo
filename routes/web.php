@@ -60,12 +60,12 @@ Route::get('/test', 'AdminController@test');
 /* Visualizzazione prenotazioni in base a id group e id resource */
 Route::get('/bookings/{idGroup}/{idResource}', 'BookingController@getBookingsByIdGroupIdResource')->name('bookings2')->where(['idGroup' => '[0-9]+', 'idResource' => '[0-9]+']);
 
-Route::get('/new-booking/{idResource?}', function($idResource = null) {
+Route::get('/new-booking/{idResource?}/{date_start?}/{date_end?}', function($idResource = null, $date_start = null, $date_end = null) {
     
-    if($idResource == null) {
+    if($idResource == null && $date_start == null && $date_end == null) {
         return App::make('\App\Http\Controllers\BookingController')->getNewBookingForm();
     } else {
-        return App::make('\App\Http\Controllers\BookingController')->getNewBookingFormWithResource($idResource);
+        return App::make('\App\Http\Controllers\BookingController')->getNewBookingFormWithResource($idResource, $date_start, $date_end);
     }
     
 });

@@ -34,36 +34,52 @@
                     <!-- Booking : data inizio evento -->
                         <div class="col-md-6">
                             {!! Form::label('event_date_start', trans('messages.booking_date_day_start')); !!}
-                            <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <span class="add-on">
-                                            <i style="margin: 7;" data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
-                                            </i>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-11">
-                                        <input data-format="dd-MM-yyyy hh:mm" class="form-control" id="event_date_start_input" name="event_date_start" type="text" placeholder="24-02-2017 12:00"></input>
+                            @if(empty($date_start))
+                                <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <span class="add-on">
+                                                <i style="margin: 7;" data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <input data-format="dd-MM-yyyy hh:mm" class="form-control" id="event_date_start_input" name="event_date_start" type="text" placeholder="24-02-2017 12:00"></input>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input class="form-control" id="event_date_start_input" name="event_date_start" type="text" value="{{$date_start}}" readonly="true"></input>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     <!-- Booking : data fine evento -->
                         <div class="col-md-6">
                             {!! Form::label('event_date_end', trans('messages.booking_date_day_end')); !!}
-                            <div id="event_date_end" class="input-append date datetimepicker1">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <span class="add-on">
-                                            <i style="margin: 7;" data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
-                                            </i>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-11">
-                                        <input data-format="dd-MM-yyyy hh:mm" class="form-control" id="event_date_end_input" name="event_date_end" type="text" placeholder="24-02-2017 14:00"></input>
+                            @if(empty($date_start))
+                                <div id="event_date_end" class="input-append date datetimepicker1">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <span class="add-on">
+                                                <i style="margin: 7;" data-time-icon="glyphicon glyphicon-time" data-date-icon="glyphicon glyphicon-calendar">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <input data-format="dd-MM-yyyy hh:mm" class="form-control" id="event_date_end_input" name="event_date_end" type="text" placeholder="24-02-2017 14:00"></input>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input class="form-control" id="event_date_end_input" name="event_date_end" type="text" value="{{$date_end}}" readonly="true"></input>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     
@@ -72,9 +88,10 @@
                         <div class="col-md-3">
                             <input type="radio" name="repeat_event" onclick="closeDivEventRepeatDetails()" value="1" checked="checked">&nbsp;{{ trans('messages.booking_single_event') }}<br>
                         </div>
-                        <div class="col-md-3">
+                        <!-- TODO gestire ripetizione eventi della settimana precedente -->
+                        <!-- <div class="col-md-3">
                             <input type="radio" name="repeat_event" onclick="openDivEventRepeatDetails()" value="2">&nbsp;{{ trans('messages.booking_multiple_event') }}<br>
-                        </div>
+                        </div> -->
                     </div>
                 
                     <div id="event_repeat_details" class="form-group row" style="display:none">
@@ -195,6 +212,8 @@
                             <div class="col-md-6">
                                 {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
                                 {!! Form::text('resource_id', $resource->name, ['class' => 'form-control', 'style' => 'width: 60%', 'readonly']); !!}
+                                
+                                {!! Form::hidden('flag_search_resource', true); !!}
                             </div>
                         @endif
                     <!-- Booking : materie prof -->
