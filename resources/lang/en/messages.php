@@ -17,6 +17,7 @@
         'home_logout' => 'Logout',
         'home_console' => 'Console',
         'home_acl' => 'ACL',
+        'home_checks' => 'Checks',
         'home_manage_resources' => 'Manage Resources',
         'home_meta_description' => 'Booking Rooms and Laboratory - Univaq',
         

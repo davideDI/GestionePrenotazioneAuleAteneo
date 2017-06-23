@@ -70,10 +70,6 @@ Route::get('/new-booking/{idResource?}/{date_start?}/{date_end?}', function($idR
     
 });
 
-
-//array('as'=>'main','uses' => ($idResource != null ? 'BookingController@getNewBookingFormWithResource' : 'BookingController@getNewBookingForm')));
-//Route::get('/new-booking/{idResource?}', 'BookingController@getNewBookingForm')->name('newbooking-form');
-
 /* Inserimento nuova prenotazione e reindirizzamento verso il calendario prenotazioni */
 Route::post('/new-booking', 'BookingController@insertNewBooking');
 
@@ -93,6 +89,9 @@ Route::post('/confirm-booking', 'AdminController@confirmBooking');
 
 //Booking to "scartata" 
 Route::post('/reject-booking', 'AdminController@rejectBooking');
+
+/**************** CHECKS ******************************/
+Route::get('/checks', 'CheckController@getChecksView')->name('checks');
 
 /**************** TEST ******************************/
 /* Route di test update evento from drop */

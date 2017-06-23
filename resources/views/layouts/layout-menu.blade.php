@@ -100,6 +100,14 @@
                                 </li>
                                 @endif
                                 
+                                @if(Session::has('ruolo') && Session::get('ruolo') == 'staff')
+                                <li>
+                                    <a href="{{ url('/checks') }}">
+                                        {{ trans('messages.home_checks') }}
+                                    </a>
+                                </li>
+                                @endif
+                                
                                 <li>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();

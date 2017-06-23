@@ -42,7 +42,36 @@ class SoapController extends Controller {
             return true;
         }
         
+        else if($username == 'usciere@ateneo.it') {
+            session(['session_id' => '444eee555rrr']);
+            session(['source_id' => '4']); //Look at UserTableSeed.php
+            session(['nome'      => 'Aldo']);
+            session(['cognome'   => 'Usciere']);
+            session(['cod_fis'   => 'STAFFSTAFF3']);
+            session(['ruolo'     => 'staff']);
+            session(['matricola' => 'usciere@ateneo.it']);
+            return true;
+        }
+        
+        else if($username == 'usciere2@ateneo.it') {
+            session(['session_id' => '555eee666rrr']);
+            session(['source_id' => '5']); //Look at UserTableSeed.php
+            session(['nome'      => 'Maria']);
+            session(['cognome'   => 'Usciere']);
+            session(['cod_fis'   => 'STAFFSTAFF34']);
+            session(['ruolo'     => 'staff']);
+            session(['matricola' => 'usciere2@ateneo.it']);
+            return true;
+        }
+        
         else if($username == 'rossi') {
+            
+            $this->wsGetUdDocPart();
+            return true;
+            
+        }
+        
+        else if($username == 'caianiello') {
             
             $this->wsGetUdDocPart();
             return true;

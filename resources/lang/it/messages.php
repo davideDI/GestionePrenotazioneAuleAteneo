@@ -17,6 +17,7 @@
         'home_logout' => 'Logout',
         'home_console' => 'Console',
         'home_acl' => 'ACL',
+        'home_checks' => 'Verifiche',
         'home_manage_resources' => 'Gestione Risorse',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
         
