@@ -10,7 +10,10 @@ class CheckController extends Controller {
     public function getChecksView() {
      
         Log::info('CheckController - getChecksView()');
-        return view('pages/check/checks');
+        
+        $checkList = \App\Survey::with('repeat')->where('tip_survey_status_id', '=', 1)->get();
+        
+        return view('pages/check/checks', ['checkList' => $checkList]);
         
     }
     

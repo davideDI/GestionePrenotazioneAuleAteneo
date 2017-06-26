@@ -156,6 +156,10 @@
         'search_search_capacity' => 'Search for Capacities',
         'search_search_free' => 'Search Free Rooms',
         
+        //Checks page
+        'check_title' => 'Checks List',
+        'check_num_students' => 'Real Num of Studs',
+        'check_exp_students' => 'Exp Studs',
         
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',

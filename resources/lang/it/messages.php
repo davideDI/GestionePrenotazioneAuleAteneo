@@ -159,6 +159,10 @@
         'search_search_capacity' => 'Cerca Aule per Capienza',
         'search_search_free' => 'Cerca Aule Libere',
         
+        //Checks page
+        'check_title' => 'Checks List',
+        'check_num_students' => 'Num Reale di Studs',
+        'check_exp_students' => 'Exp Studs',
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',
