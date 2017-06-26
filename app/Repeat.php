@@ -19,4 +19,9 @@ class Repeat extends Model {
         return $this->belongsTo('App\TipBookingStatus');
     }
     
+    //Relazione con la tabella surveys
+    public function surveys() {
+        return $this->hasMany('App\Survey');
+    }
+    
 }

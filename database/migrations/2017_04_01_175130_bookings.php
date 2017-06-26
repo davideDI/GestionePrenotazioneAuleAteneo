@@ -10,10 +10,12 @@ class Bookings extends Migration {
     public function up() {
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id')->comment('booking id');  
-            $table->string('name', 50)->nullble()->comment('booking name');  
-            $table->string('description', 100)->nullble()->comment('booking description');  
+            $table->string('name', 50)->nullable()->comment('booking name');  
+            $table->string('description', 100)->nullable()->comment('booking description');  
             $table->dateTime('booking_date')->comment('booking date');         
             $table->integer('num_students')->comment('Expected number of students');  
+            
+            $table->string('subject_id', 20)->default('N.D.')->comment('reference subject');
             
             //foreign tip_event table
             $table->integer('tip_event_id')->unsigned()->comment('foreign tip_event table');  

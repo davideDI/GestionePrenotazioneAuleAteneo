@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder {
         //Table TipBookingStatus
         $this->call(TipBookingStatusTableSeed::class);
         
+        //Table TipSurveyStatus
+        $this->call(TipSurveyStatusTableSeed::class);
+        
         //Table TipGroups
         $this->call(TipGroupTableSeed::class);
         

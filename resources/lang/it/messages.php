@@ -52,6 +52,7 @@
         'index_calendar_event_start' => 'Inizio evento : ',
         'index_calendar_event_end' => 'Fine evento : ',
         'index_calendar_booked_by' => 'Prenotato da : ',
+        'index_calendar_inpect_event' => 'Verifica prenotazione',
         
         //Messages from common
         'common_save' => 'Salva',

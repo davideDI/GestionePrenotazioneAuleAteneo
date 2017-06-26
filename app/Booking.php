@@ -6,13 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model {
     
-    protected $fillable = ['name', 'description', 'num_students', 'booking_date', 'resource_id', 'tip_event_id'];
+    protected $fillable = ['name', 'description', 'subject_id', 'num_students', 'booking_date', 'resource_id', 'tip_event_id'];
     protected $table = 'bookings';
-
-    //Relazione con la tabella surveys
-    public function surveys() {
-        return $this->hasMany('App\Survey');
-    }
     
     //Relazione con la tabella repeats
     public function repeats() {

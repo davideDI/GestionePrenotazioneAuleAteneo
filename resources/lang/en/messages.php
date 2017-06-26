@@ -52,6 +52,7 @@
         'index_calendar_event_start' => 'Event start : ',
         'index_calendar_event_end' => 'Event end : ',
         'index_calendar_booked_by' => 'Booked by : ',
+        'index_calendar_inpect_event' => 'Inspect booking',
         
         ///Messages from common
         'common_save' => 'Save',

@@ -120,7 +120,7 @@
                             
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
                         </div>
                     </div>
                 </div>
@@ -318,9 +318,19 @@
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_event')}}</strong>" + result[0].tip_event.name + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
                                 for (var x=0; x < result[0].repeats.length; x++) {
+                                    textForModal += "<hr>"; 
+                                    textForModal += "<div>"; 
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_start')}}</strong>" + moment(result[0].repeats[x].event_date_start).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
+                                    @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                        if(result[0].repeats[x].tip_booking_status_id == 3) {
+                                            textForModal += "<button class='btn btn-primary' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
+                                        }
+                                    @endif
+                                    textForModal += "</div>";
+                                    textForModal += "<hr>";
                                 }
+                                
                                 $('#modalBody').html(textForModal);
                                 $('#myModal').modal('show');
                             },
@@ -337,6 +347,29 @@
                 });
 
             });
+            
+            function inspectBooking(idRepeat) {
+            
+                var data = {'idRepeat' : idRepeat};
+            
+                $.ajax({
+
+                    url: "{{URL::to('/insert-request-check')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function() {
+                        $('#myModal').modal('hide');
+                        $("#message-success").fadeIn('fast').delay(1000).fadeOut('fast');
+                    },
+                    error: function() {
+                        $('#myModal').modal('hide');
+                        $("#message-danger").fadeIn('fast').delay(1000).fadeOut('fast');
+                    },
+
+                });
+                
+            }
             
             function updateEvent(event) {
                 
