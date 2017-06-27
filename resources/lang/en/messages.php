@@ -162,6 +162,17 @@
         'check_exp_students' => 'Exp Studs',
         'check_title_modal' => 'Effettua verifica',  
         
+        //Report page
+        'report_title' => 'Report',
+        'report_title1' => 'Checks performed',
+        'report_title2' => 'Report 2',
+        'report_title3' => 'Report 3',
+        'report_title4' => 'Report 4',
+        'report_checked' => 'Checked',
+        'report_unchecked' => 'Unchecked',
+        'report_real_use' => 'Real use',
+        'report_waste' => 'Waste',
+        
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',
         
