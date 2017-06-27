@@ -160,6 +160,7 @@
         'check_title' => 'Checks List',
         'check_num_students' => 'Real Num of Studs',
         'check_exp_students' => 'Exp Studs',
+        'check_title_modal' => 'Effettua verifica',  
         
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',

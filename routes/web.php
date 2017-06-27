@@ -93,6 +93,8 @@ Route::post('/reject-booking', 'AdminController@rejectBooking');
 /**************** CHECKS ******************************/
 Route::get('/checks', 'CheckController@getChecksView')->name('checks');
 
+Route::post('/check', 'CheckController@updateCheck')->name('updateCheck');
+
 Route::post('/insert-request-check', 'CheckController@insertRequestCheck');
 
 /**************** TEST ******************************/

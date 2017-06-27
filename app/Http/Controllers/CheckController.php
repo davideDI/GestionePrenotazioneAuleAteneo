@@ -33,6 +33,27 @@ class CheckController extends Controller {
         
     }
     
+    public function updateCheck(Request $request) {
+        
+        Log::info('CheckController - updateCheck()');
+        
+        $idSurvey = $request['id'];
+        $survey = \App\Survey::find($idSurvey);
+        
+        $survey->note = $request['note'];
+        $survey->real_num_students = $request['real_num_students'];
+        $survey->performed_by = session('source_id');
+        $survey->tip_survey_status_id = 2;
+        
+        $survey->save();
+        
+        return redirect()->route('checks');
+        
+        //TODO una volta effettuato l'update inserire un messaggio di successo
+        //TODO valutare se nella pagina report visualizzare tutte le verifiche effettuate dagli operatori 
+        
+    }
+    
 }
 
 ?>

@@ -163,6 +163,7 @@
         'check_title' => 'Checks List',
         'check_num_students' => 'Num Reale di Studs',
         'check_exp_students' => 'Exp Studs',
+        'check_title_modal' => 'Effettua verifica',
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',
