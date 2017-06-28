@@ -110,7 +110,6 @@ Route::post('/login', 'SoapController@wsLogin');
 //Inserendo la matricola docente l'utente viene autenticato in modo fittizio e vengono inserite in sessione
 //le info sulle properie materie
 //TODO Autenticazione con LDAP
-//Route::post('/login', 'SoapController@wsGetUdDocPart'); 
 
 /**************** LOGOUT ******************************/
 Route::get('/logout', 'SoapController@wsLogout'); 

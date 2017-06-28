@@ -16,8 +16,9 @@ class SoapController extends Controller {
         $this->soapWrapper = $soapWrapper;
     }
   
-    private function checkFakeUsersForLogin($username) {
+    private function checkFakeUsersForLogin($request) {
         
+        $username = $request['username'];
         Log::info('SoapController - checkFakeUsersForLogin(username: '.$username.')');
         
         if($username == 'davide@davide.it') {
@@ -64,16 +65,16 @@ class SoapController extends Controller {
             return true;
         }
         
-        else if($username == 'rossi') {
+        else if($username == '001642') {
             
-            $this->wsGetUdDocPart();
+            $this->wsGetUdDocPart($request);
             return true;
             
         }
         
-        else if($username == 'caianiello') {
+        else if($username == '000099') {
             
-            $this->wsGetUdDocPart();
+            $this->wsGetUdDocPart($request);
             return true;
             
         }
@@ -91,7 +92,7 @@ class SoapController extends Controller {
         $password = $request['password'];
         
         //gestione utenza fittizia per sviluppo
-        if($this->checkFakeUsersForLogin($username)) {
+        if($this->checkFakeUsersForLogin($request)) {
             return redirect('/');
         } else {
         
@@ -152,7 +153,7 @@ class SoapController extends Controller {
         Log::info('SoapController - checkFakeUsersForLogout()');
         $matricola = session('matricola');
         
-        if($matricola == 'davide@davide.it' || $matricola == 'ateneo@ateneo.it' || $matricola == '001642') {
+        if($matricola == 'davide@davide.it' || $matricola == 'ateneo@ateneo.it' || $matricola == '001642' || $matricola == '000099') {
             return true;
         } else {
             return false;
