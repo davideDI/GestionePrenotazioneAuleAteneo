@@ -146,44 +146,51 @@
                     dataType: 'json',
                     data: data,
                     success: function(bookings) {
-                        var result = "<table class='table table-hover'>";
-                        result += "<thead>";
-                            result += "<th>{{trans('messages.common_title')}}</th>";
-                            result += "<th>{{trans('messages.common_description')}}</th>";
-                            result += "<th>{{trans('messages.booking_date_day_start')}}</th>";
-                            result += "<th>{{trans('messages.booking_date_day_end')}}</th>";
-                            result += "<th>{{trans('messages.booking_date_resource')}}</th>";
-                            result += "<th></th>";
-                        result += "</thead>";
-                        result += "<tbody>";
-                        for(var j=0; j < bookings.length; j++) {
-                            for(var k=0; k < bookings[j].repeats.length; k++) {
-                                result += "<tr id='"+bookings[j].repeats[k].id+"'>";
-                                    result += "<td>";
-                                        result += bookings[j].name;
-                                    result += "</td>";
-                                    result += "<td>";
-                                        result += bookings[j].description;
-                                    result += "</td>";
-                                    result += "<td>";
-                                        result += moment(bookings[j].repeats[k].event_date_start).format("DD-MM-YYYY HH:mm:ss");
-                                    result += "</td>";
-                                    result += "<td>";
-                                        result += moment(bookings[j].repeats[k].event_date_end).format("DD-MM-YYYY HH:mm:ss");
-                                    result += "</td>";
-                                    result += "<td>";
-                                        result += bookings[j].resource.name;
-                                    result += "</td>";
-                                    result += "<td>";
-                                        result += "<a href='#' onclick='confirmBooking(" + bookings[j].repeats[k].id + ")'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></a>";
-                                        result += "&nbsp;&nbsp;";
-                                        result += "<a href='#' onclick='rejectBooking(" + bookings[j].repeats[k].id + ")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></a>";
-                                    result += "</td>";
-                                result += "</tr>";
+                        
+                        var result = "";
+                        
+                        if(bookings.length > 0) {
+                            result += "<table class='table table-hover'>";
+                                result += "<thead>";
+                                result += "<th>{{trans('messages.common_title')}}</th>";
+                                result += "<th>{{trans('messages.common_description')}}</th>";
+                                result += "<th>{{trans('messages.booking_date_day_start')}}</th>";
+                                result += "<th>{{trans('messages.booking_date_day_end')}}</th>";
+                                result += "<th>{{trans('messages.booking_date_resource')}}</th>";
+                                result += "<th></th>";
+                            result += "</thead>";
+                            result += "<tbody>";
+                            for(var j=0; j < bookings.length; j++) {
+                                for(var k=0; k < bookings[j].repeats.length; k++) {
+                                    result += "<tr id='"+bookings[j].repeats[k].id+"'>";
+                                        result += "<td>";
+                                            result += bookings[j].name;
+                                        result += "</td>";
+                                        result += "<td>";
+                                            result += bookings[j].description;
+                                        result += "</td>";
+                                        result += "<td>";
+                                            result += moment(bookings[j].repeats[k].event_date_start).format("DD-MM-YYYY HH:mm:ss");
+                                        result += "</td>";
+                                        result += "<td>";
+                                            result += moment(bookings[j].repeats[k].event_date_end).format("DD-MM-YYYY HH:mm:ss");
+                                        result += "</td>";
+                                        result += "<td>";
+                                            result += bookings[j].resource.name;
+                                        result += "</td>";
+                                        result += "<td>";
+                                            result += "<a href='#' onclick='confirmBooking(" + bookings[j].repeats[k].id + ", " + bookings[j].resource.group_id + ")'><span class='glyphicon glyphicon-ok' aria-hidden='true'></span></a>";
+                                            result += "&nbsp;&nbsp;";
+                                            result += "<a href='#' onclick='rejectBooking(" + bookings[j].repeats[k].id + ", " + bookings[j].resource.group_id + ")'><span class='glyphicon glyphicon-remove' aria-hidden='true'></a>";
+                                        result += "</td>";
+                                    result += "</tr>";
+                                }
                             }
-                        }
-                        result += "</tbody>";
-                        result += "</table>";
+                            result += "</tbody>";
+                            result += "</table>";
+                            } else {
+                                result += "<h4 style='margin-left: 35%; margin-top: 25%;'>{{ trans('messages.console_no_result') }}</h4>";
+                            }
                         $("#content").html(result);
                     },
                     error: function(e) {
@@ -194,7 +201,7 @@
             
             }
             
-            function confirmBooking(idRepeat) {
+            function confirmBooking(idRepeat, idGroup) {
             
                 var data = {'id_repeat': idRepeat};
                 $.ajax({
@@ -210,6 +217,7 @@
                         searchBookingsByIdStatus(2);
                         searchBookingsByIdStatus(3);
                         $("#message-success").fadeIn('fast').delay(1000).fadeOut('fast');
+                        getBookings(idGroup);
                     },
                     error: function(e) {
                         console.log(e);
@@ -220,7 +228,7 @@
             
             }
             
-            function rejectBooking(idRepeat) {
+            function rejectBooking(idRepeat, idGroup) {
             
                 var data = {'id_repeat': idRepeat};
                 $.ajax({
@@ -236,6 +244,7 @@
                         searchBookingsByIdStatus(2);
                         searchBookingsByIdStatus(4);
                         $("#message-danger").fadeIn('fast').delay(1000).fadeOut('fast');
+                        getBookings(idGroup);
                     },
                     error: function(e) {
                         console.log(e);

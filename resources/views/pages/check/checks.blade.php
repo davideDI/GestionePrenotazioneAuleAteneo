@@ -6,9 +6,9 @@
                 <legend>{{ trans('messages.check_title') }}</legend>
             </div>
             <div class="col-md-10">
-                @if(empty($checkList))
+                @if(count($checkList) == 0)
                 
-                    <p>Nessun elemento da visualizzare</p>
+                    <h4 style='margin-left: 30%; margin-top: 25%; margin-bottom: 30%;'>{{ trans('messages.check_no_result') }}</h4>
                 
                 @else
                 

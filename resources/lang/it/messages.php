@@ -137,6 +137,7 @@
         'console_no_groups' => 'Lei non ha Gruppi da amministrare!',
         'console_manage' => 'Approva',
         'console_reject' => 'Respingi',
+        'console_no_result' => 'Nessuna prenotazione da gestire',
         
         //Manage-resource page
         'manage_resource_title' => 'Gestione Risorse',
@@ -158,23 +159,26 @@
         'search_duration' => 'Durata',
         'search_search_capacity' => 'Cerca Aule per Capienza',
         'search_search_free' => 'Cerca Aule Libere',
+        'search_no_result' => 'Nessun risultato per i criteri selezionati!',
         
         //Checks page
         'check_title' => 'Checks List',
         'check_num_students' => 'Num Reale di Studs',
         'check_exp_students' => 'Exp Studs',
         'check_title_modal' => 'Effettua verifica',
+        'check_no_result' => 'Nessuna verifica in coda',
         
         //Report page
         'report_title' => 'Report',
-        'report_title1' => 'Checks performed',
-        'report_title2' => 'Report 2',
-        'report_title3' => 'Report 3',
-        'report_title4' => 'Report 4',
+        'report_title1' => 'Verifiche effettuate',
         'report_checked' => 'Verificate',
         'report_unchecked' => 'Non verificate',
+        'report_title2' => 'Utilizzo capienza aula',
         'report_real_use' => 'Uso Reale',
         'report_waste' => 'Scarto',
+        'report_title3' => 'Verifiche richieste',
+        'report_bookings' => 'Num prenotazioni',
+        'report_surveys' => 'Num verifiche',
         
         //Success Messages [from 100 to 299]
         '100' => 'Prenotazione effettuata! ',

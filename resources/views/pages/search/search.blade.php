@@ -91,7 +91,7 @@
                         
                     <div class="col-md-12" id="searchResult">
                         
-                        
+                        <img src="{{URL::asset('lib/images/lente_ingrandimento.png')}}" width="150" height="95" style="margin-left: 45%; margin-top: 30%;" alt="lente">
                         
                     </div>
                     
@@ -121,7 +121,7 @@
                     dataType: 'json',
                     data: dataInput,
                     success: function(resourcesList) {
-//                        console.log(resourcesList);
+
                         var result = "";
                         if(resourcesList.length > 0) {
                             
@@ -160,7 +160,7 @@
                                     result += "</tbody>";
                                 result += "</table>";
                         } else {
-                            result += "<p>{{ trans('') }}</p>";
+                            result += "<h4 style='margin-left: 35%; margin-top: 30%;'>{{ trans('messages.search_no_result') }}</h4>";
                         }
                         $("#searchResult").html(result);
                     },

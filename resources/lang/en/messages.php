@@ -134,6 +134,7 @@
         'console_no_groups' => 'You don\'t have any groups to manage!',
         'console_manage' => 'Approve',
         'console_reject' => 'Reject',
+        'console_no_result' => 'No bookings to manage',
         
         //Manage-resource page
         'manage_resource_title' => 'Manage Resources',
@@ -155,23 +156,26 @@
         'search_duration' => 'Duration',
         'search_search_capacity' => 'Search for Capacities',
         'search_search_free' => 'Search Free Rooms',
+        'search_no_result' => 'No Result!',
         
         //Checks page
         'check_title' => 'Checks List',
         'check_num_students' => 'Real Num of Studs',
         'check_exp_students' => 'Exp Studs',
         'check_title_modal' => 'Effettua verifica',  
+        'check_no_result' => 'Nessuna verifica in coda',
         
         //Report page
         'report_title' => 'Report',
         'report_title1' => 'Checks performed',
-        'report_title2' => 'Report 2',
-        'report_title3' => 'Report 3',
-        'report_title4' => 'Report 4',
         'report_checked' => 'Checked',
         'report_unchecked' => 'Unchecked',
+        'report_title2' => 'Use capacity classroom',
         'report_real_use' => 'Real use',
         'report_waste' => 'Waste',
+        'report_title3' => 'Checks requested',
+        'report_bookings' => 'Num bookings',
+        'report_surveys' => 'Num surveys',
         
         //Success Messages [from 100 to 299]
         '100' => 'Reservation saved!',

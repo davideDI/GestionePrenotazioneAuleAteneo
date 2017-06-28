@@ -32,15 +32,16 @@ class ReportController extends Controller {
             }
         }
         
-        
-//        survey->real_num_students
-//                booking->num_students
+        //Report 3
+        $numRepeats = \App\Repeat::all()->count();
         
         return view('pages/report/report', [
                     'surveyStatus1' => $surveyStatus1,
                     'surveyStatus2' => $surveyStatus2,
                     'tot1' => round($tot1, 2),
-                    'tot2' => round($tot2, 2)
+                    'tot2' => round($tot2, 2),
+                    'numSurveys' => $surveyStatus1,
+                    'numRepeats' => $numRepeats
             ]);
         
     }
