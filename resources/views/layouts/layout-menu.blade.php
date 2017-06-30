@@ -51,7 +51,9 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{URL::to('/report')}}">{{ trans('messages.home_report') }}</a></li>
+                        @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
+                            <li><a href="{{URL::to('/report')}}">{{ trans('messages.home_report') }}</a></li>
+                        @endif    
                         <li><a href="{{URL::to('/print')}}">{{ trans('messages.home_print') }}</a></li>
                     </ul>
                 </li>

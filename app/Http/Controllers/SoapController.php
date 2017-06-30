@@ -38,7 +38,7 @@ class SoapController extends Controller {
             session(['nome'      => 'ATENEO']);
             session(['cognome'   => 'ATENEO']);
             session(['cod_fis'   => 'ATENEOATENEO33']);
-            session(['ruolo'     => 'admin']);
+            session(['ruolo'     => 'ateneo']);
             session(['matricola' => 'ateneo@ateneo.it']);
             return true;
         }
@@ -256,7 +256,7 @@ class SoapController extends Controller {
                     );
                     $nome = (string)$list[$i]->DOCENTE_NOME;
                     $cognome = (string)$list[$i]->DOCENTE_COGNOME;
-                }
+//                }
             }
             session(['session_id' => 'id_test']);
             session(['source_id'  => $username]);

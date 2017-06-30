@@ -132,6 +132,9 @@
                                         result += "<th>{{trans('messages.common_description')}}</th>";
                                         result += "<th>{{trans('messages.common_email_adimn')}}</th>";
                                         result += "<th>{{trans('messages.booking_capacity')}}</th>";
+                                        @if(Session::has('session_id'))
+                                            result += "<th></th>";
+                                        @endif
                                     result += "</thead>";
                                     result += "<tbody>";
                                     
@@ -153,6 +156,14 @@
                                             result += "<td>";
                                                 result += resourcesList[j].capacity;
                                             result += "</td>";
+                                            @if(Session::has('session_id'))
+                                                result += "<td>";
+                                                    //TODO aggiustare link con utility di laravel
+                                                    result += 
+                                                    "<a href='../public/new-booking/"+resourcesList[j].id+"'>{{trans('messages.common_reservation')}}\n\
+                                                     </a>";
+                                                result += "</td>";
+                                            @endif
                                         result += "</tr>";
                                         
                                     }
