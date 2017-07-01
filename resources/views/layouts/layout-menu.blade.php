@@ -89,7 +89,10 @@
                                 @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
                                 <li>
                                     <a href="{{ url('/console') }}">
-                                        {{ trans('messages.home_console') }}
+                                        {{ trans('messages.home_console') }} 
+                                        @if(!empty($consoleCount))
+                                            <span class="badge">{{$consoleCount}}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 @endif
@@ -106,6 +109,9 @@
                                 <li>
                                     <a href="{{ url('/checks') }}">
                                         {{ trans('messages.home_checks') }}
+                                        @if(!empty($checkCount))
+                                            <span class="badge">{{$checkCount}}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 @endif

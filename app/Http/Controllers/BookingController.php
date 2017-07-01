@@ -12,7 +12,7 @@ class BookingController extends Controller {
         
         $bookingId = $request['booking_id'];
         Log::info('BookingController - getBooking(bookingId: '.$bookingId.')');
-        $booking = \App\Booking::with('repeats', 'tipEvent')->where('id', $bookingId)->get();
+        $booking = \App\Booking::with('repeats', 'tipEvent', 'repeats.surveys')->where('id', $bookingId)->get();
         return $booking;
         
     }
