@@ -105,7 +105,7 @@ class AdminController extends Controller {
                 $booking->resource;
                 foreach($booking->repeats as $repeat) {
                     //Stato RICHIESTA o IN LAVORAZIONE
-                    if($repeat->tip_booking_status_id == 1 || $booking->tip_booking_status_id == 2) {
+                    if($repeat->tip_booking_status_id == 1 || $repeat->tip_booking_status_id == 2) {
                         array_push($bookings, $booking);
                     }
                 }

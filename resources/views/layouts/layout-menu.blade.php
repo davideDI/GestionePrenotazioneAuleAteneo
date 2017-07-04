@@ -90,8 +90,8 @@
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }} 
-                                        @if(!empty($consoleCount))
-                                            <span class="badge">{{$consoleCount}}</span>
+                                        @if(Session::has('countRepeatsTemp'))
+                                            <span class="badge">{{session('countRepeatsTemp')}}</span>
                                         @endif
                                     </a>
                                 </li>
@@ -109,8 +109,8 @@
                                 <li>
                                     <a href="{{ url('/checks') }}">
                                         {{ trans('messages.home_checks') }}
-                                        @if(!empty($checkCount))
-                                            <span class="badge">{{$checkCount}}</span>
+                                        @if(Session::has('checkCountTemp'))
+                                            <span class="badge">{{session('checkCountTemp')}}</span>
                                         @endif
                                     </a>
                                 </li>
