@@ -56,7 +56,9 @@
         
         ///Messages from common
         'common_save' => 'Save',
+        'common_delete' => 'Delete',
         'common_close' => 'Close',
+        'common_confirm' => 'Confirm',
         'common_title' => 'Title',
         'common_name' => 'Name',
         'common_description' => 'Description',
@@ -144,9 +146,8 @@
         'manage_resource_group_title' => 'Insert new Group',
         'manage_resource_resource_title' => 'Insert new Resource',
         'manage_resource_tip_group_title' => 'Tip Group',
-        'manage_resource_' => '',
-        'manage_resource_' => '',
-        'manage_resource_' => '',
+        'manage_resource_confirm_delete' => 'Are you sure you want to delete this element?',
+        'manage_resource_confirm_delete_text' => 'This action will produce the cascade deletion of all the elements associated with the resource',
         
         //Search-page
         'search_title' => 'Search Rooms',

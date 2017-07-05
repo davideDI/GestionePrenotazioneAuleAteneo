@@ -17,6 +17,21 @@
                     @endforeach
                 </select>
                 @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                    <td>
+                        <a href="{{URL::to('/group', $selectedGroup->id )}}"
+                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                        </a>
+                    </td>
+                @endif
+                
+            </div>
+        </div>
+    
+        <div class="row"><div class="col-md-12"></div></div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
                     <a class="btn btn-primary" href="{{URL::to('/insert-group')}}">
                         {{ trans('messages.manage_resource_inset_group') }}
                     </a>
@@ -25,7 +40,6 @@
                         {{ trans('messages.manage_resource_inset_resource') }}
                     </a>
                 @endif
-                
             </div>
         </div>
     

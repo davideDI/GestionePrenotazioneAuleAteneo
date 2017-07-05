@@ -125,17 +125,46 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-md-6">
-                            {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                        <div class="col-md-9"></div>
+                        <div class="col-md-1">
+                                {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                            {{ Form::close() }}
+                        </div>
+                        <div class="col-md-1">
+                            {!! Form::open(['url' => ['/resource',$resource->id], 'id' => 'deleteResourceForm', 'method' => 'delete']) !!} 
+                                {!! Form::submit( trans('messages.common_delete'), ['id' => 'deleteResourceButton', 'class' => 'btn btn-danger'] ) !!}
+                            {!! Form::close() !!}                    
                         </div>
                     </div>
-                {!! Form::close() !!}                    
-                
             </div>
             <div class="col-md-2"></div>
         </div>
     
+        <!-- Modal for confirm action -->
+        <div class="modal fade" id="modalPreventDefaultResource" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">
+                            {{ trans('messages.manage_resource_confirm_delete') }}
+                        </h4>
+                    </div>
+                    <div id="modalBody" class="modal-body">
+                        {{ trans('messages.manage_resource_confirm_delete_text') }}
+                    </div>
+                    <div class="modal-footer">
+                        <button id="deleteResourceButtonYES" type="button" class="btn btn-danger" >{{ trans('messages.common_confirm') }}</button>
+                        <button id="deleteResourceButtonNO" type="button" class="btn btn-primary" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
         <script type="text/javascript">
+            
             $(document).ready(function() {
                 $(".listOfTipResourceItems").select2({
                     //parameter
@@ -145,6 +174,20 @@
                     //parameter
                 });
             });
+            
+            $("#deleteResourceButton").click(function(event) {
+                event.preventDefault();
+                $('#modalPreventDefaultResource').modal('show');
+            });
+            
+            $("#deleteResourceButtonYES").click(function() {
+                $("#deleteResourceForm").submit();
+            });
+            
+            $("#deleteResourceButtonNO").click(function() {
+                $('#modalPreventDefaultResource').modal('hide');
+            });
+            
         </script>
     
     @endsection

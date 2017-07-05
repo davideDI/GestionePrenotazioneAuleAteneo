@@ -56,7 +56,9 @@
         
         //Messages from common
         'common_save' => 'Salva',
+        'common_delete' => 'Elimina',
         'common_close' => 'Chiudi',
+        'common_confirm' => 'Conferma',
         'common_title' => 'Titolo',
         'common_name' => 'Nome',
         'common_description' => 'Descrizione',
@@ -147,9 +149,8 @@
         'manage_resource_group_title' => 'Inserisci nuovo Gruppo',
         'manage_resource_resource_title' => 'Inserisci nuova Risorsa',
         'manage_resource_tip_group_title' => 'Tipo Gruppo',
-        'manage_resource_' => '',
-        'manage_resource_' => '',
-        'manage_resource_' => '',
+        'manage_resource_confirm_delete' => 'Sei sicuro di voler eliminare questo elemento?',
+        'manage_resource_confirm_delete_text' => 'Questa azione produrrà come effetto la cancellazione a cascata di tutti gli elementi associati alla risorsa',
         
         //Search-page
         'search_title' => 'Cerca Aule',

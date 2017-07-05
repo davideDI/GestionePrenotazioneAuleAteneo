@@ -38,6 +38,7 @@ class ResourceController extends Controller {
         $resource = new \App\Resource;
         $tipResourceList = \App\TipResource::pluck('name', 'id');
         $groupList = \App\Group::pluck('name', 'id');
+        
         return view('pages/resources/insert-resource', ['resource' => $resource, 'groupList' => $groupList, 'tipResourceList' => $tipResourceList]);
         
     }
@@ -68,6 +69,7 @@ class ResourceController extends Controller {
         $resource = \App\Resource::find($idResource);
         $tipResourceList = \App\TipResource::pluck('name', 'id');
         $groupList = \App\Group::pluck('name', 'id');
+        
         return view('pages/resources/update-resource', ['resource' => $resource, 'tipResourceList' => $tipResourceList, 'groupList' => $groupList]);
         
     }
@@ -76,10 +78,34 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - updateResource()');
         
-        $resource = \App\Resource::find($request->id);
-        $resource->fill($request->all());
-        $resource->save();
-        return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 100);
+        try {
+            
+            $resource = \App\Resource::find($request->id);
+            $resource->fill($request->all());
+            $resource->save();
+            
+            return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 100);
+            
+        } catch (Exception $ex) {
+            Log::error('ResourcesController - insertResource() : '.$ex->getMessage());
+            return Redirect::back()->withErrors([500]);
+        }
+               
+    }
+    
+    public function deleteResource(Request $request) {
+        
+        Log::info('ResourcesController - deleteResource('.$request->idResource.')');
+        
+        $idResource = $request->idResource;
+        
+        //TODO
+        
+        //Eliminazione risorsa
+        $resource = \App\Resource::find($idResource);
+        $resource->delete();
+        
+        return redirect()->route('home')->with('success', 100);
         
     }
     
@@ -89,7 +115,38 @@ class ResourceController extends Controller {
         
         $group = new \App\Group;
         $tipGroupList = \App\TipGroup::pluck('name', 'id');
+        
         return view('pages/group/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
+        
+    }
+    
+    public function updateGroupView($idGroup) {
+        
+        Log::info('ResourcesController - updateGroupView('.$idGroup.')');
+        
+        $group = \App\Group::find($idGroup);
+        $tipGroupList = \App\TipGroup::pluck('name', 'id');
+        
+        return view('pages/group/update-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
+        
+    }
+    
+    public function updateGroup(Request $request) {
+        
+        Log::info('ResourcesController - updateGroup()');
+        
+        try {
+            
+            $group = \App\Group::find($request->id);
+            $group->fill($request->all());
+            $group->save();
+        
+            return redirect()->route('manage_resources_from_id', [$group->id])->with('success', 100);
+            
+        } catch (Exception $ex) {
+            Log::error('ResourcesController - updateGroup() : '.$ex->getMessage());
+            return Redirect::back()->withErrors([500]);
+        }
         
     }
     
@@ -113,6 +170,17 @@ class ResourceController extends Controller {
             Log::error('ResourcesController - insertGroup() : '.$ex->getMessage());
             return Redirect::back()->withErrors([500]);
         }
+        
+    }
+    
+    public function deleteGroup(Request $request) {
+        
+        Log::info('ResourcesController - deleteGroup('.$request->idGroup.')');
+        
+//      $group = \App\Group::find($request->idGroup);
+//      $group->delete();
+        
+        return redirect()->route('home')->with('success', 100);
         
     }
     

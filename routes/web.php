@@ -36,6 +36,12 @@ Route::get('/insert-group', 'ResourceController@getInsertGroupView')->name('mana
 
 Route::post('/insert-group', 'ResourceController@insertGroup');
 
+Route::get('/group/{idGroup}', 'ResourceController@updateGroupView');
+
+Route::post('/update-group', 'ResourceController@updateGroup');
+
+Route::delete('/group/{idGroup}', 'ResourceController@deleteGroup');
+
 Route::get('/insert-resource', 'ResourceController@getInsertResourceView')->name('manage_resources_insert_group');
 
 Route::post('/insert-resource', 'ResourceController@insertResource');
@@ -43,6 +49,8 @@ Route::post('/insert-resource', 'ResourceController@insertResource');
 Route::get('/resource/{idResource}', 'ResourceController@updateResourceView')->name('update-resource')->where('idGroup', '[0-9]+');
 
 Route::post('/update-resource', 'ResourceController@updateResource');
+
+Route::delete('/resource/{idResource}', 'ResourceController@deleteResource');
 
 /**************** ACL ******************************/
 Route::get('/acl', 'AclController@getAclView')->name('acl');
@@ -104,12 +112,9 @@ Route::post('/updateEvent', 'BookingController@updateEvent');
 /**************** LOGIN ******************************/
 Route::get('/login', 'Auth\LoginController@getLoginView');
 
-/* Route di test per la chiamata al servizio login segreteria virtuale */
-//Login Esse3
-Route::post('/login', 'SoapController@wsLogin'); 
-//Inserendo la matricola docente l'utente viene autenticato in modo fittizio e vengono inserite in sessione
-//le info sulle properie materie
 //TODO Autenticazione con LDAP
+//A seconda della username inserita viene effettuata un autenticazione fittizia
+Route::post('/login', 'SoapController@wsLogin'); 
 
 /**************** LOGOUT ******************************/
 Route::get('/logout', 'SoapController@wsLogout'); 
