@@ -95,17 +95,40 @@ class ResourceController extends Controller {
     
     public function deleteResource(Request $request) {
         
-        Log::info('ResourcesController - deleteResource('.$request->idResource.')');
+        Log::info('ResourcesController - deleteResource(idResource: '.$request->idResource.')');
         
-        $idResource = $request->idResource;
+        try {
+            
+            $idResource = $request->idResource;
+            $resource = \App\Resource::find($idResource);
+
+            $listOfBookings = \App\Booking::where('resource_id', '=', $idResource)->get();
+
+            foreach($listOfBookings as $booking) {
+                $listOfRepeats = \App\Repeat::where('booking_id', '=', $booking->id)->get();
+                //elimina repeats
+                foreach($listOfRepeats as $repeat) {
+                    $repeatTemp = \App\Repeat::find($repeat->id);
+                    $repeatTemp->delete();
+                }
+            
+            }
+            
+            //elimina bookings
+            foreach($listOfBookings as $booking) {
+                $bookingTemp = \App\Booking::find($booking->id);
+                $bookingTemp->delete();
+            }
+
+            //elimina resources
+            $resource->delete();
+
+            return redirect()->route('home')->with('success', 100);
         
-        //TODO
-        
-        //Eliminazione risorsa
-        $resource = \App\Resource::find($idResource);
-        $resource->delete();
-        
-        return redirect()->route('home')->with('success', 100);
+        } catch (Exception $ex) {
+            Log::error('ResourcesController - deleteResource() : '.$ex->getMessage());
+            return Redirect::back()->withErrors([500]);
+        }
         
     }
     
@@ -117,7 +140,7 @@ class ResourceController extends Controller {
         $tipGroupList = \App\TipGroup::pluck('name', 'id');
         
         return view('pages/group/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
-        
+            
     }
     
     public function updateGroupView($idGroup) {
@@ -175,10 +198,50 @@ class ResourceController extends Controller {
     
     public function deleteGroup(Request $request) {
         
-        Log::info('ResourcesController - deleteGroup('.$request->idGroup.')');
+        Log::info('ResourcesController - deleteGroup(idGroup: '.$request->idGroup.')');
         
-//      $group = \App\Group::find($request->idGroup);
-//      $group->delete();
+        try {
+            
+            $idGroup = $request->idGroup;
+            $group = \App\Group::find($idGroup);
+
+            $listOfResource = \App\Resource::where('group_id', '=', $idGroup)->get();
+            
+            foreach($listOfResource as $resource) {
+            
+                $listOfBookings = \App\Booking::where('resource_id', '=', $resource->id)->get();
+
+                foreach($listOfBookings as $booking) {
+                    $listOfRepeats = \App\Repeat::where('booking_id', '=', $booking->id)->get();
+                    //elimina repeats
+                    foreach($listOfRepeats as $repeat) {
+                        $repeatTemp = \App\Repeat::find($repeat->id);
+                        $repeatTemp->delete();
+                    }
+
+                }
+
+                //elimina bookings
+                foreach($listOfBookings as $booking) {
+                    $bookingTemp = \App\Booking::find($booking->id);
+                    $bookingTemp->delete();
+                }
+                
+                //elimina resource
+                $resourceTemp = \App\Resource::find($resource->id);
+                $resourceTemp->delete();
+            
+            }
+            
+            //elimina group
+            $group->delete();
+
+            return redirect()->route('home')->with('success', 100);
+        
+        } catch (Exception $ex) {
+            Log::error('ResourcesController - deleteGroup() : '.$ex->getMessage());
+            return Redirect::back()->withErrors([500]);
+        }
         
         return redirect()->route('home')->with('success', 100);
         

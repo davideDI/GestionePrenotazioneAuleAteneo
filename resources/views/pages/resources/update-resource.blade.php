@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <h3>{{ trans('messages.manage_resource_resource_title')}}</h3>
+                <h3>{{ trans('messages.manage_resource_resource_update_title')}}</h3>
                 
                 {!! Form::model($resource, ['url' => '/update-resource', 'method' => 'post']) !!} 
                 

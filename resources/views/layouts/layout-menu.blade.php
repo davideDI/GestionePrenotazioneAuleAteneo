@@ -67,7 +67,9 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{URL::to('/help')}}">{{ trans('messages.home_help') }}</a></li>
                         <li><a href="{{URL::to('/search')}}">{{ trans('messages.home_search') }}</a></li>
-                        <li><a href="{{ url('/manage-resources') }}">{{ trans('messages.home_manage_resources') }}</a></li>
+                        @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
+                            <li><a href="{{ url('/manage-resources') }}">{{ trans('messages.home_manage_resources') }}</a></li>
+                        @endif    
                     </ul>
                 </li>
         

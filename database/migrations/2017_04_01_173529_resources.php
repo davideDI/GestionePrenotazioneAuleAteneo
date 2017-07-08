@@ -23,13 +23,13 @@ class Resources extends Migration {
             $table->tinyInteger('pc')->default(0)->comment('PC?');
             $table->tinyInteger('wire_mic')->default(0)->comment('wire Mic?');
             $table->tinyInteger('wireless_mic')->default(0)->comment('Wireless Mic?');
-            $table->tinyInteger('overhead_projector')->default(1)->comment('Overhead Projector?');
+            $table->tinyInteger('overhead_projector')->default(0)->comment('Overhead Projector?');
             $table->tinyInteger('visual_presenter')->default(0)->comment('Visual Presenter?'); 
-            $table->tinyInteger('wiring')->default(1)->comment('Wiring?'); 
-            $table->tinyInteger('equipment')->default(1)->comment('Equipment?'); 
-            $table->string('blackboard', 25)->default('N.D.')->comment('Blackboard type'); 
+            $table->tinyInteger('wiring')->default(0)->comment('Wiring?'); 
+            $table->tinyInteger('equipment')->default(0)->comment('Equipment?'); 
+            $table->string('blackboard')->default(0)->comment('Blackboard type'); 
             $table->string('note', 50)->default('')->comment('Note'); 
-            $table->integer('network')->default(1)->comment('Num network');
+            $table->integer('network')->default(0)->comment('Num network');
             
             //foreign groups table
             $table->integer('group_id')->unsigned()->comment('foreign groups table');
