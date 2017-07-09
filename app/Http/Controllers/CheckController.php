@@ -38,19 +38,23 @@ class CheckController extends Controller {
         $idSurvey = $request['id'];
         Log::info('CheckController - updateCheck(idSurvey: '.$idSurvey.')');
         
-        $survey = \App\Survey::find($idSurvey);
+        try {
+            
+            $survey = \App\Survey::find($idSurvey);
         
-        $survey->note = $request['note'];
-        $survey->real_num_students = $request['real_num_students'];
-        $survey->performed_by = session('source_id');
-        $survey->tip_survey_status_id = 2;
-        
-        $survey->save();
-        
-        return redirect()->route('checks');
-        
-        //TODO una volta effettuato l'update inserire un messaggio di successo
-        //TODO valutare se nella pagina report visualizzare tutte le verifiche effettuate dagli operatori 
+            $survey->note = $request['note'];
+            $survey->real_num_students = $request['real_num_students'];
+            $survey->performed_by = session('source_id');
+            $survey->tip_survey_status_id = 2;
+
+            $survey->save();
+
+            return redirect()->route('checks')->with('success', 'check_booking_ok');
+            
+        } catch(Exception $ex) {
+            Log::error('CheckController - Errore nella verifica della prenotazione '.$ex->getMessage());
+            return redirect()->route('checks')->withErrors('check_booking_ko');
+        }   
         
     }
     

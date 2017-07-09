@@ -16,7 +16,7 @@
                         </option>
                     @endforeach
                 </select>
-                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
                     <td>
                         <a href="{{URL::to('/group', $selectedGroup->id )}}"
                             <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
@@ -31,7 +31,7 @@
         
         <div class="row">
             <div class="col-md-12">
-                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
                     <a class="btn btn-primary" href="{{URL::to('/insert-group')}}">
                         {{ trans('messages.manage_resource_inset_group') }}
                     </a>
@@ -49,7 +49,7 @@
                 <div class="table-responsive" id="content" style="margin-top: 10px">
                     <table class='table table-hover' style="font-size: 12px">
                         <thead>
-                            @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                            @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
                             <th></th>
                             @endif
                             <th>{{trans('messages.booking_date_resource')}}</th>
@@ -73,7 +73,7 @@
                         <tbody>
                             @foreach($resourceList as $resource)
                                 <tr>    
-                                    @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                    @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
                                     <td>
                                         <a href="{{URL::to('/resource', $resource->id)}}"
                                             <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>

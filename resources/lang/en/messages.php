@@ -180,13 +180,23 @@
         'report_bookings' => 'Num bookings',
         'report_surveys' => 'Num surveys',
         
-        //Success Messages [from 100 to 299]
-        '100' => 'Reservation saved!',
+        //Results messages 
         
-        //Warning Messages [from 300 to 499]
+        //Successes
+        'booking_insert_ok' => 'Reservation saved!',
+        'check_booking_ok' => 'Check booking made',
+        'insert_resource_ok' => 'Resource successfully inserted',
+        'insert_group_ok' => 'Group successfully inserted',
+        'update_resource_ok' => 'Resource successfully updated',
+        'update_group_ok' => 'Group successfully updated',
+        'common_delete_ok' => 'Cancellation made successfully',
         
-        //Error Messages [from 500 to 699]
-        '500' => 'Error in the inclusion of reservation',
+        //Failed
+        'booking_insert_ko' => 'Error in the inclusion of reservation',
+        'check_booking_ko' => 'Error during booking verification made',
+        'common_insert_ko' => 'Insertion failed',
+        'common_update_ko' => 'Failed to update',
+        'common_delete_ko' => 'Failed to delete',
         
         //Response code
         //WS LOGIN

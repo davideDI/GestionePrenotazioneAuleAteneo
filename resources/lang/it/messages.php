@@ -183,13 +183,23 @@
         'report_bookings' => 'Num prenotazioni',
         'report_surveys' => 'Num verifiche',
         
-        //Success Messages [from 100 to 299]
-        '100' => 'Prenotazione effettuata! ',
+        //Results messages 
         
-        //Warning Messages [from 300 to 499]
+        //Successes
+        'booking_insert_ok' => 'Prenotazione effettuata',
+        'check_booking_ok' => 'Verifica prenotazione effettuata',
+        'insert_resource_ok' => 'Risorsa inserita con successo',
+        'insert_group_ok' => 'Gruppo inserito con successo',
+        'update_resource_ok' => 'Risorsa modificata con successo',
+        'update_group_ok' => 'Gruppo modificato con successo',
+        'common_delete_ok' => 'Cancellazione effettuata con successo',
         
-        //Error Messages [from 500 to 699]
-        '500' => 'Errore nell\'inserimento della prenotazione',
+        //Failed
+        'booking_insert_ko' => 'Errore nell\'inserimento della prenotazione',
+        'check_booking_ko' => 'Errore durante il salvataggio della verifica prenotazione',
+        'common_insert_ko' => 'Inserimento dati fallito',
+        'common_update_ko' => 'Modifica dati fallita',
+        'common_delete_ko' => 'Cancellazione dati fallita',
         
         //Response code
         //WS LOGIN

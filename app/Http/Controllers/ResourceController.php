@@ -53,11 +53,11 @@ class ResourceController extends Controller {
             $resource->fill($request->all());
             $resource->save();
             
-            return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 100);
+            return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 'insert_resource_ok');
             
         } catch (Exception $ex) {
             Log::error('ResourcesController - insertResource() : '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            return Redirect::back()->withErrors(['common_insert_ko']);
         }
         
     }
@@ -84,11 +84,11 @@ class ResourceController extends Controller {
             $resource->fill($request->all());
             $resource->save();
             
-            return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 100);
+            return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 'update_resource_ok');
             
         } catch (Exception $ex) {
-            Log::error('ResourcesController - insertResource() : '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            Log::error('ResourcesController - updateResource() : '.$ex->getMessage());
+            return Redirect::back()->withErrors(['common_update_ko']);
         }
                
     }
@@ -123,11 +123,11 @@ class ResourceController extends Controller {
             //elimina resources
             $resource->delete();
 
-            return redirect()->route('home')->with('success', 100);
+            return redirect()->route('manage_resources')->with('success', 'common_delete_ok');
         
         } catch (Exception $ex) {
             Log::error('ResourcesController - deleteResource() : '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            return Redirect::back()->withErrors(['common_delete_ko']);
         }
         
     }
@@ -164,11 +164,11 @@ class ResourceController extends Controller {
             $group->fill($request->all());
             $group->save();
         
-            return redirect()->route('manage_resources_from_id', [$group->id])->with('success', 100);
+            return redirect()->route('manage_resources_from_id', [$group->id])->with('success', 'update_group_ok');
             
         } catch (Exception $ex) {
             Log::error('ResourcesController - updateGroup() : '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            return Redirect::back()->withErrors(['common_update_ko']);
         }
         
     }
@@ -187,11 +187,11 @@ class ResourceController extends Controller {
             $group->admin_id=1;
             $group->save();
             
-            return redirect()->route('manage_resources')->with('success', 100);
+            return redirect()->route('manage_resources_from_id', [$group->id])->with('success', 'insert_group_ok');
             
         } catch (Exception $ex) {
             Log::error('ResourcesController - insertGroup() : '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            return Redirect::back()->withErrors(['common_insert_ko']);
         }
         
     }
@@ -236,14 +236,12 @@ class ResourceController extends Controller {
             //elimina group
             $group->delete();
 
-            return redirect()->route('home')->with('success', 100);
+            return redirect()->route('manage_resources')->with('success', 'common_delete_ok');
         
         } catch (Exception $ex) {
             Log::error('ResourcesController - deleteGroup() : '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            return Redirect::back()->withErrors(['common_delete_ko']);
         }
-        
-        return redirect()->route('home')->with('success', 100);
         
     }
     

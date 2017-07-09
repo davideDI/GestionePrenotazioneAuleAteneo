@@ -130,11 +130,11 @@ class BookingController extends Controller {
 
             }
 
-            return redirect()->route('bookings2', [$resourceOfBooking->group_id, $booking->resource_id])->with('success', 100);
+            return redirect()->route('bookings2', [$resourceOfBooking->group_id, $booking->resource_id])->with('success', 'booking_insert_ok');
             
         } catch(Exception $ex) {
             Log::error('BookingController - Errore nell\'inserimento della prenotazione '.$ex->getMessage());
-            return Redirect::back()->withErrors([500]);
+            return Redirect::back()->withErrors(['booking_insert_ko']);
         }
         
     }
