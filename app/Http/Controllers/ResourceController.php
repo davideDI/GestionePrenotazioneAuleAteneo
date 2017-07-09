@@ -76,7 +76,7 @@ class ResourceController extends Controller {
     
     public function updateResource(Request $request) {
         
-        Log::info('ResourcesController - updateResource()');
+        Log::info('ResourcesController - updateResource(idResource: '.$request->id.')');
         
         try {
             
@@ -145,7 +145,7 @@ class ResourceController extends Controller {
     
     public function updateGroupView($idGroup) {
         
-        Log::info('ResourcesController - updateGroupView('.$idGroup.')');
+        Log::info('ResourcesController - updateGroupView(idGroup: '.$idGroup.')');
         
         $group = \App\Group::find($idGroup);
         $tipGroupList = \App\TipGroup::pluck('name', 'id');
@@ -156,7 +156,7 @@ class ResourceController extends Controller {
     
     public function updateGroup(Request $request) {
         
-        Log::info('ResourcesController - updateGroup()');
+        Log::info('ResourcesController - updateGroup(idGroup: '.$request->id.')');
         
         try {
             

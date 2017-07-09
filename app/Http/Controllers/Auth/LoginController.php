@@ -40,7 +40,7 @@ class LoginController extends Controller
     
     public function getLoginView() {
         
-        Log::info('AclController - getAclView()');
+        Log::info('LoginController - getLoginView()');
         return view('pages/login/login');
         
     }

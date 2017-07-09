@@ -19,8 +19,8 @@ class CheckController extends Controller {
     
     public function insertRequestCheck(Request $request) {
         
-        Log::info('CheckController - requestCheck()');
         $idRepeat = $request['idRepeat'];
+        Log::info('CheckController - requestCheck(idRepeat: '.$idRepeat.')');
         
         $survey = new \App\Survey;
         $survey->repeat_id = $idRepeat;
@@ -35,9 +35,9 @@ class CheckController extends Controller {
     
     public function updateCheck(Request $request) {
         
-        Log::info('CheckController - updateCheck()');
-        
         $idSurvey = $request['id'];
+        Log::info('CheckController - updateCheck(idSurvey: '.$idSurvey.')');
+        
         $survey = \App\Survey::find($idSurvey);
         
         $survey->note = $request['note'];

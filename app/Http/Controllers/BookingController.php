@@ -179,7 +179,7 @@ class BookingController extends Controller {
     
     public function getNewBookingFormWithResource($idResource, $date_start, $date_end) {
         
-        Log::info('BookingController - getNewBookingFormWithResource('.$idResource.','.$date_start.','.$date_end.')');
+        Log::info('BookingController - getNewBookingFormWithResource(idResource: '.$idResource.', date_start: '.$date_start.', date_end: '.$date_end.')');
     
         $booking = new \App\Booking;
         $resource =  \App\Resource::find($idResource);

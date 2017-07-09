@@ -67,7 +67,6 @@ class SearchController extends Controller {
             array_push($listOfParameters, $listOfGroups[$i]);
         }
         
-        
         array_push($listOfParameters, $repeat_start);
         array_push($listOfParameters, $repeat_end);
         array_push($listOfParameters, $repeat_start);
