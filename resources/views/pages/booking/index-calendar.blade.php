@@ -360,11 +360,11 @@
                     data: data,
                     success: function() {
                         $('#myModal').modal('hide');
-                        $("#message-success").fadeIn('fast').delay(1000).fadeOut('fast');
+                        $("#message-success-check").fadeIn('fast').delay(1000).fadeOut('fast');
                     },
                     error: function() {
                         $('#myModal').modal('hide');
-                        $("#message-danger").fadeIn('fast').delay(1000).fadeOut('fast');
+                        $("#message-danger-check").fadeIn('fast').delay(1000).fadeOut('fast');
                     },
 
                 });

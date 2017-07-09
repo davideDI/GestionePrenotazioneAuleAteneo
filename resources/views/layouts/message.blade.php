@@ -37,23 +37,34 @@
         
     @endif
     
-    <!-- Messaggi utilizzati per la conferma / respinta prenotazione -->
-        <div class="col-md-2"></div>
+    <div class="col-md-2"></div>
 
-        <div class="col-md-8">
-            
-            <div id="message-success" class="alert alert-success" role="alert" style="display: none;">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{trans('messages.common_success')}}
-            </div>
+    <div class="col-md-8">
 
-            <div id="message-danger" class="alert alert-danger" role="alert" style="display: none;">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{trans('messages.common_danger')}}
-            </div>
-            
+        <!-- Messaggi utilizzati per la conferma / respinta prenotazione -->
+        <div id="message-success" class="alert alert-success" role="alert" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{trans('messages.common_success')}}
         </div>
-        
-        <div class="col-md-2"></div>
-        
+
+        <div id="message-danger" class="alert alert-danger" role="alert" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{trans('messages.common_danger')}}
+        </div>
+
+        <!-- Messaggi utilizzati per richiesta di verifica -->
+        <div id="message-success-check" class="alert alert-success" role="alert" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{trans('messages.')}}
+        </div>
+
+        <div id="message-danger-check" class="alert alert-danger" role="alert" style="display: none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{trans('messages.check_insert_ko')}}
+        </div>
+
+    </div>
+
+    <div class="col-md-2"></div>
+
 </div>

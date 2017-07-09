@@ -190,6 +190,7 @@
         'update_resource_ok' => 'Resource successfully updated',
         'update_group_ok' => 'Group successfully updated',
         'common_delete_ok' => 'Cancellation made successfully',
+        'check_insert_ok' => 'Request check successfully inserted',
         
         //Failed
         'booking_insert_ko' => 'Error in the inclusion of reservation',
@@ -197,6 +198,7 @@
         'common_insert_ko' => 'Insertion failed',
         'common_update_ko' => 'Failed to update',
         'common_delete_ko' => 'Failed to delete',
+        'check_insert_ko' => 'Request rejected',
         
         //Response code
         //WS LOGIN

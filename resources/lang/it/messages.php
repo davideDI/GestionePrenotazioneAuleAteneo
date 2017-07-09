@@ -193,6 +193,7 @@
         'update_resource_ok' => 'Risorsa modificata con successo',
         'update_group_ok' => 'Gruppo modificato con successo',
         'common_delete_ok' => 'Cancellazione effettuata con successo',
+        'check_insert_ok' => 'Richiesta verifica inserita',
         
         //Failed
         'booking_insert_ko' => 'Errore nell\'inserimento della prenotazione',
@@ -200,6 +201,7 @@
         'common_insert_ko' => 'Inserimento dati fallito',
         'common_update_ko' => 'Modifica dati fallita',
         'common_delete_ko' => 'Cancellazione dati fallita',
+        'check_insert_ko' => 'Richiesta verifica non andata a buon fine',
         
         //Response code
         //WS LOGIN

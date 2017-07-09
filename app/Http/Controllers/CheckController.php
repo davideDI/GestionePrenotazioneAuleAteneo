@@ -29,6 +29,10 @@ class CheckController extends Controller {
         
         $survey->save();
         
+        //TODO compleatare gestione invio email
+        //$repeat = \App\Repeat::find($idRepeat);
+        //mail($repeat->booking->resource->room_admin_email, "TODO", "TODO");
+        
         return $survey;
         
     }

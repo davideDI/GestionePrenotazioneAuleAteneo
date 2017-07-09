@@ -67,6 +67,9 @@ class BookingController extends Controller {
                 $repeat->save();
 
             } 
+            
+            //TODO compleatare gestione invio email
+            //mail($resourceOfBooking->room_admin_email, "TODO", "TODO");
 
             //Multiple event
             //TODO in sospeso : permettere l'inserimento di una singola prenotazione
