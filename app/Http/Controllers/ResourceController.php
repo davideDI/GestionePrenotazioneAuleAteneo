@@ -49,6 +49,14 @@ class ResourceController extends Controller {
         
         try {
             
+            $this->validate($request, [
+                'name'             => 'required|max:50',
+                'description'      => 'required|max:100',
+                'capacity'         => 'required|numeric|min:1',
+                'room_admin_email' => 'required|email',
+                'network'          => 'required|numeric|min:0' 
+            ]);
+            
             $resource = new \App\Resource;
             $resource->fill($request->all());
             $resource->save();
@@ -79,6 +87,14 @@ class ResourceController extends Controller {
         Log::info('ResourcesController - updateResource(idResource: '.$request->id.')');
         
         try {
+            
+            $this->validate($request, [
+                'name'             => 'required|max:50',
+                'description'      => 'required|max:100',
+                'capacity'         => 'required|numeric|min:1',
+                'room_admin_email' => 'required|email',
+                'network'          => 'required|numeric|min:0' 
+            ]);
             
             $resource = \App\Resource::find($request->id);
             $resource->fill($request->all());
@@ -160,6 +176,12 @@ class ResourceController extends Controller {
         
         try {
             
+            $this->validate($request, [
+                'name'         => 'required|max:50',
+                'description'  => 'required|max:100',
+                'tip_group_id' => 'required'
+            ]);
+            
             $group = \App\Group::find($request->id);
             $group->fill($request->all());
             $group->save();
@@ -178,6 +200,12 @@ class ResourceController extends Controller {
         Log::info('ResourcesController - insertGroup()');
         
         try {
+            
+            $this->validate($request, [
+                'name'         => 'required|max:50',
+                'description'  => 'required|max:100',
+                'tip_group_id' => 'required'
+            ]);
             
             $group = new \App\Group; 
             $group->fill($request->all());

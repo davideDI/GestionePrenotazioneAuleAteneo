@@ -27,7 +27,18 @@ class BookingController extends Controller {
         Log::info('BookingController - insertNewBooking()');
 
         try {
-
+            
+            //TODO valida formato data inizio / fine
+            //TODO valida capienza prevista e massima aula
+            $this->validate($request, [
+                'name'             => 'required|max:50',
+                'description'      => 'required|max:100',
+                'num_students'     => 'required|numeric|min:1',
+                'event_date_start' => 'required',
+                'event_date_end'   => 'required',
+                'resource_id'      => 'required|numeric' 
+            ]);
+            
             //Booking Object
             $booking = new \App\Booking; 
             $booking->fill($request->all());
@@ -69,7 +80,7 @@ class BookingController extends Controller {
             } 
             
             //TODO compleatare gestione invio email
-            //mail($resourceOfBooking->room_admin_email, "TODO", "TODO");
+//            mail($resourceOfBooking->room_admin_email, "TODO", "TODO");
 
             //Multiple event
             //TODO in sospeso : permettere l'inserimento di una singola prenotazione

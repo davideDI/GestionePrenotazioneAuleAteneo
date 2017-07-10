@@ -160,6 +160,8 @@
         'search_search_capacity' => 'Search for Capacities',
         'search_search_free' => 'Search Free Rooms',
         'search_no_result' => 'No Result!',
+        'search_page_list_groups_empty' => 'No selected group',
+        'search_page_date_empty' => 'No day selected',
         
         //Checks page
         'check_title' => 'Checks List',

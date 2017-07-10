@@ -163,6 +163,8 @@
         'search_search_capacity' => 'Cerca Aule per Capienza',
         'search_search_free' => 'Cerca Aule Libere',
         'search_no_result' => 'Nessun risultato per i criteri selezionati!',
+        'search_page_list_groups_empty' => 'Nessun gruppo selezionato',
+        'search_page_date_empty' => 'Nessun giorno selezionato',
         
         //Checks page
         'check_title' => 'Checks List',

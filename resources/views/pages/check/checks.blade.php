@@ -69,11 +69,21 @@
                                 
                                 <div class="form-group row">
                                     <label for="real_num_students">{{ trans('messages.check_num_students') }}</label>
+                                    @if ($errors->has('real_num_students'))
+                                        <span class="label label-danger">
+                                            <strong>{{ $errors->first('real_num_students') }}</strong>
+                                        </span>
+                                    @endif
                                     <input name="real_num_students" type="number" min="0">
                                 </div>
                                 
                                 <div class="form-group row">
                                     <label for="note">{{ trans('messages.booking_note') }}</label>
+                                    @if ($errors->has('note'))
+                                        <span class="label label-danger">
+                                            <strong>{{ $errors->first('note') }}</strong>
+                                        </span>
+                                    @endif
                                     <textarea name="note" maxlength="150"></textarea> 
                                 </div>    
                             </div>

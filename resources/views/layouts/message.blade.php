@@ -1,6 +1,6 @@
 <div class="row">
 
-    @if(!empty($errors) && $errors->any())
+    @if(!empty($customError))
     
         <div class="col-md-2"></div>
 
@@ -9,7 +9,7 @@
             <!-- Messaggi di Errore  -->
             <div class="alert alert-danger" role="alert">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{ trans('messages.'.$errors->first()) }}
+                {{ trans('messages.'.$customError) }}
             </div>
             
         </div>
@@ -55,7 +55,7 @@
         <!-- Messaggi utilizzati per richiesta di verifica -->
         <div id="message-success-check" class="alert alert-success" role="alert" style="display: none;">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            {{trans('messages.')}}
+            {{trans('messages.check_insert_ok')}}
         </div>
 
         <div id="message-danger-check" class="alert alert-danger" role="alert" style="display: none;">

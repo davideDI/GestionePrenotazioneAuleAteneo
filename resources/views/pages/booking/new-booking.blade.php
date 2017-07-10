@@ -10,18 +10,33 @@
                     <!-- Booking : name -->
                     <div class="form-group">
                         {!! Form::label('name', trans('messages.common_title')); !!}
+                        @if ($errors->has('name'))
+                            <span class="label label-danger">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
                         {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_title')]); !!}
                     </div>
                     <!-- Booking : description -->
                     <div class="form-group">
                         {!! Form::label('description', trans('messages.common_description')); !!}
+                        @if ($errors->has('description'))
+                            <span class="label label-danger">
+                                <strong>{{ $errors->first('description') }}</strong>
+                            </span>
+                        @endif
                         {!! Form::text('description', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_description')]); !!}
                     </div>
                     <!-- Num Students -->
                     <div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::label('num_students', trans('messages.booking_num_students')); !!}
-                            {!! Form::text('num_students', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_num_students')]); !!}
+                            @if ($errors->has('num_students'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('num_students') }}</strong>
+                                </span>
+                            @endif
+                            {!! Form::number('num_students', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_num_students'), 'min' => 0]); !!}
                         </div>
                         <div id="capacityRoom" class="col-md-6">
                             
@@ -34,6 +49,11 @@
                     <!-- Booking : data inizio evento -->
                         <div class="col-md-6">
                             {!! Form::label('event_date_start', trans('messages.booking_date_day_start')); !!}
+                            @if ($errors->has('event_date_start'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('event_date_start') }}</strong>
+                                </span>
+                            @endif
                             @if(empty($date_start))
                                 <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
                                     <div class="row">
@@ -59,6 +79,11 @@
                     <!-- Booking : data fine evento -->
                         <div class="col-md-6">
                             {!! Form::label('event_date_end', trans('messages.booking_date_day_end')); !!}
+                            @if ($errors->has('event_date_end'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('event_date_end') }}</strong>
+                                </span>
+                            @endif
                             @if(empty($date_start))
                                 <div id="event_date_end" class="input-append date datetimepicker1">
                                     <div class="row">
@@ -197,7 +222,11 @@
                         <!-- Booking : id risorsa - lista -->
                             <div class="col-md-6">
                                 {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
-
+                                @if ($errors->has('resource_id'))
+                                    <span class="label label-danger">
+                                        <strong>{{ $errors->first('resource_id') }}</strong>
+                                    </span>
+                                @endif
                                 {!! Form::select(
                                         'resource_id', 
                                         [], 

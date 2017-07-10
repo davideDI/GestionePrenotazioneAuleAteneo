@@ -125,6 +125,8 @@ class AdminController extends Controller {
         $repeat->tip_booking_status_id = 3;
         $repeat->save();
         
+        session(['countRepeatsTemp' => session('countRepeatsTemp') - 1]);
+        
         return $repeat;
         
     }
@@ -137,6 +139,8 @@ class AdminController extends Controller {
         $repeat = \App\Repeat::find($idRepeat);
         $repeat->tip_booking_status_id = 4;
         $repeat->save();
+        
+        session(['countRepeatsTemp' => session('countRepeatsTemp') - 1]);
         
         return $repeat;
         

@@ -44,6 +44,11 @@ class CheckController extends Controller {
         
         try {
             
+            $this->validate($request, [
+                'real_num_students' => 'required|numeric|min:0',
+                'note'              => 'required|max:150'
+            ]);
+            
             $survey = \App\Survey::find($idSurvey);
         
             $survey->note = $request['note'];

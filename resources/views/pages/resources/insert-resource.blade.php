@@ -10,10 +10,20 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::label('name', trans('messages.common_name')); !!}
+                            @if ($errors->has('name'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                            @endif
                             {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_name')]); !!}
                         </div>
                         <div class="col-md-6">
                             {!! Form::label('description', trans('messages.common_description')); !!}
+                            @if ($errors->has('description'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('description') }}</strong>
+                                </span>
+                            @endif
                             {!! Form::text('description', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_description')]); !!}
                         </div>
                     </div>
@@ -21,10 +31,20 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::label('capacity', trans('messages.booking_capacity')); !!}
+                            @if ($errors->has('capacity'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('capacity') }}</strong>
+                                </span>
+                            @endif
                             {!! Form::number('capacity', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_capacity'), 'min' => '0']); !!}
                         </div>
                         <div class="col-md-6">
                             {!! Form::label('room_admin_email', trans('messages.booking_room_admin_email')); !!}
+                            @if ($errors->has('room_admin_email'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('room_admin_email') }}</strong>
+                                </span>
+                            @endif
                             {!! Form::text('room_admin_email', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_room_admin_email')]); !!}
                         </div>
                     </div>
@@ -83,6 +103,11 @@
                     <div class="form-group row">
                         <div class="col-md-6">    
                             {!! Form::label('network', trans('messages.booking_network')); !!}
+                            @if ($errors->has('network'))
+                                <span class="label label-danger">
+                                    <strong>{{ $errors->first('network') }}</strong>
+                                </span>
+                            @endif
                             {!! Form::number('network', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_network'), 'min' => '0']); !!}
                         </div>
                     </div>

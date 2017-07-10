@@ -12,6 +12,9 @@
                         <legend>{{ trans('messages.search_title') }}</legend> 
                         
                         <label for="groupSelected">{{ trans('messages.search_group') }}</label>
+                        <span id="no_group_selected" style="display: none" class="label label-danger">
+                            <strong>{{ trans('messages.search_page_list_groups_empty') }}</strong>
+                        </span>
                         <select id="listOfGroups"  name="groupSelected"
                                 class="js-example-placeholder-multiple form-control"
                                 multiple="multiple"
@@ -32,6 +35,9 @@
                         <br>
                         
                         <label for="date_search">{{ trans('messages.search_date') }}</label>
+                        <span id="no_date_search" style="display: none" class="label label-danger">
+                            <strong>{{ trans('messages.search_page_list_groups_empty') }}</strong>
+                        </span>
                         <input type="text" class="form-control" name="date_search" id="date_search" size="10">
                         
                         <br>
@@ -104,164 +110,190 @@
             
             function searchByCapacity() {
                 
-                var dataInput = {
+                if($("#listOfGroups").val().length == 0) {
                     
-                    'listOfGroups' : $("#listOfGroups").val(),
-                    'capacity'     : $("#capacity").val(),
-                    'date_search'  : $("#date_search").val(),
-                    'date_start'   : $("#date_start").val(),
-                    'date_end'     : $("#date_end").val()
+                    $("#no_group_selected").show();
                     
-                };
-                
-                $.ajax({
+                } else {
+               
+                    var dataInput = {
 
-                    url: "{{URL::to('/search-by-capacity')}}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: dataInput,
-                    success: function(resourcesList) {
+                        'listOfGroups' : $("#listOfGroups").val(),
+                        'capacity'     : $("#capacity").val(),
+                        'date_search'  : $("#date_search").val(),
+                        'date_start'   : $("#date_start").val(),
+                        'date_end'     : $("#date_end").val()
 
-                        var result = "";
-                        if(resourcesList.length > 0) {
-                            
-                            var result = "<table class='table table-hover'>";
-                                    result += "<thead>";
-                                        result += "<th>{{trans('messages.common_structure')}}</th>";
-                                        result += "<th>{{trans('messages.common_room_name')}}</th>";
-                                        result += "<th>{{trans('messages.common_description')}}</th>";
-                                        result += "<th>{{trans('messages.common_email_adimn')}}</th>";
-                                        result += "<th>{{trans('messages.booking_capacity')}}</th>";
-                                        @if(Session::has('session_id'))
-                                            result += "<th></th>";
-                                        @endif
-                                    result += "</thead>";
-                                    result += "<tbody>";
-                                    
-                                    for(var j=0; j < resourcesList.length; j++) {
-                                        
-                                        result += "<tr id='"+resourcesList[j].id+"'>";
-                                            result += "<td>";
-                                                result += resourcesList[j].name;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].group.name;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].description;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].room_admin_email;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].capacity;
-                                            result += "</td>";
+                    };
+
+                    $.ajax({
+
+                        url: "{{URL::to('/search-by-capacity')}}",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: dataInput,
+                        success: function(resourcesList) {
+
+                            var result = "";
+                            if(resourcesList.length > 0) {
+
+                                var result = "<table class='table table-hover'>";
+                                        result += "<thead>";
+                                            result += "<th>{{trans('messages.common_structure')}}</th>";
+                                            result += "<th>{{trans('messages.common_room_name')}}</th>";
+                                            result += "<th>{{trans('messages.common_description')}}</th>";
+                                            result += "<th>{{trans('messages.common_email_adimn')}}</th>";
+                                            result += "<th>{{trans('messages.booking_capacity')}}</th>";
                                             @if(Session::has('session_id'))
-                                                result += "<td>";
-                                                    //TODO aggiustare link con utility di laravel
-                                                    result += 
-                                                    "<a href='../public/new-booking/"+resourcesList[j].id+"'>{{trans('messages.common_reservation')}}\n\
-                                                     </a>";
-                                                result += "</td>";
+                                                result += "<th></th>";
                                             @endif
-                                        result += "</tr>";
-                                        
-                                    }
-                                    
-                                    result += "</tbody>";
-                                result += "</table>";
-                        } else {
-                            result += "<h4 style='margin-left: 35%; margin-top: 30%;'>{{ trans('messages.search_no_result') }}</h4>";
-                        }
-                        $("#searchResult").html(result);
-                    },
-                    error: function(e) {
-                         console.log(e.responseText);
-                    },
+                                        result += "</thead>";
+                                        result += "<tbody>";
 
-                });
+                                        for(var j=0; j < resourcesList.length; j++) {
+
+                                            result += "<tr id='"+resourcesList[j].id+"'>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].name;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].group.name;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].description;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].room_admin_email;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].capacity;
+                                                result += "</td>";
+                                                @if(Session::has('session_id'))
+                                                    result += "<td>";
+                                                        //TODO aggiustare link con utility di laravel
+                                                        result += 
+                                                        "<a href='../public/new-booking/"+resourcesList[j].id+"'>{{trans('messages.common_reservation')}}\n\
+                                                         </a>";
+                                                    result += "</td>";
+                                                @endif
+                                            result += "</tr>";
+
+                                        }
+
+                                        result += "</tbody>";
+                                    result += "</table>";
+                            } else {
+                                result += "<h4 style='margin-left: 35%; margin-top: 30%;'>{{ trans('messages.search_no_result') }}</h4>";
+                            }
+                            $("#searchResult").html(result);
+                        },
+                        error: function(e) {
+                             console.log(e.responseText);
+                        },
+
+                    });
+                }    
                 
             }
             
             function searchByFree() {
                 
-                var dataInput = {
-                    
-                    'listOfGroups' : $("#listOfGroups").val(),
-                    'capacity'     : $("#capacity").val(),
-                    'date_search'  : $("#date_search").val(),
-                    'date_start'   : $("#date_start").val(),
-                    'date_end'     : $("#date_end").val(),
-                    
-                };
+                var validatedInput = true;
                 
-                $.ajax({
+                if($("#listOfGroups").val().length == 0) {
+                    
+                    $("#no_group_selected").show();
+                    validatedInput = false;
+                    
+                }
+                
+                if($("#date_search").val().length == 0) {
+                    
+                    $("#no_date_search").show();
+                    validatedInput = false;
+                    
+                } 
+                
+                if(validatedInput == true) {
+                    
+                    var dataInput = {
 
-                    url: "{{URL::to('/search-by-free')}}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: dataInput,
-                    success: function(resourcesList) {
-                        console.log(resourcesList);
-                        var result = "";
-                        if(resourcesList.length > 0) {
-                            
-                            var result = "<table class='table table-hover'>";
-                                    result += "<thead>";
-                                        result += "<th>{{trans('messages.common_structure')}}</th>";
-                                        result += "<th>{{trans('messages.common_room_name')}}</th>";
-                                        result += "<th>{{trans('messages.common_description')}}</th>";
-                                        result += "<th>{{trans('messages.common_email_adimn')}}</th>";
-                                        result += "<th>{{trans('messages.booking_capacity')}}</th>";
-                                        @if(Session::has('session_id'))
-                                            result += "<th></th>";
-                                        @endif
-                                    result += "</thead>";
-                                    result += "<tbody>";
-                                    
-                                    for(var j=0; j < resourcesList.length; j++) {
-                                        
-                                        result += "<tr id='"+resourcesList[j].id_resources+"'>";
-                                            result += "<td>";
-                                                result += resourcesList[j].name;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].name_resource;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].description_resource;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].room_admin_email;
-                                            result += "</td>";
-                                            result += "<td>";
-                                                result += resourcesList[j].capacity;
-                                            result += "</td>";
+                        'listOfGroups' : $("#listOfGroups").val(),
+                        'capacity'     : $("#capacity").val(),
+                        'date_search'  : $("#date_search").val(),
+                        'date_start'   : $("#date_start").val(),
+                        'date_end'     : $("#date_end").val(),
+
+                    };
+
+                    $.ajax({
+
+                        url: "{{URL::to('/search-by-free')}}",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: dataInput,
+                        success: function(resourcesList) {
+                            console.log(resourcesList);
+                            var result = "";
+                            if(resourcesList.length > 0) {
+
+                                var result = "<table class='table table-hover'>";
+                                        result += "<thead>";
+                                            result += "<th>{{trans('messages.common_structure')}}</th>";
+                                            result += "<th>{{trans('messages.common_room_name')}}</th>";
+                                            result += "<th>{{trans('messages.common_description')}}</th>";
+                                            result += "<th>{{trans('messages.common_email_adimn')}}</th>";
+                                            result += "<th>{{trans('messages.booking_capacity')}}</th>";
                                             @if(Session::has('session_id'))
-                                                result += "<td>";
-                                                    //TODO aggiustare link con utility di laravel
-                                                    result += 
-                                                    "<a href='../public/new-booking/"+resourcesList[j].id_resources+"/"+$("#date_search").val()+" "+$("#date_start").val()+"/"+$("#date_search").val()+" "+$("#date_end").val()+"'>{{trans('messages.common_reservation')}}\n\
-                                                     </a>";
-                                                result += "</td>";
+                                                result += "<th></th>";
                                             @endif
-                                        result += "</tr>";
-                                        
-                                    }
-                                    
-                                    result += "</tbody>";
-                                result += "</table>";
-                        } else {
-                            result += "<p>{{ trans('') }}</p>";
-                        }
-                        $("#searchResult").html(result);
-                    },
-                    error: function(e) {
-                        console.log(e.responseText);
-                    },
+                                        result += "</thead>";
+                                        result += "<tbody>";
 
-                });
-                
+                                        for(var j=0; j < resourcesList.length; j++) {
+
+                                            result += "<tr id='"+resourcesList[j].id_resources+"'>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].name;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].name_resource;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].description_resource;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].room_admin_email;
+                                                result += "</td>";
+                                                result += "<td>";
+                                                    result += resourcesList[j].capacity;
+                                                result += "</td>";
+                                                @if(Session::has('session_id'))
+                                                    result += "<td>";
+                                                        //TODO aggiustare link con utility di laravel
+                                                        result += 
+                                                        "<a href='../public/new-booking/"+resourcesList[j].id_resources+"/"+$("#date_search").val()+" "+$("#date_start").val()+"/"+$("#date_search").val()+" "+$("#date_end").val()+"'>{{trans('messages.common_reservation')}}\n\
+                                                         </a>";
+                                                    result += "</td>";
+                                                @endif
+                                            result += "</tr>";
+
+                                        }
+
+                                        result += "</tbody>";
+                                    result += "</table>";
+                            } else {
+                                result += "<p>{{ trans('') }}</p>";
+                            }
+                            $("#searchResult").html(result);
+                        },
+                        error: function(e) {
+                            console.log(e.responseText);
+                        },
+
+                    });
+                    
+                }
             }
             
             $(document).ready(function() {
