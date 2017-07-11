@@ -167,8 +167,9 @@
         'check_title' => 'Checks List',
         'check_num_students' => 'Real Num of Studs',
         'check_exp_students' => 'Exp Studs',
-        'check_title_modal' => 'Effettua verifica',  
-        'check_no_result' => 'Nessuna verifica in coda',
+        'check_title_modal' => 'Check form',  
+        'check_no_result' => 'No checks in queue',
+        'check_real_num_students_error' => 'Insert num of students',
         
         //Report page
         'report_title' => 'Report',

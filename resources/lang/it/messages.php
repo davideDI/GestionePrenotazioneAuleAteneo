@@ -172,6 +172,7 @@
         'check_exp_students' => 'Exp Studs',
         'check_title_modal' => 'Effettua verifica',
         'check_no_result' => 'Nessuna verifica in coda',
+        'check_real_num_students_error' => 'Inserire numero studenti',
         
         //Report page
         'report_title' => 'Report',

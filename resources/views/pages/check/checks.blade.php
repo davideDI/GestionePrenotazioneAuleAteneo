@@ -60,7 +60,7 @@
                             </button>
                             <h4 class="modal-title" id="myModalLabel">{{ trans('messages.check_title_modal') }}</h4>
                         </div>
-                        <form method="POST" action="{{url('check')}}">
+                        <form method="POST" id="checkForm" action="{{url('check')}}">
                             
                             <div id="modalBody" class="modal-body">
                                 
@@ -68,28 +68,29 @@
                                 <input type="hidden" id="survey_hidden_id" name="id" value="">
                                 
                                 <div class="form-group row">
-                                    <label for="real_num_students">{{ trans('messages.check_num_students') }}</label>
-                                    @if ($errors->has('real_num_students'))
-                                        <span class="label label-danger">
-                                            <strong>{{ $errors->first('real_num_students') }}</strong>
-                                        </span>
-                                    @endif
-                                    <input name="real_num_students" type="number" min="0">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <label for="real_num_students">{{ trans('messages.check_num_students') }}</label>
+                                            <span id="check_real_num_students_error" style="display: none" class="label label-danger">
+                                                <strong>{{ trans('messages.check_real_num_students_error') }}</strong>
+                                            </span>
+                                        <input class="form-control" id="real_num_students" name="real_num_students" type="number" min="0">
+                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
                                 
                                 <div class="form-group row">
-                                    <label for="note">{{ trans('messages.booking_note') }}</label>
-                                    @if ($errors->has('note'))
-                                        <span class="label label-danger">
-                                            <strong>{{ $errors->first('note') }}</strong>
-                                        </span>
-                                    @endif
-                                    <textarea name="note" maxlength="150"></textarea> 
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <label for="note">{{ trans('messages.booking_note') }}</label>
+                                        <textarea class="form-control" id="note" name="note" maxlength="150"></textarea> 
+                                    </div>
+                                    <div class="col-md-2"></div>    
                                 </div>    
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">{{ trans('messages.common_save') }}</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
+                                <button type="submit" class="btn btn-primary" id="validationCheckInput">{{ trans('messages.common_save') }}</button>
+                                <button type="button" class="btn btn-default" id="buttonCloseModal" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
                             </div>
                         </form>
                     </div>
@@ -106,7 +107,27 @@
             $('#myModal').modal('show');
             
         }
-    
+        
+        $("#validationCheckInput").click(function(event) {
+            
+            event.preventDefault();
+            
+            var real_num_students = $('#real_num_students').val();
+                       
+            if(real_num_students == 0) {
+                $('#check_real_num_students_error').show();
+            }
+            
+            else {
+                $('#checkForm').submit();
+            }
+            
+        });
+        
+        $("#buttonCloseModal").click(function(event) {
+            $('#check_real_num_students_error').hide();
+        });
+            
     </script>
         
     @endsection

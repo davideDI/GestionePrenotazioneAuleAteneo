@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Session::has('session_id'))
+                        @if(Session::has('session_id') && Session::get('ruolo') != 'staff')
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>
@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti NON studenti visualizzano la legenda stati prenotazione -->
-                        @if(Session::has('session_id') && Session::get('ruolo') != 'Studenti')
+                        @if(Session::has('session_id') && Session::get('ruolo') != 'Studenti' && Session::get('ruolo') != 'staff')
                             <legend>{{ trans('messages.index_calendar_booking_status')}}</legend>
                             @foreach($bookingsStatus as $bookingStatus)
                                 @if($bookingStatus->id == 1)
