@@ -189,6 +189,7 @@
         
         //Repeat page
         'repeat_status_booking' => 'Stato prenotazione',
+        'repeat_booking_update_ok' => 'Prenotazione modificata',
         
         //Results messages 
         

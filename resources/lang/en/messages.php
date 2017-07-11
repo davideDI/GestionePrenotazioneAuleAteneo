@@ -186,6 +186,7 @@
         
         //Repeat page
         'repeat_status_booking' => 'Booking status',
+        'repeat_booking_update_ok' => 'Booking updated',
         
         //Results messages 
         

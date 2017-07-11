@@ -33,7 +33,7 @@ class RepeatController extends Controller {
         //TODO compleatare modifica evento
         //$repeat->save();
         
-        return null;
+        return redirect()->route('home')->with('success', 'repeat_booking_update_ok');
         
     }
     
