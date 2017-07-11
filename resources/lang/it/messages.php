@@ -68,6 +68,7 @@
         'common_room_name' => 'Nome Aula',
         'common_email_adimn' => 'Email Gestore',
         'common_reservation' => 'Prenota',
+        'common_update_repeat' => 'Modifica Evento',
         
         //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
@@ -185,6 +186,9 @@
         'report_title3' => 'Verifiche richieste',
         'report_bookings' => 'Num prenotazioni',
         'report_surveys' => 'Num verifiche',
+        
+        //Repeat page
+        'repeat_status_booking' => 'Stato prenotazione',
         
         //Results messages 
         

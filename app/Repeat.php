@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Repeat extends Model {
     
-    protected $fillable = ['event_date_start', 'event_date_end'];
+    protected $fillable = ['event_date_start', 'event_date_end', 'tip_booking_status_id'];
     protected $table = 'repeats';
     
     //Relazione con la tabella users

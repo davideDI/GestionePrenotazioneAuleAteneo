@@ -68,6 +68,7 @@
         'common_room_name' => 'Room\'s Name',
         'common_email_adimn' => 'Email Admin',
         'common_reservation' => 'Reserve',
+        'common_update_repeat' => 'Update Event',
         
         //Messages from insert booking
         'booking_title' => 'Insert new Booking',
@@ -182,6 +183,9 @@
         'report_title3' => 'Checks requested',
         'report_bookings' => 'Num bookings',
         'report_surveys' => 'Num surveys',
+        
+        //Repeat page
+        'repeat_status_booking' => 'Booking status',
         
         //Results messages 
         
