@@ -6,11 +6,14 @@ use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
+
+include 'Variables.php';
 
 class SoapController extends Controller {
 
     protected $soapWrapper;
+    protected $esse3PathWsdl = ESSE3_PATH_WSDL;
 
     public function __construct(SoapWrapper $soapWrapper) {
         $this->soapWrapper = $soapWrapper;
@@ -51,12 +54,12 @@ class SoapController extends Controller {
         
         if($username == 'davide@davide.it') {
             session(['session_id' => '999ooo888iii']);
-            session(['source_id' => '1']); //Look at UserTableSeed.php
-            session(['nome'      => 'DAVIDE']);
-            session(['cognome'   => 'DAVIDE']);
-            session(['cod_fis'   => 'DAVIDEDAVIDE33']);
-            session(['ruolo'     => 'admin']);
-            session(['matricola' => 'davide@davide']);
+            session(['source_id'  => '1']); //Look at UserTableSeed.php
+            session(['nome'       => 'DAVIDE']);
+            session(['cognome'    => 'DAVIDE']);
+            session(['cod_fis'    => 'DAVIDEDAVIDE33']);
+            session(['ruolo'      => 'admin']);
+            session(['matricola'  => 'davide@davide']);
             
             //TODO una volta associata la matricola al gruppo di appartenenza prendere le prenotazioni
             $user_id = 1;
@@ -70,12 +73,12 @@ class SoapController extends Controller {
         
         else if($username == 'ateneo@ateneo.it') {
             session(['session_id' => '222eee333rrr']);
-            session(['source_id' => '3']); //Look at UserTableSeed.php
-            session(['nome'      => 'ATENEO']);
-            session(['cognome'   => 'ATENEO']);
-            session(['cod_fis'   => 'ATENEOATENEO33']);
-            session(['ruolo'     => 'ateneo']);
-            session(['matricola' => 'ateneo@ateneo.it']);
+            session(['source_id'  => '3']); //Look at UserTableSeed.php
+            session(['nome'       => 'ATENEO']);
+            session(['cognome'    => 'ATENEO']);
+            session(['cod_fis'    => 'ATENEOATENEO33']);
+            session(['ruolo'      => 'ateneo']);
+            session(['matricola'  => 'ateneo@ateneo.it']);
             
             //TODO una volta associata la matricola al gruppo di appartenenza prendere le prenotazioni
             $user_id = 3;
@@ -89,12 +92,12 @@ class SoapController extends Controller {
         
         else if($username == 'usciere@ateneo.it') {
             session(['session_id' => '444eee555rrr']);
-            session(['source_id' => '4']); //Look at UserTableSeed.php
-            session(['nome'      => 'Aldo']);
-            session(['cognome'   => 'Usciere']);
-            session(['cod_fis'   => 'STAFFSTAFF3']);
-            session(['ruolo'     => 'staff']);
-            session(['matricola' => 'usciere@ateneo.it']);
+            session(['source_id'  => '4']); //Look at UserTableSeed.php
+            session(['nome'       => 'Aldo']);
+            session(['cognome'    => 'Usciere']);
+            session(['cod_fis'    => 'STAFFSTAFF3']);
+            session(['ruolo'      => 'staff']);
+            session(['matricola'  => 'usciere@ateneo.it']);
             
             //TODO una volta associata la matricola al gruppo di appartenenza prendere le verifiche associate
             $user_id = 4;
@@ -108,12 +111,12 @@ class SoapController extends Controller {
         
         else if($username == 'usciere2@ateneo.it') {
             session(['session_id' => '555eee666rrr']);
-            session(['source_id' => '5']); //Look at UserTableSeed.php
-            session(['nome'      => 'Maria']);
-            session(['cognome'   => 'Usciere']);
-            session(['cod_fis'   => 'STAFFSTAFF34']);
-            session(['ruolo'     => 'staff']);
-            session(['matricola' => 'usciere2@ateneo.it']);
+            session(['source_id'  => '5']); //Look at UserTableSeed.php
+            session(['nome'       => 'Maria']);
+            session(['cognome'    => 'Usciere']);
+            session(['cod_fis'    => 'STAFFSTAFF34']);
+            session(['ruolo'      => 'staff']);
+            session(['matricola'  => 'usciere2@ateneo.it']);
             
             //TODO una volta associata la matricola al gruppo di appartenenza prendere le verifiche associate
             $user_id = 5;
@@ -155,9 +158,9 @@ class SoapController extends Controller {
         if($this->checkFakeUsersForLogin($request)) {
             return redirect('/');
         } else {
-        
+            
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
-                $service->wsdl('https://segreteriavirtuale.univaq.it/services/ESSE3WS?wsdl');
+                $service->wsdl($this->esse3PathWsdl);
             });
 
             $fn_dologin = $this->soapWrapper->call('GenericWSEsse3.fn_dologin', [
@@ -182,21 +185,21 @@ class SoapController extends Controller {
                 //Xml di risposta
                 $response = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
 
-                $row = $response->children()->children()->children();
-                $sourceID = (string) $row->SOURCE_ID;
-                $nome = (string) $row->NOME;
-                $cognome = (string) $row->COGNOME;
-                $codFis = (string) $row->COD_FIS;
-                $ruolo = (string) $row->RUOLO;
+                $row       = $response->children()->children()->children();
+                $sourceID  = (string) $row->SOURCE_ID;
+                $nome      = (string) $row->NOME;
+                $cognome   = (string) $row->COGNOME;
+                $codFis    = (string) $row->COD_FIS;
+                $ruolo     = (string) $row->RUOLO;
                 $matricola = (string) $row->MATRICOLA;
 
                 session(['session_id' => $sessionID]);
-                session(['source_id' => $sourceID]);
-                session(['nome'      => $nome]);
-                session(['cognome'   => $cognome]);
-                session(['cod_fis'   => $codFis]);
-                session(['ruolo'     => $ruolo]);
-                session(['matricola' => $matricola]);
+                session(['source_id'  => $sourceID]);
+                session(['nome'       => $nome]);
+                session(['cognome'    => $cognome]);
+                session(['cod_fis'    => $codFis]);
+                session(['ruolo'      => $ruolo]);
+                session(['matricola'  => $matricola]);
 
                 return redirect('/');
 
@@ -225,13 +228,15 @@ class SoapController extends Controller {
         
         Log::info('SoapController - wsLogout()');
         
+        $esse3PathWsdl = env('ESSE3_PATH_WSDL', '');
+        
         if(!$this->checkFakeUsersForLogout()) {
             
             $sessionId = session('session_id');
             $sid = 'SESSIONID='.$sessionId;
 
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
-                $service->wsdl('https://segreteriavirtuale.univaq.it/services/ESSE3WS?wsdl');
+                $service->wsdl($this->esse3PathWsdl);
             });
 
             $fn_doLogout = $this->soapWrapper->call('GenericWSEsse3.fn_doLogout', [
@@ -255,13 +260,15 @@ class SoapController extends Controller {
     public function wsGetUdDocPart(Request $request) {
         
         $username = $request['username'];
+        $esse3PathWsdl = env('ESSE3_PATH_WSDL', '');
+        
         //TODO
         //Inserire variabile anno per chiamata a servizio nel file di configurazione
         $year = '2016';
         Log::info('SoapController - wsGetUdDocPart(username: '.$username.', year: '.$year.')');
 
         $this->soapWrapper->add('GenericWSEsse3', function ($service) {
-            $service->wsdl('https://segreteriavirtuale.univaq.it/services/ESSE3WS?wsdl');
+            $service->wsdl($this->esse3PathWsdl);
         });
 
         $params = 'AA_OFF_ID='.$year.';DOCENTE_MATRICOLA='.$username;

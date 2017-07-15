@@ -331,7 +331,7 @@
                                         if(result[0].repeats[x].tip_booking_status_id == 1 || result[0].repeats[x].tip_booking_status_id == 3) {
                                             textForModal += "<hr>"; 
                                             //TODO aggiustare link con utility di laravel
-                                            textForModal += "<a href='../public/repeat/"+result[0].repeats[x].id+"' class='btn btn-primary'>{{trans('messages.common_update_repeat')}}</a>"
+                                            textForModal += "<a href='../repeat/"+result[0].repeats[x].id+"' class='btn btn-primary'>{{trans('messages.common_update_repeat')}}</a>"
                                         }
                                     @endif
                                     textForModal += "</div>";
