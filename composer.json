@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "twitter/bootstrap": "^3.3",
         "laravelcollective/html": "5.3",
-        "artisaninweb/laravel-soap": "0.3.0.7"
+        "artisaninweb/laravel-soap": "0.3.0.7",
+        "spipu/html2pdf": "^5.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

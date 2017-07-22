@@ -20,6 +20,8 @@ Route::get('/report', 'ReportController@getReportView')->name('reportView');
 /**************** PRINT ******************************/
 Route::get('/print', 'PrintController@getPrintView')->name('printView');
 
+Route::post('/download-pdf', 'PrintController@downloadPDF')->name('downloadPDF');
+
 /**************** SEARCH ******************************/
 Route::get('/search', 'SearchController@getSearchView')->name('search');
 

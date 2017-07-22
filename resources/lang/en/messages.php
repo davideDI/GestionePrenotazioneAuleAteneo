@@ -69,6 +69,8 @@
         'common_email_adimn' => 'Email Admin',
         'common_reservation' => 'Reserve',
         'common_update_repeat' => 'Update Event',
+        'common_from' => 'From',
+        'common_to' => 'To',
         
         //Messages from insert booking
         'booking_title' => 'Insert new Booking',
@@ -187,6 +189,9 @@
         //Repeat page
         'repeat_status_booking' => 'Booking status',
         'repeat_booking_update_ok' => 'Booking updated',
+        
+        //Pdf page
+        'pdf_title' => 'Search filters',
         
         //Results messages 
         

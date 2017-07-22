@@ -50,7 +50,7 @@
                     data: [
                         {
                             type: "pie",
-                            showInLegend: true,
+                            showInLegend: false,
                             toolTipContent: "{y} - <strong>#percent%</strong>",
                             dataPoints: [
                                     { y: {{$surveyStatus2}}, exploded: true, legendText: "{{ trans('messages.report_checked') }}", indexLabel: "{{ trans('messages.report_checked') }}" },
@@ -72,7 +72,7 @@
                         data: [
                                 {
                                 type: "pie",
-                                showInLegend: true,
+                                showInLegend: false,
                                 toolTipContent: "{y} - <strong>#percent%</strong>",
                                 dataPoints: [
                                         { y: {{ $tot1 }}, exploded: true, legendText: "{{ trans('messages.report_real_use') }}", indexLabel: "{{ trans('messages.report_real_use') }}" },
@@ -94,7 +94,7 @@
                             data: [
                                 {
                                     type: "pie",
-                                    showInLegend: true,
+                                    showInLegend: false,
                                     toolTipContent: "{y} - <strong>#percent%</strong>",
                                     dataPoints: [
                                             { y: {{ $numRepeats }}, legendText: "{{ trans('messages.report_bookings') }}", indexLabel: "{{ trans('messages.report_bookings') }}" },

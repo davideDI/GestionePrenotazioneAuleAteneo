@@ -236,6 +236,7 @@ return [
         
         //'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facades\SoapWrapper',
         'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facade',
+        
     ],
 
 ];

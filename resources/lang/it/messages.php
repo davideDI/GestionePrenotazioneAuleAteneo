@@ -69,6 +69,8 @@
         'common_email_adimn' => 'Email Gestore',
         'common_reservation' => 'Prenota',
         'common_update_repeat' => 'Modifica Evento',
+        'common_from' => 'Dal',
+        'common_to' => 'Al',
         
         //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
@@ -190,6 +192,9 @@
         //Repeat page
         'repeat_status_booking' => 'Stato prenotazione',
         'repeat_booking_update_ok' => 'Prenotazione modificata',
+        
+        //Pdf page
+        'pdf_title' => 'Filtri di ricerca',
         
         //Results messages 
         
