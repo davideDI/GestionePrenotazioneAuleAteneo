@@ -1,6 +1,6 @@
 <div class="row">
 
-    @if(!empty($customError))
+    @if(Session::has('customError'))
     
         <div class="col-md-2"></div>
 
@@ -9,7 +9,7 @@
             <!-- Messaggi di Errore  -->
             <div class="alert alert-danger" role="alert">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{ trans('messages.'.$customError) }}
+                {{ trans('messages.'.session('customError')) }}
             </div>
             
         </div>

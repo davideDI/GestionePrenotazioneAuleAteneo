@@ -204,7 +204,7 @@ class SoapController extends Controller {
                 return redirect('/');
 
             } else {
-                return Redirect::back()->withErrors([$responseCode]);
+                return redirect()->back()->with('customError', $responseCode);
             }
            
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Exception;
 
 class BookingController extends Controller {
 
@@ -143,12 +144,12 @@ class BookingController extends Controller {
                 return view('pages/test/testInsert', ['testDate' => $test]);
 
             }
-
+            
             return redirect()->route('bookings2', [$resourceOfBooking->group_id, $booking->resource_id])->with('success', 'booking_insert_ok');
             
         } catch(Exception $ex) {
-            Log::error('BookingController - Errore nell\'inserimento della prenotazione '.$ex->getMessage());
-            return Redirect::back()->withErrors(['booking_insert_ko']);
+            Log::error('BookingController - Errore nell\'inserimento della prenotazione: '.$ex->getMessage());
+            return redirect()->back()->with('customError', 'booking_insert_ko');
         }
         
     }

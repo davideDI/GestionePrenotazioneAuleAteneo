@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
         
         if ($exception instanceof TokenMismatchException){
             Log::error('Handler - TokenMismatchException : ['.$exception->getMessage().']');
-            return redirect('/')->withErrors([-1]);
+            return redirect('/')->with('customError', -1);
         }
         
         return parent::render($request, $exception);

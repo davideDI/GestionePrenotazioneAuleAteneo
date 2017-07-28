@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Exception;
 
 class CheckController extends Controller {
     
@@ -52,12 +53,11 @@ class CheckController extends Controller {
             $survey->tip_survey_status_id = 2;
 
             $survey->save();
-
             return redirect()->route('checks')->with('success', 'check_booking_ok');
             
         } catch(Exception $ex) {
-            Log::error('CheckController - Errore nella verifica della prenotazione '.$ex->getMessage());
-            return redirect()->route('checks')->withErrors('check_booking_ko');
+            Log::error('CheckController - Errore nella verifica della prenotazione: '.$ex->getMessage());
+            return redirect()->back()->with('customError', 'check_booking_ko');
         }   
         
     }
