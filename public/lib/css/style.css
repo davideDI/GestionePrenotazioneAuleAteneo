@@ -7,3 +7,7 @@
 .marginTop5px{
     margin-top:5px;
 }
+
+button.btn.btn-primary.marginRight5px{
+    margin-right: 5px;
+}

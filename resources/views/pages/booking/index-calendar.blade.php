@@ -324,12 +324,11 @@
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                     @if(Session::has('ruolo') && (Session::get('ruolo') == 'admin' || Session::get('ruolo') == 'ateneo'))
                                         if(result[0].repeats[x].tip_booking_status_id == 3 && result[0].repeats[x].surveys.length == 0) {
-                                            textForModal += "<button class='btn btn-primary' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
+                                            textForModal += "<button class='btn btn-primary marginRight5px' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
                                         }
                                     @endif
                                     @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
-                                        if(result[0].repeats[x].tip_booking_status_id == 1 || result[0].repeats[x].tip_booking_status_id == 3) {
-                                            textForModal += "<hr>"; 
+                                        if(result[0].repeats[x].tip_booking_status_id != 4) {
                                             //TODO aggiustare link con utility di laravel
                                             textForModal += "<a href='../repeat/"+result[0].repeats[x].id+"' class='btn btn-primary'>{{trans('messages.common_update_repeat')}}</a>"
                                         }
