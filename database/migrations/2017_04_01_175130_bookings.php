@@ -22,8 +22,7 @@ class Bookings extends Migration {
             $table->foreign('tip_event_id')->references('id')->on('tip_event');
             
             //foreign user table
-            $table->integer('user_id')->unsigned()->comment('foreign user table');    
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('registration_number', 10)->comment('user registration number');    
             
             //foreign resource table
             $table->integer('resource_id')->unsigned()->comment('foreign resource table');  

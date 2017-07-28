@@ -56,7 +56,7 @@ class BookingController extends Controller {
             $resourceOfBooking = \App\Resource::find($booking->resource_id);
 
             $booking->booking_date = date("Y-m-d G:i:s");
-            $booking->user_id = session('source_id');
+            $booking->registration_number = session('source_id');
             Log::info('BookingController - Insert booking ['.$booking.']');
             $booking->save();
 

@@ -14,7 +14,9 @@ class Users extends Migration {
             $table->string('surname')->comment('user surname');  
             $table->string('email')->unique()->comment('user email');  
             $table->string('password')->comment('user password');  
-            $table->rememberToken()->comment('user remember Token');  
+            $table->rememberToken()->comment('user remember Token');
+            
+            $table->string('registration_number')->comment('user registration number');
             
             //foreign tip_user table
             $table->integer('tip_user_id')->unsigned()->comment('foreign tip_user table');  

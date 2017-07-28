@@ -313,7 +313,7 @@
                                 var textForModal = "";
                                 textForModal += "<p><strong>" + result[0].description + "</strong></p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_booked_at')}}</strong>" + moment(result[0].created_at).format("DD-MM-YYYY HH:mm:ss") + "</p>";
-                                textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user_id + "</p>";
+                                textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].registration_number + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_num_students')}}</strong>" + result[0].num_students + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_event')}}</strong>" + result[0].tip_event.name + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
