@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Spipu\Html2Pdf\Html2Pdf;
 use Illuminate\Http\Request;
+use App\Group;
+use App\Resource;
 
 class PrintController extends Controller {
     
@@ -13,8 +15,8 @@ class PrintController extends Controller {
         
         Log::info('PrintController - getPrintView()');
         
-        $groupsList = \App\Group::all();
-        $resourceList =  \App\Resource::all();
+        $groupsList = Group::all();
+        $resourceList =  Resource::all();
 
         return view('pages/print/print', ['groupsList' => $groupsList, 'resourceList' => $resourceList]);
     
@@ -72,8 +74,7 @@ class PrintController extends Controller {
                             , 
                             $listOfParameters
                         );
- Log::info($bookingList);
-
+ 
         $content = "<table>";
         $content .=  "<thead>";
         $content .=  "<tr>";

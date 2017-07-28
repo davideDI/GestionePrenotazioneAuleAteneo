@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Group;
+use App\Repeat;
+use App\Booking;
 
 class AdminController extends Controller {
 
@@ -16,7 +19,7 @@ class AdminController extends Controller {
         Log::info('AdminController - getBookingsByIdStatus(idStatus: '.$idStatus.')');
         
         //Groups amministrati dall'utente
-        $groups = \App\Group::where('admin_id', $user_id)->get();
+        $groups = Group::where('admin_id', $user_id)->get();
         
         $bookingsList = array();
         
@@ -52,7 +55,7 @@ class AdminController extends Controller {
         $rejectedBookings  = array();
         
         //Groups amministrati dall'utente
-        $groups = \App\Group::where('admin_id', $user_id)->get();
+        $groups = Group::where('admin_id', $user_id)->get();
         
         //Per ogni gruppo
         foreach($groups as $group) {
@@ -95,7 +98,7 @@ class AdminController extends Controller {
         $idGroup = $request['id_group'];
         Log::info('AdminController - getBookingsByIdGroup($idGroup: '.$idGroup.')');
         
-        $group = \App\Group::find($idGroup);
+        $group = Group::find($idGroup);
         
         $bookings = array();
         //Per ogni risorsa associata ad un gruppo
@@ -121,7 +124,7 @@ class AdminController extends Controller {
         $idRepeat = $request['id_repeat'];
         Log::info('AdminController - confirmBooking($idRepeat: '.$idRepeat.')');
         
-        $repeat = \App\Repeat::find($idRepeat);
+        $repeat = Repeat::find($idRepeat);
         $repeat->tip_booking_status_id = 3;
         $repeat->save();
         
@@ -136,7 +139,7 @@ class AdminController extends Controller {
         $idRepeat = $request['id_repeat'];
         Log::info('AdminController - rejectBooking($idRepeat: '.$idRepeat.')');
         
-        $repeat = \App\Repeat::find($idRepeat);
+        $repeat = Repeat::find($idRepeat);
         $repeat->tip_booking_status_id = 4;
         $repeat->save();
         
@@ -151,7 +154,7 @@ class AdminController extends Controller {
         
         Log::info('AdminController - test()');
         
-        $bookings = \App\Booking::where('user_id', 1)->simplePaginate(3);
+        $bookings = Booking::where('user_id', 1)->simplePaginate(3);
         return view('pages/test/test', [  'bookings'   => $bookings]);
         
     }

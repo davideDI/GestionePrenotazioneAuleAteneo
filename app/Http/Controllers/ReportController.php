@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
+use App\Survey;
+use App\Repeat;
 
 class ReportController extends Controller {
     
@@ -11,11 +13,11 @@ class ReportController extends Controller {
         Log::info('ReportController - getReportView()');
         
         //Report 1
-        $surveyStatus1 = \App\Survey::where('tip_survey_status_id', 1)->count();
-        $surveyStatus2 = \App\Survey::where('tip_survey_status_id', 2)->count();
+        $surveyStatus1 = Survey::where('tip_survey_status_id', 1)->count();
+        $surveyStatus2 = Survey::where('tip_survey_status_id', 2)->count();
         
         //Report 2
-        $surveysListChecked = \App\Survey::with('repeat')->where('tip_survey_status_id', 2)->get();
+        $surveysListChecked = Survey::with('repeat')->where('tip_survey_status_id', 2)->get();
         $totSurveysListChecked = count($surveysListChecked);
         $tot1 = 0;
         $tot2 = 0;
@@ -33,7 +35,7 @@ class ReportController extends Controller {
         }
         
         //Report 3
-        $numRepeats = \App\Repeat::all()->count();
+        $numRepeats = Repeat::all()->count();
         
         return view('pages/report/report', [
                     'surveyStatus1' => $surveyStatus1,

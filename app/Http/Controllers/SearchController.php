@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Group;
+use App\Resource;
 
 class SearchController extends Controller {
     
@@ -12,7 +14,7 @@ class SearchController extends Controller {
         
         Log::info('SearchController - getSearchView()');
         
-        $groupList = \App\Group::all();
+        $groupList = Group::all();
        
         return view('pages/search/search', ['groupsList' => $groupList]);
         
@@ -28,7 +30,7 @@ class SearchController extends Controller {
             $capacity = 0;
         }
         
-        $resourceList = \App\Resource::with('group')->whereIn('group_id', $listOfGroups)->where('capacity', '>=', $capacity)->get();
+        $resourceList = Resource::with('group')->whereIn('group_id', $listOfGroups)->where('capacity', '>=', $capacity)->get();
 
         return $resourceList;
         

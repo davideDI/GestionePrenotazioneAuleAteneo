@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Group;
+use App\Resource;
+use App\Booking;
+use App\TipGroup;
+use App\TipResource;
+use App\Repeat;
 use Exception;
 
 class ResourceController extends Controller {
@@ -12,9 +18,9 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - getResourceView()');
         
-        $groupList = \App\Group::all();
+        $groupList = Group::all();
         $groupDefault = $groupList->first();
-        $resourceList = \App\Resource::where('group_id', $groupDefault->id)->get();
+        $resourceList = Resource::where('group_id', $groupDefault->id)->get();
         
         return view('pages/resources/resources', ['selectedGroup' => $groupDefault, 'groupList' => $groupList, 'resourceList' => $resourceList]);
         
@@ -24,9 +30,9 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - getResourceFromId(idGroup: '.$idGroup.')');
         
-        $group = \App\Group::find($idGroup);
-        $groupList = \App\Group::all();
-        $resourceList = \App\Resource::where('group_id', $group->id)->get();
+        $group = Group::find($idGroup);
+        $groupList = Group::all();
+        $resourceList = Resource::where('group_id', $group->id)->get();
         
         return view('pages/resources/resources', ['selectedGroup' => $group, 'groupList' => $groupList, 'resourceList' => $resourceList]);
         
@@ -36,9 +42,9 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - getInsertResourceView()');
         
-        $resource = new \App\Resource;
-        $tipResourceList = \App\TipResource::pluck('name', 'id');
-        $groupList = \App\Group::pluck('name', 'id');
+        $resource = new Resource;
+        $tipResourceList = TipResource::pluck('name', 'id');
+        $groupList = Group::pluck('name', 'id');
         
         return view('pages/resources/insert-resource', ['resource' => $resource, 'groupList' => $groupList, 'tipResourceList' => $tipResourceList]);
         
@@ -58,7 +64,7 @@ class ResourceController extends Controller {
                 'network'          => 'required|numeric|min:0' 
             ]);
             
-            $resource = new \App\Resource;
+            $resource = new Resource;
             $resource->fill($request->all());
             $resource->save();
             
@@ -75,9 +81,9 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - updateResourceView(idResource: '.$idResource.')');
         
-        $resource = \App\Resource::find($idResource);
-        $tipResourceList = \App\TipResource::pluck('name', 'id');
-        $groupList = \App\Group::pluck('name', 'id');
+        $resource = Resource::find($idResource);
+        $tipResourceList = TipResource::pluck('name', 'id');
+        $groupList = Group::pluck('name', 'id');
         
         return view('pages/resources/update-resource', ['resource' => $resource, 'tipResourceList' => $tipResourceList, 'groupList' => $groupList]);
         
@@ -97,7 +103,7 @@ class ResourceController extends Controller {
                 'network'          => 'required|numeric|min:0' 
             ]);
             
-            $resource = \App\Resource::find($request->id);
+            $resource = Resource::find($request->id);
             $resource->fill($request->all());
             $resource->save();
             
@@ -117,15 +123,15 @@ class ResourceController extends Controller {
         try {
             
             $idResource = $request->idResource;
-            $resource = \App\Resource::find($idResource);
+            $resource = Resource::find($idResource);
 
-            $listOfBookings = \App\Booking::where('resource_id', '=', $idResource)->get();
+            $listOfBookings = Booking::where('resource_id', '=', $idResource)->get();
 
             foreach($listOfBookings as $booking) {
-                $listOfRepeats = \App\Repeat::where('booking_id', '=', $booking->id)->get();
+                $listOfRepeats = Repeat::where('booking_id', '=', $booking->id)->get();
                 //elimina repeats
                 foreach($listOfRepeats as $repeat) {
-                    $repeatTemp = \App\Repeat::find($repeat->id);
+                    $repeatTemp = Repeat::find($repeat->id);
                     $repeatTemp->delete();
                 }
             
@@ -133,7 +139,7 @@ class ResourceController extends Controller {
             
             //elimina bookings
             foreach($listOfBookings as $booking) {
-                $bookingTemp = \App\Booking::find($booking->id);
+                $bookingTemp = Booking::find($booking->id);
                 $bookingTemp->delete();
             }
 
@@ -153,8 +159,8 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - getInsertGroupView()');
         
-        $group = new \App\Group;
-        $tipGroupList = \App\TipGroup::pluck('name', 'id');
+        $group = new Group;
+        $tipGroupList = TipGroup::pluck('name', 'id');
         
         return view('pages/group/insert-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
             
@@ -164,8 +170,8 @@ class ResourceController extends Controller {
         
         Log::info('ResourcesController - updateGroupView(idGroup: '.$idGroup.')');
         
-        $group = \App\Group::find($idGroup);
-        $tipGroupList = \App\TipGroup::pluck('name', 'id');
+        $group = Group::find($idGroup);
+        $tipGroupList = TipGroup::pluck('name', 'id');
         
         return view('pages/group/update-group', ['group' => $group, 'tipGroupList' => $tipGroupList]);
         
@@ -183,7 +189,7 @@ class ResourceController extends Controller {
                 'tip_group_id' => 'required'
             ]);
             
-            $group = \App\Group::find($request->id);
+            $group = Group::find($request->id);
             $group->fill($request->all());
             $group->save();
         
@@ -208,7 +214,7 @@ class ResourceController extends Controller {
                 'tip_group_id' => 'required'
             ]);
             
-            $group = new \App\Group; 
+            $group = new Group; 
             $group->fill($request->all());
             //TODO gestione utenza
             //capire se mostrare lista di matricole o permettere l'inserimento
@@ -232,19 +238,19 @@ class ResourceController extends Controller {
         try {
             
             $idGroup = $request->idGroup;
-            $group = \App\Group::find($idGroup);
+            $group = Group::find($idGroup);
 
-            $listOfResource = \App\Resource::where('group_id', '=', $idGroup)->get();
+            $listOfResource = Resource::where('group_id', '=', $idGroup)->get();
             
             foreach($listOfResource as $resource) {
             
-                $listOfBookings = \App\Booking::where('resource_id', '=', $resource->id)->get();
+                $listOfBookings = Booking::where('resource_id', '=', $resource->id)->get();
 
                 foreach($listOfBookings as $booking) {
-                    $listOfRepeats = \App\Repeat::where('booking_id', '=', $booking->id)->get();
+                    $listOfRepeats = Repeat::where('booking_id', '=', $booking->id)->get();
                     //elimina repeats
                     foreach($listOfRepeats as $repeat) {
-                        $repeatTemp = \App\Repeat::find($repeat->id);
+                        $repeatTemp = Repeat::find($repeat->id);
                         $repeatTemp->delete();
                     }
 
@@ -252,12 +258,12 @@ class ResourceController extends Controller {
 
                 //elimina bookings
                 foreach($listOfBookings as $booking) {
-                    $bookingTemp = \App\Booking::find($booking->id);
+                    $bookingTemp = Booking::find($booking->id);
                     $bookingTemp->delete();
                 }
                 
                 //elimina resource
-                $resourceTemp = \App\Resource::find($resource->id);
+                $resourceTemp = Resource::find($resource->id);
                 $resourceTemp->delete();
             
             }

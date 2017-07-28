@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Repeat;
+use App\TipBookingStatus;
 
 class RepeatController extends Controller {
     
@@ -11,11 +13,11 @@ class RepeatController extends Controller {
         
         Log::info('RepeatController - updateRepeatView(idRepeat: '.$idRepeat.')');
         
-        $repeat = \App\Repeat::find($idRepeat);
+        $repeat = Repeat::find($idRepeat);
         $repeat->event_date_start = date("d-m-Y G:i",strtotime($repeat->event_date_start));
         $repeat->event_date_end = date("d-m-Y G:i",strtotime($repeat->event_date_end));
         
-        $listOfTipBookingStatus = \App\TipBookingStatus::pluck('description', 'id');
+        $listOfTipBookingStatus = TipBookingStatus::pluck('description', 'id');
         
         return view('pages/repeat/update-repeat', ['repeat' => $repeat, 'listOfTipBookingStatus' => $listOfTipBookingStatus]);
         
@@ -31,7 +33,7 @@ class RepeatController extends Controller {
             'tip_booking_status_id'  => 'required'
         ]);
         
-        $repeat = \App\Repeat::with('booking')->find($request->id);
+        $repeat = Repeat::with('booking')->find($request->id);
         
         $repeat_start = date("Y-m-d G:i:s",strtotime($request['event_date_start'].":00"));
         $repeat->event_date_start = $repeat_start;

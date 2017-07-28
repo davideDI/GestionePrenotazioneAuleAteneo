@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Survey;
 use Exception;
 
 class CheckController extends Controller {
@@ -12,7 +13,7 @@ class CheckController extends Controller {
      
         Log::info('CheckController - getChecksView()');
         
-        $checkList = \App\Survey::with('repeat')->where('tip_survey_status_id', '=', 1)->get();
+        $checkList = Survey::with('repeat')->where('tip_survey_status_id', '=', 1)->get();
         
         return view('pages/check/checks', ['checkList' => $checkList]);
         
@@ -23,7 +24,7 @@ class CheckController extends Controller {
         $idRepeat = $request['idRepeat'];
         Log::info('CheckController - requestCheck(idRepeat: '.$idRepeat.')');
         
-        $survey = new \App\Survey;
+        $survey = new Survey;
         $survey->repeat_id = $idRepeat;
         $survey->requested_by = session('source_id');
         $survey->tip_survey_status_id = 1;
@@ -45,7 +46,7 @@ class CheckController extends Controller {
         
         try {
             
-            $survey = \App\Survey::find($idSurvey);
+            $survey = Survey::find($idSurvey);
         
             $survey->note = $request['note'];
             $survey->real_num_students = $request['real_num_students'];

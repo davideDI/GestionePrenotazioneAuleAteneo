@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use App\Group;
+use App\Survey;
 
 include 'Variables.php';
 
@@ -21,7 +22,7 @@ class SoapController extends Controller {
   
     private function getCountRepeatsTemp($user_id) {
         
-        $groups = \App\Group::where('admin_id', $user_id)->get();
+        $groups = Group::where('admin_id', $user_id)->get();
         $countCheck = 0;
         //Per ogni gruppo
         foreach($groups as $group) {
@@ -43,7 +44,7 @@ class SoapController extends Controller {
     
     private function getCountCheckTemp() {
         
-        return \App\Survey::where('tip_survey_status_id', 1)->count();
+        return Survey::where('tip_survey_status_id', 1)->count();
             
     }
     
@@ -228,8 +229,6 @@ class SoapController extends Controller {
         
         Log::info('SoapController - wsLogout()');
         
-        $esse3PathWsdl = env('ESSE3_PATH_WSDL', '');
-        
         if(!$this->checkFakeUsersForLogout()) {
             
             $sessionId = session('session_id');
@@ -260,7 +259,6 @@ class SoapController extends Controller {
     public function wsGetUdDocPart(Request $request) {
         
         $username = $request['username'];
-        $esse3PathWsdl = env('ESSE3_PATH_WSDL', '');
         
         //TODO
         //Inserire variabile anno per chiamata a servizio nel file di configurazione
