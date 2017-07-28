@@ -3,6 +3,8 @@
 /**************** HOME ******************************/
 Route::get('/','HomeController@getHome')->name('home');
 
+Route::post('/manage-badge', 'HomeController@manageBadge')->name('manage-badge');
+
 /**************** LANG ******************************/
 /* Route che gestisce il cambio di lingua */
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);

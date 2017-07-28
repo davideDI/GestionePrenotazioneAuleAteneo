@@ -83,7 +83,7 @@
                     
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" onclick="manageBadge()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ session('cognome') }} {{ session('nome') }} <span class="caret"></span>
                             </a>
 
@@ -92,9 +92,7 @@
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }} 
-                                        @if(Session::has('countRepeatsTemp'))
-                                            <span class="badge">{{session('countRepeatsTemp')}}</span>
-                                        @endif
+                                        <span id="real-time-badge" class="badge"></span>
                                     </a>
                                 </li>
                                 @endif
@@ -111,9 +109,7 @@
                                 <li>
                                     <a href="{{ url('/checks') }}">
                                         {{ trans('messages.home_checks') }}
-                                        @if(Session::has('checkCountTemp'))
-                                            <span class="badge">{{session('checkCountTemp')}}</span>
-                                        @endif
+                                        <span id="real-time-badge" class="badge"></span>
                                     </a>
                                 </li>
                                 @endif
@@ -138,3 +134,23 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+
+<script>
+
+    function manageBadge() {
+        
+        $.ajax({
+            url: "{{URL::to('/manage-badge')}}",
+            type: 'POST',
+            dataType: 'json',
+            success : function(result) {
+                $("#real-time-badge").text(result);
+            },
+            error : function(result) {
+                console.log(result);
+            }
+        }); 
+        
+    }
+    
+</script>

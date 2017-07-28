@@ -20,34 +20,6 @@ class SoapController extends Controller {
         $this->soapWrapper = $soapWrapper;
     }
   
-    private function getCountRepeatsTemp($user_id) {
-        
-        $groups = Group::where('admin_id', $user_id)->get();
-        $countCheck = 0;
-        //Per ogni gruppo
-        foreach($groups as $group) {
-            //Per ogni risorsa associata ad un gruppo
-            foreach($group->resources as $resource) {
-                //Per ogni prenotazione associata ad una risorsa
-                foreach($resource->bookings as $booking) {
-                    foreach($booking->repeats as $repeat) {
-                        if($repeat->tip_booking_status_id == 1 || $repeat->tip_booking_status_id == 2) {
-                            $countCheck++;
-                        }
-                    }
-                }    
-            }
-        }
-        return $countCheck;
-            
-    }
-    
-    private function getCountCheckTemp() {
-        
-        return Survey::where('tip_survey_status_id', 1)->count();
-            
-    }
-    
     private function checkFakeUsersForLogin($request) {
         
         $username = $request['username'];
@@ -62,13 +34,6 @@ class SoapController extends Controller {
             session(['ruolo'      => 'admin']);
             session(['matricola'  => 'davide@davide']);
             
-            //TODO una volta associata la matricola al gruppo di appartenenza prendere le prenotazioni
-            $user_id = 1;
-            $countRepeats = $this->getCountRepeatsTemp($user_id);
-            if($countRepeats > 0) {
-                session(['countRepeatsTemp' => $countRepeats]);
-            }
-            
             return true;
         }
         
@@ -80,13 +45,6 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'ATENEOATENEO33']);
             session(['ruolo'      => 'ateneo']);
             session(['matricola'  => 'ateneo@ateneo.it']);
-            
-            //TODO una volta associata la matricola al gruppo di appartenenza prendere le prenotazioni
-            $user_id = 3;
-            $countRepeats = $this->getCountRepeatsTemp($user_id);
-            if($countRepeats > 0) {
-                session(['countRepeatsTemp' => $countRepeats]);
-            }
             
             return true;
         }
@@ -100,13 +58,6 @@ class SoapController extends Controller {
             session(['ruolo'      => 'staff']);
             session(['matricola'  => 'usciere@ateneo.it']);
             
-            //TODO una volta associata la matricola al gruppo di appartenenza prendere le verifiche associate
-            $user_id = 4;
-            $countCheck = $this->getCountCheckTemp();
-            if($countCheck > 0) {
-                session(['checkCountTemp' => $countCheck]);
-            }
-            
             return true;
         }
         
@@ -118,13 +69,6 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'STAFFSTAFF34']);
             session(['ruolo'      => 'staff']);
             session(['matricola'  => 'usciere2@ateneo.it']);
-            
-            //TODO una volta associata la matricola al gruppo di appartenenza prendere le verifiche associate
-            $user_id = 5;
-            $countCheck = $this->getCountCheckTemp();
-            if($countCheck > 0) {
-                session(['checkCountTemp' => $countCheck]);
-            }
             
             return true;
         }
