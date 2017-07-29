@@ -170,10 +170,7 @@
                                                 result += "</td>";
                                                 @if(Session::has('session_id'))
                                                     result += "<td>";
-                                                        //TODO aggiustare link con utility di laravel
-                                                        result += 
-                                                        "<a href='../public/new-booking/"+resourcesList[j].id+"'>{{trans('messages.common_reservation')}}\n\
-                                                         </a>";
+                                                        result += "<a href='"+ "{{URL::to('/new-booking')}}/" + resourcesList[j].id + "'>{{trans('messages.common_reservation')}}</a>";
                                                     result += "</td>";
                                                 @endif
                                             result += "</tr>";
@@ -270,10 +267,7 @@
                                                 result += "</td>";
                                                 @if(Session::has('session_id'))
                                                     result += "<td>";
-                                                        //TODO aggiustare link con utility di laravel
-                                                        result += 
-                                                        "<a href='../public/new-booking/"+resourcesList[j].id_resources+"/"+$("#date_search").val()+" "+$("#date_start").val()+"/"+$("#date_search").val()+" "+$("#date_end").val()+"'>{{trans('messages.common_reservation')}}\n\
-                                                         </a>";
+                                                        result += "<a href='"+ "{{URL::to('/new-booking')}}/" + resourcesList[j].id_resources +"/"+$("#date_search").val()+" "+$("#date_start").val()+"/"+$("#date_search").val()+" "+$("#date_end").val()+"'>{{trans('messages.common_reservation')}}</a>";
                                                     result += "</td>";
                                                 @endif
                                             result += "</tr>";

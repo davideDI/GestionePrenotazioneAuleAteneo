@@ -329,8 +329,7 @@
                                     @endif
                                     @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
                                         if(result[0].repeats[x].tip_booking_status_id != 4) {
-                                            //TODO aggiustare link con utility di laravel
-                                            textForModal += "<a href='../repeat/"+result[0].repeats[x].id+"' class='btn btn-primary'>{{trans('messages.common_update_repeat')}}</a>"
+                                            textForModal += "<a class='btn btn-primary' href='"+ "{{URL::to('/repeat')}}/" + result[0].repeats[x].id + "'>{{trans('messages.common_update_repeat')}}</a>";
                                         }
                                     @endif
                                     textForModal += "</div>";
