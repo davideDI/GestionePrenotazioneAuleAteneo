@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Exception;
 
+include 'Variables.php';
+
 class BookingController extends Controller {
 
     public function getBooking(Request $request) {
@@ -73,7 +75,7 @@ class BookingController extends Controller {
 
                 $repeat->event_date_start = $repeat_start;
                 $repeat->event_date_end = $repeat_end;
-                $repeat->tip_booking_status_id = 1;
+                $repeat->tip_booking_status_id = TIP_BOOKING_STATUS_REQUESTED;
                 $repeat->booking_id= $booking->id;
                 Log::info('BookingController - Insert repeat ['.$repeat.']');
                 $repeat->save();
@@ -184,10 +186,10 @@ class BookingController extends Controller {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
 
-        return view('pages/booking/new-booking', [  'booking'      => $booking,
-                                                    'groupsList'   => $groupsList,
-                                                    'resourceList' => $resourceList,
-                                                    'tipEventList' => $tipEventList,
+        return view('pages/booking/new-booking', [  'booking'         => $booking,
+                                                    'groupsList'      => $groupsList,
+                                                    'resourceList'    => $resourceList,
+                                                    'tipEventList'    => $tipEventList,
                                                     'listOfTeachings' => $listOfTeachings]);
         
     }
@@ -229,11 +231,11 @@ class BookingController extends Controller {
         $bookingsStatus = \App\TipBookingStatus::all();
         
         return view('pages/booking/index-calendar', [   'selectedResource' => $firstResource,
-                                                        'resources'    => $resources, 
-                                                        'group'        => $group,
-                                                        'eventsType'   => $eventsType,
-                                                        'bookingsStatus'=> $bookingsStatus,
-                                                        'bookings'     => $bookings]);
+                                                        'resources'        => $resources, 
+                                                        'group'            => $group,
+                                                        'eventsType'       => $eventsType,
+                                                        'bookingsStatus'   => $bookingsStatus,
+                                                        'bookings'         => $bookings]);
         
     }
     
@@ -249,12 +251,12 @@ class BookingController extends Controller {
         $eventsType = \App\TipEvent::all();
         $bookingsStatus = \App\TipBookingStatus::all();
         
-        return view('pages/booking/index-calendar', [   'bookings' => $bookings,
+        return view('pages/booking/index-calendar', [   'bookings'         => $bookings,
                                                         'selectedResource' => $resource,
-                                                        'resources' => $resources,
-                                                        'eventsType'   => $eventsType,
-                                                        'bookingsStatus'=> $bookingsStatus,
-                                                        'group' => $group]);
+                                                        'resources'        => $resources,
+                                                        'eventsType'       => $eventsType,
+                                                        'bookingsStatus'   => $bookingsStatus,
+                                                        'group'            => $group]);
         
     }
     

@@ -6,8 +6,6 @@ use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
-use App\Group;
-use App\Survey;
 
 include 'Variables.php';
 

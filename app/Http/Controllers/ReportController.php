@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Log;
 use App\Survey;
 use App\Repeat;
 
+include 'Variables.php';
+
 class ReportController extends Controller {
     
     public function getReportView() {
@@ -13,11 +15,11 @@ class ReportController extends Controller {
         Log::info('ReportController - getReportView()');
         
         //Report 1
-        $surveyStatus1 = Survey::where('tip_survey_status_id', 1)->count();
-        $surveyStatus2 = Survey::where('tip_survey_status_id', 2)->count();
+        $surveyStatus1 = Survey::where('tip_survey_status_id', TIP_SURVEY_STATUS_REQUESTED)->count();
+        $surveyStatus2 = Survey::where('tip_survey_status_id', TIP_SURVEY_STATUS_OK)->count();
         
         //Report 2
-        $surveysListChecked = Survey::with('repeat')->where('tip_survey_status_id', 2)->get();
+        $surveysListChecked = Survey::with('repeat')->where('tip_survey_status_id', TIP_SURVEY_STATUS_OK)->get();
         $totSurveysListChecked = count($surveysListChecked);
         $tot1 = 0;
         $tot2 = 0;

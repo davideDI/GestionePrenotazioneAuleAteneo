@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Group;
 use App\Repeat;
-use App\Booking;
+
+include 'Variables.php';
 
 class AdminController extends Controller {
 
@@ -65,19 +66,19 @@ class AdminController extends Controller {
                 foreach($resource->bookings as $booking) {
                     foreach($booking->repeats as $repeat) {
                         //Se lo stato della prenotazione è RICHIESTA
-                        if($repeat->tip_booking_status_id == 1) {
+                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_REQUESTED) {
                             array_push($quequedBookings, $booking);
                         }
                         //Se lo stato della prenotazione è IN LAVORAZIONE
-                        if($repeat->tip_booking_status_id == 2) {
+                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_WORKING) {
                             array_push($workingBookings, $booking);
                         }
                         //Se lo stato della prenotazione è GESTITA
-                        if($repeat->tip_booking_status_id == 3) {
+                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_OK) {
                             array_push($confirmedBookings, $booking);
                         }
                         //Se lo stato della prenotazione è SCARTATA
-                        if($repeat->tip_booking_status_id == 4) {
+                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_KO) {
                             array_push($rejectedBookings, $booking);
                         }
                     }
@@ -86,10 +87,10 @@ class AdminController extends Controller {
         }
         
         return view('pages/console/console', [  'quequedBookings'   => $quequedBookings,
-                                        'workingBookings'   => $workingBookings,
-                                        'confirmedBookings' => $confirmedBookings,
-                                        'rejectedBookings'  => $rejectedBookings,
-                                        'groups'            => $groups]);
+                                                'workingBookings'   => $workingBookings,
+                                                'confirmedBookings' => $confirmedBookings,
+                                                'rejectedBookings'  => $rejectedBookings,
+                                                'groups'            => $groups]);
         
     }
     
@@ -108,7 +109,9 @@ class AdminController extends Controller {
                 $booking->resource;
                 foreach($booking->repeats as $repeat) {
                     //Stato RICHIESTA o IN LAVORAZIONE
-                    if($repeat->tip_booking_status_id == 1 || $repeat->tip_booking_status_id == 2) {
+                    if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_REQUESTED 
+                            || 
+                       $repeat->tip_booking_status_id == TIP_BOOKING_STATUS_WORKING) {
                         array_push($bookings, $booking);
                     }
                 }
@@ -125,7 +128,7 @@ class AdminController extends Controller {
         Log::info('AdminController - confirmBooking($idRepeat: '.$idRepeat.')');
         
         $repeat = Repeat::find($idRepeat);
-        $repeat->tip_booking_status_id = 3;
+        $repeat->tip_booking_status_id = TIP_BOOKING_STATUS_OK;
         $repeat->save();
         
         return $repeat;
@@ -138,20 +141,10 @@ class AdminController extends Controller {
         Log::info('AdminController - rejectBooking($idRepeat: '.$idRepeat.')');
         
         $repeat = Repeat::find($idRepeat);
-        $repeat->tip_booking_status_id = 4;
+        $repeat->tip_booking_status_id = TIP_BOOKING_STATUS_KO;
         $repeat->save();
         
         return $repeat;
-        
-    }
-    
-    //test paginazione
-    public function test() {
-        
-        Log::info('AdminController - test()');
-        
-        $bookings = Booking::where('user_id', 1)->simplePaginate(3);
-        return view('pages/test/test', [  'bookings'   => $bookings]);
         
     }
     

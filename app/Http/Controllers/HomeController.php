@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Config;
 use App\Group;
 use App\Survey;
 
+include 'Variables.php';
+
 class HomeController extends Controller {
     
     /**
@@ -75,7 +77,9 @@ class HomeController extends Controller {
                 //Per ogni prenotazione associata ad una risorsa
                 foreach($resource->bookings as $booking) {
                     foreach($booking->repeats as $repeat) {
-                        if($repeat->tip_booking_status_id == 1 || $repeat->tip_booking_status_id == 2) {
+                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_REQUESTED 
+                                || 
+                           $repeat->tip_booking_status_id == TIP_BOOKING_STATUS_WORKING) {
                             $countCheck++;
                         }
                     }
@@ -95,7 +99,7 @@ class HomeController extends Controller {
     public function getCountCheck() {
         
         Log::info('HomeController - getCountCheck()');
-        return Survey::where('tip_survey_status_id', 1)->count();
+        return Survey::where('tip_survey_status_id', TIP_BOOKING_STATUS_REQUESTED)->count();
             
     }
     

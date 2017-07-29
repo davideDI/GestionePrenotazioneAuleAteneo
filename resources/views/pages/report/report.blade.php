@@ -60,50 +60,56 @@
                     ]
                 };
                 $("#pie1").CanvasJSChart(options);
-                    var options2 = {
-                        title: {
-                                text: "{{ trans('messages.report_title2') }}"
-                            },
-                        animationEnabled: true,
-                        legend: {
-                                verticalAlign: "bottom",
-                                horizontalAlign: "center"
-                            },
-                        data: [
-                                {
-                                type: "pie",
-                                showInLegend: false,
-                                toolTipContent: "{y} - <strong>#percent%</strong>",
-                                dataPoints: [
-                                        { y: {{ $tot1 }}, exploded: true, legendText: "{{ trans('messages.report_real_use') }}", indexLabel: "{{ trans('messages.report_real_use') }}" },
-                                        { y: {{ $tot2 }}, legendText: "{{ trans('messages.report_waste') }}", indexLabel: "{{ trans('messages.report_waste') }}" }
-                                ]
-                                }
+                
+                var options2 = {
+                    title: {
+                            text: "{{ trans('messages.report_title2') }}"
+                        },
+                    animationEnabled: true,
+                    legend: {
+                            verticalAlign: "bottom",
+                            horizontalAlign: "center"
+                        },
+                    data: [
+                            {
+                            type: "pie",
+                            showInLegend: false,
+                            toolTipContent: "{y} - <strong>#percent%</strong>",
+                            dataPoints: [
+                                @if($surveyStatus2 > 0)
+                                    { y: {{ $tot1 }}, exploded: true, legendText: "{{ trans('messages.report_real_use') }}", indexLabel: "{{ trans('messages.report_real_use') }}" },
+                                    { y: {{ $tot2 }}, legendText: "{{ trans('messages.report_waste') }}", indexLabel: "{{ trans('messages.report_waste') }}" }
+                                @else
+                                    //TODO gestire valori null per grafici
+                                @endif            
                             ]
-                    };
-                    $("#pie2").CanvasJSChart(options2);
-                        var options3 = {
-                            title: {
-                                    text: "{{ trans('messages.report_title3') }}"
-                            },
-                            animationEnabled: true,
-                            legend: {
-                                    verticalAlign: "bottom",
-                                    horizontalAlign: "center"
-                            },
-                            data: [
-                                {
-                                    type: "pie",
-                                    showInLegend: false,
-                                    toolTipContent: "{y} - <strong>#percent%</strong>",
-                                    dataPoints: [
-                                            { y: {{ $numRepeats }}, legendText: "{{ trans('messages.report_bookings') }}", indexLabel: "{{ trans('messages.report_bookings') }}" },
-                                            { y: {{ $numSurveys }}, exploded: true, legendText: "{{ trans('messages.report_surveys') }}", indexLabel: "{{ trans('messages.report_surveys') }}" }
-                                    ]
-                                }
+                            }
+                        ]
+                };
+                $("#pie2").CanvasJSChart(options2);
+                    
+                var options3 = {
+                    title: {
+                            text: "{{ trans('messages.report_title3') }}"
+                    },
+                    animationEnabled: true,
+                    legend: {
+                            verticalAlign: "bottom",
+                            horizontalAlign: "center"
+                    },
+                    data: [
+                        {
+                            type: "pie",
+                            showInLegend: false,
+                            toolTipContent: "{y} - <strong>#percent%</strong>",
+                            dataPoints: [
+                                    { y: {{ $numRepeats }}, legendText: "{{ trans('messages.report_bookings') }}", indexLabel: "{{ trans('messages.report_bookings') }}" },
+                                    { y: {{ $numSurveys }}, exploded: true, legendText: "{{ trans('messages.report_surveys') }}", indexLabel: "{{ trans('messages.report_surveys') }}" }
                             ]
-			};
-                        $("#pie3").CanvasJSChart(options3);
+                        }
+                    ]
+                };
+                $("#pie3").CanvasJSChart(options3);
                         
 		});
 

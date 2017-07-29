@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Survey;
 use Exception;
 
+include 'Variables.php';
+
 class CheckController extends Controller {
     
     public function getChecksView() {
      
         Log::info('CheckController - getChecksView()');
         
-        $checkList = Survey::with('repeat')->where('tip_survey_status_id', '=', 1)->get();
+        $checkList = Survey::with('repeat')->where('tip_survey_status_id', '=', TIP_SURVEY_STATUS_REQUESTED)->get();
         
         return view('pages/check/checks', ['checkList' => $checkList]);
         
@@ -27,7 +29,7 @@ class CheckController extends Controller {
         $survey = new Survey;
         $survey->repeat_id = $idRepeat;
         $survey->requested_by = session('source_id');
-        $survey->tip_survey_status_id = 1;
+        $survey->tip_survey_status_id = TIP_SURVEY_STATUS_REQUESTED;
         
         $survey->save();
         
@@ -51,7 +53,7 @@ class CheckController extends Controller {
             $survey->note = $request['note'];
             $survey->real_num_students = $request['real_num_students'];
             $survey->performed_by = session('source_id');
-            $survey->tip_survey_status_id = 2;
+            $survey->tip_survey_status_id = TIP_SURVEY_STATUS_OK;
 
             $survey->save();
             return redirect()->route('checks')->with('success', 'check_booking_ok');
@@ -64,5 +66,3 @@ class CheckController extends Controller {
     }
     
 }
-
-?>

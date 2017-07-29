@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Group;
 use App\Resource;
 
+include 'Variables.php';
+
 class PrintController extends Controller {
     
     public function getPrintView() {
@@ -18,7 +20,8 @@ class PrintController extends Controller {
         $groupsList = Group::all();
         $resourceList =  Resource::all();
 
-        return view('pages/print/print', ['groupsList' => $groupsList, 'resourceList' => $resourceList]);
+        return view('pages/print/print', [  'groupsList' => $groupsList, 
+                                            'resourceList' => $resourceList]);
     
     }
     
@@ -55,7 +58,7 @@ class PrintController extends Controller {
 //                                    
 //                                    ->get();
         
-        $listOfParameters = array($idResource, 3, $dateSearchFrom, $dateSearchTo);
+        $listOfParameters = array($idResource, TIP_BOOKING_STATUS_OK, $dateSearchFrom, $dateSearchTo);
         $bookingList = DB::select
                         ( DB::raw
                             ("  select bookings.name, bookings.description,  
@@ -75,17 +78,17 @@ class PrintController extends Controller {
                             $listOfParameters
                         );
  
-        $content = "<table>";
-        $content .=  "<thead>";
-        $content .=  "<tr>";
-        $content .=  "<th>Title</th>";
-        $content .=  "<th>Description</th>";
-        $content .=  "<th>Date from</th>";
-        $content .=  "<th>Date end</th>";
-        $content .=  "<th>Resource</th>";
-        $content .=  "</tr>";
-        $content .=  "</thead>";
-        $content .=  "<tbody>";
+        $content  = "<table>";
+        $content .= "<thead>";
+        $content .= "<tr>";
+        $content .= "<th>Title</th>";
+        $content .= "<th>Description</th>";
+        $content .= "<th>Date from</th>";
+        $content .= "<th>Date end</th>";
+        $content .= "<th>Resource</th>";
+        $content .= "</tr>";
+        $content .= "</thead>";
+        $content .= "<tbody>";
         //TODO compleatare tabella con informazioni
         if(count($bookingList) > 0) {
             for($i = 0; $i < count($bookingList); $i++) {

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Repeat;
 use App\TipBookingStatus;
 
+include 'Variables.php';
+
 class RepeatController extends Controller {
     
     public function updateRepeatView($idRepeat) {
@@ -19,7 +21,8 @@ class RepeatController extends Controller {
         
         $listOfTipBookingStatus = TipBookingStatus::pluck('description', 'id');
         
-        return view('pages/repeat/update-repeat', ['repeat' => $repeat, 'listOfTipBookingStatus' => $listOfTipBookingStatus]);
+        return view('pages/repeat/update-repeat', [ 'repeat'                 => $repeat, 
+                                                    'listOfTipBookingStatus' => $listOfTipBookingStatus]);
         
     }
     
