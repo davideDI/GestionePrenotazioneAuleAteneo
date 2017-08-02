@@ -222,6 +222,9 @@
                         <!-- Booking : id risorsa - lista -->
                             <div class="col-md-6">
                                 {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
+                                <span id="resource_id_for_repeat" class="label label-danger" style="display: none">
+                                    <strong>{{ trans('messages.booking_resource_id_empty') }}</strong>
+                                </span>
                                 @if ($errors->has('resource_id'))
                                     <span class="label label-danger">
                                         <strong>{{ $errors->first('resource_id') }}</strong>
@@ -281,6 +284,11 @@
                         <div class="col-md-2">
                             {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
                         </div>
+                        @if(Session::has('session_id') && Session::get('ruolo') == 'segreteria')
+                            <div class="col-md-2">
+                                <a href="#" class="btn btn-primary" id="repeatEvents"> {{ trans('messages.booking_repeat_event') }}</a> 
+                            </div>
+                        @endif
                         @if(Session::has('session_id') && Session::get('ruolo') == 'Studenti')
                         <div class="col-md-10">
                             <b>{{ trans('messages.booking_warning_student') }}</b>
@@ -292,8 +300,108 @@
             </div>
             <div class="col-md-2"></div>
         </div>
+    
+    
+        <!-- Modal for repeat event -->
+            <div class="modal fade" id="repeatEventsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">{{ trans('messages.booking_repeat_event') }}</h4>
+                        </div>
+                        <div id="repeatEventsBody" class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="confirm_repeat_events" class="btn btn-primary" data-dismiss="modal">{{ trans('messages.booking_confirm_repeat') }}</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         
         <script type="text/javascript">
+            
+            $("#repeatEvents").click(function (event) {
+                
+                event.preventDefault();
+                
+                var resourceId = $("#resource_id").val();
+               
+                if(resourceId === null ) {
+                    
+                    $("#resource_id_for_repeat").show();
+                    
+                } else {
+                    
+                    $("#resource_id_for_repeat").hide();
+                    $("#confirm_repeat_events").show();
+                    
+                    $.ajax({
+                        
+                        dataType : 'JSON',
+                        data : {'resourceId' : resourceId},
+                        type : 'POST',
+                        url : "{{URL::to('/booking-repeat-events')}}",
+                        success : function(bookings) {
+                            
+                            var result = "";
+                            
+                            if(bookings.length == 0) {
+                                result += "<p>{{ trans('messages.booking_no_result') }}</p>";
+                                $("#confirm_repeat_events").hide();
+                            } else {
+                                result += "<table class='table table-hover'>";
+                                    result += "<thead>";
+                                    result += "<th>{{trans('messages.common_title')}}</th>";
+                                    result += "<th>{{trans('messages.common_description')}}</th>";
+                                    result += "<th>{{trans('messages.booking_date_day_start')}}</th>";
+                                    result += "<th>{{trans('messages.booking_date_day_end')}}</th>";
+                                    result += "<th>{{trans('messages.booking_date_resource')}}</th>";
+                                result += "</thead>";
+                                result += "<tbody>";
+                                for(var j=0; j < bookings.length; j++) {
+                                    for(var k=0; k < bookings[j].repeats.length; k++) {
+                                        result += "<tr id='"+bookings[j].repeats[k].id+"'>";
+                                            result += "<td>";
+                                                result += bookings[j].name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += bookings[j].description;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += moment(bookings[j].repeats[k].event_date_start).format("DD-MM-YYYY HH:mm:ss");
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += moment(bookings[j].repeats[k].event_date_end).format("DD-MM-YYYY HH:mm:ss");
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += bookings[j].resource.name;
+                                            result += "</td>";
+                                        result += "</tr>";
+                                    }
+                                }
+                                result += "</tbody>";
+                                result += "</table>";
+                            }
+                            
+                            $("#repeatEventsBody").html(result);
+                            
+                        },
+                        error : function(result) {
+                            console.log(result);
+                        }
+                        
+                    });
+                    
+                    $('#repeatEventsModal').modal('show');
+                    
+                }
+                
+            });
             
             $(document).ready(function() {
                 $(".listOfGroupsItems").select2({

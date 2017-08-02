@@ -116,6 +116,10 @@
         'booking_type_repeat_saturday' => 'Saturday',
         'booking_place_available' => 'Places Available',
         'booking_warning_student' => 'Please note that the following booking will be registered with the account number associated with your account.',
+        'booking_repeat_event' => 'Repeat Bookings',
+        'booking_resource_id_empty' => 'No selected resource',
+        'booking_confirm_repeat' => 'Confirm repeats',
+        'booking_no_result' => 'No bookings in the last week',
         
         //Messages from help page
         'help_contact' => 'Contact',

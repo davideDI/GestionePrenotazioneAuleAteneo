@@ -116,6 +116,10 @@
         'booking_type_repeat_saturday' => 'Sabato',
         'booking_place_available' => 'Posti Disponibili',
         'booking_warning_student' => 'Attenzione, la seguente prenotazione verrà registrata con la matricola associata al vostro account.',
+        'booking_repeat_event' => 'Ripeti prenotazioni precedenti',
+        'booking_resource_id_empty' => 'Nessuna Risorsa selezionata',
+        'booking_confirm_repeat' => 'Conferma Ripetizione',
+        'booking_no_result' => 'Nessuna prenotazione nella settimana precedente',
         
         //Messages from help page
         'help_contact' => 'Contatti',

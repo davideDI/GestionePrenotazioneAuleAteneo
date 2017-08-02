@@ -71,6 +71,18 @@ class SoapController extends Controller {
             return true;
         }
         
+        else if($username == 'segreteria@ateneo.it') {
+            session(['session_id' => '666eee777rrr']);
+            session(['source_id'  => '6']); //Look at UserTableSeed.php
+            session(['nome'       => 'Anna']);
+            session(['cognome'    => 'Bianchi']);
+            session(['cod_fis'    => 'STAFFSTAFF88']);
+            session(['ruolo'      => 'segreteria']);
+            session(['matricola'  => 'segreteria@ateneo.it']);
+            
+            return true;
+        }
+        
         else if($username == '001642') {
             
             $this->wsGetUdDocPart($request);

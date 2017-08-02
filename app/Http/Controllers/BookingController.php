@@ -239,6 +239,25 @@ class BookingController extends Controller {
         
     }
     
+    public function getBookingsForRepeatEvents(Request $request) {
+        
+        $resourceId = $request['resourceId'];
+        
+        $dateTo = date('Y-m-d');
+        $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
+        
+        //TODO gestire filtro date sulla repeat invece che sulla created_at dell booking
+        //TODO capire come gestire paginazione per numero elevato di eventi
+        $bookings = \App\Booking::with('resource', 'repeats')
+                                ->where('resource_id', '=', $resourceId)
+                                ->where('created_at', '<=', $dateTo)
+                                ->where('created_at', '>=', $dateFrom)
+                                ->get();
+        
+        return $bookings;
+        
+    }
+    
     //Lista di tutte le prenotazioni per id group e id resource
     public function getBookingsByIdGroupIdResource($idGroup, $idResource) {
         
