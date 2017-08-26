@@ -60,6 +60,9 @@ class BookingController extends Controller {
 
             $booking->booking_date = date("Y-m-d G:i:s");
             $booking->registration_number = session('source_id');
+            if(isset($request['teaching_id'])) {
+                $booking->subject_id = substr($request['teaching_id'], 0, 11);
+            }
             Log::info('BookingController - Insert booking ['.$booking.']');
             $booking->save();
 
