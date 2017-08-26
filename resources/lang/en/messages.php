@@ -120,6 +120,7 @@
         'booking_resource_id_empty' => 'No selected resource',
         'booking_confirm_repeat' => 'Confirm repeats',
         'booking_no_result' => 'No bookings in the last week',
+        'booking_re_confirmed_ok' => 'All the bookings are re-confirmed!',
         
         //Messages from help page
         'help_contact' => 'Contact',
@@ -216,6 +217,7 @@
         'common_update_ko' => 'Failed to update',
         'common_delete_ko' => 'Failed to delete',
         'check_insert_ko' => 'Request rejected',
+        'booking_repeat_ko' => 'Error on re-confirmed events',
         
         //Response code
         //WS LOGIN

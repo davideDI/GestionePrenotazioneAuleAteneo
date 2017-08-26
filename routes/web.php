@@ -69,6 +69,8 @@ Route::post('/bookings', 'AdminController@getBookingsByIdGroup');
 
 Route::post('/booking-repeat-events', 'BookingController@getBookingsForRepeatEvents');
 
+Route::post('/booking-repeat-events-confirm', 'BookingController@confirmRepeatEvents');
+
 /**************** REPEAT ******************************/
 Route::get('/repeat/{idRepeat}', 'RepeatController@updateRepeatView');
 

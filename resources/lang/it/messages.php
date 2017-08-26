@@ -120,6 +120,7 @@
         'booking_resource_id_empty' => 'Nessuna Risorsa selezionata',
         'booking_confirm_repeat' => 'Conferma Ripetizione',
         'booking_no_result' => 'Nessuna prenotazione nella settimana precedente',
+        'booking_re_confirmed_ok' => 'Tutte le prenotazioni sono state riconfermate!',
         
         //Messages from help page
         'help_contact' => 'Contatti',
@@ -219,6 +220,7 @@
         'common_update_ko' => 'Modifica dati fallita',
         'common_delete_ko' => 'Cancellazione dati fallita',
         'check_insert_ko' => 'Richiesta verifica non andata a buon fine',
+        'booking_repeat_ko' => 'Errore nella riconferma delle prenotazioni',
         
         //Response code
         //WS LOGIN

@@ -25,7 +25,7 @@ class SoapController extends Controller {
         
         if($username == 'davide@davide.it') {
             session(['session_id' => '999ooo888iii']);
-            session(['source_id'  => '1']); //Look at UserTableSeed.php
+            session(['source_id'  => '000001']); //Look at UserTableSeed.php
             session(['nome'       => 'DAVIDE']);
             session(['cognome'    => 'DAVIDE']);
             session(['cod_fis'    => 'DAVIDEDAVIDE33']);
@@ -37,7 +37,7 @@ class SoapController extends Controller {
         
         else if($username == 'ateneo@ateneo.it') {
             session(['session_id' => '222eee333rrr']);
-            session(['source_id'  => '3']); //Look at UserTableSeed.php
+            session(['source_id'  => '000003']); //Look at UserTableSeed.php
             session(['nome'       => 'ATENEO']);
             session(['cognome'    => 'ATENEO']);
             session(['cod_fis'    => 'ATENEOATENEO33']);
@@ -49,7 +49,7 @@ class SoapController extends Controller {
         
         else if($username == 'usciere@ateneo.it') {
             session(['session_id' => '444eee555rrr']);
-            session(['source_id'  => '4']); //Look at UserTableSeed.php
+            session(['source_id'  => '000004']); //Look at UserTableSeed.php
             session(['nome'       => 'Aldo']);
             session(['cognome'    => 'Usciere']);
             session(['cod_fis'    => 'STAFFSTAFF3']);
@@ -61,7 +61,7 @@ class SoapController extends Controller {
         
         else if($username == 'usciere2@ateneo.it') {
             session(['session_id' => '555eee666rrr']);
-            session(['source_id'  => '5']); //Look at UserTableSeed.php
+            session(['source_id'  => '000005']); //Look at UserTableSeed.php
             session(['nome'       => 'Maria']);
             session(['cognome'    => 'Usciere']);
             session(['cod_fis'    => 'STAFFSTAFF34']);
@@ -73,7 +73,7 @@ class SoapController extends Controller {
         
         else if($username == 'segreteria@ateneo.it') {
             session(['session_id' => '666eee777rrr']);
-            session(['source_id'  => '6']); //Look at UserTableSeed.php
+            session(['source_id'  => '000006']); //Look at UserTableSeed.php
             session(['nome'       => 'Anna']);
             session(['cognome'    => 'Bianchi']);
             session(['cod_fis'    => 'STAFFSTAFF88']);

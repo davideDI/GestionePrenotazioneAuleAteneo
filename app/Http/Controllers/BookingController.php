@@ -243,19 +243,73 @@ class BookingController extends Controller {
         
         $resourceId = $request['resourceId'];
         
+        Log::info('BookingController - getBookingsForRepeatEvents(resourceId: '.$resourceId.')');
+        
         $dateTo = date('Y-m-d');
         $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
-        
-        //TODO gestire filtro date sulla repeat invece che sulla created_at dell booking
-        //TODO capire come gestire paginazione per numero elevato di eventi
-        $bookings = \App\Booking::with('resource', 'repeats')
-                                ->where('resource_id', '=', $resourceId)
-                                ->where('created_at', '<=', $dateTo)
-                                ->where('created_at', '>=', $dateFrom)
+             
+        $repeats = \App\Repeat::with('booking')
+                                ->where('event_date_end', '<=', $dateTo)
+                                ->where('event_date_start', '>=', $dateFrom)
+                                ->whereHas('booking', function($q) use ($resourceId) {
+                                    $q->where('resource_id', '=', $resourceId);
+                                })
                                 ->get();
+                                
+        return $repeats;
         
-        return $bookings;
+    }
+    
+    public function confirmRepeatEvents(Request $request) {
         
+        try {
+            
+            $resourceId = $request['resourceId'];
+            
+            Log::info('BookingController - confirmRepeatEvents(resourceId: '.$resourceId.')');
+
+            $dateTo = date('Y-m-d');
+            $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
+
+            $bookings = \App\Booking::with('resource', 'repeats')
+                                    ->where('resource_id', '=', $resourceId)
+                                    ->whereHas('repeats', function($q) use ($dateTo) {
+                                        $q->where('event_date_end', '<=', $dateTo);
+                                    })
+                                    ->whereHas('repeats', function($q) use ($dateFrom) {
+                                        $q->where('event_date_start', '>=', $dateFrom);
+                                    })   
+                                    ->get();
+
+            if(count($bookings) > 0) {
+                
+                for ($i = 0; $i < count($bookings); $i++) {
+                    foreach ($bookings[$i]->repeats as $repeat) {
+
+                        $tempRepeat = new \App\Repeat;
+                        $tempRepeat->tip_booking_status_id = TIP_BOOKING_STATUS_REQUESTED;
+                        $tempRepeat->booking_id = $repeat->booking_id;
+
+                        $dateFrom = date('Y-m-d G:i:s', strtotime($repeat->event_date_start. ' + 7 days'));
+                        $dateTo = date('Y-m-d G:i:s', strtotime($repeat->event_date_end. ' + 7 days'));
+
+                        $tempRepeat->event_date_start = $dateFrom;
+                        $tempRepeat->event_date_end = $dateTo;
+
+                        $tempRepeat->save();        
+
+                    }
+                }
+                
+            }   
+            
+            return 1;
+            
+        } catch (Exception $ex) {
+            Log::error('BookingController - Errore nella conferma ripetizione eventi: '.$ex->getMessage());
+            return redirect()->back()->with('customError', 'booking_repeat_ko');
+        }
+             
     }
     
     //Lista di tutte le prenotazioni per id group e id resource
