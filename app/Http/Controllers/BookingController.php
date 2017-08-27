@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -11,6 +12,13 @@ include 'Variables.php';
 
 class BookingController extends Controller {
 
+    protected $soapWrapper;
+    protected $esse3PathWsdl = ESSE3_PATH_WSDL;
+
+    public function __construct(SoapWrapper $soapWrapper) {
+        $this->soapWrapper = $soapWrapper;
+    }
+    
     public function getBooking(Request $request) {
         
         $bookingId = $request['booking_id'];
@@ -62,6 +70,9 @@ class BookingController extends Controller {
             $booking->registration_number = session('source_id');
             if(isset($request['teaching_id'])) {
                 $booking->subject_id = substr($request['teaching_id'], 0, 11);
+            }
+            if(isset($request['subject_id'])) {
+                $booking->subject_id = substr($request['subject_id'], 0, 11);
             }
             Log::info('BookingController - Insert booking ['.$booking.']');
             $booking->save();
@@ -175,6 +186,91 @@ class BookingController extends Controller {
         
     }
     
+    public function getCDSFromDepartment(Request $request) {
+     
+        $idDepartment = $request['idDepartment'];
+        Log::info('BookingController - getCDSFromDepartment(idDepartment: '.$idDepartment.')');
+        
+        $this->soapWrapper->add('GenericWSEsse3', function ($service) {
+            $service->wsdl($this->esse3PathWsdl);
+        });
+
+        //TODO gestione parametro a.a.
+        $params = 'aa_id=2016;tipo_corso='.WS_TIP_CORSO_LIST.';fac_id='.$idDepartment;
+        
+        $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
+            'retrieve' => 'CDS_FACOLTA',
+            'params' => $params
+        ]);
+
+        //Codice di risposta
+        $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
+
+        $result = "";
+        if($responseCode == 1) {
+            $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
+            $list = $xml->children()->children();
+            $result = array();
+            $result[] = array('' => '');
+            for($i = 0; $i < count($list); $i++) {
+                $idTemp = (string)$list[$i]->p06_cds_cod;
+                $desTemp = (string)$list[$i]->p06_cds_cod.' - '.(string)$list[$i]->p06_cds_des.' - '.(string)$list[$i]->tipi_corso_tipo_corso_des;
+                $result[] = array(
+                    'id' => $idTemp, 'text' => $desTemp
+                );
+            }
+        }
+        $cdsList = json_encode($result);
+        
+        return $cdsList;
+        
+    }
+    
+    public function getSubjectsFromCDS(Request $request) {
+        
+        $cds = $request['cds'];
+        Log::info('BookingController - getSubjectsFromCDS(cds: '.$cds.')');
+        
+        //TODO
+        //Inserire variabile anno per chiamata a servizio nel file di configurazione
+        $year = '2016';
+
+        $this->soapWrapper->add('GenericWSEsse3', function ($service) {
+            $service->wsdl($this->esse3PathWsdl);
+        });
+
+        $params = 'AA_OFF_ID='.$year.';CDS_COD='.$cds;
+
+        $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
+            'retrieve' => 'GET_UD_DOC_PART',
+            'params'   => $params
+        ]);
+
+        //Codice di risposta
+        $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
+
+        //se il codice di risposta è 1 non ci sono stati errori
+        if($responseCode == 1) {
+            $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
+            $list = $xml->children()->children();
+
+            $result = array();
+            $result[] = array('' => '');
+            for($i = 0; $i < count($list); $i++) {
+                $idTemp = (string)$list[$i]->UD_COD.'-'.(string)$list[$i]->AA_ORD_ID.'-'.$i;
+                $desTemp = (string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID.' - '.(string)$list[$i]->DOCENTE_COGNOME.' ('.(string)$list[$i]->PDS_DES.')';
+                $result[] = array(
+                    'id' => $idTemp, 'text' => $desTemp
+                );
+            }
+            return $result;
+            
+        }
+        
+        return 0;
+        
+    }
+    
     public function getNewBookingForm() {
         
         Log::info('BookingController - getNewBookingForm()');
@@ -188,12 +284,45 @@ class BookingController extends Controller {
         if(session('ruolo') == 'docente') {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
+        
+        $departmentList = "";
+        if(session('ruolo') == 'segreteria') {
+            
+            $this->soapWrapper->add('GenericWSEsse3', function ($service) {
+                $service->wsdl($this->esse3PathWsdl);
+            });
+
+            $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
+                'retrieve' => 'FACOLTA'
+            ]);
+
+            //Codice di risposta
+            $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
+            
+            $result = "";
+            if($responseCode == 1) {
+                $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
+                $list = $xml->children()->children();
+                $result = array();
+                $result += array('' => '');
+                for($i = 0; $i < count($list); $i++) {
+                    $idTemp = (string)$list[$i]->fac_id;
+                    $desTemp = (string)$list[$i]->des;
+                    $result += array(
+                        $idTemp => $desTemp
+                    );
+                }
+            }
+            $departmentList = new \Illuminate\Support\Collection($result);
+            
+        }
 
         return view('pages/booking/new-booking', [  'booking'         => $booking,
                                                     'groupsList'      => $groupsList,
                                                     'resourceList'    => $resourceList,
                                                     'tipEventList'    => $tipEventList,
-                                                    'listOfTeachings' => $listOfTeachings]);
+                                                    'listOfTeachings' => $listOfTeachings,
+                                                    'departmentList'  => $departmentList]);
         
     }
     
@@ -374,5 +503,5 @@ class BookingController extends Controller {
         }
         
     }
-
+    
 }

@@ -263,8 +263,59 @@
                                 
                         </div>
                         @endif
+                          
                     </div>
+                
+                @if(Session::has('session_id') && Session::get('ruolo') == 'segreteria')
+                <div class="form-group row">
                     
+                    <!-- Booking : lista facolta -->
+                        <div class="col-md-12">
+                            {!! Form::label('department_id', trans('messages.booking_date_departments')); !!}
+                            
+                            {!! Form::select(
+                                    'department_id', 
+                                    $departmentList, 
+                                    null, 
+                                    ['class' => 'listOfDepartments',
+                                     'style' => 'width: 90%']
+                                ); !!}
+                                
+                        </div>
+                </div>
+                
+                <!-- Booking : lista CDS -->
+                <div class="form-group row">
+                    <div class="col-md-12">
+                    {!! Form::label('cds_id', trans('messages.booking_date_cds')); !!}
+                            
+                            {!! Form::select(
+                                    'cds_id', 
+                                    [], 
+                                    null, 
+                                    ['class' => 'cds_id',
+                                     'style' => 'width: 90%']
+                                ); !!}
+                    </div>
+                </div>
+                
+                <!-- Booking : lista insegnamenti -->
+                <div class="form-group row">
+                    <div class="col-md-12">
+                    {!! Form::label('subject_id', trans('messages.booking_date_subjects')); !!}
+                            
+                            {!! Form::select(
+                                    'subject_id', 
+                                    [], 
+                                    null, 
+                                    ['class' => 'js-example-basic-single subject_id ',
+                                     'style' => 'width: 85%']
+                                ); !!}
+                    </div>
+                </div>
+                
+                @endif
+                
                     <!-- Resource details -->
                     <div class="panel panel-default">
                         <div class="panel-heading">{{ trans('messages.booking_resource_information') }}</div>
@@ -461,7 +512,16 @@
                     placeholder: "{{ trans('messages.booking_type_event') }}"
                 });
                 $(".listOfTeachings").select2({
-                    placeholder: "{{ trans('messages.booking_date_select_teachings') }}"
+                    placeholder: "{{ trans('messages.booking_date_select_teaching') }}"
+                });
+                $(".listOfDepartments").select2({
+                    placeholder: "{{ trans('messages.booking_date_select_department') }}"
+                });
+                $(".cds_id").select2({
+                    placeholder: "{{ trans('messages.booking_date_select_cds') }}"
+                });
+                $(".subject_id").select2({
+                    placeholder: "{{ trans('messages.booking_date_select_subject') }}"
                 });
 
                 @if(!empty($resourceList))
@@ -471,6 +531,57 @@
                     getInfoResource({{$resource->id}});
                 @endif
             });
+            
+            $("#department_id").on("change", function() {
+                getCDSFromDepartment($("#department_id").val());
+            });
+            
+            function getCDSFromDepartment(idDepartment) {
+                $("#cds_id").val(null);
+                var selectedDepartment = { 'idDepartment' : idDepartment};
+                console.log(idDepartment);
+                $('#cds_id').select2({
+                    placeholder: "{{ trans('messages.booking_date_select_cds') }}",
+                    ajax : {
+                        type: 'post',
+                        url: "{{URL::to('/cds')}}",
+                        dataType: 'json',
+                        data: selectedDepartment,
+                        processResults: function (data) {console.log(data);
+                            return {
+                                results: data
+                            };
+                        },
+                        cache: false
+                    }
+                });
+                
+            }
+            
+            $("#cds_id").on("change", function() {
+                getSubjectsFromCds($("#cds_id").val());
+            });
+            
+            function getSubjectsFromCds(cds) {
+                $("#subject_id").val(null);
+                var selectedCds = { 'cds' : cds};
+                $('#subject_id').select2({
+                    placeholder: "{{ trans('messages.booking_date_select_subject') }}",
+                    ajax : {
+                        type: 'post',
+                        url: "{{URL::to('/subjects')}}",
+                        dataType: 'json',
+                        data: selectedCds,
+                        processResults: function (data) {console.log(data);
+                            return {
+                                results: data
+                            };
+                        },
+                        cache: false
+                    }
+                });
+                
+            }
             
             $("#resource_id").on("change", function() {
                 appendGifLoad();

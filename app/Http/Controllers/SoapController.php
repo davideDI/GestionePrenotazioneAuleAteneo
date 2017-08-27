@@ -289,5 +289,5 @@ class SoapController extends Controller {
             return redirect('/');
         }
     }
-
+    
 }

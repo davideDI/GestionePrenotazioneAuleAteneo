@@ -96,6 +96,10 @@ Route::post('/resource', 'BookingController@getSpecificResource');
 
 Route::post('/resources', 'BookingController@getListOfResourcesByIdGroup');
 
+Route::post('/cds', 'BookingController@getCDSFromDepartment');
+
+Route::post('/subjects', 'BookingController@getSubjectsFromCDS');
+
 /**************** CONSOLE ADMIN ******************************/
 //Ricerca prenotazione in base a "Groups" amministrati
 Route::get('/console', 'AdminController@getBookings');
@@ -119,6 +123,9 @@ Route::post('/insert-request-check', 'CheckController@insertRequestCheck');
 /**************** TEST ******************************/
 /* Route di test update evento from drop */
 Route::post('/updateEvent', 'BookingController@updateEvent'); 
+
+/* Route di test update evento from drop */
+Route::get('/test-ws', 'SoapController@testCallWS'); 
 
 /**************** LOGIN ******************************/
 Route::get('/login', 'Auth\LoginController@getLoginView');
