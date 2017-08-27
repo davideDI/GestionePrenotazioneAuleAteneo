@@ -539,15 +539,14 @@
             function getCDSFromDepartment(idDepartment) {
                 $("#cds_id").val(null);
                 var selectedDepartment = { 'idDepartment' : idDepartment};
-                console.log(idDepartment);
-                $('#cds_id').select2({
+                                $('#cds_id').select2({
                     placeholder: "{{ trans('messages.booking_date_select_cds') }}",
                     ajax : {
                         type: 'post',
                         url: "{{URL::to('/cds')}}",
                         dataType: 'json',
                         data: selectedDepartment,
-                        processResults: function (data) {console.log(data);
+                        processResults: function (data) {
                             return {
                                 results: data
                             };
@@ -555,8 +554,7 @@
                         cache: false
                     }
                 });
-                
-            }
+                            }
             
             $("#cds_id").on("change", function() {
                 getSubjectsFromCds($("#cds_id").val());
@@ -572,7 +570,7 @@
                         url: "{{URL::to('/subjects')}}",
                         dataType: 'json',
                         data: selectedCds,
-                        processResults: function (data) {console.log(data);
+                        processResults: function (data) {
                             return {
                                 results: data
                             };
@@ -580,7 +578,6 @@
                         cache: false
                     }
                 });
-                
             }
             
             $("#resource_id").on("change", function() {
