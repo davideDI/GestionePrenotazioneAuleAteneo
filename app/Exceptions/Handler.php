@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use ErrorException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
@@ -53,6 +54,11 @@ class Handler extends ExceptionHandler
         
         if ($exception instanceof TokenMismatchException){
             Log::error('Handler - TokenMismatchException : ['.$exception->getMessage().']');
+            return redirect('/')->with('customError', -1);
+        }
+        
+        if ($exception instanceof ErrorException){
+            Log::error('Handler - ErrorException : ['.$exception->getMessage().']');
             return redirect('/')->with('customError', -1);
         }
         

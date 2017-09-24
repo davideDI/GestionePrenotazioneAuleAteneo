@@ -126,6 +126,39 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | LDAP Configuration
+    |--------------------------------------------------------------------------
+    |
+    |   LDAP_ADM_USERNAME
+    |   LDAP_ADM_PASSWORD
+    |   LDAP_HOST
+    |   LDAP_PORT
+    |   LDAP_PROTO
+    |   LDAP_BASE_DN
+    |   LDAP_USER_MASK
+    |   LDAP_FILTER
+    |   LDAP_JUST_THESE
+    |   LDAP_MEMBER_EMAIL_DOMAIN
+    |   LDAP_STUDENT_EMAIL_DOMAIN
+    |   LDAP_TEST_PASSWORD
+    | 
+     */
+
+    'LDAP_ADM_USERNAME'         => env('LDAP_ADM_USERNAME'),
+    'LDAP_ADM_PASSWORD'         => env('LDAP_ADM_PASSWORD'),
+    'LDAP_HOST'                 => env('LDAP_HOST'),
+    'LDAP_PORT'                 => env('LDAP_PORT'),
+    'LDAP_PROTO'                => env('LDAP_PROTO'),
+    'LDAP_BASE_DN'              => env('LDAP_BASE_DN'),
+    'LDAP_USER_MASK'            => env('LDAP_USER_MASK'),
+    'LDAP_FILTER'               => env('LDAP_FILTER'),
+    'LDAP_JUST_THESE'           => env('LDAP_JUST_THESE'),
+    'LDAP_MEMBER_EMAIL_DOMAIN'  => env('LDAP_MEMBER_EMAIL_DOMAIN'),
+    'LDAP_STUDENT_EMAIL_DOMAIN' => env('LDAP_STUDENT_EMAIL_DOMAIN'),
+    'LDAP_TEST_PASSWORD'        => env('LDAP_TEST_PASSWORD'),
+    
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

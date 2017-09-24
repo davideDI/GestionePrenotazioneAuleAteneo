@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3"></div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-                <h4>Effettua il login</h4>
+                <h4>{{ trans('messages.common_login_text') }}</h4>
                 <hr>
                 <form class="form-inline"  method="post" action="{{ url('/login') }}" accept-charset="UTF-8">
                     {{ csrf_field() }}

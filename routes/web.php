@@ -123,12 +123,11 @@ Route::post('/insert-request-check', 'CheckController@insertRequestCheck');
 /**************** LOGIN ******************************/
 Route::get('/login', 'Auth\LoginController@getLoginView');
 
-//TODO Autenticazione con LDAP
-//A seconda della username inserita viene effettuata un autenticazione fittizia
-Route::post('/login', 'SoapController@wsLogin'); 
+//Da file di configurazione impostare parametri di connessione
+Route::post('/login', 'SoapController@login'); 
 
 /**************** LOGOUT ******************************/
-Route::get('/logout', 'SoapController@wsLogout'); 
+Route::get('/logout', 'SoapController@logout'); 
 
 /**************** TEST ESPOSIZIONE SERVIZI ******************************/
 // API routes

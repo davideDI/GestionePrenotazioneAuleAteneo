@@ -71,6 +71,7 @@
         'common_update_repeat' => 'Modifica Evento',
         'common_from' => 'Dal',
         'common_to' => 'Al',
+        'common_login_text' => 'Effettua il login',
         
         //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
@@ -227,6 +228,21 @@
         'common_delete_ko' => 'Cancellazione dati fallita',
         'check_insert_ko' => 'Richiesta verifica non andata a buon fine',
         'booking_repeat_ko' => 'Errore nella riconferma delle prenotazioni',
+        
+        //LDAP ERRORS
+        'ldap_error_invalid_username' => 'Username non trovato!',
+        'ldap_error_wrong_password' => 'Password errata!',
+        'ldap_error_password_length' => 'Lunghezza password non valida!',
+        'ldap_error_dn_not_found' => 'Utente DN non trovato!',
+        'ldap_error_enough_attribute_user' => 'Ldap non restituisce abbastanza attributi per l\'utente',
+        'ldap_error_user_not_found' => 'Username not found',
+        'ldap_error_multiple_username' => 'Più utenti trovati per lo stesso username',
+        'ldap_error_unable_find_in_ldap' => 'Impossibile ricercare in LDAP',
+        'ldap_error_admin_credentials_wrong' => 'Credenziali da amministratore non valide',
+        'ldap_error_protocol_worng' => 'Impossibile comunicare con Ldap utilizzando questo protocollo',
+        'ldap_error_ssl_protocol' => 'Impossibile comunicare con Ldap utilizzando un protocollo SSL',
+        'ldap_error_no_ssl_protocol' => 'Impossibile comunicare con Ldap utilizzando un protocollo non-SSL',
+        'ldap_error_no_login' => 'Impossibile effettuare il login. Contattare l\'amministratore',
         
         //Response code
         //WS LOGIN
