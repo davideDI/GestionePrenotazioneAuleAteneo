@@ -29,6 +29,3 @@ N.B.
  1. Se eseguendo il comando "php artisan db:seed" si presenta una "ReflectionException" esegui il comando "composer dump-autoload"
  2. Se avviando l'applicazione si presenta un messaggio "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths"
     eseguire i seguenti comandi "php artisan config:clear" e successivamente "php artisan config:cache"
-
-Prerequisiti
-1. Git

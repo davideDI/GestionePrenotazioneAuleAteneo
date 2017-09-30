@@ -293,9 +293,16 @@ class SoapController extends Controller {
     
     //TODO gestire ruoli (creare prima nuovo schema ldap)
     //TODO terminare gestione errori con scrittura messaggi
-    public function login() {
+    public function login(Request $request) {
         
         Log::info('SoapController - login()');
+        
+        $ldapEnableLogin = Config::get('app.LDAP_ENABLE_LOGIN');
+        if($ldapEnableLogin != null && !$ldapEnableLogin) {
+            if($this->checkFakeUsersForLogin($request)) {
+                return redirect('/');
+            }
+        } 
         
         /* Detect Client IP */
         $ldap_client_ip = "";
@@ -435,11 +442,10 @@ class SoapController extends Controller {
                                                                                                                             session(['cognome'  => $ldap_reply["data"]['COGNOME']]);
                                                                                                                     break;
                                                                                                                 
-                                                                                                                    //TODO tesrminare schema ldap e successivamente gestione dei ruoli
                                                                                                                     case "eduPersonScopedAffiliation":
                                                                                                                             $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
                                                                                                                             if (isset($val[0])) {
-                                                                                                                                    $traduzione_gruppi = array('member'=>'Utente','staff'=>'Personale TA','student'=>'Studenti','professor'=>"Docenti");
+                                                                                                                                    $traduzione_gruppi = array('member'=>'Utente','staff'=>'Personale TA','student'=>'Studenti','professor'=>"docente");
                                                                                                                                     $g = explode(';',$val[0]);
                                                                                                                                     $ldap_reply["data"]['GRUPPI'] = array();
                                                                                                                                     foreach($g as $val) {
@@ -453,6 +459,11 @@ class SoapController extends Controller {
                                                                                                                                     } else {
                                                                                                                                             $ldap_reply["data"]['RUOLO'] = "Sconosciuto";
                                                                                                                                     }
+                                                                                                                                    
+                                                                                                                                    //N.B. viene preso sempre l'ultimo ruolo dall'elenco presente su LDAP
+                                                                                                                                    //Teoricamente sono in ordine di grado (si presuppone che l'ultimo ruolo abbia tutti i diritti dei ruoli alla sua sinistra)(chiedi)
+                                                                                                                                    session(['ruolo' => $ldap_reply["data"]['RUOLO']]); 
+                                                                                                                                    
                                                                                                                             }
                                                                                                                     break;
                                                                                                                     default:

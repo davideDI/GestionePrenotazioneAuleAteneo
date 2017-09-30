@@ -144,6 +144,8 @@ return [
     | 
      */
 
+    'LDAP_ENABLE_LOGIN'         => env('LDAP_ENABLE_LOGIN'),
+    
     'LDAP_ADM_USERNAME'         => env('LDAP_ADM_USERNAME'),
     'LDAP_ADM_PASSWORD'         => env('LDAP_ADM_PASSWORD'),
     'LDAP_HOST'                 => env('LDAP_HOST'),

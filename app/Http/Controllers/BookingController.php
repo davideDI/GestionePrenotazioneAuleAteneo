@@ -97,7 +97,9 @@ class BookingController extends Controller {
             } 
             
             //TODO compleatare gestione invio email
-//            mail($resourceOfBooking->room_admin_email, "TODO", "TODO");
+            if(Config::get(MAIL.'.'.ENABLE_SEND_MAIL)) {
+                mail($resourceOfBooking->room_admin_email, "SUBJECT", "MESSAGE");
+            }
 
             //Multiple event
             //TODO in sospeso : permettere l'inserimento di una singola prenotazione

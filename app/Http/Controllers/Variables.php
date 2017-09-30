@@ -2,7 +2,9 @@
 
 define("MYAPPNAME", "Gestion_Prenotazioni_Aule_Laboratori_App");
 
+//config files
 define("APP", "app");
+define("MAIL", "mail");
 
 //Web Service
 define("ESSE3_PATH_WSDL", "https://segreteriavirtuale.univaq.it/services/ESSE3WS?wsdl");
@@ -49,6 +51,8 @@ define('LDAP_ERROR',     2);
 define('LDAP_EXCEPTION', 3);
 
 //LDAP Config
+define('LDAP_ENABLE_LOGIN', 'LDAP_ENABLE_LOGIN');
+
 define('LDAP_ADM_USERNAME', 'LDAP_ADM_USERNAME');
 define('LDAP_ADM_PASSWORD', 'LDAP_ADM_PASSWORD');
 define('LDAP_HOST', 'LDAP_HOST');
@@ -61,3 +65,6 @@ define('LDAP_JUST_THESE', 'LDAP_JUST_THESE');
 define('LDAP_MEMBER_EMAIL_DOMAIN', 'LDAP_MEMBER_EMAIL_DOMAIN');
 define('LDAP_STUDENT_EMAIL_DOMAIN', 'LDAP_STUDENT_EMAIL_DOMAIN');
 define('LDAP_TEST_PASSWORD', 'LDAP_TEST_PASSWORD');
+
+//Mails
+define('ENABLE_SEND_MAIL', 'ENABLE_SEND_MAIL');
