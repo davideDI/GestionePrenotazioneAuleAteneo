@@ -19,10 +19,10 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it)
 2. Scarica e installa [Composer](https://getcomposer.org/download/)
 3. Importa da Git il progetto -> git clone https://github.com/davideDI/GestionePrenotazioneAuleAteneo
 4. Vai da prompt nella cartella appena creata ed esegui il comando "composer install"
-5. Nel file config/database.php ci sono le informazioni per la creazione del DB locale
-6. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
-7. "php artisan db:seed" per l'inserimento dei dati iniziali
-8. Creare e popolare il file di configurazione .env. Le properties aggiuntive, rispetto ad un classico file .env Laravel, utilizzate sono elencate [qui](https://github.com/davideDI/GestionePrenotazioneAuleAteneo/blob/master/.env.example)
+5. Creare e popolare il file di configurazione .env. Le properties aggiuntive, rispetto ad un classico file .env Laravel, utilizzate sono elencate [qui](https://github.com/davideDI/GestionePrenotazioneAuleAteneo/blob/master/.env.example)
+6. Nel file config/database.php ci sono le informazioni per la creazione del DB locale
+7. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
+8. "php artisan db:seed" per l'inserimento dei dati iniziali 
 9. "php artisan generate:key"
 
 N.B. 
