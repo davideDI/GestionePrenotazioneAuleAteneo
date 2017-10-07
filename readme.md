@@ -22,10 +22,14 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it)
 5. Nel file config/database.php ci sono le informazioni per la creazione del DB locale
 6. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
 7. "php artisan db:seed" per l'inserimento dei dati iniziali
-8. da prompt digita "copy .env.example" (Windows) / "cp .env.example" (Linux) per generare il file .env
+8. Creare e popolare il file di configurazione .env. Le properties aggiuntive, rispetto ad un classico file .env Laravel, utilizzate sono elencate [qui](https://github.com/davideDI/GestionePrenotazioneAuleAteneo/blob/master/.env.example)
 9. "php artisan generate:key"
 
 N.B. 
  1. Se eseguendo il comando "php artisan db:seed" si presenta una "ReflectionException" esegui il comando "composer dump-autoload"
  2. Se avviando l'applicazione si presenta un messaggio "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths"
     eseguire i seguenti comandi "php artisan config:clear" e successivamente "php artisan config:cache"
+
+## Ldap Auth
+
+Per creare e configurare un server Ldap locale, guarda il seguente [repository](https://github.com/davideDI/LdapAuth)
