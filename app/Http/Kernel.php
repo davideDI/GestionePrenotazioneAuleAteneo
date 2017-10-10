@@ -15,6 +15,13 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        /*
+         * To have always the session initialized, we moved the definition of StartSession 
+         * in the $middleware variable because is always running. If the definition is in 
+         * the 'web' middleware groups, we can't have session in default error page, 
+         * because we don't have a route match
+         */
+        \Illuminate\Session\Middleware\StartSession::class,
     ];
 
     /**
@@ -26,7 +33,7 @@ class Kernel extends HttpKernel
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            //\Illuminate\Session\Middleware\StartSession::class,
             \App\Http\Middleware\Language::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,

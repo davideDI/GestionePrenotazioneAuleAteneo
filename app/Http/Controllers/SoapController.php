@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
+use App\Acl;
 
 include 'Variables.php';
 
@@ -291,7 +292,6 @@ class SoapController extends Controller {
         }
     }
     
-    //TODO gestire ruoli (creare prima nuovo schema ldap)
     //TODO terminare gestione errori con scrittura messaggi
     public function login(Request $request) {
         
@@ -460,10 +460,6 @@ class SoapController extends Controller {
                                                                                                                                             $ldap_reply["data"]['RUOLO'] = "Sconosciuto";
                                                                                                                                     }
                                                                                                                                     
-                                                                                                                                    //N.B. viene preso sempre l'ultimo ruolo dall'elenco presente su LDAP
-                                                                                                                                    //Teoricamente sono in ordine di grado (si presuppone che l'ultimo ruolo abbia tutti i diritti dei ruoli alla sua sinistra)(chiedi)
-                                                                                                                                    session(['ruolo' => $ldap_reply["data"]['RUOLO']]); 
-                                                                                                                                    
                                                                                                                             }
                                                                                                                     break;
                                                                                                                     default:
@@ -478,8 +474,9 @@ class SoapController extends Controller {
 
                                                                                             session(['session_id' => session_id()]); 
                                                                                             
-                                                                                            //$ldap_reply["data"]['ACL'] = array(); /* If you have to implement some ACL based on user DN here is the right place. Disable if not used */
-
+                                                                                            Log::info($ldap_reply["data"]['cn']);
+                                                                                            $this->manageACL($ldap_reply["data"]['cn']);
+                                                                                            
                                                                                             if (isset($ldap_reply["data"]['uid'])) { /* Check if at least an UID exist in LDAP result */
                                                                                                     $_SESSION['loggedin'] = true; /* User is logged in successfully */
                                                                                             } else {
@@ -509,13 +506,11 @@ class SoapController extends Controller {
                                                     } else {
                                                             if ($ldap_result_count <= 0) {
                                                                 Log::error('SoapController - login(): LDAP_error -> Username not found.');
-                                                                //return redirect()->back()->with('customError', 'ldap_error_user_not_found');
-                                                                //LDAP_replyError("Username not found");
+                                                                return redirect()->back()->with('customError', 'ldap_error_user_not_found');
                                                             }
                                                             if ($ldap_result_count > 1) {
                                                                 Log::error('SoapController - login(): LDAP_error -> Multiple Username match found.');
-                                                                //return redirect()->back()->with('customError', 'ldap_error_multiple_username');
-                                                                //LDAP_replyError("Multiple Username match found");
+                                                                return redirect()->back()->with('customError', 'ldap_error_multiple_username');
                                                             }
                                                     }
                                             } else {
@@ -557,6 +552,19 @@ class SoapController extends Controller {
         }
         
         return redirect('/');
+        
+    }
+    
+    private function manageACL($cn) {
+        
+        Log::info('SoapController - manageACL('.$cn.')');
+        
+        $acl = Acl::where('cn', $cn)->get();
+        if(count($acl) == 0) {
+            session('ruolo', 7);
+        } else {
+            session(['ruolo' => $acl[0]->tip_user_id]); 
+        }
         
     }
     

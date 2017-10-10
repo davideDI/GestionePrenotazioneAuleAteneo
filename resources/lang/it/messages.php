@@ -17,6 +17,7 @@
         'home_logout' => 'Logout',
         'home_console' => 'Console',
         'home_acl' => 'ACL',
+        'home_manage_users' => 'Gestione Utenti',
         'home_checks' => 'Verifiche',
         'home_manage_resources' => 'Gestione Risorse',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
@@ -256,6 +257,17 @@
         '1119' => 'Il gruppo a cui appartiene l\'utente non è abilitato ad utilizzare questo tipo di client',
         '1126' => 'Errore generico di LDAP',
         '1130' => 'Password scaduta',
+        
+        //ACL
+        'acl_email' => 'Email',
+        'acl_title_insert' => 'Autorizza un nuovo utente',
+        'acl_enable_access' => 'Abilita l\'accesso',
+        'acl_enable_crud' => 'Abilita aggiunta e modifica prenotazioni',
+        'acl_tip_user' => 'Tipologia Utente',
+        'acl_cn' => 'Common name',
+        'acl_check_user' => 'Verifica utente',
+        'acl_get_ldap_user' => 'Importa dati utente',
+        'acl_user_not_found' => 'Utente non trovato',
         
     ];
 

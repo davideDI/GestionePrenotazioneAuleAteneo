@@ -40,5 +40,8 @@ class DatabaseSeeder extends Seeder {
         //Table Repeats
         $this->call(RepeatsTableSeeder::class);
         
+        //Table Acl
+        $this->call(AclDefaultSeeder::class);
+        
     }
 }

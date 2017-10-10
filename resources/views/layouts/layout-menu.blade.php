@@ -51,7 +51,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
+                        @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                             <li><a href="{{URL::to('/report')}}">{{ trans('messages.home_report') }}</a></li>
                         @endif    
                         <li><a href="{{URL::to('/print')}}">{{ trans('messages.home_print') }}</a></li>
@@ -67,7 +67,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{URL::to('/help')}}">{{ trans('messages.home_help') }}</a></li>
                         <li><a href="{{URL::to('/search')}}">{{ trans('messages.home_search') }}</a></li>
-                        @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
+                        @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                             <li><a href="{{ url('/manage-resources') }}">{{ trans('messages.home_manage_resources') }}</a></li>
                         @endif    
                     </ul>
@@ -84,11 +84,16 @@
                     @else
                         <li class="dropdown">
                             <a href="#" onclick="manageBadge()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ session('cognome') }} {{ session('nome') }} <span class="caret"></span>
+                                @if(Session::has('nome') && Session::has('cognome'))
+                                    {{ session('cognome') }} {{ session('nome') }}
+                                @else
+                                    Admin
+                                @endif
+                                <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP)
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }} 
@@ -97,7 +102,12 @@
                                 </li>
                                 @endif
                                 
-                                @if(Session::has('ruolo') && Session::get('ruolo') == 'admin')
+                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
+                                <li>
+                                    <a href="{{ url('/manage-users') }}">
+                                        {{ trans('messages.home_manage_users') }}
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="{{ url('/acl') }}">
                                         {{ trans('messages.home_acl') }}
@@ -105,7 +115,7 @@
                                 </li>
                                 @endif
                                 
-                                @if(Session::has('ruolo') && Session::get('ruolo') == 'staff')
+                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
                                 <li>
                                     <a href="{{ url('/checks') }}">
                                         {{ trans('messages.home_checks') }}

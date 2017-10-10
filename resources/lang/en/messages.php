@@ -17,6 +17,7 @@
         'home_logout' => 'Logout',
         'home_console' => 'Console',
         'home_acl' => 'ACL',
+        'home_manage_users' => 'Manage Users',
         'home_checks' => 'Checks',
         'home_manage_resources' => 'Manage Resources',
         'home_meta_description' => 'Booking Rooms and Laboratory - Univaq',
@@ -253,5 +254,16 @@
         '1119' => 'Il gruppo a cui appartiene l\'utente non è abilitato ad utilizzare questo tipo di client',
         '1126' => 'Errore generico di LDAP',
         '1130' => 'Password scaduta',
+        
+        //ACL
+        'acl_email' => 'Email',
+        'acl_title_insert' => 'Authorize a new user',
+        'acl_enable_access' => 'Enables access',
+        'acl_enable_crud' => 'Enable adding and modifying reservations',
+        'acl_tip_user' => 'Tip User',
+        'acl_cn' => 'Common name',
+        'acl_check_user' => 'Check User',
+        'acl_get_ldap_user' => 'Import data',
+        'acl_user_not_found' => 'User not found',
         
     ];
