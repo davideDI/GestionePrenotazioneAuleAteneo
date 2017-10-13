@@ -283,12 +283,12 @@ class BookingController extends Controller {
         $tipEventList = \App\TipEvent::pluck('name', 'id');
         
         $listOfTeachings = "";
-        if(session('ruolo') == 'docente') {
+        if(session('ruolo') == \App\TipUser::ROLE_TEACHER) {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
         
         $departmentList = "";
-        if(session('ruolo') == 'segreteria') {
+        if(session('ruolo') == \App\TipUser::ROLE_SECRETARY) {
             
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
                 $service->wsdl($this->esse3PathWsdl);
@@ -338,7 +338,7 @@ class BookingController extends Controller {
         $tipEventList = \App\TipEvent::pluck('name', 'id');
         
         $listOfTeachings = "";
-        if(session('ruolo') == 'docente') {
+        if(session('ruolo') == \App\TipUser::ROLE_TEACHER) {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
 

@@ -262,12 +262,15 @@
         'acl_email' => 'Email',
         'acl_title_insert' => 'Autorizza un nuovo utente',
         'acl_enable_access' => 'Abilita l\'accesso',
-        'acl_enable_crud' => 'Abilita aggiunta e modifica prenotazioni',
+        'acl_enable_crud_title' => 'Abilita aggiunta e modifica prenotazioni',
+        'acl_enable_crud' => 'Abilita crud',
         'acl_tip_user' => 'Tipologia Utente',
         'acl_cn' => 'Common name',
         'acl_check_user' => 'Verifica utente',
         'acl_get_ldap_user' => 'Importa dati utente',
         'acl_user_not_found' => 'Utente non trovato',
+        'acl_no_autorized_users' => 'Nessun Utente autorizzato',
+        'acl_confirm_delete_text' => 'L\'utente non avrà più nessun ruolo all\'interno dell\'applicazione',
         
     ];
 

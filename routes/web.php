@@ -57,8 +57,6 @@ Route::post('/update-resource', 'ResourceController@updateResource');
 Route::delete('/resource/{idResource}', 'ResourceController@deleteResource');
 
 /**************** ACL ******************************/
-Route::get('/acl', 'AclController@getAclView')->name('acl');
-
 Route::get('/manage-users', 'AclController@getUsersList')->name('users-list');
 
 Route::get('/manage-user', 'AclController@getManageUserView')->name('manage-user');
@@ -66,6 +64,12 @@ Route::get('/manage-user', 'AclController@getManageUserView')->name('manage-user
 Route::post('/insert-user', 'AclController@insertUser')->name('insert-user');
 
 Route::post('/get-ldap-user-info', 'AclController@getLdapUserInfo')->name('get-ldap-user-info');
+
+Route::get('/acl/{idAcl}', 'AclController@updateAclView')->name('acl-update-view');
+
+Route::post('/acl', 'AclController@updateAcl')->name('acl-update');
+
+Route::delete('/acl', 'AclController@deleteAcl')->name('acl-delete');
 
 /**************** BOOKING ******************************/
 Route::post('/booking', 'BookingController@getBooking')->name('booking');

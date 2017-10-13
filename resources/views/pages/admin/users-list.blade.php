@@ -11,17 +11,69 @@
                     </div>
                 </div>
                 
+                <br>
+                
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="container">
-                            @foreach ($listOfAcl as $acl)
-                                {{ $acl->cn }}
-                            @endforeach
+                        @if(count($listOfAcl) == 0)
+                            <p>{{ trans('messages.acl_no_autorized_users') }}</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <th></th>
+                                    <th>{{ trans('messages.acl_cn') }}</th>
+                                    <th>{{ trans('messages.acl_email') }}</th>
+                                    <th>{{ trans('messages.acl_tip_user') }}</th>
+                                    <th>{{ trans('messages.manage_resource_tip_group_title') }}</th>
+                                    <th>{{ trans('messages.acl_enable_access') }}</th>
+                                    <th>{{ trans('messages.acl_enable_crud') }}</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($listOfAcl as $acl)
+                                        <tr>
+                                            <td>
+                                                <a href="{{URL::to('/acl', $acl->id)}}"
+                                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ $acl->cn }}
+                                            </td>
+                                            <td>
+                                                {{ $acl->email }}
+                                            </td>
+                                            <td>
+                                                {{ $acl->tip_user_id }}
+                                            </td>
+                                            <td>
+                                                {{ $acl->group_id }}
+                                            </td>
+                                            <td>
+                                                @if($acl->enable_access)
+                                                    <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                                 @else
+                                                     <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                                 @endif
+                                            </td>
+                                            <td>
+                                                @if($acl->enable_crud)
+                                                    <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
+                                                 @else
+                                                     <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
+                                                 @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                        <div class="row">
+                            <div align="center">
+                                {{ $listOfAcl->links() }}
+                            </div>
                         </div>
-                        {{ $listOfAcl->links() }}
                     </div>
                 </div>
-                
             </div>
         </div>
     

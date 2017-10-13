@@ -5,22 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
+use App\Acl;
+use App\Group;
+use App\TipUser;
 
 include 'Variables.php';
 
 class AclController extends Controller {
     
-    public function getAclView() {
-        
-        Log::info('AclController - getAclView()');
-        return view('pages/admin/acl');
-        
-    }
-    
     public function getUsersList() {
         
         Log::info('AclController - getUserList()');
-        $listOfAcl = \App\Acl::simplePaginate(1);
+        $listOfAcl = Acl::with('group', 'tipUser')->simplePaginate(1);
         return view('pages/admin/users-list', ['listOfAcl' => $listOfAcl]);
         
     }
@@ -39,47 +35,8 @@ class AclController extends Controller {
         $ldap_params_username = $request['cn'];
         $checkUserSearch = true;
          
-        $ldap_client_ip = "";
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ldap_client_ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ldap_client_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ldap_client_ip = $_SERVER['REMOTE_ADDR'];
-        }
+        require_once 'LdapConfigUtility.php';
         
-        $ldap = array(
-            "host"                  => Config::get(APP.'.'.LDAP_HOST),	
-            "proto"                 => Config::get(APP.'.'.LDAP_PROTO),	
-            "port"                  => Config::get(APP.'.'.LDAP_PORT),
-            "basedn"                => Config::get(APP.'.'.LDAP_BASE_DN),	
-            "user_mask"             => Config::get(APP.'.'.LDAP_USER_MASK),
-            "user"                  => 'cn='.Config::get(APP.'.'.LDAP_ADM_USERNAME).','.Config::get(APP.'.'.LDAP_BASE_DN),	
-            "filter"                => null,	
-            "pass"                  => Config::get(APP.'.'.LDAP_ADM_PASSWORD),	
-            "justthese"             => array("cn", "sn", "co", "c", "whenCreated","whenChanged", 
-                                            "lastLogon", "badPasswordTime", "pwdLastSet", 
-                                            "lastLogonTimestamp", "department", "memberOf",
-                                            "employeeType", "telephoneNumber", "distinguishedName",
-                                            "userPrincipalName", "accountExpires", "mail",
-                                            "preferredLanguage","targetAddress", "proxyAddresses", 
-                                            "name", "displayName", "sAMAccountName","uid", "carLicense", 
-                                            "eduPersonScopedAffiliation","employeeID","givenName","title"),
-            "member_email_domain"   => Config::get(APP.'.'.LDAP_MEMBER_EMAIL_DOMAIN),	
-            "student_email_domain"  => Config::get(APP.'.'.LDAP_STUDENT_EMAIL_DOMAIN),	
-            "test_password"         => Config::get(APP.'.'.LDAP_TEST_PASSWORD),	
-        );
-
-        $ldap_isLogout = null;
-        $ldap_result_count = 0;
-        $ldap_connection = null;
-
-        $ldap_reply = array(
-                "isError"=>false,
-                "errorLevel"=>0,
-                "data"=>null
-        ); 
-         
         $ldap_useSSL = (isset($ldap['proto']) && (strtolower($ldap['proto'])=='ssl')) || (isset($ldap['port']) && (intval($ldap['port']) == 636));
         if ($ldap_useSSL) {
                 putenv('LDAPTLS_REQCERT=never');
@@ -183,13 +140,13 @@ class AclController extends Controller {
             $checkUserSearch = false;
         }
 
-        $acl = new \App\Acl;
+        $acl = new Acl;
         if($checkUserSearch) {
             $acl->email = $ldap_reply["data"]["mail"];
             $acl->cn = $ldap_reply["data"]["cn"];
             
-            $listOfGroups = \App\Group::pluck('name', 'id');
-            $listOfTipUser = \App\TipUser::pluck('name', 'id');
+            $listOfGroups = Group::pluck('name', 'id');
+            $listOfTipUser = TipUser::pluck('name', 'id');
         
             return view('pages/admin/manage-users', ['acl' => $acl, 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser, 'checkSearchTrue' => $checkUserSearch]);
             
@@ -203,13 +160,46 @@ class AclController extends Controller {
         
         Log::info('AclController - insertUser()');
         
-        $acl = new \App\Acl;
+        //TODO validator
+        
+        $acl = new Acl;
         $acl->fill($request->all());
         $acl->save();
+        return redirect()->route('users-list');
         
+    }
+    
+    public function updateAclView($idAcl) {
+        
+        Log::info('AclController - updateAclView('.$idAcl.')');
+        $acl = Acl::find($idAcl);
+        $listOfGroups = Group::pluck('name', 'id');
+        $listOfTipUser = TipUser::pluck('name', 'id');
+        return view('pages/admin/acl', ['acl' => $acl, 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser]);
+        
+    }
+    
+    public function updateAcl(Request $request) {
+        
+        Log::info('AclController - updateAcl()');
+        
+        //TODO validator
+        //TODO non salva i checkbox
+        
+        $acl = Acl::find($request->id);
+        $acl->fill($request->all());
+        $acl->save();
+        return redirect()->route('users-list');
+        
+    }
+    
+    public function deleteAcl(Request $request) {
+        
+        Log::info('AclController - deleteAcl()');
+        $acl = Acl::find($request->id);
+        $acl->delete();
         return redirect()->route('users-list');
         
     }
     
 }
-

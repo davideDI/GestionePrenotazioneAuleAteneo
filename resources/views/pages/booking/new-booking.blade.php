@@ -249,7 +249,7 @@
                             </div>
                         @endif
                     <!-- Booking : materie prof -->
-                        @if(Session::has('session_id') && Session::get('ruolo') == 'docente')
+                        @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_TEACHER )
                         <div class="col-md-6">
                             {!! Form::label('teaching_id', trans('messages.booking_date_teachings')); !!}
                             
@@ -266,7 +266,7 @@
                           
                     </div>
                 
-                @if(Session::has('session_id') && Session::get('ruolo') == 'segreteria')
+                @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
                 <div class="form-group row">
                     
                     <!-- Booking : lista facolta -->
@@ -335,12 +335,12 @@
                         <div class="col-md-2">
                             {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
                         </div>
-                        @if(Session::has('session_id') && Session::get('ruolo') == 'segreteria')
+                        @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
                             <div class="col-md-2">
                                 <a href="#" class="btn btn-primary" id="repeatEvents"> {{ trans('messages.booking_repeat_event') }}</a> 
                             </div>
                         @endif
-                        @if(Session::has('session_id') && Session::get('ruolo') == 'Studenti')
+                        @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)
                         <div class="col-md-10">
                             <b>{{ trans('messages.booking_warning_student') }}</b>
                         </div>

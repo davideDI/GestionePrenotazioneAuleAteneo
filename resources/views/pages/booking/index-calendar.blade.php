@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Session::has('session_id') && Session::get('ruolo') != 'staff')
+                        @if(Session::has('session_id'))
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>
@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti NON studenti visualizzano la legenda stati prenotazione -->
-                        @if(Session::has('session_id') && Session::get('ruolo') != 'Studenti' && Session::get('ruolo') != 'staff')
+                        @if(Session::has('session_id') && Session::get('ruolo') != \App\TipUser::ROLE_STUDENT && Session::get('ruolo') != \App\TipUser::ROLE_INQUIRER)
                             <legend>{{ trans('messages.index_calendar_booking_status')}}</legend>
                             @foreach($bookingsStatus as $bookingStatus)
                                 @if($bookingStatus->id == 1)
@@ -169,7 +169,7 @@
                             @foreach($booking->repeats as $repeat)
                                 //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
                                 //in stato 3 [Gestita]
-                                @if(!Session::has('ruolo') || Session::get('ruolo') == 'Studenti')
+                                @if(!Session::has('ruolo') || Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)
                                     @if($repeat->tip_booking_status_id == 3)
                                         {
                                             id         : '{{$booking->id}}',
@@ -190,7 +190,7 @@
                                     @endif 
                                 //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
                                 //in stato 3 [Gestita]
-                                @elseif(Session::has('ruolo') && Session::get('ruolo') != 'Studenti')
+                                @elseif(Session::has('ruolo') && Session::get('ruolo') != \App\TipUser::ROLE_STUDENT)
                                         {
                                             id         : '{{$booking->id}}',
                                             title      : '{{$booking->name}}',
@@ -322,12 +322,12 @@
                                     textForModal += "<div>"; 
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_start')}}</strong>" + moment(result[0].repeats[x].event_date_start).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
-                                    @if(Session::has('ruolo') && (Session::get('ruolo') == 'admin' || Session::get('ruolo') == 'ateneo'))
+                                    @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP))
                                         if(result[0].repeats[x].tip_booking_status_id == 3 && result[0].repeats[x].surveys.length == 0) {
                                             textForModal += "<button class='btn btn-primary marginRight5px' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
                                         }
                                     @endif
-                                    @if(Session::has('ruolo') && Session::get('ruolo') == 'ateneo')
+                                    @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                                         if(result[0].repeats[x].tip_booking_status_id != 4) {
                                             textForModal += "<a class='btn btn-primary' href='"+ "{{URL::to('/repeat')}}/" + result[0].repeats[x].id + "'>{{trans('messages.common_update_repeat')}}</a>";
                                         }

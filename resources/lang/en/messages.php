@@ -259,11 +259,14 @@
         'acl_email' => 'Email',
         'acl_title_insert' => 'Authorize a new user',
         'acl_enable_access' => 'Enables access',
-        'acl_enable_crud' => 'Enable adding and modifying reservations',
+        'acl_enable_crud_title' => 'Enable adding and modifying reservations',
+        'acl_enable_crud' => 'Enable crud',
         'acl_tip_user' => 'Tip User',
         'acl_cn' => 'Common name',
         'acl_check_user' => 'Check User',
         'acl_get_ldap_user' => 'Import data',
         'acl_user_not_found' => 'User not found',
+        'acl_no_autorized_users' => 'No authorized Users',
+        'acl_confirm_delete_text' => 'The user will no longer have any role within the application',
         
     ];

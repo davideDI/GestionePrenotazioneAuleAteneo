@@ -45,11 +45,11 @@ class HomeController extends Controller {
         
         $sessionRole = session('ruolo');
         
-        if($sessionRole == 'admin') {
+        if($sessionRole == \App\TipUser::ROLE_ADMIN_DIP) {
             
             return $this->getCountRepeats();
             
-        } else if($sessionRole == 'staff') {
+        } else if($sessionRole == \App\TipUser::ROLE_INQUIRER) {
             
             return $this->getCountCheck();
             

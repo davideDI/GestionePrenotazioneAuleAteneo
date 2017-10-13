@@ -105,11 +105,6 @@
                                 @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                                 <li>
                                     <a href="{{ url('/manage-users') }}">
-                                        {{ trans('messages.home_manage_users') }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/acl') }}">
                                         {{ trans('messages.home_acl') }}
                                     </a>
                                 </li>

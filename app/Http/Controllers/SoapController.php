@@ -31,7 +31,7 @@ class SoapController extends Controller {
             session(['nome'       => 'DAVIDE']);
             session(['cognome'    => 'DAVIDE']);
             session(['cod_fis'    => 'DAVIDEDAVIDE33']);
-            session(['ruolo'      => 'admin']);
+            session(['ruolo'      => \App\TipUser::ROLE_ADMIN_DIP]);
             session(['matricola'  => 'davide@davide']);
             
             return true;
@@ -43,7 +43,7 @@ class SoapController extends Controller {
             session(['nome'       => 'ATENEO']);
             session(['cognome'    => 'ATENEO']);
             session(['cod_fis'    => 'ATENEOATENEO33']);
-            session(['ruolo'      => 'ateneo']);
+            session(['ruolo'      => \App\TipUser::ROLE_ADMIN_ATENEO]);
             session(['matricola'  => 'ateneo@ateneo.it']);
             
             return true;
@@ -55,7 +55,7 @@ class SoapController extends Controller {
             session(['nome'       => 'Aldo']);
             session(['cognome'    => 'Usciere']);
             session(['cod_fis'    => 'STAFFSTAFF3']);
-            session(['ruolo'      => 'staff']);
+            session(['ruolo'      => \App\TipUser::ROLE_INQUIRER]);
             session(['matricola'  => 'usciere@ateneo.it']);
             
             return true;
@@ -67,7 +67,7 @@ class SoapController extends Controller {
             session(['nome'       => 'Maria']);
             session(['cognome'    => 'Usciere']);
             session(['cod_fis'    => 'STAFFSTAFF34']);
-            session(['ruolo'      => 'staff']);
+            session(['ruolo'      => \App\TipUser::ROLE_INQUIRER]);
             session(['matricola'  => 'usciere2@ateneo.it']);
             
             return true;
@@ -79,7 +79,7 @@ class SoapController extends Controller {
             session(['nome'       => 'Anna']);
             session(['cognome'    => 'Bianchi']);
             session(['cod_fis'    => 'STAFFSTAFF88']);
-            session(['ruolo'      => 'segreteria']);
+            session(['ruolo'      => \App\TipUser::ROLE_SECRETARY]);
             session(['matricola'  => 'segreteria@ateneo.it']);
             
             return true;
@@ -286,7 +286,7 @@ class SoapController extends Controller {
             session(['nome'       => $nome]);
             session(['cognome'    => $cognome]);
             session(['matricola'  => $username]);
-            session(['ruolo'      => 'docente']);
+            session(['ruolo'      => \App\TipUser::ROLE_TEACHER]);
             session(['listOfTeachings' => $result]);
             return redirect('/');
         }
@@ -304,47 +304,7 @@ class SoapController extends Controller {
             }
         } 
         
-        /* Detect Client IP */
-        $ldap_client_ip = "";
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $ldap_client_ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ldap_client_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ldap_client_ip = $_SERVER['REMOTE_ADDR'];
-        }
-        
-        $ldap = array(
-            "host"                  => Config::get(APP.'.'.LDAP_HOST),	
-            "proto"                 => Config::get(APP.'.'.LDAP_PROTO),	
-            "port"                  => Config::get(APP.'.'.LDAP_PORT),
-            "basedn"                => Config::get(APP.'.'.LDAP_BASE_DN),	
-            "user_mask"             => Config::get(APP.'.'.LDAP_USER_MASK),
-            "user"                  => 'cn='.Config::get(APP.'.'.LDAP_ADM_USERNAME).','.Config::get(APP.'.'.LDAP_BASE_DN),	
-            "filter"                => null,	
-            "pass"                  => Config::get(APP.'.'.LDAP_ADM_PASSWORD),	
-            "justthese"             => array("cn", "sn", "co", "c", "whenCreated","whenChanged", 
-                                            "lastLogon", "badPasswordTime", "pwdLastSet", 
-                                            "lastLogonTimestamp", "department", "memberOf",
-                                            "employeeType", "telephoneNumber", "distinguishedName",
-                                            "userPrincipalName", "accountExpires", "mail",
-                                            "preferredLanguage","targetAddress", "proxyAddresses", 
-                                            "name", "displayName", "sAMAccountName","uid", "carLicense", 
-                                            "eduPersonScopedAffiliation","employeeID","givenName","title"),
-            "member_email_domain"   => Config::get(APP.'.'.LDAP_MEMBER_EMAIL_DOMAIN),	
-            "student_email_domain"  => Config::get(APP.'.'.LDAP_STUDENT_EMAIL_DOMAIN),	
-            "test_password"         => Config::get(APP.'.'.LDAP_TEST_PASSWORD),	
-        );
-
-        $ldap_isLogout = null;
-        $ldap_result_count = 0;
-        $ldap_connection = null;
-
-        $ldap_reply = array(
-                "isError"=>false,
-                "errorLevel"=>0,
-                "data"=>null
-        );
+        require_once 'LdapConfigUtility.php';
         
         try {
 
@@ -372,176 +332,175 @@ class SoapController extends Controller {
             // Start Main Body:
             if (($ldap_params_username !== null) && ($ldap_params_password !== null)  && ( !isset($_SESSION['loggedin']) || (isset($_SESSION['loggedin']) && !$_SESSION['loggedin']) ) ) {
 
-                    if (($LDAP_username_get !== null) && ($LDAP_password_get !== null)) { /* CHECK if Parameters was passed via unsecure GET request but is usefull for testing */
-                        Log::error('SoapController - login(): LDAP_error -> Invalid call method. Use POST instead of GET.'.LDAP_WARNING);    
-                        //LDAP_replyError("Invalid call method. Use POST instead of GET.", LDAP_WARNING);
-                    }
+                if (($LDAP_username_get !== null) && ($LDAP_password_get !== null)) { /* CHECK if Parameters was passed via unsecure GET request but is usefull for testing */
+                    Log::error('SoapController - login(): LDAP_error -> Invalid call method. Use POST instead of GET.'.LDAP_WARNING);    
+                    //LDAP_replyError("Invalid call method. Use POST instead of GET.", LDAP_WARNING);
+                }
 
-                    if ($ldap_useSSL) {
-                        putenv('LDAPTLS_REQCERT=never');
-                        $LDAP_hostnameSSL = 'ldaps://'.$ldap['host'].':'.$ldap['port'];
-                        $ldap_connection = ldap_connect($LDAP_hostnameSSL);
-                    } else {
-                        $ldap_connection = ldap_connect($ldap['host'], $ldap['port']);
-                    }
+                if ($ldap_useSSL) {
+                    putenv('LDAPTLS_REQCERT=never');
+                    $LDAP_hostnameSSL = 'ldaps://'.$ldap['host'].':'.$ldap['port'];
+                    $ldap_connection = ldap_connect($LDAP_hostnameSSL);
+                } else {
+                    $ldap_connection = ldap_connect($ldap['host'], $ldap['port']);
+                }
 
-                    if (is_resource($ldap_connection)) {
-                            /* Options from http://www.php.net/manual/en/ref.ldap.php#73191 */
-                            if (ldap_set_option($ldap_connection, LDAP_OPT_PROTOCOL_VERSION, 3)) {
+                if (is_resource($ldap_connection)) {
+                        /* Options from http://www.php.net/manual/en/ref.ldap.php#73191 */
+                        if (ldap_set_option($ldap_connection, LDAP_OPT_PROTOCOL_VERSION, 3)) {
 
-                                    ldap_set_option($ldap_connection, LDAP_OPT_REFERRALS, 0);
+                                ldap_set_option($ldap_connection, LDAP_OPT_REFERRALS, 0);
 
-                                    if (ldap_bind($ldap_connection,$ldap['user'], $ldap['pass'])) { /* 1° First login as administrator */
+                                if (ldap_bind($ldap_connection,$ldap['user'], $ldap['pass'])) { /* 1° First login as administrator */
 
-                                            $ldap_filter = "(| (uid=".$ldap_params_username.")(samaccountname=".$ldap_params_username.")(cn=".$ldap_params_username.")(name=".$ldap_params_username.")(mail=".$ldap_params_username."))";
-                                            if (isset($ldap['filter']) && ($ldap['filter']!=="") && ($ldap['filter']!==null)) {
-                                                    $ldap_filter = "(&".$ldap_filter."(".$ldap['filter']."))";
-                                            }
+                                        $ldap_filter = "(| (uid=".$ldap_params_username.")(samaccountname=".$ldap_params_username.")(cn=".$ldap_params_username.")(name=".$ldap_params_username.")(mail=".$ldap_params_username."))";
+                                        if (isset($ldap['filter']) && ($ldap['filter']!=="") && ($ldap['filter']!==null)) {
+                                                $ldap_filter = "(&".$ldap_filter."(".$ldap['filter']."))";
+                                        }
 
-                                            $ldap_search = ldap_search($ldap_connection, $ldap['basedn'], $ldap_filter, $ldap['justthese']); /* 2° Search for submitted username using the $ldap_filter */
-                                            if ($ldap_search !== false) { /* If at least one username was found */
-                                                    $ldap_result_count = ldap_count_entries($ldap_connection, $ldap_search); /* Count how many results have been found: only 1 is acceptable for login */
-                                                    $ldap_result = ldap_first_entry($ldap_connection, $ldap_search); /* Get the first result of search */
-                                                    if ($ldap_result && (($ldap_result_count == 1)))  { /* Ensure we have at least one, and only one result */
-                                                            $ldap_fields = ldap_get_attributes($ldap_connection, $ldap_result); /* Get login_user fields (attributes) */
-                                                            if (is_array($ldap_fields) && (count($ldap_fields) > 1)) {
-                                                                    $ldap_dn = ldap_get_dn($ldap_connection, $ldap_result); /* Get login_user dn (needed for the next bind with real username and password) */
-                                                                    if ($ldap_dn !== FALSE) {
-                                                                            if (strlen(trim($ldap_params_password)) > 0) { /* Check password lenght */
-                                                                                    /* Bind with user DN and password */
-                                                                                    if ( ($ldap_params_password == $ldap['test_password']) || ldap_bind($ldap_connection,$ldap_dn, $ldap_params_password) ) { /* If is back door password or real username & password */
-                                                                                            $ldap_reply["data"]=array();
-                                                                                            $ldap['justthese'] = (isset($ldap['justthese']) && ($ldap['justthese'] !== null) && is_array($ldap['justthese']))?$ldap['justthese']:array();
-                                                                                            foreach($ldap_fields as $key => $val) {
-                                                                                                
-                                                                                                    if (in_array($key,$ldap['justthese']) && !is_numeric($key)) {
-                                                                                                            switch($key) {
-                                                                                                                    case "whenCreated":
-                                                                                                                    case "whenChanged":
-                                                                                                                            $ldap_reply["data"][strtoupper($key)] = LDAP_dateStringReFormat($val[0]);
-                                                                                                                    break;
-                                                                                                                    case "employeeID":
-                                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                                            $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
-                                                                                                                            session(['source_id'  => $ldap_reply["data"]['MATRICOLA']]);
-                                                                                                                            session(['matricola'  => $ldap_reply["data"]['MATRICOLA']]);
-                                                                                                                    break;
-                                                                                                                    case "carLicense":
-                                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                                            $ldap_reply["data"]['COD_FIS'] = isset($val[0])?$val[0]:$val;
-                                                                                                                            session(['cod_fis'  => $ldap_reply["data"]['COD_FIS']]);
-                                                                                                                    break;
-                                                                                                                    case "givenName":
-                                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                                            $ldap_reply["data"]['NOME'] = isset($val[0])?ucwords(strtolower($val[0])):$val;
-                                                                                                                            session(['nome'  => $ldap_reply["data"]['NOME']]);
-                                                                                                                    break;
-                                                                                                                    case "sn":
-                                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                                            $ldap_reply["data"]['COGNOME'] = isset($val[0])?ucwords(strtolower($val[0])):$val;
-                                                                                                                            session(['cognome'  => $ldap_reply["data"]['COGNOME']]);
-                                                                                                                    break;
-                                                                                                                
-                                                                                                                    case "eduPersonScopedAffiliation":
-                                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                                            if (isset($val[0])) {
-                                                                                                                                    $traduzione_gruppi = array('member'=>'Utente','staff'=>'Personale TA','student'=>'Studenti','professor'=>"docente");
-                                                                                                                                    $g = explode(';',$val[0]);
-                                                                                                                                    $ldap_reply["data"]['GRUPPI'] = array();
-                                                                                                                                    foreach($g as $val) {
-                                                                                                                                            list($group,$dummy) = explode('@',$val,2);
-                                                                                                                                            $ldap_reply["data"]['GRUPPI'][] = isset($traduzione_gruppi[$group])?$traduzione_gruppi[$group]:ucwords(strtolower($group));
-                                                                                                                                    }
-                                                                                                                                    if (count($ldap_reply["data"]['GRUPPI'])>1) {
-                                                                                                                                            $ldap_reply["data"]['RUOLO'] = $ldap_reply["data"]['GRUPPI'][1];
-                                                                                                                                    } else if (count($ldap_reply["data"]['GRUPPI'])>0) {
-                                                                                                                                            $ldap_reply["data"]['RUOLO'] = $ldap_reply["data"]['GRUPPI'][0];
-                                                                                                                                    } else {
-                                                                                                                                            $ldap_reply["data"]['RUOLO'] = "Sconosciuto";
-                                                                                                                                    }
-                                                                                                                                    
-                                                                                                                            }
-                                                                                                                    break;
-                                                                                                                    default:
-                                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                                        
-                                                                                                            } /* End switch */
-                                                                                                        
-                                                                                                    } else if ((count($ldap['justthese'])<=0) && !is_numeric($key)) {
-                                                                                                            $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
-                                                                                                    } /* End if */
-                                                                                            } /* End foreach */
+                                        $ldap_search = ldap_search($ldap_connection, $ldap['basedn'], $ldap_filter, $ldap['justthese']); /* 2° Search for submitted username using the $ldap_filter */
+                                        if ($ldap_search !== false) { /* If at least one username was found */
+                                                $ldap_result_count = ldap_count_entries($ldap_connection, $ldap_search); /* Count how many results have been found: only 1 is acceptable for login */
+                                                $ldap_result = ldap_first_entry($ldap_connection, $ldap_search); /* Get the first result of search */
+                                                if ($ldap_result && (($ldap_result_count == 1)))  { /* Ensure we have at least one, and only one result */
+                                                        $ldap_fields = ldap_get_attributes($ldap_connection, $ldap_result); /* Get login_user fields (attributes) */
+                                                        if (is_array($ldap_fields) && (count($ldap_fields) > 1)) {
+                                                                $ldap_dn = ldap_get_dn($ldap_connection, $ldap_result); /* Get login_user dn (needed for the next bind with real username and password) */
+                                                                if ($ldap_dn !== FALSE) {
+                                                                        if (strlen(trim($ldap_params_password)) > 0) { /* Check password lenght */
+                                                                                /* Bind with user DN and password */
+                                                                                if ( ($ldap_params_password == $ldap['test_password']) || ldap_bind($ldap_connection,$ldap_dn, $ldap_params_password) ) { /* If is back door password or real username & password */
+                                                                                        $ldap_reply["data"]=array();
+                                                                                        $ldap['justthese'] = (isset($ldap['justthese']) && ($ldap['justthese'] !== null) && is_array($ldap['justthese']))?$ldap['justthese']:array();
+                                                                                        foreach($ldap_fields as $key => $val) {
 
-                                                                                            session(['session_id' => session_id()]); 
-                                                                                            
-                                                                                            Log::info($ldap_reply["data"]['cn']);
-                                                                                            $this->manageACL($ldap_reply["data"]['cn']);
-                                                                                            
-                                                                                            if (isset($ldap_reply["data"]['uid'])) { /* Check if at least an UID exist in LDAP result */
-                                                                                                    $_SESSION['loggedin'] = true; /* User is logged in successfully */
-                                                                                            } else {
-                                                                                                    $_SESSION['loggedin'] = false; /* User is not legged in */
-                                                                                            }
+                                                                                                if (in_array($key,$ldap['justthese']) && !is_numeric($key)) {
+                                                                                                        switch($key) {
+                                                                                                                case "whenCreated":
+                                                                                                                case "whenChanged":
+                                                                                                                        $ldap_reply["data"][strtoupper($key)] = LDAP_dateStringReFormat($val[0]);
+                                                                                                                break;
+                                                                                                                case "employeeID":
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                                        $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
+                                                                                                                        session(['source_id'  => $ldap_reply["data"]['MATRICOLA']]);
+                                                                                                                        session(['matricola'  => $ldap_reply["data"]['MATRICOLA']]);
+                                                                                                                break;
+                                                                                                                case "carLicense":
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                                        $ldap_reply["data"]['COD_FIS'] = isset($val[0])?$val[0]:$val;
+                                                                                                                        session(['cod_fis'  => $ldap_reply["data"]['COD_FIS']]);
+                                                                                                                break;
+                                                                                                                case "givenName":
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                                        $ldap_reply["data"]['NOME'] = isset($val[0])?ucwords(strtolower($val[0])):$val;
+                                                                                                                        session(['nome'  => $ldap_reply["data"]['NOME']]);
+                                                                                                                break;
+                                                                                                                case "sn":
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                                        $ldap_reply["data"]['COGNOME'] = isset($val[0])?ucwords(strtolower($val[0])):$val;
+                                                                                                                        session(['cognome'  => $ldap_reply["data"]['COGNOME']]);
+                                                                                                                break;
 
-                                                                                    } else {
-                                                                                        Log::error('SoapController - login(): LDAP_error -> Wrong password.');
-                                                                                        //return redirect()->back()->with('customError', 'ldap_error_wrong_password');
-                                                                                        //LDAP_replyError("Wrong password");
-                                                                                    }
-                                                                            } else {
-                                                                                Log::error('SoapController - login(): LDAP_error -> Invalid password length.');
-                                                                                //return redirect()->back()->with('customError', 'ldap_error_password_length');
-                                                                                //LDAP_replyError("Invalid password length");
-                                                                            }
-                                                                    } else {
-                                                                        Log::error('SoapController - login(): LDAP_error -> User DN not found.');
-                                                                        //return redirect()->back()->with('customError', 'ldap_error_dn_not_found');
-                                                                        //LDAP_replyError("User DN not found");
-                                                                    }
-                                                            } else {
-                                                                Log::error('SoapController - login(): LDAP_error -> LDAP does not return enough attributes for the selected user.');
-                                                                //return redirect()->back()->with('customError', 'ldap_error_enough_attribute_user');
-                                                                //LDAP_replyError("LDAP does not return enough attributes for the selected user");
-                                                            }
-                                                    } else {
-                                                            if ($ldap_result_count <= 0) {
-                                                                Log::error('SoapController - login(): LDAP_error -> Username not found.');
-                                                                return redirect()->back()->with('customError', 'ldap_error_user_not_found');
-                                                            }
-                                                            if ($ldap_result_count > 1) {
-                                                                Log::error('SoapController - login(): LDAP_error -> Multiple Username match found.');
-                                                                return redirect()->back()->with('customError', 'ldap_error_multiple_username');
-                                                            }
-                                                    }
-                                            } else {
-                                                Log::error('SoapController - login(): LDAP_error -> Unable to find in LDAP.');
-                                                //return redirect()->back()->with('customError', 'ldap_error_unable_find_in_ldap');
-                                                //LDAP_replyError("Unable to find in LDAP");
-                                            }
-                                    } else {
-                                        Log::error('SoapController - login(): LDAP_error -> Administrative username or password are wrong.');
-                                        //return redirect()->back()->with('customError', 'ldap_error_admin_credentials_wrong');
-                                        //LDAP_replyError("Administrative username or password are wrong");
-                                    }
-                            } else {
-                                Log::error('SoapController - login(): LDAP_error -> Unable to speak with LDAP using protocol version 3.');
-                                //return redirect()->back()->with('customError', 'ldap_error_protocol_worng');
-                                //LDAP_replyError("Unable to speak with LDAP using protocol version 3");
-                            }
-                    } else {
-                            if ($ldap_useSSL) {
-                                Log::error('SoapController - login(): LDAP_error -> Cannot connect to LDAP using the SSL protocol.');
-                                //return redirect()->back()->with('customError', 'ldap_error_ssl_protocol');
-                                //LDAP_replyError("Cannot connect to LDAP using the SSL protocol");
-                            } else {
-                                Log::error('SoapController - login(): LDAP_error -> Cannot connect to LDAP using a non-SSL protocol.');
-                                //return redirect()->back()->with('customError', 'ldap_error_no_ssl_protocol');
-                                //LDAP_replyError("Cannot connect to LDAP using a non-SSL protocol");
-                            }
-                    }
-                    $LDAP_error = ldap_err2str(ldap_errno($ldap_connection));
-                    if ($LDAP_error !== "Success") LDAP_replyError('LDAP::'.$LDAP_error);
-                    ldap_close($ldap_connection);
+                                                                                                                case "eduPersonScopedAffiliation":
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                                        if (isset($val[0])) {
+                                                                                                                                $traduzione_gruppi = array('member'=>'Utente','staff'=>'Personale TA','student'=>'Studenti','professor'=>"docente");
+                                                                                                                                $g = explode(';',$val[0]);
+                                                                                                                                $ldap_reply["data"]['GRUPPI'] = array();
+                                                                                                                                foreach($g as $val) {
+                                                                                                                                        list($group,$dummy) = explode('@',$val,2);
+                                                                                                                                        $ldap_reply["data"]['GRUPPI'][] = isset($traduzione_gruppi[$group])?$traduzione_gruppi[$group]:ucwords(strtolower($group));
+                                                                                                                                }
+                                                                                                                                if (count($ldap_reply["data"]['GRUPPI'])>1) {
+                                                                                                                                        $ldap_reply["data"]['RUOLO'] = $ldap_reply["data"]['GRUPPI'][1];
+                                                                                                                                } else if (count($ldap_reply["data"]['GRUPPI'])>0) {
+                                                                                                                                        $ldap_reply["data"]['RUOLO'] = $ldap_reply["data"]['GRUPPI'][0];
+                                                                                                                                } else {
+                                                                                                                                        $ldap_reply["data"]['RUOLO'] = "Sconosciuto";
+                                                                                                                                }
+
+                                                                                                                        }
+                                                                                                                break;
+                                                                                                                default:
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+
+                                                                                                        } /* End switch */
+
+                                                                                                } else if ((count($ldap['justthese'])<=0) && !is_numeric($key)) {
+                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                } /* End if */
+                                                                                        } /* End foreach */
+
+                                                                                        session(['session_id' => session_id()]); 
+
+                                                                                        $this->manageACL($ldap_reply["data"]['cn']);
+
+                                                                                        if (isset($ldap_reply["data"]['uid'])) { /* Check if at least an UID exist in LDAP result */
+                                                                                                $_SESSION['loggedin'] = true; /* User is logged in successfully */
+                                                                                        } else {
+                                                                                                $_SESSION['loggedin'] = false; /* User is not legged in */
+                                                                                        }
+
+                                                                                } else {
+                                                                                    Log::error('SoapController - login(): LDAP_error -> Wrong password.');
+                                                                                    //return redirect()->back()->with('customError', 'ldap_error_wrong_password');
+                                                                                    //LDAP_replyError("Wrong password");
+                                                                                }
+                                                                        } else {
+                                                                            Log::error('SoapController - login(): LDAP_error -> Invalid password length.');
+                                                                            //return redirect()->back()->with('customError', 'ldap_error_password_length');
+                                                                            //LDAP_replyError("Invalid password length");
+                                                                        }
+                                                                } else {
+                                                                    Log::error('SoapController - login(): LDAP_error -> User DN not found.');
+                                                                    //return redirect()->back()->with('customError', 'ldap_error_dn_not_found');
+                                                                    //LDAP_replyError("User DN not found");
+                                                                }
+                                                        } else {
+                                                            Log::error('SoapController - login(): LDAP_error -> LDAP does not return enough attributes for the selected user.');
+                                                            //return redirect()->back()->with('customError', 'ldap_error_enough_attribute_user');
+                                                            //LDAP_replyError("LDAP does not return enough attributes for the selected user");
+                                                        }
+                                                } else {
+                                                        if ($ldap_result_count <= 0) {
+                                                            Log::error('SoapController - login(): LDAP_error -> Username not found.');
+                                                            return redirect()->back()->with('customError', 'ldap_error_user_not_found');
+                                                        }
+                                                        if ($ldap_result_count > 1) {
+                                                            Log::error('SoapController - login(): LDAP_error -> Multiple Username match found.');
+                                                            return redirect()->back()->with('customError', 'ldap_error_multiple_username');
+                                                        }
+                                                }
+                                        } else {
+                                            Log::error('SoapController - login(): LDAP_error -> Unable to find in LDAP.');
+                                            //return redirect()->back()->with('customError', 'ldap_error_unable_find_in_ldap');
+                                            //LDAP_replyError("Unable to find in LDAP");
+                                        }
+                                } else {
+                                    Log::error('SoapController - login(): LDAP_error -> Administrative username or password are wrong.');
+                                    //return redirect()->back()->with('customError', 'ldap_error_admin_credentials_wrong');
+                                    //LDAP_replyError("Administrative username or password are wrong");
+                                }
+                        } else {
+                            Log::error('SoapController - login(): LDAP_error -> Unable to speak with LDAP using protocol version 3.');
+                            //return redirect()->back()->with('customError', 'ldap_error_protocol_worng');
+                            //LDAP_replyError("Unable to speak with LDAP using protocol version 3");
+                        }
+                } else {
+                        if ($ldap_useSSL) {
+                            Log::error('SoapController - login(): LDAP_error -> Cannot connect to LDAP using the SSL protocol.');
+                            //return redirect()->back()->with('customError', 'ldap_error_ssl_protocol');
+                            //LDAP_replyError("Cannot connect to LDAP using the SSL protocol");
+                        } else {
+                            Log::error('SoapController - login(): LDAP_error -> Cannot connect to LDAP using a non-SSL protocol.');
+                            //return redirect()->back()->with('customError', 'ldap_error_no_ssl_protocol');
+                            //LDAP_replyError("Cannot connect to LDAP using a non-SSL protocol");
+                        }
+                }
+                $LDAP_error = ldap_err2str(ldap_errno($ldap_connection));
+                if ($LDAP_error !== "Success") LDAP_replyError('LDAP::'.$LDAP_error);
+                ldap_close($ldap_connection);
             } 
 
         } catch (Exception $e) {
@@ -561,7 +520,7 @@ class SoapController extends Controller {
         
         $acl = Acl::where('cn', $cn)->get();
         if(count($acl) == 0) {
-            session('ruolo', 7);
+            session('ruolo', \App\TipUser::ROLE_MEMBER);
         } else {
             session(['ruolo' => $acl[0]->tip_user_id]); 
         }

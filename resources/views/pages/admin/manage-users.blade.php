@@ -94,7 +94,7 @@
                         <div class="form-group row">
                             <!-- Acl : enable crud -->
                             <div class="col-md-10">
-                                {{ trans('messages.acl_enable_crud') }}
+                                {{ trans('messages.acl_enable_crud_title') }}
                                 {{ Form::checkbox('enable_crud') }}
                             </div>
                         </div>
