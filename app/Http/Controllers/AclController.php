@@ -16,7 +16,12 @@ class AclController extends Controller {
     public function getUsersList() {
         
         Log::info('AclController - getUserList()');
-        $listOfAcl = Acl::with('group', 'tipUser')->simplePaginate(1);
+        $listOfAcl = Acl::with('group', 'tipUser')->get();
+        
+//        $listOfAcl->load(['group' => function ($q) {
+//            $q->orderBy('id', 'name')->simplePaginate(1);
+//        }]);
+        
         return view('pages/admin/users-list', ['listOfAcl' => $listOfAcl]);
         
     }
@@ -159,13 +164,10 @@ class AclController extends Controller {
     public function insertUser(Request $request) {
         
         Log::info('AclController - insertUser()');
-        
-        //TODO validator
-        
         $acl = new Acl;
         $acl->fill($request->all());
         $acl->save();
-        return redirect()->route('users-list');
+        return redirect()->route('users-list')->with('success', 'common_insert_ok');
         
     }
     
@@ -182,14 +184,12 @@ class AclController extends Controller {
     public function updateAcl(Request $request) {
         
         Log::info('AclController - updateAcl()');
-        
-        //TODO validator
-        //TODO non salva i checkbox
-        
         $acl = Acl::find($request->id);
         $acl->fill($request->all());
+        $acl->enable_crud = $request->enable_crud ? 1 : 0;
+        $acl->enable_access = $request->enable_access ? 1 : 0;
         $acl->save();
-        return redirect()->route('users-list');
+        return redirect()->route('users-list')->with('success', 'common_update_ok');
         
     }
     
@@ -198,7 +198,7 @@ class AclController extends Controller {
         Log::info('AclController - deleteAcl()');
         $acl = Acl::find($request->id);
         $acl->delete();
-        return redirect()->route('users-list');
+        return redirect()->route('users-list')->with('success', 'common_update_ok');
         
     }
     

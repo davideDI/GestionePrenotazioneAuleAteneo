@@ -69,7 +69,7 @@
                             <!-- Acl : enable access -->
                             <div class="col-md-10">
                                 {{ trans('messages.acl_enable_access') }}
-                                {{ Form::checkbox('enable_access') }}
+                                {!! Form::checkbox('enable_access') !!}
                             </div>
                         </div>
                         <div class="form-group row">

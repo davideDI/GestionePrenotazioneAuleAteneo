@@ -57,13 +57,13 @@ Route::post('/update-resource', 'ResourceController@updateResource');
 Route::delete('/resource/{idResource}', 'ResourceController@deleteResource');
 
 /**************** ACL ******************************/
-Route::get('/manage-users', 'AclController@getUsersList')->name('users-list');
-
 Route::get('/manage-user', 'AclController@getManageUserView')->name('manage-user');
+
+Route::post('/get-ldap-user-info', 'AclController@getLdapUserInfo')->name('get-ldap-user-info');
 
 Route::post('/insert-user', 'AclController@insertUser')->name('insert-user');
 
-Route::post('/get-ldap-user-info', 'AclController@getLdapUserInfo')->name('get-ldap-user-info');
+Route::get('/acl', 'AclController@getUsersList')->name('users-list');
 
 Route::get('/acl/{idAcl}', 'AclController@updateAclView')->name('acl-update-view');
 

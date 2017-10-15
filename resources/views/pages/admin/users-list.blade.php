@@ -2,8 +2,8 @@
     @section('content')
     
         <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
                 
                 <div class="row">
                     <div class="col-md-12">
@@ -43,10 +43,10 @@
                                                 {{ $acl->email }}
                                             </td>
                                             <td>
-                                                {{ $acl->tip_user_id }}
+                                                {{ $acl->tipUser->name }}
                                             </td>
                                             <td>
-                                                {{ $acl->group_id }}
+                                                {{ $acl->group->name }}
                                             </td>
                                             <td>
                                                 @if($acl->enable_access)
@@ -67,14 +67,10 @@
                                 </tbody>
                             </table>
                         @endif
-                        <div class="row">
-                            <div align="center">
-                                {{ $listOfAcl->links() }}
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-1"></div>
         </div>
     
     @endsection

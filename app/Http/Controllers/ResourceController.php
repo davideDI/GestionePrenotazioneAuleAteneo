@@ -105,6 +105,20 @@ class ResourceController extends Controller {
             
             $resource = Resource::find($request->id);
             $resource->fill($request->all());
+            
+            $resource->projector = $request->projector ? 1 : 0;
+            $resource->screen_motor = $request->screen_motor ? 1 : 0;
+            $resource->screen_manual = $request->screen_manual ? 1 : 0;
+            $resource->audio = $request->audio ? 1 : 0;
+            $resource->pc = $request->pc ? 1 : 0;
+            $resource->wire_mic = $request->wire_mic ? 1 : 0;
+            $resource->wireless_mic = $request->wireless_mic ? 1 : 0;
+            $resource->overhead_projector = $request->overhead_projector ? 1 : 0;
+            $resource->visual_presenter = $request->visual_presenter ? 1 : 0;
+            $resource->wiring = $request->wiring ? 1 : 0;
+            $resource->equipment = $request->equipment ? 1 : 0;
+            $resource->blackboard = $request->blackboard ? 1 : 0;
+            
             $resource->save();
             
             return redirect()->route('manage_resources_from_id', [$resource->group_id])->with('success', 'update_resource_ok');

@@ -226,6 +226,8 @@
         'common_delete_ko' => 'Failed to delete',
         'check_insert_ko' => 'Request rejected',
         'booking_repeat_ko' => 'Error on re-confirmed events',
+        'common_insert_ok' => 'Data entered correctly',
+        'common_update_ok' => 'Data changed properly',
         
         //LDAP ERRORS
         'ldap_error_invalid_username' => 'Username not found!',
@@ -268,5 +270,6 @@
         'acl_user_not_found' => 'User not found',
         'acl_no_autorized_users' => 'No authorized Users',
         'acl_confirm_delete_text' => 'The user will no longer have any role within the application',
+        'acl_no_enable_access' => 'You dont\' have any ermission to login. Contact the admin',
         
     ];
