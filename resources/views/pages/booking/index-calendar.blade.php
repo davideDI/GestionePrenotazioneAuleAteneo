@@ -8,7 +8,6 @@
                 
                 <!-- Select resource associate al group -->
                 <div class="row">
-                        
                     <div class="col-md-12">
 
                         <legend>{{$group->name}}</legend> 
@@ -25,7 +24,6 @@
                         </select>
 
                     </div>
-                    
                 </div>
                 
                 <br>
@@ -34,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Session::has('session_id'))
+                        @if(Session::has('session_id') && Session::has('enable_crud') && Session::get('enable_crud') == '1' )
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>

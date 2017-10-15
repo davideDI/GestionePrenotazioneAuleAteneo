@@ -520,15 +520,15 @@ class SoapController extends Controller {
         
         $acl = Acl::where('cn', $cn)->get();
         if(count($acl) == 0) {
-            session('ruolo', \App\TipUser::ROLE_MEMBER);
-            session('enable_crud', false);
+            session(['ruolo' => \App\TipUser::ROLE_MEMBER]);
+            session(['enable_crud' => false]);
         } else {
             if(!$acl[0]->enable_access) {
                 session()->flush();
                 return redirect('/')->with('customError', 'acl_no_enable_access');
             } else {
                 session(['ruolo' => $acl[0]->tip_user_id]); 
-                session('enable_crud', $acl[0]->enable_crud);
+                session(['enable_crud' => $acl[0]->enable_crud]);
             }
         }
         

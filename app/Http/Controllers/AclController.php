@@ -17,11 +17,6 @@ class AclController extends Controller {
         
         Log::info('AclController - getUserList()');
         $listOfAcl = Acl::with('group', 'tipUser')->get();
-        
-//        $listOfAcl->load(['group' => function ($q) {
-//            $q->orderBy('id', 'name')->simplePaginate(1);
-//        }]);
-        
         return view('pages/admin/users-list', ['listOfAcl' => $listOfAcl]);
         
     }
