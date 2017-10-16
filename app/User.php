@@ -15,18 +15,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'password', 'tip_user_id'
+        'cn', 'name', 'surname', 'email', 'tip_user_id', 'registration_number'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-    
     //Relazione con la tabella tip_user
     public function tipUser() {
         return $this->belongsTo('App\TipUser');
@@ -47,4 +38,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Group');
     }
     
+    public function acl() {
+        return $this->belongsTo('App\Acl');
+    }
 }

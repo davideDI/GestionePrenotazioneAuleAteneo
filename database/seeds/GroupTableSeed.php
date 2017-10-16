@@ -17,7 +17,6 @@ class GroupTableSeed extends Seeder {
                     'name'          => 'DISIM Aule',
                     'description'   => 'Ingegneria e scienze dell\'informazione e matematica',
                     'tip_group_id'  => 1,
-                    'admin_id'      => 1,
                     'created_at'    => date("Y-m-d G:i:s"),
                     'updated_at'    => date("Y-m-d G:i:s")
                 ],
@@ -26,7 +25,6 @@ class GroupTableSeed extends Seeder {
                     'name'          => 'ATENEO Aule',
                     'description'   => 'Aule di Ateneo',
                     'tip_group_id'  => 1,
-                    'admin_id'      => 2,
                     'created_at'    => date("Y-m-d G:i:s"),
                     'updated_at'    => date("Y-m-d G:i:s")
                 ],
@@ -35,7 +33,6 @@ class GroupTableSeed extends Seeder {
                     'name'          => 'CLA Aule',
                     'description'   => 'Centro Linguistico di Ateneo',
                     'tip_group_id'  => 1,
-                    'admin_id'      => 3,
                     'created_at'    => date("Y-m-d G:i:s"),
                     'updated_at'    => date("Y-m-d G:i:s")
                 ]

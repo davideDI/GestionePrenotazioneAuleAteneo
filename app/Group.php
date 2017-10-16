@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model {
     
-    protected $fillable = ['name', 'description', 'tip_group_id'/*, 'admin_id'*/];
+    protected $fillable = ['name', 'description', 'tip_group_id'];
     
     //Relazione con la tabella tip_group
     public function tipGroup() {
@@ -17,10 +17,5 @@ class Group extends Model {
     public function resources() {
         return $this->hasMany('App\Resource');
     }
-    
-    //Relazione con la tabella users
-    public function admin() {
-        return $this->belongsTo('App\User');
-    }
-    
+       
 }

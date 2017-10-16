@@ -16,7 +16,7 @@ class AclController extends Controller {
     public function getUsersList() {
         
         Log::info('AclController - getUserList()');
-        $listOfAcl = Acl::with('group', 'tipUser')->get();
+        $listOfAcl = Acl::with('group', 'user')->get();
         return view('pages/admin/users-list', ['listOfAcl' => $listOfAcl]);
         
     }
@@ -140,15 +140,16 @@ class AclController extends Controller {
             $checkUserSearch = false;
         }
 
-        $acl = new Acl;
         if($checkUserSearch) {
-            $acl->email = $ldap_reply["data"]["mail"];
-            $acl->cn = $ldap_reply["data"]["cn"];
+            $user = new \App\User;
+            $user->email = $ldap_reply["data"]["mail"];
+            $user->cn = $ldap_reply["data"]["cn"];
+            $user->registration_number = $ldap_reply["data"]['employeeNumber'];
             
             $listOfGroups = Group::pluck('name', 'id');
             $listOfTipUser = TipUser::pluck('name', 'id');
         
-            return view('pages/admin/manage-users', ['acl' => $acl, 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser, 'checkSearchTrue' => $checkUserSearch]);
+            return view('pages/admin/manage-users', ['user' => $user, 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser, 'checkSearchTrue' => $checkUserSearch]);
             
         }
         
@@ -159,9 +160,17 @@ class AclController extends Controller {
     public function insertUser(Request $request) {
         
         Log::info('AclController - insertUser()');
+        $user = new \App\User;
+        $user->fill($request->all());
+        $user->save();
+        
         $acl = new Acl;
-        $acl->fill($request->all());
+        $acl->user_id = $user->id;
+        $acl->group_id = $request['group_id'];
+        $acl->enable_crud = $request->enable_crud ? 1 : 0;
+        $acl->enable_access = $request->enable_access ? 1 : 0;
         $acl->save();
+        
         return redirect()->route('users-list')->with('success', 'common_insert_ok');
         
     }
@@ -169,21 +178,27 @@ class AclController extends Controller {
     public function updateAclView($idAcl) {
         
         Log::info('AclController - updateAclView('.$idAcl.')');
-        $acl = Acl::find($idAcl);
+        $acl = Acl::where('id', $idAcl)->with('user')->get();
         $listOfGroups = Group::pluck('name', 'id');
         $listOfTipUser = TipUser::pluck('name', 'id');
-        return view('pages/admin/acl', ['acl' => $acl, 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser]);
+        return view('pages/admin/acl', ['acl' => $acl[0], 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser]);
         
     }
     
     public function updateAcl(Request $request) {
         
         Log::info('AclController - updateAcl()');
+        
         $acl = Acl::find($request->id);
-        $acl->fill($request->all());
+        $acl->group_id = $request->group_id;
         $acl->enable_crud = $request->enable_crud ? 1 : 0;
         $acl->enable_access = $request->enable_access ? 1 : 0;
         $acl->save();
+        
+        $user = \App\User::find($acl->user_id);
+        $user->tip_user_id = $request->tip_user_id;
+        $user->save();
+        
         return redirect()->route('users-list')->with('success', 'common_update_ok');
         
     }
@@ -192,6 +207,9 @@ class AclController extends Controller {
         
         Log::info('AclController - deleteAcl()');
         $acl = Acl::find($request->id);
+        $idUser = $acl->user_id;
+        $user = \App\User::find($idUser);
+        $user->delete();
         $acl->delete();
         return redirect()->route('users-list')->with('success', 'common_update_ok');
         

@@ -380,7 +380,14 @@ class SoapController extends Controller {
                                                                                                                 case "whenChanged":
                                                                                                                         $ldap_reply["data"][strtoupper($key)] = LDAP_dateStringReFormat($val[0]);
                                                                                                                 break;
+                                                                                                            //TODO gestire i due campi
                                                                                                                 case "employeeID":
+                                                                                                                        $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
+                                                                                                                        $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
+                                                                                                                        session(['source_id'  => $ldap_reply["data"]['MATRICOLA']]);
+                                                                                                                        session(['matricola'  => $ldap_reply["data"]['MATRICOLA']]);
+                                                                                                                break;
+                                                                                                                case "employeeNumber":
                                                                                                                         $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
                                                                                                                         $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
                                                                                                                         session(['source_id'  => $ldap_reply["data"]['MATRICOLA']]);
@@ -518,17 +525,24 @@ class SoapController extends Controller {
         
         Log::info('SoapController - manageACL('.$cn.')');
         
-        $acl = Acl::where('cn', $cn)->get();
-        if(count($acl) == 0) {
+        $user = \App\User::where('cn', $cn)->get();
+        if(count($user) == 0) {
             session(['ruolo' => \App\TipUser::ROLE_MEMBER]);
-            session(['enable_crud' => false]);
+            session(['enable_crud' => 0]);
         } else {
-            if(!$acl[0]->enable_access) {
-                session()->flush();
-                return redirect('/')->with('customError', 'acl_no_enable_access');
+            $acl = Acl::where('user_id', $user[0]->id)->get();
+            if(count($acl) == 0) {
+                session(['ruolo' => \App\TipUser::ROLE_MEMBER]);
+                session(['enable_crud' => 0]);
             } else {
-                session(['ruolo' => $acl[0]->tip_user_id]); 
-                session(['enable_crud' => $acl[0]->enable_crud]);
+                if(!$acl[0]->enable_access) {
+                    session()->flush();
+                    return redirect('/')->with('customError', 'acl_no_enable_access');
+                } else {
+                    session(['ruolo' => $user[0]->tip_user_id]); 
+                    session(['enable_crud' => $acl[0]->enable_crud]);
+                    session(['group_id_to_manage' => $acl[0]->group_id]);
+                }
             }
         }
         

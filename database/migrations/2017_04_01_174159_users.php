@@ -10,12 +10,11 @@ class Users extends Migration {
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->comment('user id');  
-            $table->string('name')->comment('user name');  
-            $table->string('surname')->comment('user surname');  
-            $table->string('email')->unique()->comment('user email');  
-            $table->string('password')->comment('user password');  
-            $table->rememberToken()->comment('user remember Token');
             
+            $table->string('cn')->comment('common name'); 
+            $table->string('name')->nullable()->comment('user name');  
+            $table->string('surname')->nullable()->comment('user surname');  
+            $table->string('email')->nullable()->unique()->comment('user email');  
             $table->string('registration_number')->comment('user registration number');
             
             //foreign tip_user table

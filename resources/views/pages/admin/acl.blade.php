@@ -15,7 +15,7 @@
                         <div class="form-group row">
                             <div class="col-md-10">
                                 {!! Form::label('email', trans('messages.acl_cn')); !!}
-                                {!! Form::text('cn', $acl->cn, ['class' => 'form-control', 'placeholder' => trans('messages.acl_cn')]); !!}
+                                {!! Form::text('cn', $acl->user->cn, ['class' => 'form-control', 'readonly', 'placeholder' => trans('messages.acl_cn')]); !!}
                             </div>
                         </div>
 
@@ -23,7 +23,7 @@
                         <div class="form-group row">
                             <div class="col-md-10">
                                 {!! Form::label('email', trans('messages.acl_email')); !!}
-                                {!! Form::text('email', $acl->email, ['class' => 'form-control', 'placeholder' => trans('messages.acl_email')]); !!}
+                                {!! Form::text('email', $acl->user->email, ['class' => 'form-control', 'readonly', 'placeholder' => trans('messages.acl_email')]); !!}
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@
                                 {!! Form::select(
                                         'tip_user_id', 
                                         $listOfTipUser, 
-                                        null, 
+                                        $acl->user->tip_user_id, 
                                         ['class' => 'listOfTipUserItems',
                                          'style' => 'width: 70%']
                                     ); !!}

@@ -25,7 +25,7 @@ $ldap = array(
                                     "userPrincipalName", "accountExpires", "mail",
                                     "preferredLanguage","targetAddress", "proxyAddresses", 
                                     "name", "displayName", "sAMAccountName","uid", "carLicense", 
-                                    "eduPersonScopedAffiliation","employeeID","givenName","title"),
+                                    "eduPersonScopedAffiliation","employeeID","givenName","title", "employeeNumber"),
     "member_email_domain"   => Config::get(APP.'.'.LDAP_MEMBER_EMAIL_DOMAIN),	
     "student_email_domain"  => Config::get(APP.'.'.LDAP_STUDENT_EMAIL_DOMAIN),	
     "test_password"         => Config::get(APP.'.'.LDAP_TEST_PASSWORD),	

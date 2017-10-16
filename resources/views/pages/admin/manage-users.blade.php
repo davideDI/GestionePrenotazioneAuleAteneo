@@ -28,13 +28,15 @@
                 @endif
                 
                 @if($checkSearchTrue)
-                    {!! Form::model($acl, ['url' => '/insert-user', 'method' => 'post']) !!} 
+                    {!! Form::model($user, ['url' => '/insert-user', 'method' => 'post']) !!} 
 
+                        {{ Form::hidden('registration_number', $user->registration_number) }}
+                        
                         <!-- Acl : cn -->
                         <div class="form-group row">
                             <div class="col-md-10">
-                                {!! Form::label('email', trans('messages.acl_cn')); !!}
-                                {!! Form::text('cn', $acl->cn, ['class' => 'form-control', 'readonly', 'placeholder' => trans('messages.acl_cn')]); !!}
+                                {!! Form::label('cn', trans('messages.acl_cn')); !!}
+                                {!! Form::text('cn', $user->cn, ['class' => 'form-control', 'readonly', 'placeholder' => trans('messages.acl_cn')]); !!}
                             </div>
                         </div>
 
@@ -42,7 +44,7 @@
                         <div class="form-group row">
                             <div class="col-md-10">
                                 {!! Form::label('email', trans('messages.acl_email')); !!}
-                                {!! Form::text('email', $acl->email, ['class' => 'form-control', 'readonly', 'placeholder' => trans('messages.acl_email')]); !!}
+                                {!! Form::text('email', $user->email, ['class' => 'form-control', 'readonly', 'placeholder' => trans('messages.acl_email')]); !!}
                             </div>
                         </div>
 

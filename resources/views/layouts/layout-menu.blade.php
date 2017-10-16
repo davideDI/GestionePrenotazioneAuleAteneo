@@ -93,7 +93,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP)
+                                @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }} 
@@ -110,7 +110,7 @@
                                 </li>
                                 @endif
                                 
-                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
+                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_INQUIRER)
                                 <li>
                                     <a href="{{ url('/checks') }}">
                                         {{ trans('messages.home_checks') }}

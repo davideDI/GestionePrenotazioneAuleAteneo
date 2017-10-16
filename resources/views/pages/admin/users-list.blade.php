@@ -37,13 +37,13 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                {{ $acl->cn }}
+                                                {{ $acl->user->cn }}
                                             </td>
                                             <td>
-                                                {{ $acl->email }}
+                                                {{ $acl->user->email }}
                                             </td>
                                             <td>
-                                                {{ $acl->tipUser->name }}
+                                                {{ $acl->user->tipUser->name }}
                                             </td>
                                             <td>
                                                 {{ $acl->group->name }}

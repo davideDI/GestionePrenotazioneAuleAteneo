@@ -15,12 +15,17 @@ class AdminController extends Controller {
     //Search Bookings By Id Status
     public function getBookingsByIdStatus(Request $request) {
         
-        $user_id = session('source_id');
         $idStatus = $request['id_status'];
         Log::info('AdminController - getBookingsByIdStatus(idStatus: '.$idStatus.')');
         
-        //Groups amministrati dall'utente
-        $groups = Group::where('admin_id', $user_id)->get();
+        //Se utente admin ateneo prendere tutte le prenotazioni
+        $sessionRole = session('ruolo');
+        $groups;
+        if($sessionRole == \App\TipUser::ROLE_ADMIN_ATENEO) {
+            $groups =  Group::all();
+        } else if($sessionRole == \App\TipUser::ROLE_ADMIN_DIP) {
+            $groups = Group::where('id', session('group_id_to_manage'))->get();
+        }
         
         $bookingsList = array();
         
@@ -56,7 +61,14 @@ class AdminController extends Controller {
         $rejectedBookings  = array();
         
         //Groups amministrati dall'utente
-        $groups = Group::where('admin_id', $user_id)->get();
+        //se utente admin ateneo prendere tutte le prenotazioni
+        $sessionRole = session('ruolo');
+        $groups;
+        if($sessionRole == \App\TipUser::ROLE_ADMIN_ATENEO) {
+            $groups =  Group::all();
+        } else if($sessionRole == \App\TipUser::ROLE_ADMIN_DIP) {
+            $groups = Group::where('id', session('group_id_to_manage'))->get();
+        }
         
         //Per ogni gruppo
         foreach($groups as $group) {
