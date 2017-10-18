@@ -31,6 +31,8 @@
                     {!! Form::model($user, ['url' => '/insert-user', 'method' => 'post']) !!} 
 
                         {{ Form::hidden('registration_number', $user->registration_number) }}
+                        {{ Form::hidden('name', $user->name) }}
+                        {{ Form::hidden('surname', $user->surname) }}
                         
                         <!-- Acl : cn -->
                         <div class="form-group row">

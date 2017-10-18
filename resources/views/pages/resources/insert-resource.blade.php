@@ -38,15 +38,6 @@
                             @endif
                             {!! Form::number('capacity', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_capacity'), 'min' => '0']); !!}
                         </div>
-                        <div class="col-md-6">
-                            {!! Form::label('room_admin_email', trans('messages.booking_room_admin_email')); !!}
-                            @if ($errors->has('room_admin_email'))
-                                <span class="label label-danger">
-                                    <strong>{{ $errors->first('room_admin_email') }}</strong>
-                                </span>
-                            @endif
-                            {!! Form::text('room_admin_email', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_room_admin_email')]); !!}
-                        </div>
                     </div>
 
                     <div class="form-group row">

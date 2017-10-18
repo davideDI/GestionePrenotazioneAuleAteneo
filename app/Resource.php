@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Resource extends Model {
     
-    protected $fillable = [ 'name', 'description', 'capacity', 'room_admin_email', 
+    protected $fillable = [ 'name', 'description', 'capacity',
                             'projector', 'screen_motor', 'screen_manual', 'audio', 'pc', 
                             'wire_mic', 'wireless_mic', 'overhead_projector', 'visual_presenter', 
                             'wiring', 'equipment', 'blackboard', 'note', 'network', 'group_id', 

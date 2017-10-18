@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
 use App\Acl;
+use App\User;
+use App\TipUser;
 
 include 'Variables.php';
 
@@ -31,7 +33,7 @@ class SoapController extends Controller {
             session(['nome'       => 'DAVIDE']);
             session(['cognome'    => 'DAVIDE']);
             session(['cod_fis'    => 'DAVIDEDAVIDE33']);
-            session(['ruolo'      => \App\TipUser::ROLE_ADMIN_DIP]);
+            session(['ruolo'      => TipUser::ROLE_ADMIN_DIP]);
             session(['matricola'  => 'davide@davide']);
             
             return true;
@@ -43,7 +45,7 @@ class SoapController extends Controller {
             session(['nome'       => 'ATENEO']);
             session(['cognome'    => 'ATENEO']);
             session(['cod_fis'    => 'ATENEOATENEO33']);
-            session(['ruolo'      => \App\TipUser::ROLE_ADMIN_ATENEO]);
+            session(['ruolo'      => TipUser::ROLE_ADMIN_ATENEO]);
             session(['matricola'  => 'ateneo@ateneo.it']);
             
             return true;
@@ -55,7 +57,7 @@ class SoapController extends Controller {
             session(['nome'       => 'Aldo']);
             session(['cognome'    => 'Usciere']);
             session(['cod_fis'    => 'STAFFSTAFF3']);
-            session(['ruolo'      => \App\TipUser::ROLE_INQUIRER]);
+            session(['ruolo'      => TipUser::ROLE_INQUIRER]);
             session(['matricola'  => 'usciere@ateneo.it']);
             
             return true;
@@ -67,7 +69,7 @@ class SoapController extends Controller {
             session(['nome'       => 'Maria']);
             session(['cognome'    => 'Usciere']);
             session(['cod_fis'    => 'STAFFSTAFF34']);
-            session(['ruolo'      => \App\TipUser::ROLE_INQUIRER]);
+            session(['ruolo'      => TipUser::ROLE_INQUIRER]);
             session(['matricola'  => 'usciere2@ateneo.it']);
             
             return true;
@@ -79,7 +81,7 @@ class SoapController extends Controller {
             session(['nome'       => 'Anna']);
             session(['cognome'    => 'Bianchi']);
             session(['cod_fis'    => 'STAFFSTAFF88']);
-            session(['ruolo'      => \App\TipUser::ROLE_SECRETARY]);
+            session(['ruolo'      => TipUser::ROLE_SECRETARY]);
             session(['matricola'  => 'segreteria@ateneo.it']);
             
             return true;
@@ -214,7 +216,7 @@ class SoapController extends Controller {
     
     public function wsGetUdDocPart($matricolaDocente) {
         
-        if(session('ruolo') == \App\TipUser::ROLE_TEACHER) {
+        if(session('ruolo') == TipUser::ROLE_TEACHER) {
             
             //TODO
             //Inserire variabile anno per chiamata a servizio nel file di configurazione
@@ -377,13 +379,11 @@ class SoapController extends Controller {
                                                                                                                 case "employeeID":
                                                                                                                         $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
                                                                                                                         $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
-                                                                                                                        session(['source_id'  => $ldap_reply["data"]['MATRICOLA']]);
                                                                                                                         session(['matricola'  => $ldap_reply["data"]['MATRICOLA']]);
                                                                                                                 break;
                                                                                                                 case "employeeNumber":
                                                                                                                         $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
                                                                                                                         $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
-                                                                                                                        session(['source_id'  => $ldap_reply["data"]['MATRICOLA']]);
                                                                                                                         session(['matricola'  => $ldap_reply["data"]['MATRICOLA']]);
                                                                                                                 break;
                                                                                                                 case "carLicense":
@@ -522,14 +522,15 @@ class SoapController extends Controller {
         
         Log::info('SoapController - manageACL('.$cn.')');
         
-        $user = \App\User::where('cn', $cn)->get();
+        $user = User::where('cn', $cn)->get();
         if(count($user) == 0) {
-            session(['ruolo' => \App\TipUser::ROLE_MEMBER]);
+            session(['ruolo' => TipUser::ROLE_MEMBER]);
             session(['enable_crud' => 0]);
         } else {
+            session(['source_id' => $user[0]->id]);
             $acl = Acl::where('user_id', $user[0]->id)->get();
             if(count($acl) == 0) {
-                session(['ruolo' => \App\TipUser::ROLE_MEMBER]);
+                session(['ruolo' => TipUser::ROLE_MEMBER]);
                 session(['enable_crud' => 0]);
             } else {
                 if(!$acl[0]->enable_access) {
@@ -540,6 +541,17 @@ class SoapController extends Controller {
                     session(['enable_crud' => $acl[0]->enable_crud]);
                     session(['group_id_to_manage' => $acl[0]->group_id]);
                 }
+                
+                //Solo per l'utente admin (in SVILUPPO) viene inserita in sessione la matricola
+                //presente nella tabella Users
+                //In PRODUZIONE tutti gli utenti avranno la matricola
+                $appEnv = Config::get('APP_ENV');
+                if($appEnv != '' && $appEnv === LOCAL) {
+                    if($user[0]->tip_user_id == TipUser::ROLE_ADMIN_ATENEO) {
+                        session(['matricola'  => $user[0]->registration_number]);
+                    }
+                }
+                
             }
         }
         

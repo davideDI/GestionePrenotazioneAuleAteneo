@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
 use App\Group;
 use App\Survey;
+use App\TipUser;
+use App\TipSurveyStatus;
+use App\TipBookingStatus;
+use App\Resource;
+use App\Repeat;
 
 include 'Variables.php';
 
@@ -45,15 +50,15 @@ class HomeController extends Controller {
         
         $sessionRole = session('ruolo');
         
-        if($sessionRole == \App\TipUser::ROLE_ADMIN_ATENEO) {
+        if($sessionRole == TipUser::ROLE_ADMIN_ATENEO) {
             
             return $this->getCountAllRepeats();
             
-        } else if($sessionRole == \App\TipUser::ROLE_ADMIN_DIP) {
+        } else if($sessionRole == TipUser::ROLE_ADMIN_DIP) {
             
-            return $this->getCountCheck();
+            return $this->getCountRepeats();
             
-        } else if($sessionRole == \App\TipUser::ROLE_INQUIRER) {
+        } else if($sessionRole == TipUser::ROLE_INQUIRER) {
             
             return $this->getCountCheck();
             
@@ -64,7 +69,7 @@ class HomeController extends Controller {
     public function getCountAllRepeats() {
         
         Log::info('HomeController - getCountAllRepeats()');
-        $repeats = \App\Repeat::whereIn('tip_booking_status_id', [TIP_BOOKING_STATUS_REQUESTED, TIP_BOOKING_STATUS_WORKING])->get();
+        $repeats = Repeat::whereIn('tip_booking_status_id', [TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED, TipBookingStatus::TIP_BOOKING_STATUS_WORKING])->get();
         return count($repeats);
         
     }
@@ -79,15 +84,15 @@ class HomeController extends Controller {
             return $countCheck;
         }
         
-        $resources = \App\Resource::where('group_id', $groupIdToManage)->get();
+        $resources = Resource::where('group_id', $groupIdToManage)->get();
         //Per ogni risorsa
         foreach($resources as $resource) {
             //Per ogni prenotazione associata ad una risorsa
             foreach($resource->bookings as $booking) {
                 foreach($booking->repeats as $repeat) {
-                    if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_REQUESTED 
+                    if($repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED 
                             || 
-                       $repeat->tip_booking_status_id == TIP_BOOKING_STATUS_WORKING) {
+                       $repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_WORKING) {
                         $countCheck++;
                     }
                 }
@@ -107,16 +112,11 @@ class HomeController extends Controller {
             return $countSurvey;
         }
         
-        $surveis = Survey::where('tip_survey_status_id', TIP_SURVEY_STATUS_REQUESTED)->get();
+        $surveis = Survey::with('repeat', 'repeat.booking', 'repeat.booking.resource')->where('tip_survey_status_id', TipSurveyStatus::TIP_SURVEY_STATUS_REQUESTED)->get();
+        
         foreach($surveis as $survey) {
-            foreach($survey->repeat as $repeat) {
-                foreach($repeat->booking as $booking) {
-                    foreach($booking->resource as $resource) {
-                        if($resource->group_id == $groupIdToManage) {
-                            $countSurvey++;
-                        }
-                    }
-                }
+            if($survey->repeat->booking->resource->group_id == $groupIdToManage) {
+                $countSurvey++;
             }
         }
         

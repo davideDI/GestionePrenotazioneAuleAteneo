@@ -60,7 +60,6 @@ class ResourceController extends Controller {
                 'name'             => 'required|max:50',
                 'description'      => 'required|max:100',
                 'capacity'         => 'required|numeric|min:1',
-                'room_admin_email' => 'required|email',
                 'network'          => 'required|numeric|min:0' 
             ]);
             
@@ -99,7 +98,6 @@ class ResourceController extends Controller {
                 'name'             => 'required|max:50',
                 'description'      => 'required|max:100',
                 'capacity'         => 'required|numeric|min:1',
-                'room_admin_email' => 'required|email',
                 'network'          => 'required|numeric|min:0' 
             ]);
             
@@ -230,10 +228,7 @@ class ResourceController extends Controller {
             
             $group = new Group; 
             $group->fill($request->all());
-            //TODO gestione utenza
-            //capire se mostrare lista di matricole o permettere l'inserimento
-            //N.B. user_id è chiave della tabella Users
-            $group->admin_id=1;
+            
             $group->save();
             
             return redirect()->route('manage_resources_from_id', [$group->id])->with('success', 'insert_group_ok');

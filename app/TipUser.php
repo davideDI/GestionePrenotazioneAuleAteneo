@@ -8,7 +8,6 @@ class TipUser extends Model {
     
     protected $table = "tip_user";
     
-    //Look at TipUser Table
     const ROLE_ADMIN_ATENEO = 1;
     const ROLE_ADMIN_DIP    = 2;
     const ROLE_TEACHER      = 3;

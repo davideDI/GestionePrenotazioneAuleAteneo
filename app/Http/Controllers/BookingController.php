@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Booking;
+use App\Repeat;
+use App\Resource;
+use App\Group;
+use App\TipEvent;
+use App\TipUser;
+use App\TipBookingStatus;
 use Exception;
 
 include 'Variables.php';
@@ -24,7 +31,7 @@ class BookingController extends Controller {
         
         $bookingId = $request['booking_id'];
         Log::info('BookingController - getBooking(bookingId: '.$bookingId.')');
-        $booking = \App\Booking::with('repeats', 'tipEvent', 'repeats.surveys')->where('id', $bookingId)->get();
+        $booking = Booking::with('repeats', 'user', 'tipEvent', 'repeats.surveys')->where('id', $bookingId)->get();
         return $booking;
         
     }
@@ -52,23 +59,23 @@ class BookingController extends Controller {
             ]);
             
             //Booking Object
-            $booking = new \App\Booking; 
+            $booking = new Booking; 
             $booking->fill($request->all());
 
             //Repeat Object
-            $repeat = new \App\Repeat;
+            $repeat = new Repeat;
             $repeat->fill($request->all());
 
             if(isset($request['flag_search_resource'])) {
-                $resourceTemp  = \App\Resource::where('name', 'like', $booking->resource_id)->get();
+                $resourceTemp  = Resource::where('name', 'like', $booking->resource_id)->get();
                 $booking->resource_id = $resourceTemp[0]->id;
             }
             
             //Resource Object
-            $resourceOfBooking = \App\Resource::find($booking->resource_id);
+            $resourceOfBooking = Resource::find($booking->resource_id);
 
             $booking->booking_date = date("Y-m-d G:i:s");
-            $booking->registration_number = session('source_id');
+            $booking->user_id = session('source_id');
             if(isset($request['teaching_id'])) {
                 $booking->subject_id = substr($request['teaching_id'], 0, 11);
             }
@@ -90,7 +97,7 @@ class BookingController extends Controller {
 
                 $repeat->event_date_start = $repeat_start;
                 $repeat->event_date_end = $repeat_end;
-                $repeat->tip_booking_status_id = TIP_BOOKING_STATUS_REQUESTED;
+                $repeat->tip_booking_status_id = TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED;
                 $repeat->booking_id= $booking->id;
                 Log::info('BookingController - Insert repeat ['.$repeat.']');
                 $repeat->save();
@@ -177,7 +184,7 @@ class BookingController extends Controller {
         
         $idGroup = $request['idGroup'];
         Log::info('BookingController - getListOfResourcesByIdGroup(idGroup: '.$idGroup.')');
-        return \App\Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
+        return Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
         
     }
     
@@ -185,7 +192,7 @@ class BookingController extends Controller {
         
         $idResource = $request['id_resource'];
         Log::info('BookingController - getSpecificResource(idResource: '.$idResource.')');
-        return \App\Resource::find($idResource);
+        return Resource::find($idResource);
         
     }
     
@@ -278,18 +285,18 @@ class BookingController extends Controller {
         
         Log::info('BookingController - getNewBookingForm()');
     
-        $booking = new \App\Booking;
-        $groupsList = \App\Group::pluck('name', 'id');
-        $resourceList =  \App\Resource::pluck('name', 'id');
-        $tipEventList = \App\TipEvent::pluck('name', 'id');
+        $booking = new Booking;
+        $groupsList = Group::pluck('name', 'id');
+        $resourceList =  Resource::pluck('name', 'id');
+        $tipEventList = TipEvent::pluck('name', 'id');
         
         $listOfTeachings = "";
-        if(session('ruolo') == \App\TipUser::ROLE_TEACHER) {
+        if(session('ruolo') == TipUser::ROLE_TEACHER) {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
         
         $departmentList = "";
-        if(session('ruolo') == \App\TipUser::ROLE_SECRETARY) {
+        if(session('ruolo') == TipUser::ROLE_SECRETARY) {
             
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
                 $service->wsdl($this->esse3PathWsdl);
@@ -333,13 +340,13 @@ class BookingController extends Controller {
         
         Log::info('BookingController - getNewBookingFormWithResource(idResource: '.$idResource.', date_start: '.$date_start.', date_end: '.$date_end.')');
     
-        $booking = new \App\Booking;
-        $resource =  \App\Resource::find($idResource);
-        $group = \App\Group::find($resource->group_id);
-        $tipEventList = \App\TipEvent::pluck('name', 'id');
+        $booking = new Booking;
+        $resource =  Resource::find($idResource);
+        $group = Group::find($resource->group_id);
+        $tipEventList = TipEvent::pluck('name', 'id');
         
         $listOfTeachings = "";
-        if(session('ruolo') == \App\TipUser::ROLE_TEACHER) {
+        if(session('ruolo') == TipUser::ROLE_TEACHER) {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
 
@@ -358,12 +365,12 @@ class BookingController extends Controller {
         
         Log::info('BookingController - getBookingsByIdGroup(idGroup: '.$idGroup.')');
         
-        $group = \App\Group::find($idGroup);
+        $group = Group::find($idGroup);
         $resources = $group->resources;
         $firstResource = $resources->first();
-        $bookings = \App\Booking::where('resource_id', $firstResource->id)->get();
-        $eventsType = \App\TipEvent::all();
-        $bookingsStatus = \App\TipBookingStatus::all();
+        $bookings = Booking::where('resource_id', $firstResource->id)->get();
+        $eventsType = TipEvent::all();
+        $bookingsStatus = TipBookingStatus::all();
         
         return view('pages/booking/index-calendar', [   'selectedResource' => $firstResource,
                                                         'resources'        => $resources, 
@@ -383,7 +390,7 @@ class BookingController extends Controller {
         $dateTo = date('Y-m-d');
         $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
              
-        $repeats = \App\Repeat::with('booking')
+        $repeats = Repeat::with('booking')
                                 ->where('event_date_end', '<=', $dateTo)
                                 ->where('event_date_start', '>=', $dateFrom)
                                 ->whereHas('booking', function($q) use ($resourceId) {
@@ -406,23 +413,23 @@ class BookingController extends Controller {
             $dateTo = date('Y-m-d');
             $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
 
-            $bookings = \App\Booking::with('resource', 'repeats')
-                                    ->where('resource_id', '=', $resourceId)
-                                    ->whereHas('repeats', function($q) use ($dateTo) {
-                                        $q->where('event_date_end', '<=', $dateTo);
-                                    })
-                                    ->whereHas('repeats', function($q) use ($dateFrom) {
-                                        $q->where('event_date_start', '>=', $dateFrom);
-                                    })   
-                                    ->get();
+            $bookings = Booking::with('resource', 'repeats')
+                                ->where('resource_id', '=', $resourceId)
+                                ->whereHas('repeats', function($q) use ($dateTo) {
+                                    $q->where('event_date_end', '<=', $dateTo);
+                                })
+                                ->whereHas('repeats', function($q) use ($dateFrom) {
+                                    $q->where('event_date_start', '>=', $dateFrom);
+                                })   
+                                ->get();
 
             if(count($bookings) > 0) {
                 
                 for ($i = 0; $i < count($bookings); $i++) {
                     foreach ($bookings[$i]->repeats as $repeat) {
 
-                        $tempRepeat = new \App\Repeat;
-                        $tempRepeat->tip_booking_status_id = TIP_BOOKING_STATUS_REQUESTED;
+                        $tempRepeat = new Repeat;
+                        $tempRepeat->tip_booking_status_id = TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED;
                         $tempRepeat->booking_id = $repeat->booking_id;
 
                         $dateFrom = date('Y-m-d G:i:s', strtotime($repeat->event_date_start. ' + 7 days'));
@@ -452,12 +459,12 @@ class BookingController extends Controller {
         
         Log::info('BookingController - getBookingsByIdGroupIdResource(idGroup: '.$idGroup.', idResource: '.$idResource.')');
         
-        $group = \App\Group::find($idGroup);
+        $group = Group::find($idGroup);
         $resources = $group->resources;
-        $resource = \App\Resource::find($idResource);
-        $bookings = \App\Booking::where('resource_id', '=', $idResource)->get();
-        $eventsType = \App\TipEvent::all();
-        $bookingsStatus = \App\TipBookingStatus::all();
+        $resource = Resource::find($idResource);
+        $bookings = Booking::where('resource_id', '=', $idResource)->get();
+        $eventsType = TipEvent::all();
+        $bookingsStatus = TipBookingStatus::all();
         
         return view('pages/booking/index-calendar', [   'bookings'         => $bookings,
                                                         'selectedResource' => $resource,

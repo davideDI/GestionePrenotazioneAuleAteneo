@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Group;
 use App\Repeat;
+use App\TipBookingStatus;
+use App\TipUser;
 
 include 'Variables.php';
 
@@ -21,9 +23,9 @@ class AdminController extends Controller {
         //Se utente admin ateneo prendere tutte le prenotazioni
         $sessionRole = session('ruolo');
         $groups;
-        if($sessionRole == \App\TipUser::ROLE_ADMIN_ATENEO) {
+        if($sessionRole == TipUser::ROLE_ADMIN_ATENEO) {
             $groups =  Group::all();
-        } else if($sessionRole == \App\TipUser::ROLE_ADMIN_DIP) {
+        } else if($sessionRole == TipUser::ROLE_ADMIN_DIP) {
             $groups = Group::where('id', session('group_id_to_manage'))->get();
         }
         
@@ -53,8 +55,6 @@ class AdminController extends Controller {
         
         Log::info('AdminController - getBookings()');
         
-        $user_id = session('source_id');
-        
         $quequedBookings   = array();
         $workingBookings   = array();
         $confirmedBookings = array();
@@ -64,9 +64,9 @@ class AdminController extends Controller {
         //se utente admin ateneo prendere tutte le prenotazioni
         $sessionRole = session('ruolo');
         $groups;
-        if($sessionRole == \App\TipUser::ROLE_ADMIN_ATENEO) {
+        if($sessionRole == TipUser::ROLE_ADMIN_ATENEO) {
             $groups =  Group::all();
-        } else if($sessionRole == \App\TipUser::ROLE_ADMIN_DIP) {
+        } else if($sessionRole == TipUser::ROLE_ADMIN_DIP) {
             $groups = Group::where('id', session('group_id_to_manage'))->get();
         }
         
@@ -78,19 +78,19 @@ class AdminController extends Controller {
                 foreach($resource->bookings as $booking) {
                     foreach($booking->repeats as $repeat) {
                         //Se lo stato della prenotazione è RICHIESTA
-                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_REQUESTED) {
+                        if($repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED) {
                             array_push($quequedBookings, $booking);
                         }
                         //Se lo stato della prenotazione è IN LAVORAZIONE
-                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_WORKING) {
+                        if($repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_WORKING) {
                             array_push($workingBookings, $booking);
                         }
                         //Se lo stato della prenotazione è GESTITA
-                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_OK) {
+                        if($repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_OK) {
                             array_push($confirmedBookings, $booking);
                         }
                         //Se lo stato della prenotazione è SCARTATA
-                        if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_KO) {
+                        if($repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_KO) {
                             array_push($rejectedBookings, $booking);
                         }
                     }
@@ -121,9 +121,9 @@ class AdminController extends Controller {
                 $booking->resource;
                 foreach($booking->repeats as $repeat) {
                     //Stato RICHIESTA o IN LAVORAZIONE
-                    if($repeat->tip_booking_status_id == TIP_BOOKING_STATUS_REQUESTED 
+                    if($repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED 
                             || 
-                       $repeat->tip_booking_status_id == TIP_BOOKING_STATUS_WORKING) {
+                       $repeat->tip_booking_status_id == TipBookingStatus::TIP_BOOKING_STATUS_WORKING) {
                         array_push($bookings, $booking);
                     }
                 }
@@ -140,7 +140,7 @@ class AdminController extends Controller {
         Log::info('AdminController - confirmBooking($idRepeat: '.$idRepeat.')');
         
         $repeat = Repeat::find($idRepeat);
-        $repeat->tip_booking_status_id = TIP_BOOKING_STATUS_OK;
+        $repeat->tip_booking_status_id = TipBookingStatus::TIP_BOOKING_STATUS_OK;
         $repeat->save();
         
         return $repeat;
@@ -153,7 +153,7 @@ class AdminController extends Controller {
         Log::info('AdminController - rejectBooking($idRepeat: '.$idRepeat.')');
         
         $repeat = Repeat::find($idRepeat);
-        $repeat->tip_booking_status_id = TIP_BOOKING_STATUS_KO;
+        $repeat->tip_booking_status_id = TipBookingStatus::TIP_BOOKING_STATUS_KO;
         $repeat->save();
         
         return $repeat;

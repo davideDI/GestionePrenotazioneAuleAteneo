@@ -14,9 +14,14 @@ class CheckController extends Controller {
     
     public function getChecksView() {
      
-        Log::info('CheckController - getChecksView()');
+        $groupIdToManage = session('group_id_to_manage');
+        Log::info('CheckController - getChecksView(groupIdToManage: '.$groupIdToManage.')');
         
-        $checkList = Survey::with('repeat')->where('tip_survey_status_id', '=', TIP_SURVEY_STATUS_REQUESTED)->get();
+        $checkList = Survey::with('repeat', 'repeat.booking', 'repeat.booking.resource')
+                            ->whereHas('repeat.booking.resource', function($q) use ($groupIdToManage) {
+                                $q->where('group_id', '=', $groupIdToManage);
+                            })
+                            ->get();
         
         return view('pages/check/checks', ['checkList' => $checkList]);
         

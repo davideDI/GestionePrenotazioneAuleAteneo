@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Acl extends Model {
     
-    protected $fillable = ['group_id', 'user_id', 'enable_access', 'enable_crud'];
+    protected $fillable = ['name', 'surname', 'group_id', 'user_id', 'enable_access', 'enable_crud'];
     protected $table = 'acl';
     
     //Relazione con la tabella groups

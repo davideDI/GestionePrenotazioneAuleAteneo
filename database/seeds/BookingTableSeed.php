@@ -17,7 +17,7 @@ class BookingTableSeed extends Seeder {
                     'name'                  => 'booking name',
                     'description'           => 'booking desc',
                     'tip_event_id'          => 1,
-                    'registration_number'   => '999999',
+                    'user_id'               => 1,
                     'resource_id'           => 1,
                     'num_students'          => 15,
                     'booking_date'          => date("Y-m-d G:i:s"),

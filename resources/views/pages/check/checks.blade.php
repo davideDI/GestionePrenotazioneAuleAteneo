@@ -15,8 +15,10 @@
                     <table class="table table-hover">
 
                         <thead>
-                            @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)
+                            @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_INQUIRER)
                             <th></th>
+                            @else
+                                <td></td>
                             @endif
                             <th>{{ trans('messages.check_num_students') }}</th>
                             <th>{{ trans('messages.check_exp_students') }}</th>
@@ -29,12 +31,16 @@
                         <tbody>
                             @foreach($checkList as $check)
                                 <tr>
-                                    @if(Session::has('ruolo') && Session::get('ruolo') == ROLE_INQUIRER)
+                                    @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_INQUIRER
+                                        &&
+                                    $check->tip_survey_status_id == 1)
                                         <td>
                                             <a href="#" onclick="openModalForUpdate({{$check->id}})">
                                                 <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
                                             </a>
                                         </td>
+                                    @else
+                                        <td></td>
                                     @endif
                                     <td>{{ $check->real_num_students }}</td>
                                     <td>{{ $check->repeat->booking->num_students }}</td>

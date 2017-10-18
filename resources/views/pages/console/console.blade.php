@@ -70,10 +70,10 @@
             $(window).on('load', function() {
                 var idItemLoaded = $(".active").attr("id");
                 getBookings(idItemLoaded);
-                searchBookingsByIdStatus(1);
-                searchBookingsByIdStatus(2);
-                searchBookingsByIdStatus(3);
-                searchBookingsByIdStatus(4);
+                searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED}});
+                searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING}});
+                searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_OK}});
+                searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_KO}});
             });
             
             $(".groupTab").click(function() {
@@ -98,19 +98,19 @@
                         var txt = "";
                         var divToAppend = "";
                         switch (idStatus) {
-                            case 1:
+                            case {{\App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED}}:
                                 txt += "{{ trans('messages.console_booking_request') }}";
                                 divToAppend += "#requestedBookings";
                                 break;
-                            case 2:
+                            case {{\App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING}}:
                                 txt += "{{ trans('messages.console_booking_working') }}";
                                 divToAppend += "#workingBookings";
                                 break;
-                            case 3:
+                            case {{\App\TipBookingStatus::TIP_BOOKING_STATUS_OK}}:
                                 txt += "{{ trans('messages.console_booking_ok') }}";
                                 divToAppend += "#quequedBookings";
                                 break;
-                            case 4:
+                            case {{\App\TipBookingStatus::TIP_BOOKING_STATUS_KO}}:
                                 txt += "{{ trans('messages.console_booking_ko') }}";
                                 divToAppend += "#rejectedBookings";
                                 break;
@@ -213,9 +213,9 @@
                     success: function() {
                         var elementToChange = "#"+idRepeat;
                         $(elementToChange).addClass("collapse out"); 
-                        searchBookingsByIdStatus(1);
-                        searchBookingsByIdStatus(2);
-                        searchBookingsByIdStatus(3);
+                        searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED}});
+                        searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING}});
+                        searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_OK}});
                         $("#message-success").fadeIn('fast').delay(1000).fadeOut('fast');
                         getBookings(idGroup);
                     },
@@ -240,9 +240,9 @@
                     success: function() {
                         var elementToChange = "#"+idRepeat;
                         $(elementToChange).addClass("collapse out"); 
-                        searchBookingsByIdStatus(1);
-                        searchBookingsByIdStatus(2);
-                        searchBookingsByIdStatus(4);
+                        searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED}});
+                        searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING}});
+                        searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_KO}});
                         $("#message-danger").fadeIn('fast').delay(1000).fadeOut('fast');
                         getBookings(idGroup);
                     },

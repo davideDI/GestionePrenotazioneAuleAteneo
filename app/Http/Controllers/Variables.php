@@ -4,6 +4,8 @@ define("MYAPPNAME", "Gestion_Prenotazioni_Aule_Laboratori_App");
 
 //config files
 define("APP", "app");
+define("LOCAL", "local");
+define("APP_ENV", "env");
 define("MAIL", "mail");
 
 //Web Service
@@ -29,16 +31,6 @@ define("ESSE3_PATH_WSDL", "https://segreteriavirtuale.univaq.it/services/ESSE3WS
 •	SHSP: Corso di Specializzazione
  */
 define("WS_TIP_CORSO_LIST", "'L1', 'L2', 'LC5', 'LC6', 'LS', 'LM', 'LM5', 'LM6', 'D', 'D1', 'DU', 'M1', 'M2', 'S1', 'SDFS', 'SHSP'");
-
-//Tip Booking Status
-define("TIP_BOOKING_STATUS_REQUESTED", 1);
-define("TIP_BOOKING_STATUS_WORKING", 2);
-define("TIP_BOOKING_STATUS_OK", 3);
-define("TIP_BOOKING_STATUS_KO", 4);
-
-//Tip Survey Status
-define("TIP_SURVEY_STATUS_REQUESTED", 1);
-define("TIP_SURVEY_STATUS_OK", 2);
 
 //LDAP
 define("MEMBER", 'Utente');

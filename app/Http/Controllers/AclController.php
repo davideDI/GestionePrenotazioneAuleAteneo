@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Acl;
 use App\Group;
 use App\TipUser;
+use App\User;
 
 include 'Variables.php';
 
@@ -141,10 +142,12 @@ class AclController extends Controller {
         }
 
         if($checkUserSearch) {
-            $user = new \App\User;
+            $user = new User;
             $user->email = $ldap_reply["data"]["mail"];
             $user->cn = $ldap_reply["data"]["cn"];
             $user->registration_number = $ldap_reply["data"]['employeeNumber'];
+            $user->name = $ldap_reply["data"]['NOME'];
+            $user->surname = $ldap_reply["data"]['COGNOME'];
             
             $listOfGroups = Group::pluck('name', 'id');
             $listOfTipUser = TipUser::pluck('name', 'id');
@@ -160,7 +163,7 @@ class AclController extends Controller {
     public function insertUser(Request $request) {
         
         Log::info('AclController - insertUser()');
-        $user = new \App\User;
+        $user = new User;
         $user->fill($request->all());
         $user->save();
         
@@ -195,7 +198,7 @@ class AclController extends Controller {
         $acl->enable_access = $request->enable_access ? 1 : 0;
         $acl->save();
         
-        $user = \App\User::find($acl->user_id);
+        $user = User::find($acl->user_id);
         $user->tip_user_id = $request->tip_user_id;
         $user->save();
         
@@ -208,7 +211,7 @@ class AclController extends Controller {
         Log::info('AclController - deleteAcl()');
         $acl = Acl::find($request->id);
         $idUser = $acl->user_id;
-        $user = \App\User::find($idUser);
+        $user = User::find($idUser);
         $user->delete();
         $acl->delete();
         return redirect()->route('users-list')->with('success', 'common_update_ok');

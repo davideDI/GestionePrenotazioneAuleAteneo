@@ -54,7 +54,6 @@
                             @endif
                             <th>{{trans('messages.booking_date_resource')}}</th>
                             <th>{{trans('messages.booking_capacity')}}</th>
-                            <th>{{trans('messages.booking_room_admin_email')}}</th>
                             <th>{{trans('messages.booking_projector')}}</th>
                             <th>{{trans('messages.booking_screen_motor')}}</th>
                             <th>{{trans('messages.booking_screen_manual')}}</th>
@@ -83,7 +82,6 @@
                                     
                                     <td>{{$resource->name}}</td>
                                     <td>{{$resource->capacity}}</td>
-                                    <td>{{$resource->room_admin_email}}</td>
                                     <td>
                                         @if($resource->projector)
                                            <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>

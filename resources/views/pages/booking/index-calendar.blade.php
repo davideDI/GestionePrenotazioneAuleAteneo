@@ -174,18 +174,18 @@
                                 //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
                                 //in stato 3 [Gestita]
                                 @if(!Session::has('ruolo') || Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)
-                                    @if($repeat->tip_booking_status_id == 3)
+                                    @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_OK)
                                         {
                                             id         : '{{$booking->id}}',
                                             title      : '{{$booking->name}}',
                                             description: '{{$booking->description}}',
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
-                                            @if($booking->tip_event_id == 1) 
+                                            @if($booking->tip_event_id == \App\TipEvent::TIP_EVENT_EXAM) 
                                                 color : '#00FF00'
-                                            @elseif($booking->tip_event_id == 2) 
+                                            @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_LESSON) 
                                                 color : '#FF0000'
-                                            @elseif($booking->tip_event_id == 3) 
+                                            @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_SEMINARY) 
                                                 color : '#FFFF00'
                                             @else
                                                 color : '#0000FF'
@@ -201,11 +201,11 @@
                                             description: '{{$booking->description}}',
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
-                                            @if($repeat->tip_booking_status_id == 1) 
+                                            @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED) 
                                                 color : '#0000FF'
-                                            @elseif($repeat->tip_booking_status_id == 2) 
+                                            @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING) 
                                                 color : '#FFFF00'
-                                            @elseif($repeat->tip_booking_status_id == 3) 
+                                            @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_OK) 
                                                 color : '#00FF00'
                                             @else
                                                 color : '#FF0000'
@@ -317,7 +317,11 @@
                                 var textForModal = "";
                                 textForModal += "<p><strong>" + result[0].description + "</strong></p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_booked_at')}}</strong>" + moment(result[0].created_at).format("DD-MM-YYYY HH:mm:ss") + "</p>";
-                                textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].registration_number + "</p>";
+                                if(result[0].user.surname === null || result[0].user.name === null) {
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.registration_number + "</p>";
+                                } else {
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.surname + " " + result[0].user.name + "</p>";
+                                }
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_num_students')}}</strong>" + result[0].num_students + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_event')}}</strong>" + result[0].tip_event.name + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
