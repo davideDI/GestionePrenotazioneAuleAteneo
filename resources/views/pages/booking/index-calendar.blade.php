@@ -31,8 +31,14 @@
                 <!-- Tasto Nuovo Evento -->
                 <div class="row">
                     <div class="col-md-12">
-                        <!-- Solo gli utenti registrati richiedono prenotazioni -->
-                        @if(Session::has('session_id') && Session::has('enable_crud') && Session::get('enable_crud') == '1' )
+                        <!-- Solo gli utenti registrati (o l'admin di ateneo) e abilitati per lo specifico gruppo possono richiedere prenotazioni -->
+                        @if(Session::has('session_id') 
+                                && 
+                            Session::has('enable_crud') 
+                                && 
+                            Session::get('enable_crud') == '1' 
+                                &&
+                            (Session::get('group_id_to_manage') == $group->id || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>

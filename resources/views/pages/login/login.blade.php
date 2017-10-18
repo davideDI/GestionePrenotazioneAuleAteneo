@@ -1,14 +1,14 @@
 @extends('layouts.layout')
     @section('content')
         <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3"></div>
-            <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="col-xs-2 col-sm-2 col-md-2"></div>
+            <div class="col-xs-8 col-sm-8 col-md-8">
                 <h4>{{ trans('messages.common_login_text') }}</h4>
                 <hr>
                 <form class="form-inline"  method="post" action="{{ url('/login') }}" accept-charset="UTF-8">
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             
                             <label for="username">Username</label>
                             <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="username.." required autofocus="">
@@ -25,7 +25,7 @@
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6">
+                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <label for="password">Password</label>
                             <input id="password" type="password" class="form-control" name="password" placeholder="password.." required>
 
@@ -45,5 +45,5 @@
                     </div>
                 </form>
             </div>
-            <div class="col-xs-3 col-sm-3 col-md-3"></div>
+            <div class="col-xs-2 col-sm-2 col-md-2"></div>
     @endsection
