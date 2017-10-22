@@ -61,33 +61,31 @@
                 };
                 $("#pie1").CanvasJSChart(options);
                 
-                var options2 = {
-                    title: {
-                            text: "{{ trans('messages.report_title2') }}"
-                        },
-                    animationEnabled: true,
-                    legend: {
-                            verticalAlign: "bottom",
-                            horizontalAlign: "center"
-                        },
-                    data: [
-                            {
-                            type: "pie",
-                            showInLegend: false,
-                            toolTipContent: "{y} - <strong>#percent%</strong>",
-                            dataPoints: [
-                                @if($surveyStatus2 > 0)
+                @if($surveyStatus2 > 0)
+                    var options2 = {
+                        title: {
+                                text: "{{ trans('messages.report_title2') }}"
+                            },
+                        animationEnabled: true,
+                        legend: {
+                                verticalAlign: "bottom",
+                                horizontalAlign: "center"
+                            },
+                        data: [
+                                {
+                                type: "pie",
+                                showInLegend: false,
+                                toolTipContent: "{y} - <strong>#percent%</strong>",
+                                dataPoints: [
                                     { y: {{ $tot1 }}, exploded: true, legendText: "{{ trans('messages.report_real_use') }}", indexLabel: "{{ trans('messages.report_real_use') }}" },
                                     { y: {{ $tot2 }}, legendText: "{{ trans('messages.report_waste') }}", indexLabel: "{{ trans('messages.report_waste') }}" }
-                                @else
-                                    //TODO gestire valori null per grafici
-                                @endif            
+                                ]
+                                }
                             ]
-                            }
-                        ]
-                };
-                $("#pie2").CanvasJSChart(options2);
-                    
+                    };
+                    $("#pie2").CanvasJSChart(options2);
+                @endif  
+                
                 var options3 = {
                     title: {
                             text: "{{ trans('messages.report_title3') }}"
