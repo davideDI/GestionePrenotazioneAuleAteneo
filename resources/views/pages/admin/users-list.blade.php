@@ -46,7 +46,9 @@
                                                 {{ $acl->user->tipUser->name }}
                                             </td>
                                             <td>
-                                                {{ $acl->group->name }}
+                                                @if(isset($acl->group_id))
+                                                    {{ $acl->group->name }}
+                                                @endif
                                             </td>
                                             <td>
                                                 @if($acl->enable_access)
