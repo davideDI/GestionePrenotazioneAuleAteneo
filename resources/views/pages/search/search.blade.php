@@ -142,9 +142,8 @@
                                             result += "<th>{{trans('messages.common_structure')}}</th>";
                                             result += "<th>{{trans('messages.common_room_name')}}</th>";
                                             result += "<th>{{trans('messages.common_description')}}</th>";
-                                            result += "<th>{{trans('messages.common_email_adimn')}}</th>";
                                             result += "<th>{{trans('messages.booking_capacity')}}</th>";
-                                            @if(Session::has('session_id'))
+                                            @if(Session::has('enable_crud') && (Session::get('enable_crud') == true))
                                                 result += "<th></th>";
                                             @endif
                                         result += "</thead>";
@@ -163,12 +162,9 @@
                                                     result += resourcesList[j].description;
                                                 result += "</td>";
                                                 result += "<td>";
-                                                    result += resourcesList[j].room_admin_email;
-                                                result += "</td>";
-                                                result += "<td>";
                                                     result += resourcesList[j].capacity;
                                                 result += "</td>";
-                                                @if(Session::has('session_id'))
+                                                @if(Session::has('enable_crud') && (Session::get('enable_crud') == true))
                                                     result += "<td>";
                                                         result += "<a href='"+ "{{URL::to('/new-booking')}}/" + resourcesList[j].id + "'>{{trans('messages.common_reservation')}}</a>";
                                                     result += "</td>";
@@ -239,9 +235,8 @@
                                             result += "<th>{{trans('messages.common_structure')}}</th>";
                                             result += "<th>{{trans('messages.common_room_name')}}</th>";
                                             result += "<th>{{trans('messages.common_description')}}</th>";
-                                            result += "<th>{{trans('messages.common_email_adimn')}}</th>";
                                             result += "<th>{{trans('messages.booking_capacity')}}</th>";
-                                            @if(Session::has('session_id'))
+                                            @if(Session::has('enable_crud') && (Session::get('enable_crud') == true))
                                                 result += "<th></th>";
                                             @endif
                                         result += "</thead>";
@@ -260,12 +255,9 @@
                                                     result += resourcesList[j].description_resource;
                                                 result += "</td>";
                                                 result += "<td>";
-                                                    result += resourcesList[j].room_admin_email;
-                                                result += "</td>";
-                                                result += "<td>";
                                                     result += resourcesList[j].capacity;
                                                 result += "</td>";
-                                                @if(Session::has('session_id'))
+                                                @if(Session::has('enable_crud') && (Session::get('enable_crud') == true))
                                                     result += "<td>";
                                                         result += "<a href='"+ "{{URL::to('/new-booking')}}/" + resourcesList[j].id_resources +"/"+$("#date_search").val()+" "+$("#date_start").val()+"/"+$("#date_search").val()+" "+$("#date_end").val()+"'>{{trans('messages.common_reservation')}}</a>";
                                                     result += "</td>";

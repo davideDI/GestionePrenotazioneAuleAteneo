@@ -86,7 +86,6 @@ class SearchController extends Controller {
                                     resources.name as name_resource, 
                                     resources.id as id_resources,
                                     resources.description as description_resource, 
-                                    resources.room_admin_email, 
                                     resources.capacity  
 
                                 from resources, groups
