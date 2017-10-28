@@ -46,8 +46,12 @@
                                                 {{ $acl->user->tipUser->name }}
                                             </td>
                                             <td>
-                                                @if(isset($acl->group_id))
-                                                    {{ $acl->group->name }}
+                                                @if($acl->user->tipUser->id == \App\TipUser::ROLE_ADMIN_ATENEO)
+                                                    All
+                                                @else
+                                                    @if(isset($acl->group_id))
+                                                        {{ $acl->group->name }}
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td>

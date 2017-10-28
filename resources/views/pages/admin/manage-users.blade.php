@@ -59,7 +59,8 @@
                                         <strong>{{ $errors->first('group_id') }}</strong>
                                     </span>
                                 @endif
-                                <select id="group_id" 
+                                <select id="group_id"
+                                        name="group_id"
                                     class="listOfGroupItems" 
                                     style="width: 70%">
                                     <option></option>

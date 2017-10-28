@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use PDOException;
 use ErrorException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -54,6 +55,11 @@ class Handler extends ExceptionHandler
         
         if ($exception instanceof TokenMismatchException){
             Log::error('Handler - TokenMismatchException : ['.$exception->getMessage().']');
+            return redirect('/')->with('customError', -1);
+        }
+        
+        if ($exception instanceof PDOException){
+            Log::error('Handler - PDOException : ['.$exception->getMessage().']');
             return redirect('/')->with('customError', -1);
         }
         

@@ -32,6 +32,7 @@
                             <div class="col-md-10">
                                 {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
                                 <select id="group_id" 
+                                        name="group_id"
                                     class="listOfGroupItems" 
                                     style="width: 70%">
                                     <option></option>
