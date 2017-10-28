@@ -59,15 +59,13 @@
                                         <strong>{{ $errors->first('group_id') }}</strong>
                                     </span>
                                 @endif
-                                <select id="group_id"
-                                        name="group_id"
-                                    class="listOfGroupItems" 
-                                    style="width: 70%">
-                                    <option></option>
-                                    @foreach($listOfGroups as $key => $value)
-                                        <option value="{{$key}}">{{$value}}</option>
-                                    @endforeach
-                                </select>
+                                {!! Form::select(
+                                        'group_id', 
+                                        $listOfGroups, 
+                                        null, 
+                                        ['class' => 'listOfGroupItems',
+                                         'style' => 'width: 70%']
+                                    ); !!}
                             </div>
                         </div>
 
