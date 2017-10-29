@@ -141,24 +141,4 @@ Route::post('/login', 'SoapController@login');
 /**************** LOGOUT ******************************/
 Route::get('/logout', 'SoapController@logout'); 
 
-/**************** TEST ESPOSIZIONE SERVIZI ******************************/
-// API routes
-// Test esposizione servizio lista di groups in base ad id
-Route::get('/api/v1/groups/{id?}', ['middleware' => 'auth.basic', function($id = null) {
 
-    //se non viene inserito nessun id verrà ritornata tutta la lista di gruops
-    if ($id == null) {
-        $groupsList = App\Group::all(array('id', 'name', 'description'));
-    } 
-    //se l'id è presente la lista sarà filtrata per id
-    else {
-        $groupsList = App\Group::find($id, array('id', 'name', 'description'));
-    }
-    
-    //Preparo il json di risposta
-    return Response::json(array(
-                'error' => false,
-                'products' => $groupsList,
-                'status_code' => 200
-            ));
-}]);
