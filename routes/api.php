@@ -1,66 +1,132 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+define('ERROR_MESSAGE_NO_MESSAGE', '');
+
+define('ERROR_CODE_NONE', 'ERROR_CODE_NONE');
+define('ERROR_CODE_INVALID_PARAMETER', 'ERROR_CODE_INVALID_PARAMETER');
+define('ERROR_CODE_PDO_EXCEPTION', 'ERROR_CODE_PDO_EXCEPTION');
+define('ERROR_CODE_EXCEPTION', 'ERROR_CODE_EXCEPTION');
+
+/**************** UTILITY ******************************/
+function getResponse($error, $errorCode, $errorMessage, $data, $statusCode) {
+    
+    return Response::json(array(
+        'error'         => $error,
+        'error_code'    => $errorCode,
+        'error_message' => $errorMessage,
+        'data'          => $data,
+        'status_code'   => $statusCode
+    ));
+    
+}
 
 /**************** ESPOSIZIONE SERVIZI ******************************/
-Route::get('/v1/groups/{id?}', function($id = null) {
 
-    //se non viene inserito nessun id verrà ritornata tutta la lista di gruops
-    if ($id == null) {
-        $groupsList = App\Group::all(array('id', 'name', 'description'));
-    } 
-    //se l'id è presente la lista sarà filtrata per id
-    else {
-        $groupsList = App\Group::find($id, array('id', 'name', 'description'));
-    }
+/**************** 1° LEVEL ******************************/
+//List of groups
+Route::get('/v1/groups', function() {
+
+    Log::info('Api - /v1/groups');
     
-    //Preparo il json di risposta
-    return Response::json(array(
-        'error'       => false,
-        'result'      => $groupsList,
-        'status_code' => 200
-    ));
+    $groupsList = App\Group::all(array('name', 'description'));
+    
+    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $groupsList, 200);
+    
 });
 
-Route::get('/v1/resources/{id?}', function($id = null) {
+//List of resources
+Route::get('/v1/resources', function() {
 
-    //se non viene inserito nessun id verrà ritornata tutta la lista di gruops
-    if ($id == null) {
-        $resourcesList = App\Resource::all(array('id', 'name', 'description'));
-    } 
-    //se l'id è presente la lista sarà filtrata per id
-    else {
-        $resourcesList = App\Resource::find($id, array('id', 'name', 'description'));
+    Log::info('Api - /v1/resources');
+    
+    $resourcesList = App\Resource::all(array('name', 'description'));
+    
+    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $resourcesList, 200);
+    
+});
+
+//List of resources, with specific group
+Route::get('/v1/group/{name}/resources', function($name = null) {
+
+    Log::info('Api - /v1/group/'.$name.'/resources');
+    
+    if(is_numeric($name)) {
+        
+        return getResponse(true, ERROR_CODE_INVALID_PARAMETER, ERROR_MESSAGE_NO_MESSAGE, null, 400);
+
     }
     
-    //Preparo il json di risposta
-    return Response::json(array(
-        'error'       => false,
-        'result'      => $resourcesList,
-        'status_code' => 200
-    ));
+    try {
+        
+        $resourcesList = App\Resource::with('group')
+                                        ->whereHas('group', function($q) use ($name) {
+                                            $q->where('name', 'like', '%'.$name.'%');
+                                        })
+                                        ->get();
+        
+    } catch (PDOException $pdoEx) {
+        
+        return getResponse(true, ERROR_CODE_PDO_EXCEPTION, $pdoEx->getMessage(), null, 400);
+        
+    } catch (Exception $ex) {
+        
+        return getResponse(true, ERROR_CODE_EXCEPTION, $ex->getMessage(), null, 400);
+        
+    }
+    
+    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $resourcesList, 200);
+    
 });
+
+//List of teachers
+Route::get('/v1/teachers', function() {
+
+    Log::info('Api - /v1/teachers');
+    
+    try {
+        
+        $teachersList = App\User::where('tip_user_id', \App\TipUser::ROLE_TEACHER)
+                                ->get(['cn', 'name', 'surname', 'email', 'registration_number']);
+    
+    } catch (PDOException $pdoEx) {
+        
+        return getResponse(true, ERROR_CODE_PDO_EXCEPTION, $pdoEx->getMessage(), null, 400);
+        
+    } catch (Exception $ex) {
+        
+        return getResponse(true, ERROR_CODE_EXCEPTION, $ex->getMessage(), null, 400);
+        
+    }
+    
+    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $teachersList, 200);
+    
+});
+/**************** 1° LEVEL - END ******************************/
+
+/**************** 2° LEVEL ******************************/
+
+
+/**************** 2° LEVEL - END ******************************/
+
+/**************** 3° LEVEL ******************************/
+
+
+/**************** 3° LEVEL - END ******************************/
+
 
 /*
  * $date = 20170930
  */
 Route::get('/v1/bookings/{date?}', function($date = null) {
-   
+   //TODO validazione campi
     if($date == null) {
         $bookingList = App\Booking::with('repeats')->get();
     } else {
@@ -77,7 +143,7 @@ Route::get('/v1/bookings/{date?}', function($date = null) {
     
     return Response::json(array(
         'error'       => false,
-        'result'      => $bookingList,
+        'data'        => $bookingList,
         'status_code' => 200
     ));
     
