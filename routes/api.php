@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 use App\Group;
 use App\Resource;
 use App\User;
@@ -13,18 +15,34 @@ use App\Repeat;
 |--------------------------------------------------------------------------
 */
 
-define('ERROR_MESSAGE_NO_MESSAGE', '');
+define('ERROR_MESSAGE_NO_MESSAGE',          '');
 
-define('ERROR_CODE_NONE', 'ERROR_CODE_NONE');
-define('ERROR_CODE_INVALID_PARAMETER', 'ERROR_CODE_INVALID_PARAMETER');
-define('ERROR_CODE_PDO_EXCEPTION', 'ERROR_CODE_PDO_EXCEPTION');
-define('ERROR_CODE_EXCEPTION', 'ERROR_CODE_EXCEPTION');
+define('ERROR_CODE_NONE',                   'ERROR_CODE_NONE');
+define('ERROR_CODE_INVALID_PARAMETER',      'ERROR_CODE_INVALID_PARAMETER');
+define('ERROR_CODE_PDO_EXCEPTION',          'ERROR_CODE_PDO_EXCEPTION');
+define('ERROR_CODE_EXCEPTION',              'ERROR_CODE_EXCEPTION');
+define('ERROR_CODE_INVALID_FORMAT',         'ERROR_CODE_INVALID_FORMAT');
+
+define('FORMAT_JSON',                       'json');
+define('FORMAT_TXT',                        'txt');
+define('FORMAT_HTML',                       'html');
+define('FORMAT_QR',                         'qr');
+
+define('GOOGLE_API_GENERATOR_QR',           'https://chart.googleapis.com/chart?');
+define('GOOGLE_API_PARAMETER_CHT',          'cht');
+define('GOOGLE_API_PARAMETER_CHS',          'chs');
+define('GOOGLE_API_PARAMETER_CHL',          'chl');
+define('GOOGLE_API_PARAMETER_CHOE',         'choe');
+
+define('GOOGLE_API_PARAMETER_VALUE_CHT',    'qr');
+define('GOOGLE_API_PARAMETER_VALUE_CHOE',   'UTF-8');
+define('GOOGLE_API_PARAMETER_VALUE_CHS',    '540x540');
 
 /**************** UTILITY ******************************/
 function getResponse($error, $errorCode, $errorMessage, $data, $statusCode) {
     
     if($error == true) {
-        Log::error('Api: '.Route::current()->getUri().'. Exception: '.$errorCode.'. Error Message: '.$errorMessage);
+        Log::error('Api: '.Request::url().'. Exception: '.$errorCode.'. Error Message: '.$errorMessage);
     }
     
     return Response::json(array(
@@ -53,7 +71,82 @@ function getDateWeekEnd() {
     
 }
 
-/**************** ESPOSIZIONE SERVIZI ******************************/
+function getToday() {
+    
+    return date('Y-m-d');
+    
+}
+
+function getSupportedFormat() {
+    
+    return array(FORMAT_JSON, FORMAT_HTML, FORMAT_TXT, FORMAT_QR);
+    
+}
+
+function manageJsonToHtml($repeatsList) {
+    
+    $numOfElements = count($repeatsList);
+    
+    if($numOfElements == 0) {
+        return 0;
+    } else {
+        $htmlResult = "<table>";
+        $htmlResult .= "<tr><td>Name</td><td>Description</td><td>Event start</td><td>Event end</td><td>Materia</td><td>Risorsa</td><td>Gruppo</td></tr>";
+        foreach ($repeatsList as $repeat) {
+            $htmlResult .=  "<tr><td>"
+                                .$repeat->booking->name.
+                            "</td><td>"
+                                .$repeat->booking->description.
+                            "</td><td>"
+                                .$repeat->event_date_start.
+                            "</td><td>"
+                                .$repeat->event_date_end.
+                            "</td><td>"
+                                .$repeat->booking->subject_id.
+                            "</td><td>"
+                                .$repeat->booking->resource->name.
+                            "</td><td>"
+                                .$repeat->booking->resource->group->name.
+                            "</td></tr>";
+        }
+        $htmlResult .= "</table>";
+        return $htmlResult;
+    }
+    
+}  
+
+function manageJsonToQr($url) {
+    
+    $newUrl = str_replace('/qr', '/html', $url);
+    
+    return  "<img src='".
+            GOOGLE_API_GENERATOR_QR.
+            GOOGLE_API_PARAMETER_CHS.'='.GOOGLE_API_PARAMETER_VALUE_CHS.'&'.
+            GOOGLE_API_PARAMETER_CHT.'='.GOOGLE_API_PARAMETER_VALUE_CHT.'&'.
+            GOOGLE_API_PARAMETER_CHL.'='.$newUrl.
+            "'>";
+    
+}  
+
+function manageJsonToTxt($repeatsList) {
+    
+    $numOfElements = count($repeatsList);
+    
+    if($numOfElements == 0) {
+        return 0;
+    } else {
+        $txtResult = "";
+        foreach ($repeatsList as $repeat) {
+            $txtResult .=  $repeat->booking->name.' '.$repeat->booking->description.' '.$repeat->event_date_start.' '.
+                           $repeat->event_date_end.' '.$repeat->booking->subject_id.' '.$repeat->booking->resource->name.' '.
+                           $repeat->booking->resource->group->name.PHP_EOL;
+        }
+        return $txtResult;
+    }
+    
+}  
+
+/**************** API - v1 ******************************/
 
 /*
 |--------------------------------------------------------------------------
@@ -182,7 +275,7 @@ Route::get('/v1/teachers', function() {
 | 2° LEVEL 
 |--------------------------------------------------------------------------
  
-http://GestionePrenotazioneAuleAteneo/public/api/v1/repeats/{filter}/{group?}  -> list of repeats
+http://GestionePrenotazioneAuleAteneo/public/api/v1/filter/{filter}/{group?}  -> list of repeats
 
 WHERE
 {filter} -> Mandatory. String. The name of a specific teacher or the description of an event
@@ -193,9 +286,9 @@ The list of results are ordered by date_start, from the current date.
 */
 
 //List of repeats
-Route::get('/v1/repeats/{filter}/{group?}', function($filter = null, $group = null) {
+Route::get('/v1/filter/{filter}/{group?}', function($filter = null, $group = null) {
    
-    Log::info('Api - /v1/repeats/'.$filter.'/'.$group);
+    Log::info('Api - /v1/filter/'.$filter.'/'.$group);
     
     if(is_numeric($filter)) {
         
@@ -212,7 +305,7 @@ Route::get('/v1/repeats/{filter}/{group?}', function($filter = null, $group = nu
     try {
     
         $repeatsList = Repeat::with('booking', 'booking.user', 'booking.resource', 'booking.resource.group')
-                            ->where('event_date_start', '>=', getDateWeekStart())
+                            ->where('event_date_start', '>=', getToday())
                             
                             ->where(function($filterUserOrDescription) use($filter) {
                                 $filterUserOrDescription->whereHas('booking.user', function($filterUser) use ($filter) {
@@ -249,43 +342,141 @@ Route::get('/v1/repeats/{filter}/{group?}', function($filter = null, $group = nu
 
 /**************** 2° LEVEL - END ******************************/
 
-/**************** 3° LEVEL ******************************/
-
-
-/**************** 3° LEVEL - END ******************************/
 /*
- * ROOM: Search for events/lessons in a specific classroom: (Priority Level 3°)
-This request may be performed with the "room" or "r" parameter having one of the following syntax:
-http://aule.linfcop.univaq.it/api/index.php?[ room | r ]=<Classroom Name>
-http://aule.linfcop.univaq.it/api/index.php?[ room | r ]=<Classroom Name> & [ s | structure ]=<Valid Structure Name>
-http://aule.linfcop.univaq.it/api/index.php?[ room | r ]=<Classroom Name> & ... & [ n | number ]=<Integer Value>
-http://aule.linfcop.univaq.it/api/index.php?[ room | r ]=<Classroom Name> & ... & like=[ false | true ]
-http://aule.linfcop.univaq.it/api/index.php?[ room | r ]=<Classroom Name> & ... & [ f | format ]=[ json | html | txt | qr]
- */
+|--------------------------------------------------------------------------
+| 3° LEVEL 
+|--------------------------------------------------------------------------
+ 
+http://GestionePrenotazioneAuleAteneo/public/api/v1/repeats/resource/{resource}/{format?}                -> list of repeats of a specific resource
+http://GestionePrenotazioneAuleAteneo/public/api/v1/repeats/group/{group}/resource/{resource}/{format?}  -> list of repeats of a specific resource
 
-/*
- * $date = 20170930
- */
-Route::get('/v1/bookings/{date?}', function($date = null) {
-   //TODO validazione campi
-    if($date == null) {
-        $bookingList = App\Booking::with('repeats')->get();
-    } else {
-        $booking_date_start = date("Y-m-d G:i:s", strtotime($date." 00:00"));
-        $booking_date_end = date("Y-m-d G:i:s", strtotime($date." 23:59"));
+WHERE
+{resource} -> Mandatory. String. The name of a specific resource.
+{group}    -> Mandatory. String. The name of a specific group.
+{format}   -> Optional. String. The specific type of return. Possible values [json | html | txt | qr]
+
+The list of results are ordered by date_start, from the current date.
+
+*/
+
+Route::get('/v1/repeats/resource/{resource}/{format?}', function($resource = null, $format = null) {
+    
+    Log::info('Api - /v1/repeats/resource/'.$resource.'/'.$format);
         
-        $bookingList = App\Booking::with('repeats', 'user')
-                ->whereHas('repeats', function($q) use ($booking_date_start, $booking_date_end) {
-                    $q->where('event_date_start', '>=', $booking_date_start)
-                      ->where('event_date_end', '<=', $booking_date_end);
-                })
-                ->get();
+    if($format != null && !in_array($format, getSupportedFormat())) {
+        
+        return getResponse(true, ERROR_CODE_INVALID_FORMAT, ERROR_MESSAGE_NO_MESSAGE, null, 400);
+        
     }
     
-    return Response::json(array(
-        'error'       => false,
-        'data'        => $bookingList,
-        'status_code' => 200
-    ));
+    try {
+    
+        $repeatsList = Repeat::with('booking', 'booking.user', 'booking.resource', 'booking.resource.group')
+                            ->where('event_date_start', '>=', getToday())
+                            
+                            ->whereHas('booking.resource', function($filterResource) use ($resource) {
+                                $filterResource->where('name', 'like', '%'.$resource.'%');
+                            })
+                            
+                            ->orderBy('event_date_start', 'ASC')
+                            ->get();
+                            
+        if($format != null) {
+            
+            switch ($format) {
+                case FORMAT_JSON:
+                    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+            
+                case FORMAT_HTML:
+                    return manageJsonToHtml($repeatsList);
+
+                case FORMAT_QR:
+                    return manageJsonToQr(Request::url());
+
+                case FORMAT_TXT:
+                    return manageJsonToTxt($repeatsList);
+            
+            }
+            
+        }
+        
+        return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+    
+    } catch (PDOException $pdoEx) {
+        
+        return getResponse(true, ERROR_CODE_PDO_EXCEPTION, $pdoEx->getMessage(), null, 400);
+        
+    } catch (Exception $ex) {
+        
+        return getResponse(true, ERROR_CODE_EXCEPTION, $ex->getMessage(), null, 400);
+        
+    }
     
 });
+
+Route::get('/v1/repeats/group/{group}/resource/{resource}/{format?}', function($group = null, $resource = null, $format = null) {
+    
+    Log::info('Api - /v1/repeats/group/'.$group.'/resource/'.$resource.'/'.$format);
+    
+    if(is_numeric($group)) {
+        
+        return getResponse(true, ERROR_CODE_INVALID_PARAMETER, ERROR_MESSAGE_NO_MESSAGE, null, 400);
+        
+    }
+    
+    if($format != null && !in_array($format, getSupportedFormat())) {
+        
+        return getResponse(true, ERROR_CODE_INVALID_FORMAT, ERROR_MESSAGE_NO_MESSAGE, null, 400);
+        
+    }
+    
+    try {
+    
+        $repeatsList = Repeat::with('booking', 'booking.user', 'booking.resource', 'booking.resource.group')
+                            ->where('event_date_start', '>=', getToday())
+                            
+                            ->whereHas('booking.resource', function($filterResource) use ($resource) {
+                                $filterResource->where('name', 'like', '%'.$resource.'%');
+                            })
+                            
+                            ->whereHas('booking.resource.group', function($filterGroup) use ($group) {
+                                $filterGroup->where('name', 'like', '%'.$group.'%');
+                            })
+                            
+                            ->orderBy('event_date_start', 'ASC')
+                            ->get();
+    
+        if($format != null) {
+            
+            switch ($format) {
+                case FORMAT_JSON:
+                    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+            
+                case FORMAT_HTML:
+                    return manageJsonToHtml($repeatsList);
+
+                case FORMAT_QR:
+                    return manageJsonToQr(Request::url());
+
+                case FORMAT_TXT:
+                    return manageJsonToTxt($repeatsList);
+            
+            }
+            
+        }
+        
+        return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+        
+    } catch (PDOException $pdoEx) {
+        
+        return getResponse(true, ERROR_CODE_PDO_EXCEPTION, $pdoEx->getMessage(), null, 400);
+        
+    } catch (Exception $ex) {
+        
+        return getResponse(true, ERROR_CODE_EXCEPTION, $ex->getMessage(), null, 400);
+        
+    }
+    
+});
+
+/**************** 3° LEVEL - END ******************************/
