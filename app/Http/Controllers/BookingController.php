@@ -16,8 +16,6 @@ use App\TipUser;
 use App\TipBookingStatus;
 use Exception;
 
-include 'Variables.php';
-
 class BookingController extends Controller {
 
     protected $soapWrapper;

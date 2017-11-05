@@ -10,8 +10,6 @@ use App\Repeat;
 use App\TipBookingStatus;
 use App\TipUser;
 
-include 'Variables.php';
-
 class AdminController extends Controller {
 
     //Search Bookings By Id Status

@@ -13,8 +13,6 @@ use App\TipBookingStatus;
 use App\Resource;
 use App\Repeat;
 
-include 'Variables.php';
-
 class HomeController extends Controller {
     
     /**

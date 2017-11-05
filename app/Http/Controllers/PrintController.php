@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 use App\Group;
 use App\Resource;
 
-include 'Variables.php';
-
 class PrintController extends Controller {
     
     public function getPrintView() {

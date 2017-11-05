@@ -9,8 +9,6 @@ use App\Group;
 use App\TipUser;
 use App\User;
 
-include 'Variables.php';
-
 class AclController extends Controller {
     
     public function getUsersList() {

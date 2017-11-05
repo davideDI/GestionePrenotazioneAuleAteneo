@@ -182,7 +182,7 @@ function manageJsonToTxt($repeatsList) {
  
 http://GestionePrenotazioneAuleAteneo/public/api/v1/groups                  -> list of groups
 http://GestionePrenotazioneAuleAteneo/public/api/v1/resources               -> list of resources
-http://GestionePrenotazioneAuleAteneo/public/api//v1/group/{name}/resources -> list of resources by group
+http://GestionePrenotazioneAuleAteneo/public/api/v1/group/{name}/resources -> list of resources by group
 http://GestionePrenotazioneAuleAteneo/public/api/v1/teachers                -> list of teachers
 
 WHERE
@@ -225,7 +225,7 @@ Route::get('/v1/group/{name}/resources', function($name = null) {
     
     try {
         
-        $resourcesList = App\Resource::with('group')
+        $resourcesList = Resource::with('group')
                                         ->whereHas('group', function($q) use ($name) {
                                             $q->where('name', 'like', '%'.$name.'%');
                                         })

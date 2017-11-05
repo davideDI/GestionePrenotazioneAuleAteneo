@@ -11,8 +11,6 @@ use App\Acl;
 use App\User;
 use App\TipUser;
 
-include 'Variables.php';
-
 class SoapController extends Controller {
 
     protected $soapWrapper;
@@ -545,7 +543,7 @@ class SoapController extends Controller {
                 //Solo per l'utente admin (in SVILUPPO) viene inserita in sessione la matricola
                 //presente nella tabella Users
                 //In PRODUZIONE tutti gli utenti avranno la matricola
-                $appEnv = Config::get('APP_ENV');
+                $appEnv = Config::get(APP_ENV);
                 if($appEnv != '' && $appEnv === LOCAL) {
                     if($user[0]->tip_user_id == TipUser::ROLE_ADMIN_ATENEO) {
                         session(['matricola'  => $user[0]->registration_number]);

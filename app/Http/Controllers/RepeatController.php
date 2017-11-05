@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Repeat;
 use App\TipBookingStatus;
 
-include 'Variables.php';
-
 class RepeatController extends Controller {
     
     public function updateRepeatView($idRepeat) {

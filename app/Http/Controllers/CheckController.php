@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use App\Survey;
 use Exception;
 
-include 'Variables.php';
-
 class CheckController extends Controller {
     
     public function getChecksView() {

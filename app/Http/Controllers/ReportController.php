@@ -7,8 +7,6 @@ use App\Survey;
 use App\TipSurveyStatus;
 use App\Repeat;
 
-include 'Variables.php';
-
 class ReportController extends Controller {
     
     public function getReportView() {
