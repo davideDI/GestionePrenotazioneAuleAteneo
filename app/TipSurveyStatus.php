@@ -9,7 +9,8 @@ class TipSurveyStatus extends Model {
     protected $table = "tip_survey_status";
     
     const TIP_SURVEY_STATUS_REQUESTED = 1;
-    const TIP_SURVEY_STATUS_OK    = 2;
+    const TIP_SURVEY_STATUS_OK        = 2;
+    const TIP_SURVEY_STATUS_REJECTED  = 3;
     
     //Relazione con la tabella repeats
     public function repeats() {

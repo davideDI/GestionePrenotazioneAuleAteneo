@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\ManageRepeatsAndSurveis;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        ManageRepeatsAndSurveis::class,
     ];
 
     /**
@@ -24,9 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-        //TODO job per gestione verifiche e prenotazioni
+         $schedule->command('manageRepeatsSurveis')
+                  ->everyMinute();
     }
 
     /**

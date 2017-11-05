@@ -23,6 +23,12 @@ class TipSurveyStatusTableSeed extends Seeder {
                     'description'  => 'gestita',
                     'created_at'   => date("Y-m-d G:i:s"),
                     'updated_at'   => date("Y-m-d G:i:s")
+                ],
+                [
+                    'id'           => 3,
+                    'description'  => 'scartata',
+                    'created_at'   => date("Y-m-d G:i:s"),
+                    'updated_at'   => date("Y-m-d G:i:s")
                 ]
             ]);
             
