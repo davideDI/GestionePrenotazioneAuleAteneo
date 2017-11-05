@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Acl;
 use App\User;
 use App\TipUser;
+use Exception;
 
 class SoapController extends Controller {
 
