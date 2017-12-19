@@ -3,7 +3,7 @@
     //   INGLESE
 
     return [
-        
+
         //Messages from menu
         'home' => 'Home',
         'home_title' => 'Booking Rooms and Laboratory',
@@ -21,11 +21,11 @@
         'home_checks' => 'Checks',
         'home_manage_resources' => 'Manage Resources',
         'home_meta_description' => 'Booking Rooms and Laboratory - Univaq',
-        
+
         //Messages from home page
         'home_welcome' => 'Welcome to the management system and reservation classrooms and teaching laboratories',
         'home_sub_section' => 'Select the area of ​​your relevance',
-        
+
         //Messages from footer
         'footer_title' => 'Booking system for Rooms and Labs',
         'footer_title_univaq' => 'University of L\'Aquila',
@@ -54,7 +54,7 @@
         'index_calendar_event_end' => 'Event end : ',
         'index_calendar_booked_by' => 'Booked by : ',
         'index_calendar_inpect_event' => 'Inspect booking',
-        
+
         ///Messages from common
         'common_save' => 'Save',
         'common_delete' => 'Delete',
@@ -73,7 +73,7 @@
         'common_from' => 'From',
         'common_to' => 'To',
         'common_login_text' => 'Insert credentilas',
-        
+
         //Messages from insert booking
         'booking_title' => 'Insert new Booking',
         'booking_date_hour_start' => 'From',
@@ -129,7 +129,7 @@
         'booking_confirm_repeat' => 'Confirm repeats',
         'booking_no_result' => 'No bookings in the last week',
         'booking_re_confirmed_ok' => 'All the bookings are re-confirmed!',
-        
+
         //Messages from help page
         'help_contact' => 'Contact',
         'help_contact_text' => 'For many information about rooms bookings contact:',
@@ -141,7 +141,7 @@
         . '                  Contact the admin if you have any problems. '
         . '                  Many options are avaible only for the admins. '
         . '                  If the system is configured with LDAP, you must use the same email\'s credentials.',
-        
+
         //Console page
         'console_booking_ok' => 'Bookings confirmed',
         'console_booking_working' => 'Bookings in workings',
@@ -153,7 +153,7 @@
         'console_manage' => 'Approve',
         'console_reject' => 'Reject',
         'console_no_result' => 'No bookings to manage',
-        
+
         //Manage-resource page
         'manage_resource_title' => 'Manage Resources',
         'manage_resource_no_resources' => 'No Resources!',
@@ -166,7 +166,7 @@
         'manage_resource_tip_group_title' => 'Tip Group',
         'manage_resource_confirm_delete' => 'Are you sure you want to delete this element?',
         'manage_resource_confirm_delete_text' => 'This action will produce the cascade deletion of all the elements associated with the resource',
-        
+
         //Search-page
         'search_title' => 'Search Rooms',
         'search_capacity' => 'Min capacity',
@@ -178,15 +178,15 @@
         'search_no_result' => 'No Result!',
         'search_page_list_groups_empty' => 'No selected group',
         'search_page_date_empty' => 'No day selected',
-        
+
         //Checks page
         'check_title' => 'Checks List',
         'check_num_students' => 'Real Num of Studs',
         'check_exp_students' => 'Exp Studs',
-        'check_title_modal' => 'Check form',  
+        'check_title_modal' => 'Check form',
         'check_no_result' => 'No checks in queue',
         'check_real_num_students_error' => 'Insert num of students',
-        
+
         //Report page
         'report_title' => 'Report',
         'report_title1' => 'Checks performed',
@@ -198,16 +198,18 @@
         'report_title3' => 'Checks requested',
         'report_bookings' => 'Num bookings',
         'report_surveys' => 'Num surveys',
-        
+
         //Repeat page
         'repeat_status_booking' => 'Booking status',
         'repeat_booking_update_ok' => 'Booking updated',
-        
+
         //Pdf page
         'pdf_title' => 'Search filters',
-        
-        //Results messages 
-        
+        'pdf_title_1' => 'University Of L\'Aquila',
+        'pdf_title_2' => 'List of Bookings of:',
+
+        //Results messages
+
         //Successes
         'booking_insert_ok' => 'Reservation saved!',
         'check_booking_ok' => 'Check booking made',
@@ -217,7 +219,7 @@
         'update_group_ok' => 'Group successfully updated',
         'common_delete_ok' => 'Cancellation made successfully',
         'check_insert_ok' => 'Request check successfully inserted',
-        
+
         //Failed
         'booking_insert_ko' => 'Error in the inclusion of reservation',
         'check_booking_ko' => 'Error during booking verification made',
@@ -228,7 +230,7 @@
         'booking_repeat_ko' => 'Error on re-confirmed events',
         'common_insert_ok' => 'Data entered correctly',
         'common_update_ok' => 'Data changed properly',
-        
+
         //LDAP ERRORS
         'ldap_error_invalid_username' => 'Username not found!',
         'ldap_error_wrong_password' => 'Wrong password!',
@@ -243,7 +245,7 @@
         'ldap_error_ssl_protocol' => 'Cannot connect to LDAP using the SSL protocol',
         'ldap_error_no_ssl_protocol' => 'Cannot connect to LDAP using a non-SSL protocol',
         'ldap_error_no_login' => 'No login is possible. Contact the admin.',
-        
+
         //Response code
         //WS LOGIN
         '-1'   => 'Errore nel recupero dei dati',
@@ -256,7 +258,7 @@
         '1119' => 'Il gruppo a cui appartiene l\'utente non è abilitato ad utilizzare questo tipo di client',
         '1126' => 'Errore generico di LDAP',
         '1130' => 'Password scaduta',
-        
+
         //ACL
         'acl_email' => 'Email',
         'acl_title_insert' => 'Authorize a new user',
@@ -271,5 +273,5 @@
         'acl_no_autorized_users' => 'No authorized Users',
         'acl_confirm_delete_text' => 'The user will no longer have any role within the application',
         'acl_no_enable_access' => 'You dont\' have any ermission to login. Contact the admin',
-        
+
     ];

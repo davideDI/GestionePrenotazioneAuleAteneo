@@ -3,7 +3,7 @@
     //   ITALIANO
 
     return [
-        
+
         //Messages from menu
         'home' => 'Home',
         'home_title' => 'Prenotazione Aule e Laboratori',
@@ -21,16 +21,16 @@
         'home_checks' => 'Verifiche',
         'home_manage_resources' => 'Gestione Risorse',
         'home_meta_description' => 'Occupazione Aule e Laboratori - Univaq',
-        
+
         //Messages from home page
         'home_welcome' => 'Benvenuti nel sistema di gestione e prenotazione aule e laboratori didattici di Ateneo',
         'home_sub_section' => 'Selezionare l\'area di vostra pertinenza',
-        
+
         //Messages from footer
         'footer_title' => 'Sistema Prenotazione Aule Didattiche e Laboratori',
         'footer_title_univaq' => 'Università degli Studi dell\'Aquila',
         'footer_privacy_cookies' => 'Informativa su Privacy ed Uso dei Cookies',
-        
+
         //Messages from index-calendar.blade
         'index_calendar_select_room' => 'Seleziona una risorsa',
         'index_calendar_new_event' => 'Nuovo Evento',
@@ -54,7 +54,7 @@
         'index_calendar_event_end' => 'Fine evento : ',
         'index_calendar_booked_by' => 'Prenotato da : ',
         'index_calendar_inpect_event' => 'Verifica prenotazione',
-        
+
         //Messages from common
         'common_save' => 'Salva',
         'common_delete' => 'Elimina',
@@ -73,7 +73,7 @@
         'common_from' => 'Dal',
         'common_to' => 'Al',
         'common_login_text' => 'Effettua il login',
-        
+
         //Messages from insert booking
         'booking_title' => 'Inserisci una nuova prenotazione',
         'booking_date_hour_start' => 'Dalle',
@@ -129,7 +129,7 @@
         'booking_confirm_repeat' => 'Conferma Ripetizione',
         'booking_no_result' => 'Nessuna prenotazione nella settimana precedente',
         'booking_re_confirmed_ok' => 'Tutte le prenotazioni sono state riconfermate!',
-        
+
         //Messages from help page
         'help_contact' => 'Contatti',
         'help_contact_text' => 'Per informazioni in merito all\'assegnazione delle aule, contattare:',
@@ -144,7 +144,7 @@
         . '                  Contatta l\'amministratore per ulteriori informazioni. '
         . '                  Se il sistema è configurato per utilizzare l\'autenticazione LDAP, significa che devi utilizzare '
         . '                  le stesse credenziali che utilizzi per accedere all\'email.',
-        
+
         //Console page
         'console_booking_ok' => 'Prenotazioni Accolte',
         'console_booking_working' => 'Prenotazioni in lavorazione',
@@ -156,7 +156,7 @@
         'console_manage' => 'Approva',
         'console_reject' => 'Respingi',
         'console_no_result' => 'Nessuna prenotazione da gestire',
-        
+
         //Manage-resource page
         'manage_resource_title' => 'Gestione Risorse',
         'manage_resource_no_resources' => 'Nessuna Risorsa presente!',
@@ -169,7 +169,7 @@
         'manage_resource_tip_group_title' => 'Tipo Gruppo',
         'manage_resource_confirm_delete' => 'Sei sicuro di voler eliminare questo elemento?',
         'manage_resource_confirm_delete_text' => 'Questa azione produrrà come effetto la cancellazione a cascata di tutti gli elementi associati alla risorsa',
-        
+
         //Search-page
         'search_title' => 'Cerca Aule',
         'search_capacity' => 'Capacità minima',
@@ -181,7 +181,7 @@
         'search_no_result' => 'Nessun risultato per i criteri selezionati!',
         'search_page_list_groups_empty' => 'Nessun gruppo selezionato',
         'search_page_date_empty' => 'Nessun giorno selezionato',
-        
+
         //Checks page
         'check_title' => 'Checks List',
         'check_num_students' => 'Num Reale di Studs',
@@ -189,7 +189,7 @@
         'check_title_modal' => 'Effettua verifica',
         'check_no_result' => 'Nessuna verifica in coda',
         'check_real_num_students_error' => 'Inserire numero studenti',
-        
+
         //Report page
         'report_title' => 'Report',
         'report_title1' => 'Verifiche effettuate',
@@ -201,16 +201,18 @@
         'report_title3' => 'Verifiche richieste',
         'report_bookings' => 'Num prenotazioni',
         'report_surveys' => 'Num verifiche',
-        
+
         //Repeat page
         'repeat_status_booking' => 'Stato prenotazione',
         'repeat_booking_update_ok' => 'Prenotazione modificata',
-        
+
         //Pdf page
         'pdf_title' => 'Filtri di ricerca',
-        
-        //Results messages 
-        
+        'pdf_title_1' => 'Universita\' Degli Studi De L\'Aquila',
+        'pdf_title_2' => 'Elenco prenotazioni relative a:',
+
+        //Results messages
+
         //Successes
         'booking_insert_ok' => 'Prenotazione effettuata',
         'check_booking_ok' => 'Verifica prenotazione effettuata',
@@ -222,7 +224,7 @@
         'check_insert_ok' => 'Richiesta verifica inserita',
         'common_insert_ok' => 'Dati inseriti correttamente',
         'common_update_ok' => 'Dati modificati correttamente',
-        
+
         //Failed
         'booking_insert_ko' => 'Errore nell\'inserimento della prenotazione',
         'check_booking_ko' => 'Errore durante il salvataggio della verifica prenotazione',
@@ -231,7 +233,7 @@
         'common_delete_ko' => 'Cancellazione dati fallita',
         'check_insert_ko' => 'Richiesta verifica non andata a buon fine',
         'booking_repeat_ko' => 'Errore nella riconferma delle prenotazioni',
-        
+
         //LDAP ERRORS
         'ldap_error_invalid_username' => 'Username non trovato!',
         'ldap_error_wrong_password' => 'Password errata!',
@@ -246,7 +248,7 @@
         'ldap_error_ssl_protocol' => 'Impossibile comunicare con Ldap utilizzando un protocollo SSL',
         'ldap_error_no_ssl_protocol' => 'Impossibile comunicare con Ldap utilizzando un protocollo non-SSL',
         'ldap_error_no_login' => 'Impossibile effettuare il login. Contattare l\'amministratore',
-        
+
         //Response code
         //WS LOGIN
         '-1'   => 'Errore nel recupero dei dati',
@@ -259,7 +261,7 @@
         '1119' => 'Il gruppo a cui appartiene l\'utente non è abilitato ad utilizzare questo tipo di client',
         '1126' => 'Errore generico di LDAP',
         '1130' => 'Password scaduta',
-        
+
         //ACL
         'acl_email' => 'Email',
         'acl_title_insert' => 'Autorizza un nuovo utente',
@@ -274,6 +276,5 @@
         'acl_no_autorized_users' => 'Nessun Utente autorizzato',
         'acl_confirm_delete_text' => 'L\'utente non avrà più nessun ruolo all\'interno dell\'applicazione',
         'acl_no_enable_access' => 'Non sei abilitato ad effettuare l\'accesso. Contatta l\'amministratore',
-        
-    ];
 
+    ];
