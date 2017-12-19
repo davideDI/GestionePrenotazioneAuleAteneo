@@ -39,3 +39,4 @@
 
 <!-- Canvas JS -->
 <script src="{{URL::asset('lib/canvas-js/jquery.canvasjs.min.js')}}"></script>
+<script src="{{URL::asset('lib/chart-js/Chart.min.js')}}"></script>
