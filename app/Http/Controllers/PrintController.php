@@ -47,7 +47,6 @@ class PrintController extends Controller {
             $dateSearchTo = "9999-01-01";
         }
 
-        //TODO modifica query per utilizzare eloquent (le query annidate si riscrivono)
 //        $bookingList = \App\Booking::with(['repeats' => function($query) use($dateSearchFrom, $idResource, $dateSearchTo) {
 //                                                Log::info($dateSearchFrom.'-'.$dateSearchTo);
 //                                                $query->where('event_date_start', '>=', $dateSearchFrom)

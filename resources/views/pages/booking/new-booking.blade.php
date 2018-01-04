@@ -1,12 +1,12 @@
 @extends('layouts.layout')
     @section('content')
-        
+
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.booking_title')}}</h3>
-                {!! Form::model($booking, ['url' => '/new-booking', 'method' => 'post']) !!} 
-                
+                {!! Form::model($booking, ['url' => '/new-booking', 'method' => 'post']) !!}
+
                     <!-- Booking : name -->
                     <div class="form-group">
                         {!! Form::label('name', trans('messages.common_title')); !!}
@@ -39,12 +39,12 @@
                             {!! Form::number('num_students', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_num_students'), 'min' => 0]); !!}
                         </div>
                         <div id="capacityRoom" class="col-md-6">
-                            
+
                         </div>
                     </div>
-                    
+
                     <hr>
-                    
+
                     <div class="form-group row">
                     <!-- Booking : data inizio evento -->
                         <div class="col-md-6">
@@ -107,8 +107,8 @@
                             @endif
                         </div>
                     </div>
-                    
-                <!-- Repet Options -->    
+
+                <!-- Repet Options -->
                     <div class="form-group row">
                         <div class="col-md-3">
                             <input type="radio" name="repeat_event" onclick="closeDivEventRepeatDetails()" value="1" checked="checked">&nbsp;{{ trans('messages.booking_single_event') }}<br>
@@ -118,7 +118,7 @@
                             <input type="radio" name="repeat_event" onclick="openDivEventRepeatDetails()" value="2">&nbsp;{{ trans('messages.booking_multiple_event') }}<br>
                         </div> -->
                     </div>
-                
+
                     <div id="event_repeat_details" class="form-group row" style="display:none">
                         <div class="col-md-12">
                             <input id="day_0" type="checkbox" name="type_repeat[]" value="0" onclick="addRepeat('day_0', 'detail_day_0')">&nbsp;{{ trans('messages.booking_type_repeat_monday') }} &nbsp;&nbsp;
@@ -129,7 +129,7 @@
                             <input id="day_5" type="checkbox" name="type_repeat[]" value="5" onclick="addRepeat('day_5', 'detail_day_5')">&nbsp;{{ trans('messages.booking_type_repeat_saturday') }}
                         </div>
                     </div>
-                
+
                     <div id="detail_day_0" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_monday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
@@ -137,7 +137,7 @@
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
                         <div class="col-md-2"><input type="time" name="detail_day_to_0" class="form-control " /></div>
                     </div>
-                
+
                     <div id="detail_day_1" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_tuesday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
@@ -145,7 +145,7 @@
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
                         <div class="col-md-2"><input type="time" name="detail_day_to_1" class="form-control " /></div>
                     </div>
-                
+
                     <div id="detail_day_2" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_wednesday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
@@ -153,7 +153,7 @@
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
                         <div class="col-md-2"><input type="time" name="detail_day_to_2" class="form-control " /></div>
                     </div>
-                
+
                     <div id="detail_day_3" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_thursday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
@@ -161,7 +161,7 @@
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
                         <div class="col-md-2"><input type="time" name="detail_day_to_3" class="form-control " /></div>
                     </div>
-                
+
                     <div id="detail_day_4" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_friday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
@@ -169,7 +169,7 @@
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
                         <div class="col-md-2"><input type="time" name="detail_day_to_4" class="form-control " /></div>
                     </div>
-                
+
                     <div id="detail_day_5" class="form-group row" style="display:none">
                         <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_saturday') }}</b></div>
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
@@ -177,10 +177,10 @@
                         <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
                         <div class="col-md-2"><input type="time" name="detail_day_to_5" class="form-control " /></div>
                     </div>
-                <!-- End Repet Options --> 
-                
+                <!-- End Repet Options -->
+
                 <hr>
-                
+
                     <div class="form-group row">
                         @if(!empty($groupsList))
                         <!-- Booking : id group - list -->
@@ -188,9 +188,9 @@
                                 {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
 
                                 {!! Form::select(
-                                        'group_id', 
-                                        $groupsList, 
-                                        null, 
+                                        'group_id',
+                                        $groupsList,
+                                        null,
                                         ['class' => 'listOfGroupsItems',
                                          'style' => 'width: 70%']
                                     ); !!}
@@ -205,18 +205,18 @@
                     <!-- Booking : id tip evento -->
                         <div class="col-md-6">
                             {!! Form::label('tip_event_id', trans('messages.booking_event')); !!}
-                            
+
                             {!! Form::select(
-                                    'tip_event_id', 
-                                    $tipEventList, 
-                                    null, 
+                                    'tip_event_id',
+                                    $tipEventList,
+                                    null,
                                     ['class' => 'listOfTipEventsItems',
                                      'style' => 'width: 70%']
                                 ); !!}
-                                
+
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
                         @if(!empty($resourceList))
                         <!-- Booking : id risorsa - lista -->
@@ -231,9 +231,9 @@
                                     </span>
                                 @endif
                                 {!! Form::select(
-                                        'resource_id', 
-                                        [], 
-                                        null, 
+                                        'resource_id',
+                                        [],
+                                        null,
                                         ['class' => 'listOfResourcesItems',
                                          'style' => 'width: 70%']
                                     ); !!}
@@ -244,7 +244,7 @@
                             <div class="col-md-6">
                                 {!! Form::label('resource_id', trans('messages.booking_date_resource')); !!}
                                 {!! Form::text('resource_id', $resource->name, ['class' => 'form-control', 'style' => 'width: 60%', 'readonly']); !!}
-                                
+
                                 {!! Form::hidden('flag_search_resource', true); !!}
                             </div>
                         @endif
@@ -252,70 +252,70 @@
                         @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_TEACHER )
                         <div class="col-md-6">
                             {!! Form::label('teaching_id', trans('messages.booking_date_teachings')); !!}
-                            
+
                             {!! Form::select(
-                                    'teaching_id', 
-                                    $listOfTeachings, 
-                                    null, 
+                                    'teaching_id',
+                                    $listOfTeachings,
+                                    null,
                                     ['class' => 'listOfTeachings',
                                      'style' => 'width: 70%']
                                 ); !!}
-                                
+
                         </div>
                         @endif
-                          
+
                     </div>
-                
+
                 @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
                 <div class="form-group row">
-                    
+
                     <!-- Booking : lista facolta -->
                         <div class="col-md-12">
                             {!! Form::label('department_id', trans('messages.booking_date_departments')); !!}
-                            
+
                             {!! Form::select(
-                                    'department_id', 
-                                    $departmentList, 
-                                    null, 
+                                    'department_id',
+                                    $departmentList,
+                                    null,
                                     ['class' => 'listOfDepartments',
                                      'style' => 'width: 90%']
                                 ); !!}
-                                
+
                         </div>
                 </div>
-                
+
                 <!-- Booking : lista CDS -->
                 <div class="form-group row">
                     <div class="col-md-12">
                     {!! Form::label('cds_id', trans('messages.booking_date_cds')); !!}
-                            
+
                             {!! Form::select(
-                                    'cds_id', 
-                                    [], 
-                                    null, 
+                                    'cds_id',
+                                    [],
+                                    null,
                                     ['class' => 'cds_id',
                                      'style' => 'width: 90%']
                                 ); !!}
                     </div>
                 </div>
-                
+
                 <!-- Booking : lista insegnamenti -->
                 <div class="form-group row">
                     <div class="col-md-12">
                     {!! Form::label('subject_id', trans('messages.booking_date_subjects')); !!}
-                            
+
                             {!! Form::select(
-                                    'subject_id', 
-                                    [], 
-                                    null, 
+                                    'subject_id',
+                                    [],
+                                    null,
                                     ['class' => 'js-example-basic-single subject_id ',
                                      'style' => 'width: 85%']
                                 ); !!}
                     </div>
                 </div>
-                
+
                 @endif
-                
+
                     <!-- Resource details -->
                     <div class="panel panel-default">
                         <div class="panel-heading">{{ trans('messages.booking_resource_information') }}</div>
@@ -330,14 +330,14 @@
                             <img src="{{URL::asset('lib/images/loading.gif')}}" width="100" height="70" style="margin-left: 45%;" alt="loading">
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
                         <div class="col-md-2">
-                            {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                            {!! Form::submit(trans('messages.common_save'), ['id' => 'insert_booking_button', 'class' => 'btn btn-primary'] ) !!}
                         </div>
                         @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
                             <div class="col-md-2">
-                                <a href="#" class="btn btn-primary" id="repeatEvents"> {{ trans('messages.booking_repeat_event') }}</a> 
+                                <a href="#" class="btn btn-primary" id="repeatEvents"> {{ trans('messages.booking_repeat_event') }}</a>
                             </div>
                         @endif
                         @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)
@@ -346,13 +346,13 @@
                         </div>
                         @endif
                     </div>
-                    
+
                 {!! Form::close() !!}
             </div>
             <div class="col-md-2"></div>
         </div>
-    
-    
+
+
         <!-- Modal for repeat event -->
             <div class="modal fade" id="repeatEventsModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -365,13 +365,13 @@
                         </div>
                         <div class="modal-body">
                             <div id="repeatEventsBodyErrorDiv" style="display: none" class="alert alert-danger" role="alert">
-                                                                
+
                             </div>
                             <div id="repeatEventsBodySuccessDiv" style="display: none" class="alert alert-success" role="alert">
-                                                                
+
                             </div>
                             <div id="repeatEventsBody">
-                                
+
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -381,76 +381,76 @@
                     </div>
                 </div>
             </div>
-        
+
         <script type="text/javascript">
-            
+
             $("#close_confirm_repeat_events").click( function() {
-               
+
                $("#repeatEventsBody").html("");
                $("#repeatEventsBodyErrorDiv").html("");
                $("#repeatEventsBodyErrorDiv").hide();
-               
+
                $("#repeatEventsBodySuccessDiv").html("");
                $("#repeatEventsBodySuccessDiv").hide();
-               
+
             });
-            
+
             $("#confirm_repeat_events").click( function () {
-            
+
                 var resourceId = $("#resource_id").val();
-                
+
                 $.ajax({
-                    
+
                     dataType : 'JSON',
                     data : {'resourceId' : resourceId},
                     type : 'POST',
                     url : "{{URL::to('/booking-repeat-events-confirm')}}",
                     success : function() {
-                        
+
                         var result = "{{ trans('messages.booking_re_confirmed_ok') }}";
                         $("#confirm_repeat_events").hide();
                         $("#repeatEventsBody").html("");
                         $("#repeatEventsBodySuccessDiv").html(result);
                         $("#repeatEventsBodySuccessDiv").show();
-                
-                    }, 
-                    error : function(result) {   
-                        
+
+                    },
+                    error : function(result) {
+
                         var errorMessage = "{{ trans('messages.booking_repeat_ko') }}";
                         $("#repeatEventsBodyErrorDiv").html(errorMessage);
                         $("#repeatEventsBodyErrorDiv").show();
                         console.log(result);
-                        
+
                     }
-                    
+
                 });
-                
+
             });
-            
+
             $("#repeatEvents").click(function (event) {
-                
+
                 event.preventDefault();
-                
+
                 var resourceId = $("#resource_id").val();
-               
+
                 if(resourceId === null ) {
-                    
+
                     $("#resource_id_for_repeat").show();
-                    
+
                 } else {
-                    
+
                     $("#resource_id_for_repeat").hide();
                     $("#confirm_repeat_events").show();
-                    
+
                     $.ajax({
-                        
+
                         dataType : 'JSON',
                         data : {'resourceId' : resourceId},
                         type : 'POST',
                         url : "{{URL::to('/booking-repeat-events')}}",
                         success : function(repeats) {
                             var result = "";
-                            
+
                             if(repeats.length == 0) {
                                 result += "<p>{{ trans('messages.booking_no_result') }}</p>";
                                 $("#confirm_repeat_events").hide();
@@ -463,9 +463,9 @@
                                         result += "<th>{{trans('messages.booking_date_day_end')}}</th>";
                                 result += "</thead>";
                                 result += "<tbody>";
-                                
+
                                 for(var j=0; j < repeats.length; j++) {
-                                    
+
                                     result += "<tr id='"+repeats[j].id+"'>";
                                         result += "<td>";
                                             result += repeats[j].booking.name;
@@ -480,27 +480,35 @@
                                             result += moment(repeats[j].event_date_end).format("DD-MM-YYYY HH:mm:ss");
                                         result += "</td>";
                                     result += "</tr>";
-                                    
+
                                 }
                                 result += "</tbody>";
                                 result += "</table>";
                             }
-                            
+
                             $("#repeatEventsBody").html(result);
-                            
+
                         },
                         error : function(result) {
                             console.log(result);
                         }
-                        
+
                     });
-                    
+
                     $('#repeatEventsModal').modal('show');
-                    
+
                 }
-                
+
             });
-            
+
+            $("#insert_booking_button").click(function (event) {
+
+                // ajax call per verificare presenza evento
+
+                // errore / submit
+
+            }
+
             $(document).ready(function() {
                 $(".listOfGroupsItems").select2({
                     placeholder: "{{ trans('messages.booking_date_select_group') }}"
@@ -526,16 +534,16 @@
 
                 @if(!empty($resourceList))
                     getResources($("#group_id").val());
-                @else 
+                @else
                     appendGifLoad();
                     getInfoResource({{$resource->id}});
                 @endif
             });
-            
+
             $("#department_id").on("change", function() {
                 getCDSFromDepartment($("#department_id").val());
             });
-            
+
             function getCDSFromDepartment(idDepartment) {
                 $("#cds_id").val(null);
                 var selectedDepartment = { 'idDepartment' : idDepartment};
@@ -555,11 +563,11 @@
                     }
                 });
                             }
-            
+
             $("#cds_id").on("change", function() {
                 getSubjectsFromCds($("#cds_id").val());
             });
-            
+
             function getSubjectsFromCds(cds) {
                 $("#subject_id").val(null);
                 var selectedCds = { 'cds' : cds};
@@ -579,20 +587,20 @@
                     }
                 });
             }
-            
+
             $("#resource_id").on("change", function() {
                 appendGifLoad();
                 getInfoResource($("#resource_id").val());
             });
-            
+
             $("#group_id").on("change", function() {
                 getResources($("#group_id").val());
             });
-            
+
             function getResources(idGroup) {
                 $("#resource_id").val(null);
-                $("#resourceSelected").fadeOut('slow'); 
-                $("#noteResourceSelected").fadeOut('slow'); 
+                $("#resourceSelected").fadeOut('slow');
+                $("#noteResourceSelected").fadeOut('slow');
                 $("#capacityRoom").html("");
                 var selectedGroup = { 'idGroup' : idGroup};
                 $('#resource_id').select2({
@@ -610,20 +618,20 @@
                         cache: false
                     }
                 });
-                                
+
             }
-            
+
             function appendGifLoad() {
-                
-                $("#resourceSelected").fadeIn('slow'); 
-                $("#noteResourceSelected").fadeIn('slow'); 
+
+                $("#resourceSelected").fadeIn('slow');
+                $("#noteResourceSelected").fadeIn('slow');
                 $("#resourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
                 $("#noteResourceSelected").html("<img src='{{URL::asset('lib/images/loading.gif')}}' width='100' height='70' style='margin-left: 45%;' alt='loading'>");
- 
+
             }
-            
+
             function getInfoResource(idResource) {
-                
+
                 var selectedResource = {'id_resource': idResource};
                 $.ajax({
                     url : "{{URL::to('/resource')}}",
@@ -634,26 +642,26 @@
                        $("#resourceSelected").html(createHtmlForResource(result));
                        $("#noteResourceSelected").html(createHtmlForNoteResource(result));
                        $("#capacityRoom").html(setCapacityRoom(result));
-                       
+
                     },
                     error : function() {
                         console.log("Errore recupero informazioni resource.");
                     }
-                }); 
-                
+                });
+
             }
-            
+
             function setCapacityRoom(result) {
-            
+
                 $("#capacityRoom").fadeIn('slow');
                 var text = "";
                 text += "<p style='margin-top : 9%; margin-bottom : 0;'><b>" + result.capacity + " {{ trans('messages.booking_place_available') }}</b></p>";
                 return text;
-    
+
             }
-            
+
             function createHtmlForResource(result) {
-            
+
                 var text = "";
                 text += "<div class='col-md-4'>";
                 text += "<p>{{trans('messages.booking_capacity')}} " + result.capacity+ "</p>";
@@ -677,11 +685,11 @@
                 text += "<p>{{trans('messages.booking_network')}} " + result.network+ "</p>";
                 text += "</div>";
                 return text;
-            
+
             }
-            
+
             function createHtmlForNoteResource(result) {
-            
+
                 var text = "";
                 text += "<div class='col-md-4'>";
                 if(result.note === '') {
@@ -691,58 +699,58 @@
                 }
                 text += "</div>";
                 return text;
-                
+
             }
-    
+
             function getImgFromBoolean(data) {
-            
+
                 if(data) {
                     return "<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>";
                 } else {
                     return "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
                 }
-                
+
             }
-            
+
             function closeDivEventRepeatDetails() {
-            
-                $("#event_repeat_details").fadeOut('slow'); 
+
+                $("#event_repeat_details").fadeOut('slow');
                 $("#event_date_start_input").attr('placeholder', '24-02-2017 12:00');
                 $("#event_date_start_input").attr('data-format', 'dd-MM-yyyy hh:mm');
                 $("#event_date_end_input").attr('placeholder', '24-02-2017 14:00');
                 $("#event_date_end_input").attr('data-format', 'dd-MM-yyyy hh:mm');
-                
-                $("#detail_day_0").fadeOut('slow'); 
-                $("#detail_day_1").fadeOut('slow'); 
-                $("#detail_day_2").fadeOut('slow'); 
-                $("#detail_day_3").fadeOut('slow'); 
-                $("#detail_day_4").fadeOut('slow'); 
-                $("#detail_day_5").fadeOut('slow'); 
-            
+
+                $("#detail_day_0").fadeOut('slow');
+                $("#detail_day_1").fadeOut('slow');
+                $("#detail_day_2").fadeOut('slow');
+                $("#detail_day_3").fadeOut('slow');
+                $("#detail_day_4").fadeOut('slow');
+                $("#detail_day_5").fadeOut('slow');
+
             }
-            
+
             function openDivEventRepeatDetails() {
-            
-                $("#event_repeat_details").fadeIn('slow'); 
+
+                $("#event_repeat_details").fadeIn('slow');
                 $("#event_date_start_input").attr('placeholder', '24-02-2017');
                 $("#event_date_start_input").attr('data-format', 'dd-MM-yyyy');
                 $("#event_date_end_input").attr('placeholder', '05-05-2017');
                 $("#event_date_end_input").attr('data-format', 'dd-MM-yyyy');
-                
+
             }
-            
+
             function addRepeat(idDay, idDetailDay) {
-                
+
                 if($("#"+idDay)[0].checked == true) {
                     $("#" + idDetailDay).fadeIn('slow');
                 } else {
                     $("#" + idDetailDay).fadeOut('slow');
                 }
-                
+
             }
-            
+
         </script>
-        
+
         <!-- Date time picker -->
         <script type="text/javascript">
             $(function() {
@@ -751,5 +759,5 @@
                 });
             });
         </script>
-        
+
     @endsection

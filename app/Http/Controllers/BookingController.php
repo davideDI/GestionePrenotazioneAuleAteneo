@@ -24,40 +24,37 @@ class BookingController extends Controller {
     public function __construct(SoapWrapper $soapWrapper) {
         $this->soapWrapper = $soapWrapper;
     }
-    
+
     public function getBooking(Request $request) {
-        
+
         $bookingId = $request['booking_id'];
         Log::info('BookingController - getBooking(bookingId: '.$bookingId.')');
         $booking = Booking::with('repeats', 'user', 'tipEvent', 'repeats.surveys')->where('id', $bookingId)->get();
         return $booking;
-        
+
     }
-    
+
     public function insertNewBooking(Request $request) {
-        
+
         date_default_timezone_set('Europe/Rome');
-    
-        //TODO
-        //Sviluppare validazione campi
 
         Log::info('BookingController - insertNewBooking()');
 
         try {
-            
-            //TODO valida formato data inizio / fine
-            //TODO valida capienza prevista e massima aula
+
+            //TODO valida formato data inizio / fine -> provare con |date
+            //TODO valida capienza prevista e massima aula -> valuta validator custom
             $this->validate($request, [
                 'name'             => 'required|max:50',
                 'description'      => 'required|max:100',
                 'num_students'     => 'required|numeric|min:1',
-                'event_date_start' => 'required',
-                'event_date_end'   => 'required',
-                'resource_id'      => 'required|numeric' 
+                'event_date_start' => 'required|date',
+                'event_date_end'   => 'required|date',
+                'resource_id'      => 'required|numeric'
             ]);
-            
+
             //Booking Object
-            $booking = new Booking; 
+            $booking = new Booking;
             $booking->fill($request->all());
 
             //Repeat Object
@@ -68,7 +65,7 @@ class BookingController extends Controller {
                 $resourceTemp  = Resource::where('name', 'like', $booking->resource_id)->get();
                 $booking->resource_id = $resourceTemp[0]->id;
             }
-            
+
             //Resource Object
             $resourceOfBooking = Resource::find($booking->resource_id);
 
@@ -100,8 +97,8 @@ class BookingController extends Controller {
                 Log::info('BookingController - Insert repeat ['.$repeat.']');
                 $repeat->save();
 
-            } 
-            
+            }
+
             //TODO compleatare gestione invio email
             if(Config::get(MAIL.'.'.ENABLE_SEND_MAIL)) {
                 mail($resourceOfBooking->room_admin_email, "SUBJECT", "MESSAGE");
@@ -118,21 +115,21 @@ class BookingController extends Controller {
                 //data inizio ripetizione
                 $repeat_start_string = substr($repeat->event_date_start, 0, 10)." 00:00";
                 $repeat_start = date("d-m-Y G:i:s",strtotime($repeat_start_string));
-                
+
                 //data fine ripetizione
                 $repeat_end_string = substr($repeat->event_date_end, 0, 10)." 23:59";
                 $repeat_end = date("d-m-Y G:i:s",strtotime($repeat_end_string));
-                
+
                 $weekRepeats = $request['type_repeat'];
                 $countWeekRepeats = count($weekRepeats);
-                
+
                 $flagDate = $repeat_start;
                 Log::info('BookingController - inizio ripetizione ['.$flagDate.']');
                 if($weekRepeats != null && $countWeekRepeats > 0) {
 
                     do {
                         $dayofweekStartEvent = date('w', strtotime($repeat_start));
-                        
+
                         for($i = 0; $i < $countWeekRepeats; $i++) {
 
                             $newdate = strtotime ( $weekRepeats[$i].' day' , strtotime ( $repeat_start ) ) ; // facciamo l'operazione
@@ -148,7 +145,7 @@ class BookingController extends Controller {
                             }
 
                         }
-                        
+
                         $dayofweekFlagDate = date('w', strtotime($flagDate));
                         Log::info('BookingController - Insert repeat ['.$dayofweekFlagDate.']');
                         do {
@@ -157,55 +154,55 @@ class BookingController extends Controller {
                            $dayofweekFlagDate = date('w', strtotime($flagDate));
                            Log::info('BookingController - new interval ['.$flagDate.']');
                         } while($dayofweekFlagDate == 1);
-                        
+
                         $repeat_start = strtotime ( '1 week' , strtotime ($repeat_start ) ) ;
                         $repeat_start = date ( 'd-m-Y G:i:s', $repeat_start );
-                        
+
                     } while($flagDate <= $repeat_end);
-                    
+
                 }
-                
+
                 return view('pages/test/testInsert', ['testDate' => $test]);
 
             }
-            
+
             return redirect()->route('bookings2', [$resourceOfBooking->group_id, $booking->resource_id])->with('success', 'booking_insert_ok');
-            
+
         } catch(Exception $ex) {
             Log::error('BookingController - Errore nell\'inserimento della prenotazione: '.$ex->getMessage());
             return redirect()->back()->with('customError', 'booking_insert_ko');
         }
-        
+
     }
-    
+
     public function getListOfResourcesByIdGroup(Request $request) {
-        
+
         $idGroup = $request['idGroup'];
         Log::info('BookingController - getListOfResourcesByIdGroup(idGroup: '.$idGroup.')');
         return Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
-        
+
     }
-    
+
     public function getSpecificResource(Request $request) {
-        
+
         $idResource = $request['id_resource'];
         Log::info('BookingController - getSpecificResource(idResource: '.$idResource.')');
         return Resource::find($idResource);
-        
+
     }
-    
+
     public function getCDSFromDepartment(Request $request) {
-     
+
         $idDepartment = $request['idDepartment'];
         Log::info('BookingController - getCDSFromDepartment(idDepartment: '.$idDepartment.')');
-        
+
         $this->soapWrapper->add('GenericWSEsse3', function ($service) {
             $service->wsdl($this->esse3PathWsdl);
         });
 
         //TODO gestione parametro a.a.
         $params = 'aa_id=2016;tipo_corso='.WS_TIP_CORSO_LIST.';fac_id='.$idDepartment;
-        
+
         $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
             'retrieve' => 'CDS_FACOLTA',
             'params' => $params
@@ -229,16 +226,16 @@ class BookingController extends Controller {
             }
         }
         $cdsList = json_encode($result);
-        
+
         return $cdsList;
-        
+
     }
-    
+
     public function getSubjectsFromCDS(Request $request) {
-        
+
         $cds = $request['cds'];
         Log::info('BookingController - getSubjectsFromCDS(cds: '.$cds.')');
-        
+
         //TODO
         //Inserire variabile anno per chiamata a servizio nel file di configurazione
         $year = '2016';
@@ -272,30 +269,30 @@ class BookingController extends Controller {
                 );
             }
             return $result;
-            
+
         }
-        
+
         return 0;
-        
+
     }
-    
+
     public function getNewBookingForm() {
-        
+
         Log::info('BookingController - getNewBookingForm()');
-    
+
         $booking = new Booking;
         $groupsList = Group::pluck('name', 'id');
         $resourceList =  Resource::pluck('name', 'id');
         $tipEventList = TipEvent::pluck('name', 'id');
-        
+
         $listOfTeachings = "";
         if(session('ruolo') == TipUser::ROLE_TEACHER) {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
         }
-        
+
         $departmentList = "";
         if(session('ruolo') == TipUser::ROLE_SECRETARY) {
-            
+
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
                 $service->wsdl($this->esse3PathWsdl);
             });
@@ -306,7 +303,7 @@ class BookingController extends Controller {
 
             //Codice di risposta
             $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
-            
+
             $result = "";
             if($responseCode == 1) {
                 $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
@@ -322,7 +319,7 @@ class BookingController extends Controller {
                 }
             }
             $departmentList = new \Illuminate\Support\Collection($result);
-            
+
         }
 
         return view('pages/booking/new-booking', [  'booking'         => $booking,
@@ -331,18 +328,18 @@ class BookingController extends Controller {
                                                     'tipEventList'    => $tipEventList,
                                                     'listOfTeachings' => $listOfTeachings,
                                                     'departmentList'  => $departmentList]);
-        
+
     }
-    
+
     public function getNewBookingFormWithResource($idResource, $date_start, $date_end) {
-        
+
         Log::info('BookingController - getNewBookingFormWithResource(idResource: '.$idResource.', date_start: '.$date_start.', date_end: '.$date_end.')');
-    
+
         $booking = new Booking;
         $resource =  Resource::find($idResource);
         $group = Group::find($resource->group_id);
         $tipEventList = TipEvent::pluck('name', 'id');
-        
+
         $listOfTeachings = "";
         if(session('ruolo') == TipUser::ROLE_TEACHER) {
             $listOfTeachings = new \Illuminate\Support\Collection(session('listOfTeachings'));
@@ -355,39 +352,39 @@ class BookingController extends Controller {
                                                     'listOfTeachings' => $listOfTeachings,
                                                     'date_start'      => $date_start,
                                                     'date_end'        => $date_end]);
-        
+
     }
-    
+
     //Lista di tutte le prenotazioni per id group
     public function getBookingsByIdGroup($idGroup) {
-        
+
         Log::info('BookingController - getBookingsByIdGroup(idGroup: '.$idGroup.')');
-        
+
         $group = Group::find($idGroup);
         $resources = $group->resources;
         $firstResource = $resources->first();
         $bookings = Booking::where('resource_id', $firstResource->id)->get();
         $eventsType = TipEvent::all();
         $bookingsStatus = TipBookingStatus::all();
-        
+
         return view('pages/booking/index-calendar', [   'selectedResource' => $firstResource,
-                                                        'resources'        => $resources, 
+                                                        'resources'        => $resources,
                                                         'group'            => $group,
                                                         'eventsType'       => $eventsType,
                                                         'bookingsStatus'   => $bookingsStatus,
                                                         'bookings'         => $bookings]);
-        
+
     }
-    
+
     public function getBookingsForRepeatEvents(Request $request) {
-        
+
         $resourceId = $request['resourceId'];
-        
+
         Log::info('BookingController - getBookingsForRepeatEvents(resourceId: '.$resourceId.')');
-        
+
         $dateTo = date('Y-m-d');
         $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
-             
+
         $repeats = Repeat::with('booking')
                                 ->where('event_date_end', '<=', $dateTo)
                                 ->where('event_date_start', '>=', $dateFrom)
@@ -395,17 +392,17 @@ class BookingController extends Controller {
                                     $q->where('resource_id', '=', $resourceId);
                                 })
                                 ->get();
-                                
+
         return $repeats;
-        
+
     }
-    
+
     public function confirmRepeatEvents(Request $request) {
-        
+
         try {
-            
+
             $resourceId = $request['resourceId'];
-            
+
             Log::info('BookingController - confirmRepeatEvents(resourceId: '.$resourceId.')');
 
             $dateTo = date('Y-m-d');
@@ -418,11 +415,11 @@ class BookingController extends Controller {
                                 })
                                 ->whereHas('repeats', function($q) use ($dateFrom) {
                                     $q->where('event_date_start', '>=', $dateFrom);
-                                })   
+                                })
                                 ->get();
 
             if(count($bookings) > 0) {
-                
+
                 for ($i = 0; $i < count($bookings); $i++) {
                     foreach ($bookings[$i]->repeats as $repeat) {
 
@@ -436,53 +433,53 @@ class BookingController extends Controller {
                         $tempRepeat->event_date_start = $dateFrom;
                         $tempRepeat->event_date_end = $dateTo;
 
-                        $tempRepeat->save();        
+                        $tempRepeat->save();
 
                     }
                 }
-                
-            }   
-            
+
+            }
+
             return 1;
-            
+
         } catch (Exception $ex) {
             Log::error('BookingController - Errore nella conferma ripetizione eventi: '.$ex->getMessage());
             return redirect()->back()->with('customError', 'booking_repeat_ko');
         }
-             
+
     }
-    
+
     //Lista di tutte le prenotazioni per id group e id resource
     public function getBookingsByIdGroupIdResource($idGroup, $idResource) {
-        
+
         Log::info('BookingController - getBookingsByIdGroupIdResource(idGroup: '.$idGroup.', idResource: '.$idResource.')');
-        
+
         $group = Group::find($idGroup);
         $resources = $group->resources;
         $resource = Resource::find($idResource);
         $bookings = Booking::where('resource_id', '=', $idResource)->get();
         $eventsType = TipEvent::all();
         $bookingsStatus = TipBookingStatus::all();
-        
+
         return view('pages/booking/index-calendar', [   'bookings'         => $bookings,
                                                         'selectedResource' => $resource,
                                                         'resources'        => $resources,
                                                         'eventsType'       => $eventsType,
                                                         'bookingsStatus'   => $bookingsStatus,
                                                         'group'            => $group]);
-        
+
     }
-    
+
     //metodo di test per l'update di una prenotazione tramite drug&drop o resize (disabilitato)
     //TODO se da utilizzare aggiornare campi viste le modifiche alle tabelle
     public function updateEvent(Request $request) {
-        
+
         Log::info('BookingController - updateEvent()');
-        
+
         $idEvent    = $request['id_evento'];
         $startEvent = $request['data_inizio'];
         $endEvent   = $request['data_fine'];
-        
+
         try {
             //Effettuo l'udate
             DB::table('events')
@@ -492,24 +489,24 @@ class BookingController extends Controller {
                                 ('event_date_start' => $startEvent,
                                  'event_date_end'   => $endEvent)
                         );
-            
+
             $response = array(
                 'status' => 'success',
                 'msg'    => 'A cannone',
             );
             return \Response::json($response);
-            
+
         } catch(Exception $ex) {
-            
+
             Log::error('BookingController - updateEvent() : '.$ex);
             $response = array(
                 'status' => 'error',
                 'msg' => $ex,
             );
             return \Response::json($response);
-            
+
         }
-        
+
     }
-    
+
 }
