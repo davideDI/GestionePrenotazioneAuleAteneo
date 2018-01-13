@@ -11,6 +11,7 @@ use App\Booking;
 use App\Repeat;
 use App\Resource;
 use App\Group;
+use App\Acl;
 use App\TipEvent;
 use App\TipUser;
 use App\TipBookingStatus;
@@ -97,9 +98,30 @@ class BookingController extends Controller {
 
             }
 
-            //TODO compleatare gestione invio email
             if(Config::get(MAIL.'.'.ENABLE_SEND_MAIL)) {
-                mail($resourceOfBooking->room_admin_email, "SUBJECT", "MESSAGE");
+
+                $mailText = "E' stata effettuata una richiesta di prenotazione dall'utente ";
+                $mailText .= session('cognome');
+                $mailText .= " ";
+                $mailText .= session('nome');
+                $mailText .= " matricola ";
+                $mailText .= session('matricola');
+                $mailText .= ". La prenotazione è relativa alla risorsa ";
+                $mailText .= $resourceOfBooking->name." del dipartimento ".$resourceOfBooking->group->name.".";
+                $mailText .= " Nella console di amministrazione sarà possibile visualizzare la lista di prenotazioni presenti.";
+
+                $subject = "Richiesta di prenotazione ".$repeat_start_string." - ".$repeat_end_string;
+                $subject .= " RISORSA ".$resourceOfBooking->name." del dipartimento ".$resourceOfBooking->group->name.".";
+
+                $acl = Acl::with('user')
+                    ->where('group_id', '=', $resourceOfBooking->group->id)
+                    ->whereHas('user', function($q) {
+                        $q->where('tip_user_id', '=', TipUser::ROLE_ADMIN_DIP);
+                    })
+                    ->get();
+
+                mail($acl->user->email, $subject, $mailText);
+
             }
 
             //Multiple event
