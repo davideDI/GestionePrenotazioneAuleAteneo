@@ -1,7 +1,7 @@
 <?php
 
     return [
-        
+
         'oops' => 'Oops...',
         'something_went_wrong' => 'something went wrong',
         '404' => 'Page not found',
@@ -9,5 +9,8 @@
         'go_to' => 'Go to',
         'home' => 'Home',
         '' => '',
-        
+
+        'field_required' => 'Field required',
+        'new_booking_num_max' => 'Maximum allowed number exceeded',
+
 ];

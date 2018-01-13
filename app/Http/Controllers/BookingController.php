@@ -42,8 +42,6 @@ class BookingController extends Controller {
 
         try {
 
-            //TODO valida formato data inizio / fine -> provare con |date
-            //TODO valida capienza prevista e massima aula -> valuta validator custom
             $this->validate($request, [
                 'name'             => 'required|max:50',
                 'description'      => 'required|max:100',
@@ -105,9 +103,7 @@ class BookingController extends Controller {
             }
 
             //Multiple event
-            //TODO in sospeso : permettere l'inserimento di una singola prenotazione
-            //o al max di prenotazioni all'interno di una settimana
-            //Creare funzionalità di copia e incolla di una intera settimana ( per la segreteria )
+            //Implementata funzione di copia delle prenotazioni della settimana precedente
             if($typeOfRepeat == 2) {
 
                 $test = array();

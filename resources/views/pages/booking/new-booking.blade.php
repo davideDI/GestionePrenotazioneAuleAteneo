@@ -9,10 +9,10 @@
 
                     <!-- Booking : name -->
                     <div class="form-group">
-                        {!! Form::label('name', trans('messages.common_title')); !!}
+                        {!! Form::label('name', trans('messages.common_title'), ['class' => 'down']); !!}
                         @if ($errors->has('name'))
                             <span class="label label-danger">
-                                <strong>{{ $errors->first('name') }}</strong>
+                                <strong>{{ trans('errors.field_required') }}</strong>
                             </span>
                         @endif
                         {!! Form::text('name', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_title')]); !!}
@@ -22,7 +22,7 @@
                         {!! Form::label('description', trans('messages.common_description')); !!}
                         @if ($errors->has('description'))
                             <span class="label label-danger">
-                                <strong>{{ $errors->first('description') }}</strong>
+                                <strong>{{ trans('errors.field_required') }}</strong>
                             </span>
                         @endif
                         {!! Form::text('description', '', ['class' => 'form-control', 'placeholder' => trans('messages.common_description')]); !!}
@@ -32,10 +32,13 @@
                         <div class="col-md-6">
                             {!! Form::label('num_students', trans('messages.booking_num_students')); !!}
                             @if ($errors->has('num_students'))
-                                <span class="label label-danger">
-                                    <strong>{{ $errors->first('num_students') }}</strong>
+                                <span id="num_students_required" class="label label-danger">
+                                    <strong>{{ trans('errors.field_required') }}</strong>
                                 </span>
                             @endif
+                            <span id="maxNumError" class="label label-danger" style="display: none">
+                                <strong>{{ trans('errors.new_booking_num_max') }}</strong>
+                            </span>
                             {!! Form::number('num_students', '', ['class' => 'form-control', 'placeholder' => trans('messages.booking_num_students'), 'min' => 0]); !!}
                         </div>
                         <div id="capacityRoom" class="col-md-6">
@@ -51,7 +54,7 @@
                             {!! Form::label('event_date_start', trans('messages.booking_date_day_start')); !!}
                             @if ($errors->has('event_date_start'))
                                 <span class="label label-danger">
-                                    <strong>{{ $errors->first('event_date_start') }}</strong>
+                                    <strong>{{ trans('errors.field_required') }}</strong>
                                 </span>
                             @endif
                             @if(empty($date_start))
@@ -81,7 +84,7 @@
                             {!! Form::label('event_date_end', trans('messages.booking_date_day_end')); !!}
                             @if ($errors->has('event_date_end'))
                                 <span class="label label-danger">
-                                    <strong>{{ $errors->first('event_date_end') }}</strong>
+                                    <strong>{{ trans('errors.field_required') }}</strong>
                                 </span>
                             @endif
                             @if(empty($date_start))
@@ -109,11 +112,10 @@
                     </div>
 
                 <!-- Repet Options -->
-                    <div class="form-group row">
+                    <div class="form-group row" style="display: none">
                         <div class="col-md-3">
                             <input type="radio" name="repeat_event" onclick="closeDivEventRepeatDetails()" value="1" checked="checked">&nbsp;{{ trans('messages.booking_single_event') }}<br>
                         </div>
-                        <!-- TODO gestire ripetizione eventi della settimana precedente -->
                         <!-- <div class="col-md-3">
                             <input type="radio" name="repeat_event" onclick="openDivEventRepeatDetails()" value="2">&nbsp;{{ trans('messages.booking_multiple_event') }}<br>
                         </div> -->
@@ -227,7 +229,7 @@
                                 </span>
                                 @if ($errors->has('resource_id'))
                                     <span class="label label-danger">
-                                        <strong>{{ $errors->first('resource_id') }}</strong>
+                                        <strong>{{ trans('errors.field_required') }}</strong>
                                     </span>
                                 @endif
                                 {!! Form::select(
@@ -501,14 +503,6 @@
 
             });
 
-            $("#insert_booking_button").click(function (event) {
-
-                // ajax call per verificare presenza evento
-
-                // errore / submit
-
-            }
-
             $(document).ready(function() {
                 $(".listOfGroupsItems").select2({
                     placeholder: "{{ trans('messages.booking_date_select_group') }}"
@@ -538,6 +532,23 @@
                     appendGifLoad();
                     getInfoResource({{$resource->id}});
                 @endif
+            });
+
+            $("#insert_booking_button").on("click", function (event) {
+
+                //validazione max num studenti
+                var capacity_room = $("[name='capacity_room']").val();
+                var num_students = $("#num_students").val();
+
+                if(parseInt(num_students) > parseInt(capacity_room)) {
+                    $("#maxNumError").show();
+                    $("#num_students_required").hide();
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: $(".down").offset().top
+                    }, 1000);
+                }
+
             });
 
             $("#department_id").on("change", function() {
@@ -656,6 +667,7 @@
                 $("#capacityRoom").fadeIn('slow');
                 var text = "";
                 text += "<p style='margin-top : 9%; margin-bottom : 0;'><b>" + result.capacity + " {{ trans('messages.booking_place_available') }}</b></p>";
+                text += "<input type='hidden' name='capacity_room' value='" + result.capacity + "' />";
                 return text;
 
             }
