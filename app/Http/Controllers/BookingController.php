@@ -254,8 +254,7 @@ class BookingController extends Controller {
         $cds = $request['cds'];
         Log::info('BookingController - getSubjectsFromCDS(cds: '.$cds.')');
 
-        //TODO
-        //Inserire variabile anno per chiamata a servizio nel file di configurazione
+        //TODO gestione parametro a.a.
         $year = '2016';
 
         $this->soapWrapper->add('GenericWSEsse3', function ($service) {
@@ -490,7 +489,7 @@ class BookingController extends Controller {
     }
 
     //metodo di test per l'update di una prenotazione tramite drug&drop o resize (disabilitato)
-    //TODO se da utilizzare aggiornare campi viste le modifiche alle tabelle
+    //N.B. se da utilizzare aggiornare campi viste le modifiche alle tabelle
     public function updateEvent(Request $request) {
 
         Log::info('BookingController - updateEvent()');

@@ -217,8 +217,7 @@ class SoapController extends Controller {
 
         if(session('ruolo') == TipUser::ROLE_TEACHER) {
 
-            //TODO
-            //Inserire variabile anno per chiamata a servizio nel file di configurazione
+            //TODO gestione parametro a.a.
             $year = '2016';
             Log::info('SoapController - wsGetUdDocPart(username: '.$matricolaDocente.', year: '.$year.')');
 
@@ -255,7 +254,7 @@ class SoapController extends Controller {
 
                         $temp => $temp
                         //$idTemp => $temp
-                        
+
                         /*"CDS_COD" => (string)$list[$i]->CDS_COD,
                         "CDS_DES" => (string)$list[$i]->CDS_DES,
                         "DIP_COD" => (string)$list[$i]->DIP_COD,
@@ -375,7 +374,7 @@ class SoapController extends Controller {
                                                                                                                 case "whenChanged":
                                                                                                                         $ldap_reply["data"][strtoupper($key)] = LDAP_dateStringReFormat($val[0]);
                                                                                                                 break;
-                                                                                                            //TODO gestire i due campi
+                                                                                                            //TODO verificare i due campi
                                                                                                                 case "employeeID":
                                                                                                                         $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
                                                                                                                         $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
