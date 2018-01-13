@@ -71,10 +71,10 @@ class BookingController extends Controller {
             $booking->booking_date = date("Y-m-d G:i:s");
             $booking->user_id = session('source_id');
             if(isset($request['teaching_id'])) {
-                $booking->subject_id = substr($request['teaching_id'], 0, 11);
+                $booking->subject_id = $request['teaching_id'];
             }
             if(isset($request['subject_id'])) {
-                $booking->subject_id = substr($request['subject_id'], 0, 11);
+                $booking->subject_id = $request['subject_id'];
             }
             Log::info('BookingController - Insert booking ['.$booking.']');
             $booking->save();
@@ -283,7 +283,8 @@ class BookingController extends Controller {
                 $idTemp = (string)$list[$i]->UD_COD.'-'.(string)$list[$i]->AA_ORD_ID.'-'.$i;
                 $desTemp = (string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID.' - '.(string)$list[$i]->DOCENTE_COGNOME.' ('.(string)$list[$i]->PDS_DES.')';
                 $result[] = array(
-                    'id' => $idTemp, 'text' => $desTemp
+                    //'id' => $idTemp, 'text' => $desTemp
+                    'id' => $desTemp, 'text' => $desTemp
                 );
             }
             return $result;

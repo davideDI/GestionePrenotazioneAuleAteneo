@@ -20,12 +20,12 @@ class SoapController extends Controller {
     public function __construct(SoapWrapper $soapWrapper) {
         $this->soapWrapper = $soapWrapper;
     }
-  
+
     private function checkFakeUsersForLogin($request) {
-        
+
         $username = $request['username'];
         Log::info('SoapController - checkFakeUsersForLogin(username: '.$username.')');
-        
+
         if($username == 'davide@davide.it') {
             session(['session_id' => '999ooo888iii']);
             session(['source_id'  => '000001']); //Look at UserTableSeed.php
@@ -34,10 +34,10 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'DAVIDEDAVIDE33']);
             session(['ruolo'      => TipUser::ROLE_ADMIN_DIP]);
             session(['matricola'  => 'davide@davide']);
-            
+
             return true;
         }
-        
+
         else if($username == 'ateneo@ateneo.it') {
             session(['session_id' => '222eee333rrr']);
             session(['source_id'  => '000003']); //Look at UserTableSeed.php
@@ -46,10 +46,10 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'ATENEOATENEO33']);
             session(['ruolo'      => TipUser::ROLE_ADMIN_ATENEO]);
             session(['matricola'  => 'ateneo@ateneo.it']);
-            
+
             return true;
         }
-        
+
         else if($username == 'usciere@ateneo.it') {
             session(['session_id' => '444eee555rrr']);
             session(['source_id'  => '000004']); //Look at UserTableSeed.php
@@ -58,10 +58,10 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'STAFFSTAFF3']);
             session(['ruolo'      => TipUser::ROLE_INQUIRER]);
             session(['matricola'  => 'usciere@ateneo.it']);
-            
+
             return true;
         }
-        
+
         else if($username == 'usciere2@ateneo.it') {
             session(['session_id' => '555eee666rrr']);
             session(['source_id'  => '000005']); //Look at UserTableSeed.php
@@ -70,10 +70,10 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'STAFFSTAFF34']);
             session(['ruolo'      => TipUser::ROLE_INQUIRER]);
             session(['matricola'  => 'usciere2@ateneo.it']);
-            
+
             return true;
         }
-        
+
         else if($username == 'segreteria@ateneo.it') {
             session(['session_id' => '666eee777rrr']);
             session(['source_id'  => '000006']); //Look at UserTableSeed.php
@@ -82,41 +82,41 @@ class SoapController extends Controller {
             session(['cod_fis'    => 'STAFFSTAFF88']);
             session(['ruolo'      => TipUser::ROLE_SECRETARY]);
             session(['matricola'  => 'segreteria@ateneo.it']);
-            
+
             return true;
         }
-        
+
         else if($username == '001642') {
-            
+
             $this->wsGetUdDocPart($request);
             return true;
-            
+
         }
-        
+
         else if($username == '000099') {
-            
+
             $this->wsGetUdDocPart($request);
             return true;
-            
+
         }
-        
+
         else {
             return false;
         }
     }
-    
+
     public function wsLogin(Request $request) {
-        
+
         Log::info('SoapController - wsLogin()');
-        
+
         $username = $request['username'];
         $password = $request['password'];
-        
+
         //gestione utenza fittizia per sviluppo
         if($this->checkFakeUsersForLogin($request)) {
             return redirect('/');
         } else {
-            
+
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
                 $service->wsdl($this->esse3PathWsdl);
             });
@@ -164,30 +164,30 @@ class SoapController extends Controller {
             } else {
                 return redirect()->back()->with('customError', $responseCode);
             }
-           
+
         }
 
     }
-    
+
     private function checkFakeUsersForLogout() {
-        
+
         Log::info('SoapController - checkFakeUsersForLogout()');
         $matricola = session('matricola');
-        
+
         if($matricola == 'davide@davide.it' || $matricola == 'ateneo@ateneo.it' || $matricola == '001642' || $matricola == '000099') {
             return true;
         } else {
             return false;
         }
-        
+
     }
-    
+
     public function wsLogout() {
-        
+
         Log::info('SoapController - wsLogout()');
-        
+
         if(!$this->checkFakeUsersForLogout()) {
-            
+
             $sessionId = session('session_id');
             $sid = 'SESSIONID='.$sessionId;
 
@@ -198,9 +198,9 @@ class SoapController extends Controller {
             $fn_doLogout = $this->soapWrapper->call('GenericWSEsse3.fn_doLogout', [
                 'params' => $sid
             ]);
-        
+
         }
-        
+
         Session::forget('session_id');
         Session::forget('source_id');
         Session::forget('nome');
@@ -208,15 +208,15 @@ class SoapController extends Controller {
         Session::forget('cod_fis');
         Session::forget('ruolo');
         Session::forget('matricola');
-        
+
         return redirect('/');
-        
+
     }
-    
+
     public function wsGetUdDocPart($matricolaDocente) {
-        
+
         if(session('ruolo') == TipUser::ROLE_TEACHER) {
-            
+
             //TODO
             //Inserire variabile anno per chiamata a servizio nel file di configurazione
             $year = '2016';
@@ -235,7 +235,7 @@ class SoapController extends Controller {
 
             //Codice di risposta
             $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
-            
+
             //se il codice di risposta è 1 non ci sono stati errori
             if($responseCode == 1) {
                 $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
@@ -246,15 +246,16 @@ class SoapController extends Controller {
                 $nome = "";
                 $cognome = "";
                 for($i = 0; $i < count($list); $i++) {
+                    //Come chiave è inserito anche l'indice del ciclo per
+                    //evitare che ci siano chiavi duplicate e quindi meno elementi nella lista
                     $idTemp = (string)$list[$i]->UD_COD.'-'.(string)$list[$i]->AA_ORD_ID.'-'.$i;
                     $temp = (string)$list[$i]->CDS_COD." - ".(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID;
                     Log::info('SoapController - wsGetUdDocPart('.(string)$list[$i]->UD_COD.':'.$temp.')');
                     $result += array(
-                        //TODO 
-                        //capire come gestire id della materia
-                        //se come chiave del json viene utilizzato il codice dell unita didattica
-                        //vengo creati elementi con chaive duplicata e quindi vengono eliminati automaticamente del json
-                        $idTemp => $temp
+
+                        $temp => $temp
+                        //$idTemp => $temp
+                        
                         /*"CDS_COD" => (string)$list[$i]->CDS_COD,
                         "CDS_DES" => (string)$list[$i]->CDS_DES,
                         "DIP_COD" => (string)$list[$i]->DIP_COD,
@@ -275,7 +276,7 @@ class SoapController extends Controller {
                         "TIPO_CORSO" => (string)$list[$i]->TIPO_CORSO,
                         "CFU_TOTALI_AD" => (string)$list[$i]->CFU_TOTALI_AD,
                         "ORE_PREVISTE_MODULO" => (string)$list[$i]->ORE_PREVISTE_MODULO,
-                        "ORE_PREVISTE_AD" => (string)$list[$i]->ORE_PREVISTE_AD   */                     
+                        "ORE_PREVISTE_AD" => (string)$list[$i]->ORE_PREVISTE_AD   */
                     );
                     $nome = (string)$list[$i]->DOCENTE_NOME;
                     $cognome = (string)$list[$i]->DOCENTE_COGNOME;
@@ -283,23 +284,23 @@ class SoapController extends Controller {
                 session(['listOfTeachings' => $result]);
             }
         }
-        
+
     }
-    
+
     //TODO terminare gestione errori con scrittura messaggi
     public function login(Request $request) {
-        
+
         Log::info('SoapController - login()');
-        
+
         $ldapEnableLogin = Config::get('app.LDAP_ENABLE_LOGIN');
         if($ldapEnableLogin != null && !$ldapEnableLogin) {
             if($this->checkFakeUsersForLogin($request)) {
                 return redirect('/');
             }
-        } 
-        
+        }
+
         require_once 'LdapConfigUtility.php';
-        
+
         try {
 
             /* Preload $_POST if empty */
@@ -327,7 +328,7 @@ class SoapController extends Controller {
             if (($ldap_params_username !== null) && ($ldap_params_password !== null)  && ( !isset($_SESSION['loggedin']) || (isset($_SESSION['loggedin']) && !$_SESSION['loggedin']) ) ) {
 
                 if (($LDAP_username_get !== null) && ($LDAP_password_get !== null)) { /* CHECK if Parameters was passed via unsecure GET request but is usefull for testing */
-                    Log::error('SoapController - login(): LDAP_error -> Invalid call method. Use POST instead of GET.'.LDAP_WARNING);    
+                    Log::error('SoapController - login(): LDAP_error -> Invalid call method. Use POST instead of GET.'.LDAP_WARNING);
                     //LDAP_replyError("Invalid call method. Use POST instead of GET.", LDAP_WARNING);
                 }
 
@@ -431,10 +432,10 @@ class SoapController extends Controller {
                                                                                                 } /* End if */
                                                                                         } /* End foreach */
 
-                                                                                        session(['session_id' => session_id()]); 
+                                                                                        session(['session_id' => session_id()]);
 
                                                                                         $this->manageACL($ldap_reply["data"]['cn']);
-                                                                                        
+
                                                                                         if(isset($ldap_reply["data"]['MATRICOLA'])) {
                                                                                             $this->wsGetUdDocPart($ldap_reply["data"]['MATRICOLA']);
                                                                                         }
@@ -504,7 +505,7 @@ class SoapController extends Controller {
                 $LDAP_error = ldap_err2str(ldap_errno($ldap_connection));
                 if ($LDAP_error !== "Success") LDAP_replyError('LDAP::'.$LDAP_error);
                 ldap_close($ldap_connection);
-            } 
+            }
 
         } catch (Exception $e) {
             $ldap_reply["data"]=null;
@@ -512,15 +513,15 @@ class SoapController extends Controller {
             return redirect()->back()->with('customError', 'ldap_error_no_login');
             //LDAP_replyError($e->getMessage(),LDAP_EXCEPTION);
         }
-        
+
         return redirect('/');
-        
+
     }
-    
+
     private function manageACL($cn) {
-        
+
         Log::info('SoapController - manageACL('.$cn.')');
-        
+
         $user = User::where('cn', $cn)->get();
         if(count($user) == 0) {
             session(['ruolo' => TipUser::ROLE_MEMBER]);
@@ -536,11 +537,11 @@ class SoapController extends Controller {
                     session()->flush();
                     return redirect('/')->with('customError', 'acl_no_enable_access');
                 } else {
-                    session(['ruolo' => $user[0]->tip_user_id]); 
+                    session(['ruolo' => $user[0]->tip_user_id]);
                     session(['enable_crud' => $acl[0]->enable_crud]);
                     session(['group_id_to_manage' => $acl[0]->group_id]);
                 }
-                
+
                 //Solo per l'utente admin (in SVILUPPO) viene inserita in sessione la matricola
                 //presente nella tabella Users
                 //In PRODUZIONE tutti gli utenti avranno la matricola
@@ -550,27 +551,27 @@ class SoapController extends Controller {
                         session(['matricola'  => $user[0]->registration_number]);
                     }
                 }
-                
+
             }
         }
-        
+
     }
-    
+
     public function logout() {
-        
+
         Log::info('SoapController - logout()');
-        
-        session_unset(); 
+
+        session_unset();
         session_destroy();
         $_SESSION = array();
         session_start();
         session_regenerate_id();
         $_SESSION['loggedin'] = false;
-        
+
         return redirect('/');
-        
+
     }
-    
+
     /* Handle error messages in reply */
     function LDAP_replyError($msg, $level = 2) {
             global $ldap_reply;
@@ -616,5 +617,5 @@ class SoapController extends Controller {
             /* Output the finished timestamp */
             return date("d/m/Y H:i:s",$timestamp);
     }
-    
+
 }
