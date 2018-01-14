@@ -552,13 +552,14 @@
             });
 
             $("#department_id").on("change", function() {
+                $("#cds_id").html("");
+                $("#subject_id").html("");
                 getCDSFromDepartment($("#department_id").val());
             });
 
             function getCDSFromDepartment(idDepartment) {
-                $("#cds_id").val(null);
                 var selectedDepartment = { 'idDepartment' : idDepartment};
-                                $('#cds_id').select2({
+                $('#cds_id').select2({
                     placeholder: "{{ trans('messages.booking_date_select_cds') }}",
                     ajax : {
                         type: 'post',
@@ -573,14 +574,14 @@
                         cache: false
                     }
                 });
-                            }
+            }
 
             $("#cds_id").on("change", function() {
+                $("#subject_id").html("");
                 getSubjectsFromCds($("#cds_id").val());
             });
 
             function getSubjectsFromCds(cds) {
-                $("#subject_id").val(null);
                 var selectedCds = { 'cds' : cds};
                 $('#subject_id').select2({
                     placeholder: "{{ trans('messages.booking_date_select_subject') }}",
@@ -609,25 +610,23 @@
             });
 
             function getResources(idGroup) {
-                $("#resource_id").val(null);
+                $("#resource_id").html("");
                 $("#resourceSelected").fadeOut('slow');
                 $("#noteResourceSelected").fadeOut('slow');
                 $("#capacityRoom").html("");
                 var selectedGroup = { 'idGroup' : idGroup};
-                $('#resource_id').select2({
-                    placeholder : "{{ trans('messages.booking_date_select_resource') }}",
-                    ajax : {
-                        type: 'post',
-                        url: "{{URL::to('/resources')}}",
-                        dataType: 'json',
-                        data: selectedGroup,
-                        processResults: function (data) {
-                            return {
-                                results: data
-                            };
-                        },
-                        cache: false
-                    }
+
+                $.ajax({
+                    type: 'post',
+                    url: "{{URL::to('/resources')}}",
+                    dataType: 'json',
+                    data: selectedGroup,
+                }).then(function (response) {
+                    $("#resource_id").select2({
+                        placeholder : "{{ trans('messages.booking_date_select_resource') }}",
+                        data: response,
+                        cache : false
+                    });
                 });
 
             }
