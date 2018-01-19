@@ -201,7 +201,8 @@
                         <!-- Booking : id group - single -->
                             <div class="col-md-6">
                                 {!! Form::label('group_id', trans('messages.booking_date_group')); !!}
-                                {!! Form::text('group_id', $group->name, ['class' => 'form-control', 'style' => 'width: 60%', 'readonly']); !!}
+                                {!! Form::hidden('group_id', $group->id); !!}
+                                {!! Form::text('name', $group->name, ['class' => 'form-control', 'style' => 'width: 60%', 'readonly']); !!}
                             </div>
                         @endif
                     <!-- Booking : id tip evento -->

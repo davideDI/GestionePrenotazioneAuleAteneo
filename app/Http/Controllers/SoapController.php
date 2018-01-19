@@ -509,8 +509,20 @@ class SoapController extends Controller {
         } catch (Exception $e) {
             $ldap_reply["data"]=null;
             Log::error('SoapController - login(): LDAP_error -> '.$e->getMessage().'.');
+
+            //Clean session
+            session(['cod_fis' => null]);
+            session(['nome' => null]);
+            session(['cognome' => null]);
+            session(['session_id' => null]);
+            session(['loggedin' => null]);
+            session(['ruolo' => null]);
+            session(['listOfTeachings' => null]);
+            session(['enable_crud' => null]);
+            session(['group_id_to_manage' => null]);
+            session(['matricola' => null]);
+
             return redirect()->back()->with('customError', 'ldap_error_no_login');
-            //LDAP_replyError($e->getMessage(),LDAP_EXCEPTION);
         }
 
         return redirect('/');

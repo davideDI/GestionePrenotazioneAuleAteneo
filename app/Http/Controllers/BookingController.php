@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Artisaninweb\SoapWrapper\SoapWrapper;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -297,10 +298,20 @@ class BookingController extends Controller {
     public function getNewBookingForm() {
 
         Log::info('BookingController - getNewBookingForm()');
-
         $booking = new Booking;
-        $groupsList = Group::pluck('name', 'id');
-        $resourceList =  Resource::pluck('name', 'id');
+
+        $groupsList = "";
+        $resourceList = "";
+        $group = "";
+
+        if(Session::get('ruolo') == TipUser::ROLE_ADMIN_ATENEO) {
+            $groupsList = Group::pluck('name', 'id');
+            $resourceList =  Resource::pluck('name', 'id');
+        } else {
+            $group = Group::find(Session::get('group_id_to_manage'));
+            $resourceList =  Resource::pluck('name', 'id')->where('group_id', $group->id);
+        }
+
         $tipEventList = TipEvent::pluck('name', 'id');
 
         $listOfTeachings = "";
@@ -343,6 +354,7 @@ class BookingController extends Controller {
         return view('pages/booking/new-booking', [  'booking'         => $booking,
                                                     'groupsList'      => $groupsList,
                                                     'resourceList'    => $resourceList,
+                                                    'group'           => $group,
                                                     'tipEventList'    => $tipEventList,
                                                     'listOfTeachings' => $listOfTeachings,
                                                     'departmentList'  => $departmentList]);

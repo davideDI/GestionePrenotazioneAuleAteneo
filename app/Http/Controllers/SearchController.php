@@ -9,41 +9,41 @@ use App\Group;
 use App\Resource;
 
 class SearchController extends Controller {
-    
+
     public function getSearchView() {
-        
+
         Log::info('SearchController - getSearchView()');
-        
+
         $groupList = Group::all();
-       
+
         return view('pages/search/search', ['groupsList' => $groupList]);
-        
+
     }
-    
+
     public function searchByCapacity(Request $request) {
-        
+
         Log::info('SearchController - searchByCapacity()');
-        
+
         $listOfGroups= $request['listOfGroups'];
         $capacity = $request['capacity'];
         if($capacity == '') {
             $capacity = 0;
         }
-        
+
         $resourceList = Resource::with('group')->whereIn('group_id', $listOfGroups)->where('capacity', '>=', $capacity)->get();
 
         return $resourceList;
-        
+
     }
-    
+
     //TODO ottimizzare query e cercare di utilizzare Eloquent
     public function searchByFree(Request $request) {
-        
+
         Log::info('SearchController - searchByFree()');
-        
+
         $listOfGroups = $request['listOfGroups'];
         $qMarks = str_repeat('?,', count($listOfGroups) - 1) . '?';
-        
+
         $capacity = $request['capacity'];
         if($capacity == '') {
             $capacity = 0;
@@ -56,50 +56,48 @@ class SearchController extends Controller {
         $date_end_string = $date_sring.' '.$date_end;
         $repeat_start = date("Y-m-d G:i:s",strtotime($date_start_string));
         $repeat_end = date("Y-m-d G:i:s",strtotime($date_end_string));
-        
+
         $listOfParameters = array();
-        
+
         array_push($listOfParameters, $capacity);
         for($i = 0; $i < count($listOfGroups); $i++) {
             array_push($listOfParameters, $listOfGroups[$i]);
         }
-                
+
         array_push($listOfParameters, $capacity);
         for($i = 0; $i < count($listOfGroups); $i++) {
             array_push($listOfParameters, $listOfGroups[$i]);
         }
-        
+
         array_push($listOfParameters, $repeat_start);
         array_push($listOfParameters, $repeat_end);
         array_push($listOfParameters, $repeat_start);
         array_push($listOfParameters, $repeat_end);
-        
-        Log::info($listOfParameters);
-        
+
         $resourceList = DB::select
                         ( DB::raw
-                            ("  
-                                select 
+                            ("
+                                select
 
-                                    groups.name, 
-                                    groups.id as id_group, 
-                                    resources.name as name_resource, 
+                                    groups.name,
+                                    groups.id as id_group,
+                                    resources.name as name_resource,
                                     resources.id as id_resources,
-                                    resources.description as description_resource, 
-                                    resources.capacity  
+                                    resources.description as description_resource,
+                                    resources.capacity
 
                                 from resources, groups
 
-                                where 
+                                where
                                     resources.group_id = groups.id
                                 AND
 
                                     resources.capacity >= ?
-                                and 
+                                and
 
                                     groups.id in ({$qMarks})
 
-                                and 
+                                and
 
                                 resources.id not in (
 
@@ -113,7 +111,7 @@ class SearchController extends Controller {
 
                                 resources.capacity >= ?
 
-                                and 
+                                and
 
                                 groups.id in ({$qMarks})
 
@@ -133,13 +131,12 @@ class SearchController extends Controller {
 
                                     )
                             ")
-                            , 
+                            ,
                             $listOfParameters
                         );
-                                    
-        return $resourceList;
-        
-    }
-     
-}
 
+        return $resourceList;
+
+    }
+
+}

@@ -1,19 +1,19 @@
 @extends('layouts.layout')
     @section('content')
-        
+
         <div class="row">
-            
+
             <!-- Div con filtri e buttons -->
             <div class="col-md-2">
-                
+
                 <!-- Select resource associate al group -->
                 <div class="row">
                     <div class="col-md-12">
 
-                        <legend>{{$group->name}}</legend> 
-                        <select id="resourceSelect" 
-                                onChange="window.location.href=this.value" 
-                                class="listOfResources" 
+                        <legend>{{$group->name}}</legend>
+                        <select id="resourceSelect"
+                                onChange="window.location.href=this.value"
+                                class="listOfResources"
                                 style="width: 90%">
                             <option></option>
                             @foreach($resources as $resource)
@@ -25,18 +25,18 @@
 
                     </div>
                 </div>
-                
+
                 <br>
-                
+
                 <!-- Tasto Nuovo Evento -->
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti registrati (o l'admin di ateneo) e abilitati per lo specifico gruppo possono richiedere prenotazioni -->
-                        @if(Session::has('session_id') 
-                                && 
-                            Session::has('enable_crud') 
-                                && 
-                            Session::get('enable_crud') == '1' 
+                        @if(Session::has('session_id')
+                                &&
+                            Session::has('enable_crud')
+                                &&
+                            Session::get('enable_crud') == '1'
                                 &&
                             (Session::get('group_id_to_manage') == $group->id || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
@@ -45,9 +45,9 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <br><br>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Solo gli utenti NON studenti visualizzano la legenda stati prenotazione -->
@@ -97,9 +97,9 @@
                         @endif
                     </div>
                 </div>
-                
+
             </div>
-            
+
             <!-- Div principale -->
             <div class="col-md-10">
 
@@ -107,7 +107,7 @@
                 <div class="row">
                     <div class="col-md-12" id="calendar"></div>
                 </div>
-                
+
             </div>
 
             <!-- Modal for set information -->
@@ -121,7 +121,7 @@
                             <h4 class="modal-title" id="myModalLabel"></h4>
                         </div>
                         <div id="modalBody" class="modal-body">
-                            
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
@@ -130,7 +130,7 @@
                 </div>
             </div>
         </div>
-   
+
         <!-- Select 2 -->
         <script type="text/javascript">
             $(document).ready(function() {
@@ -139,7 +139,7 @@
               })
             });
         </script>
-    
+
         <!-- Caricamento script calendario -->
         <script type="text/javascript">
             //Al caricamento della pagina viene inserito il calendario
@@ -147,9 +147,9 @@
 
                 var initialLocaleCode = "{{Session::get('applocale')}}";
                 var typeUser = "{{Session::get('ruolo')}}";
-                
+
                 $('#calendar').fullCalendar({
-                       
+
                     // Definizione opzioni calendario
                     header: {
                         left: 'prev,next today',
@@ -157,7 +157,7 @@
                         right: 'month,basicWeek,basicDay,listDay,agendaWeek'
                             },
                     minTime: "08:00:00", //Definizione orari min
-                    maxTime: "20:30:00", //Definizione orari max             
+                    maxTime: "20:30:00", //Definizione orari max
                     //defaultDate: '2016-12-12', Se non impostata la data di default viene presa la data odierna
                     navLinks: true, // can click day/week names to navigate views
                     editable: true, // onclick sull'evento
@@ -166,12 +166,12 @@
                     eventDurationEditable: false,  //disabilitato il resize dell'evento
                     defaultView: 'agendaWeek', //Vista di default
                     eventLimit: true, // Quando ci sono più eventi per una data compare il link view more
-                    
+
                     //Caricamento eventi
                     events: [
                         @foreach($bookings as $booking)
                             @foreach($booking->repeats as $repeat)
-                                //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
+                                //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni
                                 //in stato 3 [Gestita]
                                 @if(!Session::has('ruolo') || Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)
                                     @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_OK)
@@ -181,18 +181,18 @@
                                             description: '{{$booking->description}}',
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
-                                            @if($booking->tip_event_id == \App\TipEvent::TIP_EVENT_EXAM) 
+                                            @if($booking->tip_event_id == \App\TipEvent::TIP_EVENT_EXAM)
                                                 color : '#00FF00'
-                                            @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_LESSON) 
+                                            @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_LESSON)
                                                 color : '#FF0000'
-                                            @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_SEMINARY) 
+                                            @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_SEMINARY)
                                                 color : '#FFFF00'
                                             @else
                                                 color : '#0000FF'
                                             @endif
                                         },
-                                    @endif 
-                                //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni 
+                                    @endif
+                                //gli utenti non loggati oppure gli utenti Studenti visualizzano solo le prenotazioni
                                 //in stato 3 [Gestita]
                                 @elseif(Session::has('ruolo') && Session::get('ruolo') != \App\TipUser::ROLE_STUDENT)
                                         {
@@ -201,31 +201,31 @@
                                             description: '{{$booking->description}}',
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
-                                            @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED) 
+                                            @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED)
                                                 color : '#0000FF'
-                                            @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING) 
+                                            @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING)
                                                 color : '#FFFF00'
-                                            @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_OK) 
+                                            @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_OK)
                                                 color : '#00FF00'
                                             @else
                                                 color : '#FF0000'
                                             @endif
                                         },
-                                @endif 
+                                @endif
                             @endforeach
                         @endforeach
                         ],
-                        
-                    drop: function(date, jsEvent, ui) { 
-                        
+
+                    drop: function(date, jsEvent, ui) {
+
                     },
-                    
-                    eventReceive: function( event ) { 
-                        
+
+                    eventReceive: function( event ) {
+
                     },
-                    
+
                     //Al passaggio del mouse sulla prenotazione visualizzo il popover
-                    eventMouseover: function( event, jsEvent, view ) { 
+                    eventMouseover: function( event, jsEvent, view ) {
                         //Set attributi per la visualizzazione del popover
                         $(this).attr("data-toggle", "popover");
                         $(this).attr("data-placement", "right");
@@ -234,66 +234,66 @@
                         //Visualizzo il "popover"
                         $(this).popover('show');
                     },
-                    
+
                     //Togliendo il mouse sulla prenotazione il popover verrà nascosto
-                    eventMouseout: function( event, jsEvent, view ) { 
+                    eventMouseout: function( event, jsEvent, view ) {
                         $(this).popover('hide');
                     },
-                    
+
                     //Spostamento casella rappresentante l'evento (disabilitato)
                     eventDrop: function( calEvent, dayDelta, minuteDelta, allDay,
- 			 			revertFunc, jsEvent, ui, view ) {  
-                        
+ 			 			revertFunc, jsEvent, ui, view ) {
+
                         //Recupero dati per update evento
                         var idEvento = calEvent.id;
                         var start = moment(calEvent.start).format("YYYY-MM-DD HH:mm:ss");
                         var end = moment(calEvent.end).format("YYYY-MM-DD HH:mm:ss");
-                        
+
                         //creazione json per chiamata ajax
                         var dataEvent = {
                                 'id_evento': idEvento,
                                 'data_inizio': start,
                                 'data_fine': end
                             };
-                        
+
                         //Si richiama la funzione che effettua la modifica all'evento
                         //updateEvent(dataEvent);
-                        
+
                     },
-                    
+
                     eventDragStart: function( event, jsEvent, ui, view ) {
-                        
+
                     },
-                    
-                    eventDragStop: function( event, jsEvent, ui, view ) { 
-                        
+
+                    eventDragStop: function( event, jsEvent, ui, view ) {
+
                     },
-                    
+
                     //Modifica "dimensione" (durata evento) casella (disabilitato)
                     eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
-                        
+
                         //Recupero dati per update evento
                         var idEvento = event.id;
                         var start = moment(event.start).format("YYYY-MM-DD HH:mm:ss");
                         var end = moment(event.end).format("YYYY-MM-DD HH:mm:ss");
-                        
+
                         //creazione json per chiamata ajax
                         var dataEvent = {
                             'id_evento': idEvento,
                             'data_inizio': start,
                             'data_fine': end
                         };
-                        
+
                         //Si richiama la funzione che effettua la modifica all'evento
                         //updateEvent(dataEvent);
-                        
+
                     },
-                    
+
                     //Quando viene caricata la pagine e si visualizza il calendario viene richiamato questo evento
                     viewRender: function() {
-                        
+
                     },
-                    
+
                     // gestione click su evento (disabilitato)
                     eventClick: function(calEvent, jsEvent, view) {
                         /*
@@ -318,7 +318,8 @@
                                 textForModal += "<p><strong>" + result[0].description + "</strong></p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_booked_at')}}</strong>" + moment(result[0].created_at).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                 if(result[0].user.surname === null || result[0].user.name === null) {
-                                    textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.registration_number + "</p>";
+                                    // textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.registration_number + "</p>";
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong> Admin </p>";
                                 } else {
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.surname + " " + result[0].user.name + "</p>";
                                 }
@@ -326,8 +327,8 @@
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_event')}}</strong>" + result[0].tip_event.name + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
                                 for (var x=0; x < result[0].repeats.length; x++) {
-                                    textForModal += "<hr>"; 
-                                    textForModal += "<div>"; 
+                                    textForModal += "<hr>";
+                                    textForModal += "<div>";
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_start')}}</strong>" + moment(result[0].repeats[x].event_date_start).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                     @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP))
@@ -343,28 +344,28 @@
                                     textForModal += "</div>";
                                     textForModal += "<hr>";
                                 }
-                                
+
                                 $('#modalBody').html(textForModal);
                                 $('#myModal').modal('show');
                             },
-                            
+
                             error : function(err) {
                                 console.log(err);
                             }
                         });
-                       
+
                         return false;
-                        
+
                     }
 
                 });
 
             });
-            
+
             function inspectBooking(idRepeat) {
-            
+
                 var data = {'idRepeat' : idRepeat};
-            
+
                 $.ajax({
 
                     url: "{{URL::to('/insert-request-check')}}",
@@ -381,11 +382,11 @@
                     },
 
                 });
-                
+
             }
-            
+
             function updateEvent(event) {
-                
+
                 //Tramite chiamata ajax vengono modificati i dati dell'evento
                 $.ajax({
 
@@ -401,14 +402,14 @@
                     },
 
                 });
-                        
+
             }
 
             // when the selected option changes, dynamically change the calendar option
             function changeCalendarLocale(locale) {
                 $('#calendar').fullCalendar('option', 'locale', locale);
             }
-            
+
         </script>
-        
+
     @endsection
