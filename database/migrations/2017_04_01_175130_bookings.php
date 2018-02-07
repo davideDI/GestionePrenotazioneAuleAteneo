@@ -15,7 +15,8 @@ class Bookings extends Migration {
             $table->dateTime('booking_date')->comment('booking date');
             $table->integer('num_students')->comment('Expected number of students');
 
-            $table->string('subject_id', 250)->default('N.D.')->comment('reference subject');
+            $table->string('subject_id', 300)->default('N.D.')->comment('reference subject');
+            $table->string('teacher_id', 50)->default('N.D.')->comment('reference teacher');
 
             //foreign tip_event table
             $table->integer('tip_event_id')->unsigned()->comment('foreign tip_event table');

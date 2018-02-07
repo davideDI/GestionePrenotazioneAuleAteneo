@@ -38,7 +38,7 @@
                                 &&
                             Session::get('enable_crud') == '1'
                                 &&
-                            (Session::get('group_id_to_manage') == $group->id || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
+                            (Session::get('group_id_to_manage') == $group->id || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO || Session::get('ruolo') == \App\TipUser::ROLE_STUDENT))
                             <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>

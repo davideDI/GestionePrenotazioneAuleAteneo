@@ -73,9 +73,14 @@ class BookingController extends Controller {
             $booking->user_id = session('source_id');
             if(isset($request['teaching_id'])) {
                 $booking->subject_id = $request['teaching_id'];
+                $booking->teacher_id = session('matricola');
             }
             if(isset($request['subject_id'])) {
-                $booking->subject_id = $request['subject_id'];
+                $subjectSelected = $request['subject_id'];
+                $splitString = "***";
+                $subjectArray = explode($splitString, $subjectSelected);
+                $booking->subject_id = $subjectArray[0];
+                $booking->teacher_id = $subjectArray[1];
             }
             Log::info('BookingController - Insert booking ['.$booking.']');
             $booking->save();
@@ -280,11 +285,10 @@ class BookingController extends Controller {
             $result = array();
             $result[] = array('' => '');
             for($i = 0; $i < count($list); $i++) {
-                $idTemp = (string)$list[$i]->UD_COD.'-'.(string)$list[$i]->AA_ORD_ID.'-'.$i;
+                $idTemp = (string)$list[$i]->CDS_COD.' - '.(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID.'***'.(string)$list[$i]->DOCENTE_MATRICOLA.'***'.$i;
                 $desTemp = (string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID.' - '.(string)$list[$i]->DOCENTE_COGNOME.' ('.(string)$list[$i]->PDS_DES.')';
                 $result[] = array(
-                    //'id' => $idTemp, 'text' => $desTemp
-                    'id' => $desTemp, 'text' => $desTemp
+                    'id' => $idTemp, 'text' => $desTemp
                 );
             }
             return $result;
