@@ -178,7 +178,7 @@
                                         {
                                             id         : '{{$booking->id}}',
                                             title      : '{{$booking->name}}',
-                                            description: '{{$booking->description}}',
+                                            description: '{{$booking->subject_id}}',
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
                                             @if($booking->tip_event_id == \App\TipEvent::TIP_EVENT_EXAM)
@@ -198,7 +198,7 @@
                                         {
                                             id         : '{{$booking->id}}',
                                             title      : '{{$booking->name}}',
-                                            description: '{{$booking->description}}',
+                                            description: '{{$booking->subject_id}}',
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
                                             @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED)
@@ -313,9 +313,16 @@
                             dataType : 'json',
                             type : 'POST',
                             success : function (result) {
-                                $('#myModalLabel').html("<p>" + result[0].name + "</p>");
+
+                                var title = "";
+                                if(result[0].subject_id !== 'N.D.') {
+                                    title += result[0].subject_id;
+                                } else {
+                                    title += result[0].name;
+                                }
+
+                                $('#myModalLabel').html("<p>" + title + "</p>");
                                 var textForModal = "";
-                                textForModal += "<p><strong>" + result[0].description + "</strong></p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_booked_at')}}</strong>" + moment(result[0].created_at).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                 if(result[0].user.surname === null || result[0].user.name === null) {
                                     // textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.registration_number + "</p>";
@@ -323,9 +330,12 @@
                                 } else {
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_booked_by')}}</strong>" + result[0].user.surname + " " + result[0].user.name + "</p>";
                                 }
+                                if(result[0].teacher_id !== null && result[0].teacher_id !== 'N.D.') {
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_teacher_id')}}</strong>" + result[0].teacher_id + "</p>";
+                                }
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_num_students')}}</strong>" + result[0].num_students + "</p>";
                                 textForModal += "<p><strong>{{trans('messages.index_calendar_event')}}</strong>" + result[0].tip_event.name + "</p>";
-                                textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
+                                //textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}</strong></p>";
                                 for (var x=0; x < result[0].repeats.length; x++) {
                                     textForModal += "<hr>";
                                     textForModal += "<div>";

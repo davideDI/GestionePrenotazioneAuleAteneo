@@ -20,12 +20,11 @@ Università degli studi de L'Aquila [Univaq](http://univaq.it)
 3. Importa da Git il progetto -> git clone https://github.com/davideDI/GestionePrenotazioneAuleAteneo
 4. Vai da prompt nella cartella appena creata ed esegui il comando "composer install"
 5. Creare e popolare il file di configurazione .env. Le properties aggiuntive, rispetto ad un classico file .env Laravel, utilizzate sono elencate [qui](https://github.com/davideDI/GestionePrenotazioneAuleAteneo/blob/master/.env.example)
-6. Nel file config/database.php ci sono le informazioni per la creazione del DB locale
-7. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
-8. "php artisan db:seed" per l'inserimento dei dati iniziali 
-9. "php artisan generate:key"
+6. "php artisan migrate" per la creazione del db e relative tabelle [comando ancora da definire]
+7. "php artisan db:seed" per l'inserimento dei dati iniziali
+8. "php artisan key:generate"
 
-N.B. 
+N.B.
  1. Se eseguendo il comando "php artisan db:seed" si presenta una "ReflectionException" esegui il comando "composer dump-autoload"
  2. Se avviando l'applicazione si presenta un messaggio "The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths"
     eseguire i seguenti comandi "php artisan config:clear" e successivamente "php artisan config:cache"

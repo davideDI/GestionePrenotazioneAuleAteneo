@@ -48,6 +48,7 @@
         'index_calendar_capacity' => 'Seats',
         'index_calendar_booked_at' => 'Booked at : ',
         'index_calendar_num_students' => 'Num Students : ',
+        'index_calendar_teacher_id' => 'Teacher : ',
         'index_calendar_event' => 'Event : ',
         'index_calendar_repeats' => 'Repeats',
         'index_calendar_event_start' => 'Event start : ',

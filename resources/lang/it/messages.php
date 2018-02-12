@@ -48,6 +48,7 @@
         'index_calendar_capacity' => 'Posti',
         'index_calendar_booked_at' => 'Prenotato il : ',
         'index_calendar_num_students' => 'Studenti previsti : ',
+        'index_calendar_teacher_id' => 'Insegnante : ',
         'index_calendar_event' => 'Evento : ',
         'index_calendar_repeats' => 'Ripetizioni',
         'index_calendar_event_start' => 'Inizio evento : ',

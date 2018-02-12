@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model {
 
-    protected $fillable = ['name', 'description', 'teacher_id', 'subject_id', 'num_students', 'booking_date', 'resource_id', 'tip_event_id'];
+    protected $fillable = ['name', 'description', 'teacher_id', 'subject_id', 'cds_id', 'num_students', 'booking_date', 'resource_id', 'tip_event_id'];
     protected $table = 'bookings';
 
     //Relazione con la tabella repeats

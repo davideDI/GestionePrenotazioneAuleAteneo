@@ -17,6 +17,7 @@ class Bookings extends Migration {
 
             $table->string('subject_id', 300)->default('N.D.')->comment('reference subject');
             $table->string('teacher_id', 50)->default('N.D.')->comment('reference teacher');
+            $table->string('cds_id', 50)->default('N.D.')->comment('reference teacher');
 
             //foreign tip_event table
             $table->integer('tip_event_id')->unsigned()->comment('foreign tip_event table');
