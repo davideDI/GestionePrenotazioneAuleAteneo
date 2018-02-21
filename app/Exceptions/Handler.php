@@ -48,26 +48,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        
+
 //        if ($exception instanceof \SoapFault){
 //            return redirect('/')->withErrors([-1]);
 //        }
-        
+
         if ($exception instanceof TokenMismatchException){
             Log::error('Handler - TokenMismatchException : ['.$exception->getMessage().']');
             return redirect('/')->with('customError', -1);
         }
-        
+
         if ($exception instanceof PDOException){
             Log::error('Handler - PDOException : ['.$exception->getMessage().']');
             return redirect('/')->with('customError', -1);
         }
-        
+
         if ($exception instanceof ErrorException){
             Log::error('Handler - ErrorException : ['.$exception->getMessage().']');
             return redirect('/')->with('customError', -1);
         }
-        
+
         return parent::render($request, $exception);
     }
 

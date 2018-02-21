@@ -235,6 +235,9 @@
         'check_insert_ko' => 'Richiesta verifica non andata a buon fine',
         'booking_repeat_ko' => 'Errore nella riconferma delle prenotazioni',
 
+        //Soap
+        'soap_error' => 'Errore: problema con servizi esterni. Contatta l\'amministratore',
+
         //LDAP ERRORS
         'ldap_error_invalid_username' => 'Username non trovato!',
         'ldap_error_wrong_password' => 'Password errata!',

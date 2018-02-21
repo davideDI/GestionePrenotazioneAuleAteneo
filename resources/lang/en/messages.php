@@ -232,6 +232,9 @@
         'common_insert_ok' => 'Data entered correctly',
         'common_update_ok' => 'Data changed properly',
 
+        //Soap
+        'soap_error' => 'Error: problem with external services. Contact admin',
+
         //LDAP ERRORS
         'ldap_error_invalid_username' => 'Username not found!',
         'ldap_error_wrong_password' => 'Wrong password!',

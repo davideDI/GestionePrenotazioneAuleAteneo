@@ -329,7 +329,7 @@ class BookingController extends Controller {
 
         $departmentList = "";
         if(session('ruolo') == TipUser::ROLE_SECRETARY) {
-
+          try {
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
                 $service->wsdl($this->esse3PathWsdl);
             });
@@ -356,7 +356,10 @@ class BookingController extends Controller {
                 }
             }
             $departmentList = new \Illuminate\Support\Collection($result);
-
+          } catch (Exception $ex) {
+              Log::error('BookingController - Errore nella creazione del form di prenotazione: '.$ex->getMessage());
+              return redirect()->back()->with('customError', 'soap_error');
+          }
         }
 
         return view('pages/booking/new-booking', [  'booking'         => $booking,
