@@ -423,11 +423,16 @@ class BookingController extends Controller {
 
         Log::info('BookingController - getBookingsForRepeatEvents(resourceId: '.$resourceId.')');
 
-        $dateTo = date('Y-m-d');
-        $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
+        $day = date('w');
+
+        $week_start = date('Y-m-d', strtotime('-'.$day.' days'));
+        $week_end = date('Y-m-d', strtotime('+'.(6-$day).' days'));
+
+        $dateTo = date('Y-m-d', strtotime($week_end. ' - 6 days'));
+        $dateFrom = date('Y-m-d', strtotime($week_start. ' - 7 days'));
 
         $repeats = Repeat::with('booking')
-                                ->where('event_date_end', '<=', $dateTo)
+                                ->where('event_date_end', '<', $dateTo)
                                 ->where('event_date_start', '>=', $dateFrom)
                                 ->whereHas('booking', function($q) use ($resourceId) {
                                     $q->where('resource_id', '=', $resourceId);
@@ -446,13 +451,18 @@ class BookingController extends Controller {
 
             Log::info('BookingController - confirmRepeatEvents(resourceId: '.$resourceId.')');
 
-            $dateTo = date('Y-m-d');
-            $dateFrom = date('Y-m-d', strtotime($dateTo. ' - 7 days'));
+            $day = date('w');
+
+            $week_start = date('Y-m-d', strtotime('-'.$day.' days'));
+            $week_end = date('Y-m-d', strtotime('+'.(6-$day).' days'));
+
+            $dateTo = date('Y-m-d', strtotime($week_end. ' - 6 days'));
+            $dateFrom = date('Y-m-d', strtotime($week_start. ' - 7 days'));
 
             $bookings = Booking::with('resource', 'repeats')
                                 ->where('resource_id', '=', $resourceId)
                                 ->whereHas('repeats', function($q) use ($dateTo) {
-                                    $q->where('event_date_end', '<=', $dateTo);
+                                    $q->where('event_date_end', '<', $dateTo);
                                 })
                                 ->whereHas('repeats', function($q) use ($dateFrom) {
                                     $q->where('event_date_start', '>=', $dateFrom);
