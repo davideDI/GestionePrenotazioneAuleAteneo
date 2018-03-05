@@ -12,5 +12,6 @@
 
         'field_required' => 'Field required',
         'new_booking_num_max' => 'Maximum allowed number exceeded',
+        'new_booking_date_format' => 'Date format wrong',
 
 ];

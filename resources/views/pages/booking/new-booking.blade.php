@@ -53,10 +53,13 @@
                         <div class="col-md-6">
                             {!! Form::label('event_date_start', trans('messages.booking_date_day_start')); !!}
                             @if ($errors->has('event_date_start'))
-                                <span class="label label-danger">
+                                <span id="date_start_required" class="label label-danger">
                                     <strong>{{ trans('errors.field_required') }}</strong>
                                 </span>
                             @endif
+                            <span id="dateStartFormatError" class="label label-danger" style="display: none">
+                                <strong>{{ trans('errors.new_booking_date_format') }}</strong>
+                            </span>
                             @if(empty($date_start))
                                 <div id="event_date_start" name="event_date_start" class="input-append date datetimepicker1">
                                     <div class="row">
@@ -83,10 +86,13 @@
                         <div class="col-md-6">
                             {!! Form::label('event_date_end', trans('messages.booking_date_day_end')); !!}
                             @if ($errors->has('event_date_end'))
-                                <span class="label label-danger">
+                                <span id="date_end_required" class="label label-danger">
                                     <strong>{{ trans('errors.field_required') }}</strong>
                                 </span>
                             @endif
+                            <span id="dateEndFormatError" class="label label-danger" style="display: none">
+                                <strong>{{ trans('errors.new_booking_date_format') }}</strong>
+                            </span>
                             @if(empty($date_start))
                                 <div id="event_date_end" class="input-append date datetimepicker1">
                                     <div class="row">
@@ -110,76 +116,6 @@
                             @endif
                         </div>
                     </div>
-
-                <!-- Repet Options -->
-                    <div class="form-group row" style="display: none">
-                        <div class="col-md-3">
-                            <input type="radio" name="repeat_event" onclick="closeDivEventRepeatDetails()" value="1" checked="checked">&nbsp;{{ trans('messages.booking_single_event') }}<br>
-                        </div>
-                        <!-- <div class="col-md-3">
-                            <input type="radio" name="repeat_event" onclick="openDivEventRepeatDetails()" value="2">&nbsp;{{ trans('messages.booking_multiple_event') }}<br>
-                        </div> -->
-                    </div>
-
-                    <div id="event_repeat_details" class="form-group row" style="display:none">
-                        <div class="col-md-12">
-                            <input id="day_0" type="checkbox" name="type_repeat[]" value="0" onclick="addRepeat('day_0', 'detail_day_0')">&nbsp;{{ trans('messages.booking_type_repeat_monday') }} &nbsp;&nbsp;
-                            <input id="day_1" type="checkbox" name="type_repeat[]" value="1" onclick="addRepeat('day_1', 'detail_day_1')">&nbsp;{{ trans('messages.booking_type_repeat_tuesday') }} &nbsp;&nbsp;
-                            <input id="day_2" type="checkbox" name="type_repeat[]" value="2" onclick="addRepeat('day_2', 'detail_day_2')">&nbsp;{{ trans('messages.booking_type_repeat_wednesday') }} &nbsp;&nbsp;
-                            <input id="day_3" type="checkbox" name="type_repeat[]" value="3" onclick="addRepeat('day_3', 'detail_day_3')">&nbsp;{{ trans('messages.booking_type_repeat_thursday') }} &nbsp;&nbsp;
-                            <input id="day_4" type="checkbox" name="type_repeat[]" value="4" onclick="addRepeat('day_4', 'detail_day_4')">&nbsp;{{ trans('messages.booking_type_repeat_friday') }} &nbsp;&nbsp;
-                            <input id="day_5" type="checkbox" name="type_repeat[]" value="5" onclick="addRepeat('day_5', 'detail_day_5')">&nbsp;{{ trans('messages.booking_type_repeat_saturday') }}
-                        </div>
-                    </div>
-
-                    <div id="detail_day_0" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_monday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_from_0" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_to_0" class="form-control " /></div>
-                    </div>
-
-                    <div id="detail_day_1" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_tuesday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_from_1" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_to_1" class="form-control " /></div>
-                    </div>
-
-                    <div id="detail_day_2" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_wednesday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_from_2" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_to_2" class="form-control " /></div>
-                    </div>
-
-                    <div id="detail_day_3" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_thursday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_from_3" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_to_3" class="form-control " /></div>
-                    </div>
-
-                    <div id="detail_day_4" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_friday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_from_4" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_to_4" class="form-control " /></div>
-                    </div>
-
-                    <div id="detail_day_5" class="form-group row" style="display:none">
-                        <div class="col-md-2"><b>{{ trans('messages.booking_type_repeat_saturday') }}</b></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_start') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_from_5" class="form-control " /></div>
-                        <div class="col-md-1">{{ trans('messages.booking_date_hour_end') }}</div>
-                        <div class="col-md-2"><input type="time" name="detail_day_to_5" class="form-control " /></div>
-                    </div>
-                <!-- End Repet Options -->
 
                 <hr>
 
@@ -354,7 +290,6 @@
             </div>
             <div class="col-md-2"></div>
         </div>
-
 
         <!-- Modal for repeat event -->
             <div class="modal fade" id="repeatEventsModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
@@ -535,9 +470,17 @@
                 @endif
             });
 
+            function dateRegEx(date){
+                var pattern = new RegExp("^(3[01]|[12][0-9]|0[1-9])-(1[0-2]|0[1-9])-[0-9]{4} (2[0-3]|[01]?[0-9]):([0-5]?[0-9])$");
+                if (date.search(pattern)===0)
+                  return true;
+                else {
+              	  return false;
+                }
+            }
+
             $("#insert_booking_button").on("click", function (event) {
 
-                //validazione max num studenti
                 var capacity_room = $("[name='capacity_room']").val();
                 var num_students = $("#num_students").val();
 
@@ -548,6 +491,30 @@
                     $('html, body').animate({
                         scrollTop: $(".down").offset().top
                     }, 1000);
+                } else {
+                    $("#maxNumError").hide();
+                }
+
+                if(!dateRegEx($("#event_date_start_input").val())) {
+                    $("#date_start_required").hide();
+                    $("#dateStartFormatError").show();
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: $(".down").offset().top
+                    }, 1000);
+                } else {
+                    $("#dateStartFormatError").hide();
+                }
+
+                if(!dateRegEx($("#event_date_end_input").val())) {
+                    $("#date_end_required").hide();
+                    $("#dateEndFormatError").show();
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: $(".down").offset().top
+                    }, 1000);
+                } else {
+                    $("#dateEndFormatError").hide();
                 }
 
             });
@@ -720,43 +687,6 @@
                     return "<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>";
                 } else {
                     return "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
-                }
-
-            }
-
-            function closeDivEventRepeatDetails() {
-
-                $("#event_repeat_details").fadeOut('slow');
-                $("#event_date_start_input").attr('placeholder', '24-02-2017 12:00');
-                $("#event_date_start_input").attr('data-format', 'dd-MM-yyyy hh:mm');
-                $("#event_date_end_input").attr('placeholder', '24-02-2017 14:00');
-                $("#event_date_end_input").attr('data-format', 'dd-MM-yyyy hh:mm');
-
-                $("#detail_day_0").fadeOut('slow');
-                $("#detail_day_1").fadeOut('slow');
-                $("#detail_day_2").fadeOut('slow');
-                $("#detail_day_3").fadeOut('slow');
-                $("#detail_day_4").fadeOut('slow');
-                $("#detail_day_5").fadeOut('slow');
-
-            }
-
-            function openDivEventRepeatDetails() {
-
-                $("#event_repeat_details").fadeIn('slow');
-                $("#event_date_start_input").attr('placeholder', '24-02-2017');
-                $("#event_date_start_input").attr('data-format', 'dd-MM-yyyy');
-                $("#event_date_end_input").attr('placeholder', '05-05-2017');
-                $("#event_date_end_input").attr('data-format', 'dd-MM-yyyy');
-
-            }
-
-            function addRepeat(idDay, idDetailDay) {
-
-                if($("#"+idDay)[0].checked == true) {
-                    $("#" + idDetailDay).fadeIn('slow');
-                } else {
-                    $("#" + idDetailDay).fadeOut('slow');
                 }
 
             }

@@ -12,5 +12,6 @@
 
         'field_required' => 'Campo obbligatorio',
         'new_booking_num_max' => 'Numero massimo consentito superato',
+        'new_booking_date_format' => 'Formato data errato',
 
     ];
