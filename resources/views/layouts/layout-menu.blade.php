@@ -85,9 +85,9 @@
                         <li class="dropdown">
                             <a href="#" onclick="manageBadge()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 @if(Session::has('nome') && Session::has('cognome'))
-                                    <span class="univaq_menu_span">{{ session('cognome') }} {{ session('nome') }}</span>
+                                    <span class="univaq_menu_span">{{ session('cognome') }} {{ session('nome') }}</span><span id="real-time-badge" class="badge"></span>
                                 @else
-                                    <span class="univaq_menu_span">Admin</span>
+                                    <span class="univaq_menu_span">Admin</span><span id="real-time-badge" class="badge"></span>
                                 @endif
                                 <span class="caret univaq_menu_span"></span>
                             </a>
