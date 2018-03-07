@@ -1,6 +1,6 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        
+<nav class="navbar navbar-default univaq_menu_navbar">
+    <div class="container-fluid univaq_menu_div">
+
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -20,20 +20,20 @@
             <ul class="nav navbar-nav">
                 <li>
                     <a href="{{URL::to('/')}}">
-                        {{ trans('messages.home') }}
-                        <span class="sr-only"></span>
+                        <span class="univaq_menu_span">{{ trans('messages.home') }}</span>
+                        <span class="sr-only univaq_menu_span"></span>
                     </a>
                 </li>
             </ul>
-       
+
             <!-- Parte destra menù -->
             <ul class="nav navbar-nav navbar-right">
-                
+
                 <!-- Cambio lingua -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-flag"></span>
-                        <span class="caret"></span>
+                        <span class="glyphicon glyphicon-flag univaq_menu_span"></span>
+                        <span class="caret univaq_menu_span"></span>
                     </a>
                     <ul class="dropdown-menu">
                         @foreach (Config::get('languages') as $lang => $language)
@@ -43,65 +43,65 @@
                         @endforeach
                     </ul>
                 </li>
-                
+
                 <!-- Report -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-print"></span>
-                        <span class="caret"></span>
+                        <span class="glyphicon glyphicon-print univaq_menu_span"></span>
+                        <span class="caret univaq_menu_span"></span>
                     </a>
                     <ul class="dropdown-menu">
                         @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                             <li><a href="{{URL::to('/report')}}">{{ trans('messages.home_report') }}</a></li>
-                        @endif    
+                        @endif
                         <li><a href="{{URL::to('/print')}}">{{ trans('messages.home_print') }}</a></li>
                     </ul>
                 </li>
-        
+
                 <!-- Cerca + Help -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-search"></span>
-                        <span class="caret"></span>
+                        <span class="glyphicon glyphicon-search univaq_menu_span"></span>
+                        <span class="caret univaq_menu_span"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{URL::to('/help')}}">{{ trans('messages.home_help') }}</a></li>
                         <li><a href="{{URL::to('/search')}}">{{ trans('messages.home_search') }}</a></li>
                         @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                             <li><a href="{{ url('/manage-resources') }}">{{ trans('messages.home_manage_resources') }}</a></li>
-                        @endif    
+                        @endif
                     </ul>
                 </li>
-        
+
                 <!-- Login -->
                 <li id="dropdown_login_error" class="dropdown">
                     @if(!Session::has('session_id'))
                         <a class="dropdown-toggle" href="{{url('/login')}}">
-                            <span class="glyphicon glyphicon-log-in"></span> 
-                                {{ trans('messages.home_login') }}
+                            <span class="glyphicon glyphicon-log-in univaq_menu_span"></span>
+                            <span class="univaq_menu_span">{{ trans('messages.home_login') }}</span>
                         </a>
-                    
+
                     @else
                         <li class="dropdown">
                             <a href="#" onclick="manageBadge()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 @if(Session::has('nome') && Session::has('cognome'))
-                                    {{ session('cognome') }} {{ session('nome') }}
+                                    <span class="univaq_menu_span">{{ session('cognome') }} {{ session('nome') }}</span>
                                 @else
-                                    Admin
+                                    <span class="univaq_menu_span">Admin</span>
                                 @endif
-                                <span class="caret"></span>
+                                <span class="caret univaq_menu_span"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
                                 <li>
                                     <a href="{{ url('/console') }}">
-                                        {{ trans('messages.home_console') }} 
+                                        {{ trans('messages.home_console') }}
                                         <span id="real-time-badge" class="badge"></span>
                                     </a>
                                 </li>
                                 @endif
-                                
+
                                 @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                                 <li>
                                     <a href="{{ url('/acl') }}">
@@ -109,7 +109,7 @@
                                     </a>
                                 </li>
                                 @endif
-                                
+
                                 @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_INQUIRER)
                                 <li>
                                     <a href="{{ url('/checks') }}">
@@ -118,7 +118,7 @@
                                     </a>
                                 </li>
                                 @endif
-                                
+
                                 <li>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();
@@ -133,7 +133,7 @@
                             </ul>
                         </li>
                     @endif
-                    
+
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -142,20 +142,20 @@
 
 <script>
 
-    function manageBadge() {
-        
-        $.ajax({
-            url: "{{URL::to('/manage-badge')}}",
-            type: 'POST',
-            dataType: 'json',
-            success : function(result) {
-                $("#real-time-badge").text(result);
-            },
-            error : function(result) {
-                console.log(result);
-            }
-        }); 
-        
-    }
-    
+      function manageBadge() {
+
+          $.ajax({
+              url: "{{URL::to('/manage-badge')}}",
+              type: 'POST',
+              dataType: 'json',
+              success : function(result) {
+                  $("#real-time-badge").text(result);
+              },
+              error : function(result) {
+                  console.log(result);
+              }
+          });
+
+      }
+
 </script>

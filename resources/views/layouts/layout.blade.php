@@ -14,7 +14,7 @@
 
             <!-- Caricamento librerie -->
             @include('layouts.layout-libs')
-            
+
             <!-- CSRF Token -->
             <meta name="csrf-token" content="{{ csrf_token() }}">
 <!--            <script>
@@ -30,7 +30,7 @@
                         });
                 });
             </script>
-            
+
             <!-- Gestione X-CSRF-Token per chiamata Ajax -->
             <script type="text/javascript">
                 $.ajaxSetup({
@@ -39,24 +39,31 @@
             </script>
     </head>
 
-    <body>      
-            <div class="container">
-                <div class="container-fluid">
+    <body>
+
+                <div class="container-liquid">
 
                     <!-- Sezione Menu -->
                     @include('layouts.layout-menu')
-                    
+
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
                     <!-- Gestione centralizzata messaggi informativi -->
                     @include('layouts.message')
-                    
+
                     <!-- Corpo della pagina -->
                     @yield('content')
 
                     <!-- Footer pagina -->
                     @include('layouts.layout-footer')
-
+                    </div>
+                    <div class="col-md-1"></div>
+                  </div>
+</div>
                 </div>
-            </div>
+
     </body>
-    
+
 </html>

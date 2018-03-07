@@ -11,3 +11,24 @@
 button.btn.btn-primary.marginRight5px{
     margin-right: 5px;
 }
+
+.univaq_menu_div {
+    background-color: #822627;
+}
+
+.univaq_menu_navbar {
+    border: 0px;
+}
+
+.univaq_menu_span {
+    color: #FFFFFF;
+}
+
+.univaq_color_span {
+    color: #822627;
+}
+
+.univaq_button,  .univaq_button:hover,  .univaq_button:focus {
+    background-image: -webkit-linear-gradient(top, #822627 0%, #822627 100%);
+    border: none;
+}

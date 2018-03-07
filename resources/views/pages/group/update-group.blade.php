@@ -1,13 +1,13 @@
 @extends('layouts.layout')
     @section('content')
-    
+
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.manage_resource_group_update_title')}}</h3>
-                
-                {!! Form::model($group, ['url' => '/update-group', 'method' => 'post']) !!} 
-                
+
+                {!! Form::model($group, ['url' => '/update-group', 'method' => 'post']) !!}
+
                 {{ Form::hidden('id', $group->id) }}
                     <div class="form-group row">
                         <div class="col-md-6">
@@ -29,7 +29,7 @@
                             {!! Form::text('description', $group->description, ['class' => 'form-control', 'placeholder' => trans('messages.common_description')]); !!}
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
                     <!-- Resource : tip_resource -->
                         <div class="col-md-6">
@@ -40,9 +40,9 @@
                                 </span>
                             @endif
                             {!! Form::select(
-                                    'tip_group_id', 
-                                    $tipGroupList, 
-                                    null, 
+                                    'tip_group_id',
+                                    $tipGroupList,
+                                    null,
                                     ['class' => 'listOfTipGroupItems',
                                      'style' => 'width: 70%']
                                 ); !!}
@@ -52,19 +52,19 @@
                     <div class="form-group row">
                         <div class="col-md-9"></div>
                         <div class="col-md-1">
-                                {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                                {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary univaq_button'] ) !!}
                             {{ Form::close() }}
                         </div>
                         <div class="col-md-1">
-                            {!! Form::open(['url' => ['/group',$group->id], 'method' => 'delete', 'id' => 'deleteGroupForm']) !!} 
+                            {!! Form::open(['url' => ['/group',$group->id], 'method' => 'delete', 'id' => 'deleteGroupForm']) !!}
                                 {!! Form::submit( trans('messages.common_delete'), ['id' => 'deleteGroupButton', 'class' => 'btn btn-danger'] ) !!}
-                            {!! Form::close() !!}                    
+                            {!! Form::close() !!}
                         </div>
                     </div>
             </div>
             <div class="col-md-2"></div>
         </div>
-    
+
         <!-- Modal for confirm action -->
         <div class="modal fade" id="modalPreventDefaultGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -82,33 +82,33 @@
                     </div>
                     <div class="modal-footer">
                         <button id="deleteGroupButtonYES" type="button" class="btn btn-danger" >{{ trans('messages.common_confirm') }}</button>
-                        <button id="deleteGroupButtonNO" type="button" class="btn btn-primary" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
+                        <button id="deleteGroupButtonNO" type="button" class="btn btn-primary univaq_button" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <script type="text/javascript">
-            
+
             $(document).ready(function() {
                 $(".listOfTipGroupItems").select2({
                     //parameter
                 });
             });
-            
+
             $("#deleteGroupButton").click(function(event) {
                 event.preventDefault();
                 $('#modalPreventDefaultGroup').modal('show');
             });
-            
+
             $("#deleteGroupButtonYES").click(function() {
                 $("#deleteGroupForm").submit();
             });
-            
+
             $("#deleteGroupButtonNO").click(function() {
                 $('#modalPreventDefaultGroup').modal('hide');
             });
-            
+
         </script>
-    
+
     @endsection

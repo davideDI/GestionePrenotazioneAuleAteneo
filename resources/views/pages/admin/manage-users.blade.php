@@ -1,20 +1,20 @@
 @extends('layouts.layout')
     @section('content')
-    
+
         <div class="row">
             <div class="col-md-3"></div>
-            
+
             <div class="col-md-6">
-                
+
                 <h3>{{ trans('messages.acl_title_insert')}}</h3>
-                
+
                 @if(isset($userFinded) && $userFinded)
                     <div class="alert alert-danger" role="alert">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         {{ trans('messages.acl_user_not_found') }}
                     </div>
                 @endif
-                
+
                 @if(!$checkSearchTrue)
                     <form method="POST" action="{{ url('/get-ldap-user-info') }}">
                         {{ csrf_field() }}
@@ -22,18 +22,18 @@
                             <input name="cn" type="text" class="form-control" />
                         </div>
                         <div class="col-md-3">
-                            <input type="submit" class="btn btn-primary" value="{{ trans('messages.acl_check_user') }}" />
+                            <input type="submit" class="btn btn-primary univaq_button" value="{{ trans('messages.acl_check_user') }}" />
                         </div>
                     </form>
                 @endif
-                
+
                 @if($checkSearchTrue)
-                    {!! Form::model($user, ['url' => '/insert-user', 'method' => 'post']) !!} 
+                    {!! Form::model($user, ['url' => '/insert-user', 'method' => 'post']) !!}
 
                         {{ Form::hidden('registration_number', $user->registration_number) }}
                         {{ Form::hidden('name', $user->name) }}
                         {{ Form::hidden('surname', $user->surname) }}
-                        
+
                         <!-- Acl : cn -->
                         <div class="form-group row">
                             <div class="col-md-10">
@@ -60,9 +60,9 @@
                                     </span>
                                 @endif
                                 {!! Form::select(
-                                        'group_id', 
-                                        $listOfGroups, 
-                                        null, 
+                                        'group_id',
+                                        $listOfGroups,
+                                        null,
                                         ['class' => 'listOfGroupItems',
                                          'style' => 'width: 70%']
                                     ); !!}
@@ -79,9 +79,9 @@
                                     </span>
                                 @endif
                                 {!! Form::select(
-                                        'tip_user_id', 
-                                        $listOfTipUser, 
-                                        null, 
+                                        'tip_user_id',
+                                        $listOfTipUser,
+                                        null,
                                         ['class' => 'listOfTipUserItems',
                                          'style' => 'width: 70%']
                                     ); !!}
@@ -105,26 +105,26 @@
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                                {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary univaq_button'] ) !!}
                             </div>
                         </div>
-                    {!! Form::close() !!} 
+                    {!! Form::close() !!}
                 @endif
             </div>
-            
+
             <div class="col-md-3"></div>
         </div>
-    
+
         <script type="text/javascript">
-            
+
             $(document).ready(function() {
                 $(".listOfGroupItems").select2({
                 });
-                
+
                 $(".listOfTipUserItems").select2({
                 });
             });
-            
+
         </script>
-    
+
     @endsection

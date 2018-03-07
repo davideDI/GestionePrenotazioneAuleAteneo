@@ -4,13 +4,13 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                
+
                 <h3>{{ trans('messages.manage_resource_group_update_title')}}</h3>
-                
-                    {!! Form::model($acl, ['url' => '/acl', 'method' => 'post']) !!} 
+
+                    {!! Form::model($acl, ['url' => '/acl', 'method' => 'post']) !!}
 
                         {{ Form::hidden('id', $acl->id) }}
-                
+
                         <!-- Acl : cn -->
                         <div class="form-group row">
                             <div class="col-md-10">
@@ -37,9 +37,9 @@
                                     </span>
                                 @endif
                                 {!! Form::select(
-                                        'group_id', 
-                                        $listOfGroups, 
-                                        $acl->group_id, 
+                                        'group_id',
+                                        $listOfGroups,
+                                        $acl->group_id,
                                         ['class' => 'listOfGroupItems',
                                          'style' => 'width: 70%']
                                     ); !!}
@@ -56,9 +56,9 @@
                                     </span>
                                 @endif
                                 {!! Form::select(
-                                        'tip_user_id', 
-                                        $listOfTipUser, 
-                                        $acl->user->tip_user_id, 
+                                        'tip_user_id',
+                                        $listOfTipUser,
+                                        $acl->user->tip_user_id,
                                         ['class' => 'listOfTipUserItems',
                                          'style' => 'width: 70%']
                                     ); !!}
@@ -83,21 +83,21 @@
                         <div class="form-group row">
                             <div class="col-md-9"></div>
                             <div class="col-md-1">
-                                    {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                                    {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary univaq_button'] ) !!}
                                 {{ Form::close() }}
                             </div>
                             <div class="col-md-1">
-                                {!! Form::open(['url' => '/acl', 'method' => 'delete', 'id' => 'deleteAclForm']) !!} 
+                                {!! Form::open(['url' => '/acl', 'method' => 'delete', 'id' => 'deleteAclForm']) !!}
                                     {{ Form::hidden('id', $acl->id) }}
                                     {!! Form::submit( trans('messages.common_delete'), ['id' => 'deleteAclButton', 'class' => 'btn btn-danger'] ) !!}
-                                {!! Form::close() !!}                    
+                                {!! Form::close() !!}
                             </div>
                         </div>
-                    
+
             </div>
             <div class="col-md-2"></div>
         </div>
-    
+
         <!-- Modal for confirm action -->
         <div class="modal fade" id="modalPreventDefaultAcl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -115,35 +115,35 @@
                     </div>
                     <div class="modal-footer">
                         <button id="deleteAclButtonYES" type="button" class="btn btn-danger" >{{ trans('messages.common_confirm') }}</button>
-                        <button id="deleteAclButtonNO" type="button" class="btn btn-primary" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
+                        <button id="deleteAclButtonNO" type="button" class="btn btn-primary univaq_button" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <script type="text/javascript">
-            
+
             $(document).ready(function() {
                 $(".listOfGroupItems").select2({
                 });
-                
+
                 $(".listOfTipUserItems").select2({
                 });
             });
-            
+
             $("#deleteAclButton").click(function(event) {
                 event.preventDefault();
                 $('#modalPreventDefaultAcl').modal('show');
             });
-            
+
             $("#deleteAclButtonYES").click(function() {
                 $("#deleteAclForm").submit();
             });
-            
+
             $("#deleteAclButtonNO").click(function() {
                 $('#modalPreventDefaultAcl').modal('hide');
             });
-            
+
         </script>
-    
+
     @endsection

@@ -1,18 +1,18 @@
 @extends('layouts.layout')
     @section('content')
-    
+
         <div class="row">
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <a href="{{ url('/manage-user') }}">{{ trans('messages.acl_title_insert')}}</a>
                     </div>
                 </div>
-                
+
                 <br>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         @if(count($listOfAcl) == 0)
@@ -33,7 +33,7 @@
                                         <tr>
                                             <td>
                                                 <a href="{{URL::to('/acl', $acl->id)}}"
-                                                    <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                                    <span class='glyphicon glyphicon-pencil univaq_color_span' aria-hidden='true'></span>
                                                 </a>
                                             </td>
                                             <td>
@@ -78,5 +78,5 @@
             </div>
             <div class="col-md-1"></div>
         </div>
-    
+
     @endsection

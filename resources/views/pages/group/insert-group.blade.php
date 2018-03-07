@@ -1,12 +1,12 @@
 @extends('layouts.layout')
     @section('content')
-    
+
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.manage_resource_group_title')}}</h3>
-                
-                {!! Form::model($group, ['url' => '/insert-group', 'method' => 'post']) !!} 
+
+                {!! Form::model($group, ['url' => '/insert-group', 'method' => 'post']) !!}
                     <div class="form-group row">
                         <div class="col-md-6">
                             {!! Form::label('name', trans('messages.common_name')); !!}
@@ -38,9 +38,9 @@
                                 </span>
                             @endif
                             {!! Form::select(
-                                    'tip_group_id', 
-                                    $tipGroupList, 
-                                    null, 
+                                    'tip_group_id',
+                                    $tipGroupList,
+                                    null,
                                     ['class' => 'listOfTipGroupItems',
                                      'style' => 'width: 70%']
                                 ); !!}
@@ -50,15 +50,15 @@
 
                     <div class="form-group row">
                         <div class="col-md-6">
-                            {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary'] ) !!}
+                            {!! Form::submit( trans('messages.common_save'), ['class' => 'btn btn-primary univaq_button'] ) !!}
                         </div>
                     </div>
-                {!! Form::close() !!}                    
-                
+                {!! Form::close() !!}
+
             </div>
             <div class="col-md-2"></div>
         </div>
-    
+
         <script type="text/javascript">
             $(document).ready(function() {
                 $(".listOfTipGroupItems").select2({
@@ -66,5 +66,5 @@
                 });
             });
         </script>
-    
+
     @endsection

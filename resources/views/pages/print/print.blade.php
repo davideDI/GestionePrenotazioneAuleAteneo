@@ -52,7 +52,7 @@
 
                             <hr>
 
-                            <input type="submit" id="checkResource" class="btn btn-primary" value="Test Print" />
+                            <input type="submit" id="checkResource" class="btn btn-primary univaq_button" value="Test Print" />
                         </form>
 
                     </div>

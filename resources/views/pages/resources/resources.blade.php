@@ -1,13 +1,13 @@
 @extends('layouts.layout')
     @section('content')
-    
+
         <div class="row">
             <div class="col-md-12">
-                
-                <h4>{{trans('messages.manage_resource_title')}}</h4> 
-                <select id="groupSelect" 
-                        onChange="window.location.href=this.value" 
-                        class="listOfGroups" 
+
+                <h4>{{trans('messages.manage_resource_title')}}</h4>
+                <select id="groupSelect"
+                        onChange="window.location.href=this.value"
+                        class="listOfGroups"
                         style="width: 20%">
                     @foreach($groupList as $group)
                         <option></option>
@@ -19,30 +19,30 @@
                 @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                     <td>
                         <a href="{{URL::to('/group', $selectedGroup->id )}}"
-                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                            <span class='glyphicon glyphicon-pencil univaq_color_span' aria-hidden='true'></span>
                         </a>
                     </td>
                 @endif
-                
+
             </div>
         </div>
-    
+
         <div class="row"><div class="col-md-12"></div></div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
-                    <a class="btn btn-primary" href="{{URL::to('/insert-group')}}">
+                    <a class="btn btn-primary univaq_button" href="{{URL::to('/insert-group')}}">
                         {{ trans('messages.manage_resource_inset_group') }}
                     </a>
 
-                    <a class="btn btn-primary" href="{{URL::to('/insert-resource')}}">
+                    <a class="btn btn-primary univaq_button" href="{{URL::to('/insert-resource')}}">
                         {{ trans('messages.manage_resource_inset_resource') }}
                     </a>
                 @endif
             </div>
         </div>
-    
+
         <div class="row">
             <div class="col-md-12">
                 @if(count($resourceList) > 0)
@@ -71,15 +71,15 @@
                         </thead>
                         <tbody>
                             @foreach($resourceList as $resource)
-                                <tr>    
+                                <tr>
                                     @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                                     <td>
                                         <a href="{{URL::to('/resource', $resource->id)}}"
-                                            <span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>
+                                            <span class='glyphicon glyphicon-pencil univaq_color_span' aria-hidden='true'></span>
                                         </a>
                                     </td>
                                     @endif
-                                    
+
                                     <td>{{$resource->name}}</td>
                                     <td>{{$resource->capacity}}</td>
                                     <td>
@@ -96,7 +96,7 @@
                                             <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
                                         @endif
                                     </td>
-                                    
+
                                     <td>
                                         @if($resource->screen_manual)
                                            <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
@@ -167,7 +167,7 @@
                                             <span class='glyphicon glyphicon-remove' aria-hidden='true'></span>
                                         @endif
                                     </td>
-                                    
+
                                     <td>{{$resource->network}}</td>
                                     <td>{{$resource->note}}</td>
                                 </tr>
@@ -180,13 +180,13 @@
                 @endif
             </div>
         </div>
-    
+
         <script type="text/javascript">
-            $(document).ready(function() {              
+            $(document).ready(function() {
                 $(".listOfGroups").select2({
                     placeholder: "{{ $selectedGroup->name }}"
                 });
             });
         </script>
-    
+
     @endsection

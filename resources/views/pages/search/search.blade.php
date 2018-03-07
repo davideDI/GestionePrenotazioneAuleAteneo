@@ -81,9 +81,9 @@
 
                         <br>
 
-                        <input type="button" class="btn btn-primary" value="{{ trans('messages.search_search_capacity') }}" onclick="searchByCapacity()">
+                        <input type="button" class="btn btn-primary univaq_button" value="{{ trans('messages.search_search_capacity') }}" onclick="searchByCapacity()">
                         <br><br>
-                        <input type="button" class="btn btn-primary" value="{{ trans('messages.search_search_free') }}" onclick="searchByFree()">
+                        <input type="button" class="btn btn-primary univaq_button" value="{{ trans('messages.search_search_free') }}" onclick="searchByFree()">
 
                     </div>
                 </div>

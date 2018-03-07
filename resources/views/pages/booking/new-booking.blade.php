@@ -5,6 +5,7 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.booking_title')}}</h3>
+                <hr>
                 {!! Form::model($booking, ['url' => '/new-booking', 'method' => 'post']) !!}
 
                     <!-- Booking : name -->
@@ -272,11 +273,11 @@
 
                     <div class="form-group row">
                         <div class="col-md-2">
-                            {!! Form::submit(trans('messages.common_save'), ['id' => 'insert_booking_button', 'class' => 'btn btn-primary'] ) !!}
+                            {!! Form::submit(trans('messages.common_save'), ['id' => 'insert_booking_button', 'class' => 'btn btn-primary univaq_button'] ) !!}
                         </div>
                         @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_SECRETARY)
                             <div class="col-md-2">
-                                <a href="#" class="btn btn-primary" id="repeatEvents"> {{ trans('messages.booking_repeat_event') }}</a>
+                                <a href="#" class="btn btn-primary univaq_button" id="repeatEvents"> {{ trans('messages.booking_repeat_event') }}</a>
                             </div>
                         @endif
                         @if(Session::has('session_id') && Session::get('ruolo') == \App\TipUser::ROLE_STUDENT)

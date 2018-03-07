@@ -39,7 +39,7 @@
                             Session::get('enable_crud') == '1'
                                 &&
                             (Session::get('group_id_to_manage') == $group->id || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO || Session::get('ruolo') == \App\TipUser::ROLE_STUDENT))
-                            <a class="btn btn-primary" href="{{URL::to('/new-booking')}}">
+                            <a class="btn btn-primary univaq_button" href="{{URL::to('/new-booking')}}">
                                 {{ trans('messages.index_calendar_new_event') }}
                             </a>
                         @endif
@@ -154,7 +154,7 @@
                     header: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'month,basicWeek,basicDay,listDay,agendaWeek'
+                        right: 'month,agendaWeek,basicDay,listDay'
                             },
                     minTime: "08:00:00", //Definizione orari min
                     maxTime: "20:30:00", //Definizione orari max
@@ -167,6 +167,9 @@
                     defaultView: 'agendaWeek', //Vista di default
                     eventLimit: true, // Quando ci sono più eventi per una data compare il link view more
 
+                    allDaySlot: false,
+                    contentHeight: 'auto',
+                    
                     //Caricamento eventi
                     events: [
                         @foreach($bookings as $booking)
@@ -343,12 +346,12 @@
                                     textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
                                     @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP))
                                         if(result[0].repeats[x].tip_booking_status_id == 3 && result[0].repeats[x].surveys.length == 0) {
-                                            textForModal += "<button class='btn btn-primary marginRight5px' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
+                                            textForModal += "<button class='btn btn-primary univaq_button marginRight5px' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
                                         }
                                     @endif
                                     @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
                                         if(result[0].repeats[x].tip_booking_status_id != 4) {
-                                            textForModal += "<a class='btn btn-primary' href='"+ "{{URL::to('/repeat')}}/" + result[0].repeats[x].id + "'>{{trans('messages.common_update_repeat')}}</a>";
+                                            textForModal += "<a class='btn btn-primary univaq_button' href='"+ "{{URL::to('/repeat')}}/" + result[0].repeats[x].id + "'>{{trans('messages.common_update_repeat')}}</a>";
                                         }
                                     @endif
                                     textForModal += "</div>";
