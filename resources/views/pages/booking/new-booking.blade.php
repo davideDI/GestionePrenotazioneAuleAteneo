@@ -410,28 +410,28 @@
                                         result += "<th>{{trans('messages.common_description')}}</th>";
                                         result += "<th>{{trans('messages.booking_date_day_start')}}</th>";
                                         result += "<th>{{trans('messages.booking_date_day_end')}}</th>";
-                                result += "</thead>";
-                                result += "<tbody>";
+                                    result += "</thead>";
+                                    result += "<tbody>";
 
-                                for(var j=0; j < repeats.length; j++) {
+                                    for(var j=0; j < repeats.length; j++) {
 
-                                    result += "<tr id='"+repeats[j].id+"'>";
-                                        result += "<td>";
-                                            result += repeats[j].booking.name;
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += repeats[j].booking.description;
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += moment(repeats[j].event_date_start).format("DD-MM-YYYY HH:mm:ss");
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += moment(repeats[j].event_date_end).format("DD-MM-YYYY HH:mm:ss");
-                                        result += "</td>";
-                                    result += "</tr>";
+                                        result += "<tr id='"+repeats[j].id+"'>";
+                                            result += "<td>";
+                                                result += repeats[j].booking.name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += repeats[j].booking.description;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += moment(repeats[j].event_date_start).format("DD-MM-YYYY HH:mm:ss");
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += moment(repeats[j].event_date_end).format("DD-MM-YYYY HH:mm:ss");
+                                            result += "</td>";
+                                        result += "</tr>";
 
-                                }
-                                result += "</tbody>";
+                                    }
+                                    result += "</tbody>";
                                 result += "</table>";
                             }
 

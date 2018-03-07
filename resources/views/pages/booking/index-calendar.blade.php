@@ -169,7 +169,7 @@
 
                     allDaySlot: false,
                     contentHeight: 'auto',
-                    
+
                     //Caricamento eventi
                     events: [
                         @foreach($bookings as $booking)
@@ -342,18 +342,18 @@
                                 for (var x=0; x < result[0].repeats.length; x++) {
                                     textForModal += "<hr>";
                                     textForModal += "<div>";
-                                    textForModal += "<p><strong>{{trans('messages.index_calendar_event_start')}}</strong>" + moment(result[0].repeats[x].event_date_start).format("DD-MM-YYYY HH:mm:ss") + "</p>";
-                                    textForModal += "<p><strong>{{trans('messages.index_calendar_event_end')}}</strong>" + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "</p>";
+                                    textForModal += "<p><strong>{{trans('messages.index_calendar_repeats')}}: </strong>" + moment(result[0].repeats[x].event_date_start).format("DD-MM-YYYY HH:mm:ss") + " | " + moment(result[0].repeats[x].event_date_end).format("DD-MM-YYYY HH:mm:ss") + "&nbsp;&nbsp;";
                                     @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP))
-                                        if(result[0].repeats[x].tip_booking_status_id == 3 && result[0].repeats[x].surveys.length == 0) {
-                                            textForModal += "<button class='btn btn-primary univaq_button marginRight5px' onclick='inspectBooking("+result[0].repeats[x].id+")'>{{ trans('messages.index_calendar_inpect_event') }}</button>";
+                                        if(result[0].repeats[x].tip_booking_status_id == "{{\App\TipBookingStatus::TIP_BOOKING_STATUS_OK}}" && result[0].repeats[x].surveys.length == 0) {
+                                            textForModal += "<button class='btn btn-primary univaq_button marginRight5px' onclick='inspectBooking("+result[0].repeats[x].id+")'><span onmouseover='$(this).popover(show);' onmouseout='$(this).popover(hide);' class='glyphicon glyphicon-check univaq_menu_span' data-toggle='popover' data-placement='bottom' data-content='test' data-container='body' aria-hidden='true'></span></button>";
                                         }
                                     @endif
                                     @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
-                                        if(result[0].repeats[x].tip_booking_status_id != 4) {
-                                            textForModal += "<a class='btn btn-primary univaq_button' href='"+ "{{URL::to('/repeat')}}/" + result[0].repeats[x].id + "'>{{trans('messages.common_update_repeat')}}</a>";
+                                        if(result[0].repeats[x].tip_booking_status_id != "{{\App\TipBookingStatus::TIP_BOOKING_STATUS_KO}}") {
+                                            textForModal += "<a class='btn btn-primary univaq_button' href='"+ "{{URL::to('/repeat')}}/" + result[0].repeats[x].id + "'><span class='glyphicon glyphicon-pencil univaq_menu_span' aria-hidden='true'></span></a>";
                                         }
                                     @endif
+                                    textForModal += "</p>";
                                     textForModal += "</div>";
                                     textForModal += "<hr>";
                                 }
