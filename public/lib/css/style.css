@@ -32,3 +32,26 @@ button.btn.btn-primary.marginRight5px{
     background-image: -webkit-linear-gradient(top, #822627 0%, #822627 100%);
     border: none;
 }
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #822627;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: white;
+    background-color: #822627;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    color: white;
+    background-color: #822627;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .active > a {
+    background-image: -webkit-linear-gradient(top, #dbdbdb 0%, #962c2d 100%);
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #C0C0C0;
+    color: white;
+}

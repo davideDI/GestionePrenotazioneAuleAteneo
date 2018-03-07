@@ -116,6 +116,16 @@
                                 </div>
                             @endif
                         </div>
+
+                        <div class="form-group row" style="display: none">
+                             <div class="col-md-3">
+                                 <input type="radio" name="repeat_event" onclick="closeDivEventRepeatDetails()" value="1" checked="checked">&nbsp;{{ trans('messages.booking_single_event') }}<br>
+                             </div>
+                             <!-- <div class="col-md-3">
+                                 <input type="radio" name="repeat_event" onclick="openDivEventRepeatDetails()" value="2">&nbsp;{{ trans('messages.booking_multiple_event') }}<br>
+                             </div> -->
+                        </div>
+
                     </div>
 
                 <hr>

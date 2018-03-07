@@ -9,7 +9,7 @@
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            
+
                             <label for="username">Username</label>
                             <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="username.." required autofocus="">
 
@@ -41,7 +41,7 @@
                     </div>
 
                     <div style="margin-top: 10px;" class="text-center">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Login" />
+                        <input class="btn btn-primary univaq_button" type="submit" name="submit" value="Login" />
                     </div>
                 </form>
             </div>

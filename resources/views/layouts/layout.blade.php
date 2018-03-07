@@ -41,28 +41,30 @@
 
     <body>
 
-                <div class="container-liquid">
+          <div class="container-liquid">
 
-                    <!-- Sezione Menu -->
-                    @include('layouts.layout-menu')
+              <!-- Sezione Menu -->
+              @include('layouts.layout-menu')
 
-  <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-                    <!-- Gestione centralizzata messaggi informativi -->
-                    @include('layouts.message')
+              <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-1"></div>
+                        <div class="col-md-10">
 
-                    <!-- Corpo della pagina -->
-                    @yield('content')
+                            <!-- Gestione centralizzata messaggi informativi -->
+                            @include('layouts.message')
 
-                    <!-- Footer pagina -->
-                    @include('layouts.layout-footer')
-                    </div>
+                            <!-- Corpo della pagina -->
+                            @yield('content')
+
+                            <!-- Footer pagina -->
+                            @include('layouts.layout-footer')
+
+                        </div>
                     <div class="col-md-1"></div>
                   </div>
-</div>
                 </div>
+          </div>
 
     </body>
 

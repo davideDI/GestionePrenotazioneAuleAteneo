@@ -117,9 +117,14 @@
                         }
                         var result = "<h4>" + txt + "</h4>";
                         result += "<p>";
+
                         if(bookings.length > 0) {
                             result += "{{ trans('messages.console_booking_there_are') }}";
-                            result += bookings.length + " ";
+                            var tot = 0;
+                            for (var i = 0; i < bookings.length; i++) {
+                                tot += bookings[i].repeats.length;
+                            }
+                            result += tot + " ";
                         } else {
                             result += "{{ trans('messages.console_booking_there_arent') }}";
                         }
