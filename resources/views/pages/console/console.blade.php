@@ -122,7 +122,11 @@
                             result += "{{ trans('messages.console_booking_there_are') }}";
                             var tot = 0;
                             for (var i = 0; i < bookings.length; i++) {
-                                tot += bookings[i].repeats.length;
+                                for (var j = 0; j < bookings[i].repeats.length; j++) {
+                                    if(bookings[i].repeats[j].tip_booking_status_id == idStatus) {
+                                        tot += 1;
+                                    }
+                                }
                             }
                             result += tot + " ";
                         } else {
@@ -167,28 +171,30 @@
                             result += "<tbody>";
                             for(var j=0; j < bookings.length; j++) {
                                 for(var k=0; k < bookings[j].repeats.length; k++) {
-                                    result += "<tr id='"+bookings[j].repeats[k].id+"'>";
-                                        result += "<td>";
-                                            result += bookings[j].name;
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += bookings[j].description;
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += moment(bookings[j].repeats[k].event_date_start).format("DD-MM-YYYY HH:mm:ss");
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += moment(bookings[j].repeats[k].event_date_end).format("DD-MM-YYYY HH:mm:ss");
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += bookings[j].resource.name;
-                                        result += "</td>";
-                                        result += "<td>";
-                                            result += "<a href='#' onclick='confirmBooking(" + bookings[j].repeats[k].id + ", " + bookings[j].resource.group_id + ")'><span class='glyphicon glyphicon-ok univaq_color_span' aria-hidden='true'></span></a>";
-                                            result += "&nbsp;&nbsp;";
-                                            result += "<a href='#' onclick='rejectBooking(" + bookings[j].repeats[k].id + ", " + bookings[j].resource.group_id + ")'><span class='glyphicon glyphicon-remove univaq_color_span' aria-hidden='true'></a>";
-                                        result += "</td>";
-                                    result += "</tr>";
+                                    if(bookings[j].repeats[k].tip_booking_status_id == "{{\App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED}}") {
+                                        result += "<tr id='"+bookings[j].repeats[k].id+"'>";
+                                            result += "<td>";
+                                                result += bookings[j].name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += bookings[j].description;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += moment(bookings[j].repeats[k].event_date_start).format("DD-MM-YYYY HH:mm:ss");
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += moment(bookings[j].repeats[k].event_date_end).format("DD-MM-YYYY HH:mm:ss");
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += bookings[j].resource.name;
+                                            result += "</td>";
+                                            result += "<td>";
+                                                result += "<a href='#' onclick='confirmBooking(" + bookings[j].repeats[k].id + ", " + bookings[j].resource.group_id + ")'><span class='glyphicon glyphicon-ok univaq_color_span' aria-hidden='true'></span></a>";
+                                                result += "&nbsp;&nbsp;";
+                                                result += "<a href='#' onclick='rejectBooking(" + bookings[j].repeats[k].id + ", " + bookings[j].resource.group_id + ")'><span class='glyphicon glyphicon-remove univaq_color_span' aria-hidden='true'></a>";
+                                            result += "</td>";
+                                        result += "</tr>";
+                                    }
                                 }
                             }
                             result += "</tbody>";

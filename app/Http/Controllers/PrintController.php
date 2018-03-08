@@ -30,13 +30,14 @@ class PrintController extends Controller {
         Log::info('PrintController - downloadPDF()');
 
         $idResource = $request['resource_id'];
+        $day = date('w');
 
         $dateSearchFromString = $request['date_search_from'];
         $dateSearchFrom = "";
         if($dateSearchFromString != '') {
             $dateSearchFrom = date("Y-m-d",strtotime($dateSearchFromString));
         } else {
-            $dateSearchFrom = "1900-01-01";
+            $dateSearchFrom = date('Y-m-d');
         }
 
         $dateSearchToString = $request['date_search_to'];
@@ -44,7 +45,7 @@ class PrintController extends Controller {
         if($dateSearchToString != '') {
             $dateSearchTo = date("Y-m-d",strtotime($dateSearchToString));
         } else {
-            $dateSearchTo = "9999-01-01";
+            $dateSearchTo = date('Y-m-d', strtotime('+31 days'));
         }
 
 //        $bookingList = \App\Booking::with(['repeats' => function($query) use($dateSearchFrom, $idResource, $dateSearchTo) {
@@ -98,8 +99,10 @@ class PrintController extends Controller {
         }
         $content .= "</div>";
 
+        $content .= "<div style=height: 20px></div>";
+
         $content .= "<div align=center>";
-        $content .= "<table>";
+        $content .= "<table align=center style=border: 1px solid black; border-collapse: collapse;>";
         $content .= "<thead>";
         $content .= "<tr>";
         $content .= "<th>".trans('messages.common_title')."</th>";
@@ -114,14 +117,15 @@ class PrintController extends Controller {
         if(count($bookingList) > 0) {
             for($i = 0; $i < count($bookingList); $i++) {
                 $content .=  "<tr>";
-                $content .=  "<td>".$bookingList[$i]->name."</td>";
-                $content .=  "<td>".$bookingList[$i]->description."</td>";
-                $content .=  "<td>".date("d-m-Y G:i:s", strtotime($bookingList[$i]->event_date_start))."</td>";
-                $content .=  "<td>".date("d-m-Y G:i:s", strtotime($bookingList[$i]->event_date_end))."</td>";
-                $content .=  "<td>".$bookingList[$i]->resource_name."</td>";
+                    $content .=  "<td>".$bookingList[$i]->name."</td>";
+                    $content .=  "<td>".$bookingList[$i]->description."</td>";
+                    $content .=  "<td>".date("d-m-Y G:i:s", strtotime($bookingList[$i]->event_date_start))."</td>";
+                    $content .=  "<td>".date("d-m-Y G:i:s", strtotime($bookingList[$i]->event_date_end))."</td>";
+                    $content .=  "<td>".$bookingList[$i]->resource_name."</td>";
                 $content .=  "</tr>";
             }
         }
+
         $content .=  "</tbody>";
         $content .=  "</table>";
         $content .= "</div>";

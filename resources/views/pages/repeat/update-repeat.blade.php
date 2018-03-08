@@ -5,7 +5,7 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.common_update_repeat')}}</h3>
-
+                <hr>
                 {!! Form::model($repeat, ['url' => '/update-repeat', 'method' => 'post']) !!}
 
                 {{ Form::hidden('id', $repeat->id) }}

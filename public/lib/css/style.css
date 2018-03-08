@@ -42,11 +42,6 @@ button.btn.btn-primary.marginRight5px{
     background-color: #822627;
 }
 
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
-    color: white;
-    background-color: #822627;
-}
-
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .active > a {
     background-image: -webkit-linear-gradient(top, #dbdbdb 0%, #962c2d 100%);
 }

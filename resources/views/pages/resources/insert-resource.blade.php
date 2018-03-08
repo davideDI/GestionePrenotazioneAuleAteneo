@@ -5,7 +5,8 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.manage_resource_resource_title')}}</h3>
-
+                <hr>
+                
                 {!! Form::model($resource, ['url' => '/insert-resource', 'method' => 'post']) !!}
                     <div class="form-group row">
                         <div class="col-md-6">

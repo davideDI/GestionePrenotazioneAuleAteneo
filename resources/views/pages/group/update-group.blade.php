@@ -5,7 +5,8 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.manage_resource_group_update_title')}}</h3>
-
+                <hr>
+                
                 {!! Form::model($group, ['url' => '/update-group', 'method' => 'post']) !!}
 
                 {{ Form::hidden('id', $group->id) }}

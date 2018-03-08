@@ -5,6 +5,7 @@
             <div class="col-md-12">
 
                 <h4>{{trans('messages.manage_resource_title')}}</h4>
+                <hr>
                 <select id="groupSelect"
                         onChange="window.location.href=this.value"
                         class="listOfGroups"
@@ -27,7 +28,7 @@
             </div>
         </div>
 
-        <div class="row"><div class="col-md-12"></div></div>
+        <br>
 
         <div class="row">
             <div class="col-md-12">

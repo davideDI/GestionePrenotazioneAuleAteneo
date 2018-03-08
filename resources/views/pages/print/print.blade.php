@@ -28,6 +28,10 @@
 
                             <hr>
 
+                            <div id="no_resource_alert" class="alert alert-danger" role="alert" style="display: none">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ trans('messages.booking_resource_id_empty') }}
+                            </div>
                             <select id="resource_id" name="resource_id" class="listOfResourcesItems"
                                     style="width: 100%">
                                 <option></option>
@@ -109,10 +113,11 @@
             }
 
             $("#checkResource").click(function(event) {
+                $("#no_resource_alert").hide();
                 event.preventDefault();
                 var selectedGroup = $("#resource_id").val();
                 if(selectedGroup === null || selectedGroup == '') {
-                    alert("risorsa non selezionata");
+                    $("#no_resource_alert").show();
                 } else {
                     $("#printPDF").submit();
                 }

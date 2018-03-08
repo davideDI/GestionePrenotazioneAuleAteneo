@@ -42,7 +42,7 @@ class CheckController extends Controller {
         $survey->save();
 
         if(Config::get(MAIL.'.'.ENABLE_SEND_MAIL)) {
-          
+
             $mailText = "E' stata effettuata una richiesta di verifica dall'utente ";
             $mailText .= session('cognome');
             $mailText .= " ";
@@ -85,7 +85,7 @@ class CheckController extends Controller {
             $survey->note = $request['note'];
             $survey->real_num_students = $request['real_num_students'];
             $survey->performed_by = session('source_id');
-            $survey->tip_survey_status_id = TIP_SURVEY_STATUS_OK;
+            $survey->tip_survey_status_id = TipSurveyStatus::TIP_SURVEY_STATUS_OK;
 
             $survey->save();
             return redirect()->route('checks')->with('success', 'check_booking_ok');
