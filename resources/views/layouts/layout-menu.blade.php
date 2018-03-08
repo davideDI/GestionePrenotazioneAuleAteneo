@@ -83,11 +83,14 @@
 
                     @else
                         <li class="dropdown">
-                            <a href="#" onclick="manageBadge()" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 @if(Session::has('nome') && Session::has('cognome'))
                                     <span class="univaq_menu_span">{{ session('cognome') }} {{ session('nome') }}</span>
                                 @else
                                     <span class="univaq_menu_span">Admin</span>
+                                @endif
+                                @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
+                                    <span id="real-time-badge" class="badge"></span>
                                 @endif
                                 <span class="caret univaq_menu_span"></span>
                             </a>
@@ -97,7 +100,6 @@
                                 <li>
                                     <a href="{{ url('/console') }}">
                                         {{ trans('messages.home_console') }}
-                                        <span id="real-time-badge" class="badge"></span>
                                     </a>
                                 </li>
                                 @endif
@@ -139,23 +141,3 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-
-<script>
-
-      function manageBadge() {
-
-          $.ajax({
-              url: "{{URL::to('/manage-badge')}}",
-              type: 'POST',
-              dataType: 'json',
-              success : function(result) {
-                  $("#real-time-badge").text(result);
-              },
-              error : function(result) {
-                  console.log(result);
-              }
-          });
-
-      }
-
-</script>

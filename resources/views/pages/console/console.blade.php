@@ -229,6 +229,7 @@
                         searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_OK}});
                         $("#message-success").fadeIn('fast').delay(1000).fadeOut('fast');
                         getBookings(idGroup);
+                        manageBadge();
                     },
                     error: function(e) {
                         console.log(e);
@@ -256,12 +257,29 @@
                         searchBookingsByIdStatus({{\App\TipBookingStatus::TIP_BOOKING_STATUS_KO}});
                         $("#message-danger").fadeIn('fast').delay(1000).fadeOut('fast');
                         getBookings(idGroup);
+                        manageBadge();
                     },
                     error: function(e) {
                         console.log(e);
                         console.log("console.balde.php - rejectBooking : ajax error");
                     }
 
+                });
+
+            }
+
+            function manageBadge() {
+
+                $.ajax({
+                    url: "{{URL::to('/manage-badge')}}",
+                    type: 'POST',
+                    dataType: 'json',
+                    success : function(result) {
+                        $("#real-time-badge").text(result);
+                    },
+                    error : function(result) {
+                        console.log(result);
+                    }
                 });
 
             }

@@ -21,6 +21,103 @@ class SoapController extends Controller {
         $this->soapWrapper = $soapWrapper;
     }
 
+    //Unused
+    public function wsLogin(Request $request) {
+
+        Log::info('SoapController - wsLogin()');
+
+        $username = $request['username'];
+        $password = $request['password'];
+
+        //gestione utenza fittizia per sviluppo
+        if($this->checkFakeUsersForLogin($request)) {
+            return redirect('/');
+        } else {
+
+            $this->soapWrapper->add('GenericWSEsse3', function ($service) {
+                $service->wsdl($this->esse3PathWsdl);
+            });
+
+            $fn_dologin = $this->soapWrapper->call('GenericWSEsse3.fn_dologin', [
+                'username' => $username,
+                'password' => $password
+            ]);
+
+            $sessionID = (string) $fn_dologin['sid'];
+            $sid = 'SESSIONID='.$sessionID;
+
+            $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
+                'retrieve' => 'GET_ANAG_FROM_SESSION',
+                'params'   => $sid
+            ]);
+
+            //Codice di risposta
+            $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
+
+            //se il codice di risposta è 1 non ci sono stati errori
+            if($responseCode == 1) {
+
+                //Xml di risposta
+                $response = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
+
+                $row       = $response->children()->children()->children();
+                $sourceID  = (string) $row->SOURCE_ID;
+                $nome      = (string) $row->NOME;
+                $cognome   = (string) $row->COGNOME;
+                $codFis    = (string) $row->COD_FIS;
+                $ruolo     = (string) $row->RUOLO;
+                $matricola = (string) $row->MATRICOLA;
+
+                session(['session_id' => $sessionID]);
+                session(['source_id'  => $sourceID]);
+                session(['nome'       => $nome]);
+                session(['cognome'    => $cognome]);
+                session(['cod_fis'    => $codFis]);
+                session(['ruolo'      => $ruolo]);
+                session(['matricola'  => $matricola]);
+
+                return redirect('/');
+
+            } else {
+                return redirect()->back()->with('customError', $responseCode);
+            }
+
+        }
+
+    }
+
+    //Unused
+    public function wsLogout() {
+
+        Log::info('SoapController - wsLogout()');
+
+        if(!$this->checkFakeUsersForLogout()) {
+
+            $sessionId = session('session_id');
+            $sid = 'SESSIONID='.$sessionId;
+
+            $this->soapWrapper->add('GenericWSEsse3', function ($service) {
+                $service->wsdl($this->esse3PathWsdl);
+            });
+
+            $fn_doLogout = $this->soapWrapper->call('GenericWSEsse3.fn_doLogout', [
+                'params' => $sid
+            ]);
+
+        }
+
+        Session::forget('session_id');
+        Session::forget('source_id');
+        Session::forget('nome');
+        Session::forget('cognome');
+        Session::forget('cod_fis');
+        Session::forget('ruolo');
+        Session::forget('matricola');
+
+        return redirect('/');
+
+    }
+    
     private function checkFakeUsersForLogin($request) {
 
         $username = $request['username'];
@@ -105,70 +202,6 @@ class SoapController extends Controller {
         }
     }
 
-    public function wsLogin(Request $request) {
-
-        Log::info('SoapController - wsLogin()');
-
-        $username = $request['username'];
-        $password = $request['password'];
-
-        //gestione utenza fittizia per sviluppo
-        if($this->checkFakeUsersForLogin($request)) {
-            return redirect('/');
-        } else {
-
-            $this->soapWrapper->add('GenericWSEsse3', function ($service) {
-                $service->wsdl($this->esse3PathWsdl);
-            });
-
-            $fn_dologin = $this->soapWrapper->call('GenericWSEsse3.fn_dologin', [
-                'username' => $username,
-                'password' => $password
-            ]);
-
-            $sessionID = (string) $fn_dologin['sid'];
-            $sid = 'SESSIONID='.$sessionID;
-
-            $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
-                'retrieve' => 'GET_ANAG_FROM_SESSION',
-                'params'   => $sid
-            ]);
-
-            //Codice di risposta
-            $responseCode = $fn_retrieve_xml_p['fn_retrieve_xml_pReturn'];
-
-            //se il codice di risposta è 1 non ci sono stati errori
-            if($responseCode == 1) {
-
-                //Xml di risposta
-                $response = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
-
-                $row       = $response->children()->children()->children();
-                $sourceID  = (string) $row->SOURCE_ID;
-                $nome      = (string) $row->NOME;
-                $cognome   = (string) $row->COGNOME;
-                $codFis    = (string) $row->COD_FIS;
-                $ruolo     = (string) $row->RUOLO;
-                $matricola = (string) $row->MATRICOLA;
-
-                session(['session_id' => $sessionID]);
-                session(['source_id'  => $sourceID]);
-                session(['nome'       => $nome]);
-                session(['cognome'    => $cognome]);
-                session(['cod_fis'    => $codFis]);
-                session(['ruolo'      => $ruolo]);
-                session(['matricola'  => $matricola]);
-
-                return redirect('/');
-
-            } else {
-                return redirect()->back()->with('customError', $responseCode);
-            }
-
-        }
-
-    }
-
     private function checkFakeUsersForLogout() {
 
         Log::info('SoapController - checkFakeUsersForLogout()');
@@ -179,37 +212,6 @@ class SoapController extends Controller {
         } else {
             return false;
         }
-
-    }
-
-    public function wsLogout() {
-
-        Log::info('SoapController - wsLogout()');
-
-        if(!$this->checkFakeUsersForLogout()) {
-
-            $sessionId = session('session_id');
-            $sid = 'SESSIONID='.$sessionId;
-
-            $this->soapWrapper->add('GenericWSEsse3', function ($service) {
-                $service->wsdl($this->esse3PathWsdl);
-            });
-
-            $fn_doLogout = $this->soapWrapper->call('GenericWSEsse3.fn_doLogout', [
-                'params' => $sid
-            ]);
-
-        }
-
-        Session::forget('session_id');
-        Session::forget('source_id');
-        Session::forget('nome');
-        Session::forget('cognome');
-        Session::forget('cod_fis');
-        Session::forget('ruolo');
-        Session::forget('matricola');
-
-        return redirect('/');
 
     }
 

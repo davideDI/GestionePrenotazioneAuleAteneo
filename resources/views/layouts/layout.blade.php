@@ -36,6 +36,23 @@
                 $.ajaxSetup({
                    headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
                 });
+
+                $(document).ready(function() {
+
+                      $.ajax({
+                          url: "{{URL::to('/manage-badge')}}",
+                          type: 'POST',
+                          dataType: 'json',
+                          success : function(result) {
+                              $("#real-time-badge").text(result);
+                          },
+                          error : function(result) {
+                              console.log(result);
+                          }
+                      });
+
+                });
+
             </script>
     </head>
 
