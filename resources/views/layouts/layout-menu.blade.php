@@ -90,7 +90,7 @@
                                     <span class="univaq_menu_span">Admin</span>
                                 @endif
                                 @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
-                                    <span id="real-time-badge" class="badge"></span>
+                                    <span id="real-time-badge" class="badge univaqBadge"></span>
                                 @endif
                                 <span class="caret univaq_menu_span"></span>
                             </a>

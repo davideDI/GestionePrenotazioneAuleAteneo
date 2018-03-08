@@ -50,3 +50,8 @@ button.btn.btn-primary.marginRight5px{
     background-color: #C0C0C0;
     color: white;
 }
+
+.badge {
+    background-color: #FFFFFF !important;
+    color: #822627 !important;
+}
