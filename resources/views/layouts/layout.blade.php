@@ -37,6 +37,7 @@
                    headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
                 });
 
+                @if(Session::has('ruolo') && (Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_DIP || Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO))
                 $(document).ready(function() {
 
                       $.ajax({
@@ -52,6 +53,7 @@
                       });
 
                 });
+                @endif
 
             </script>
     </head>
