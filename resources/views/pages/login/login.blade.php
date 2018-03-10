@@ -8,7 +8,7 @@
                 <form class="form-inline"  method="post" action="{{ url('/login') }}" accept-charset="UTF-8">
                     {{ csrf_field() }}
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-xs-12 col-sm-12 col-md-12" align="center">
 
                             <label for="username">Username</label>
                             <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" placeholder="username.." required autofocus="">
@@ -25,7 +25,7 @@
                     </div>
                     <br>
                     <div class="row">
-                         <div class="col-xs-12 col-sm-12 col-md-12">
+                         <div class="col-xs-12 col-sm-12 col-md-12" align="center">
                             <label for="password">Password</label>
                             <input id="password" type="password" class="form-control" name="password" placeholder="password.." required>
 
@@ -46,4 +46,5 @@
                 </form>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2"></div>
+        </div>
     @endsection

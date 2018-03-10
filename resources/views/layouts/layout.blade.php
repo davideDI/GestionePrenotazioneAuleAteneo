@@ -58,9 +58,9 @@
             </script>
     </head>
 
-    <body>
+    <body style="height: 100%;">
 
-          <div class="container-liquid">
+          <div class="container-liquid" style="min-height: 100%;  height: 100%; margin: 0 auto -150px; ">
 
               <!-- Sezione Menu -->
               @include('layouts.layout-menu')
@@ -76,15 +76,18 @@
                             <!-- Corpo della pagina -->
                             @yield('content')
 
-                            <!-- Footer pagina -->
-                            @include('layouts.layout-footer')
-
                         </div>
                     <div class="col-md-1"></div>
                   </div>
-                </div>
+
+              </div>
+
           </div>
 
+
+                        <!-- Footer pagina -->
+                        @include('layouts.layout-footer')
     </body>
+
 
 </html>

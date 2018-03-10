@@ -10,12 +10,12 @@
         <div class="row">
 
             <!-- Graphs 1 -->
-            <div class="col-md-6" style="width: 45%; height: 350px;display: inline-block;">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="width: 45%;">
                 <canvas id="pie1"></canvas>
             </div>
 
             <!-- Graphs 2 -->
-            <div class="col-md-6" style="width: 45%; height: 350px;display: inline-block;">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="width: 45%;">
                 <canvas id="pie2"></canvas>
             </div>
 
@@ -26,7 +26,7 @@
         <div class="row">
 
             <!-- Graphs 3 -->
-            <div class="col-md-6" style="width: 45%; height: 350px;display: inline-block;">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="width: 45%;">
                 <canvas id="pie3"></canvas>
             </div>
 
