@@ -168,8 +168,8 @@ class BookingController extends Controller {
             $service->wsdl($this->esse3PathWsdl);
         });
 
-        //TODO gestione parametro a.a.
-        $params = 'aa_id=2016;tipo_corso='.WS_TIP_CORSO_LIST.';fac_id='.$idDepartment;
+        $year = Config::get(APP.'.'.VAR_AA);
+        $params = 'aa_id='.$year.';tipo_corso='.WS_TIP_CORSO_LIST.';fac_id='.$idDepartment;
 
         $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
             'retrieve' => 'CDS_FACOLTA',
@@ -204,8 +204,7 @@ class BookingController extends Controller {
         $cds = $request['cds'];
         Log::info('BookingController - getSubjectsFromCDS(cds: '.$cds.')');
 
-        //TODO gestione parametro a.a.
-        $year = '2016';
+        $year = Config::get(APP.'.'.VAR_AA);
 
         $this->soapWrapper->add('GenericWSEsse3', function ($service) {
             $service->wsdl($this->esse3PathWsdl);

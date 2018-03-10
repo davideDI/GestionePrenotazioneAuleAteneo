@@ -111,7 +111,7 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Enable send mail
@@ -120,6 +120,6 @@ return [
     | Flag used to disable sending emails in local enviromnent
     |
     */
-    'flag_send_emails' => env('ENABLE_SEND_MAIL', false),
-    
+    'ENABLE_SEND_MAIL' => env('ENABLE_SEND_MAIL', false),
+
 ];

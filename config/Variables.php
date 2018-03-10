@@ -60,3 +60,5 @@ define('LDAP_TEST_PASSWORD', 'LDAP_TEST_PASSWORD');
 
 //Mails
 define('ENABLE_SEND_MAIL', 'ENABLE_SEND_MAIL');
+
+define('VAR_AA', 'VAR_AA');

@@ -141,11 +141,11 @@ return [
     |   LDAP_MEMBER_EMAIL_DOMAIN
     |   LDAP_STUDENT_EMAIL_DOMAIN
     |   LDAP_TEST_PASSWORD
-    | 
+    |
      */
 
     'LDAP_ENABLE_LOGIN'         => env('LDAP_ENABLE_LOGIN'),
-    
+
     'LDAP_ADM_USERNAME'         => env('LDAP_ADM_USERNAME'),
     'LDAP_ADM_PASSWORD'         => env('LDAP_ADM_PASSWORD'),
     'LDAP_HOST'                 => env('LDAP_HOST'),
@@ -158,7 +158,17 @@ return [
     'LDAP_MEMBER_EMAIL_DOMAIN'  => env('LDAP_MEMBER_EMAIL_DOMAIN'),
     'LDAP_STUDENT_EMAIL_DOMAIN' => env('LDAP_STUDENT_EMAIL_DOMAIN'),
     'LDAP_TEST_PASSWORD'        => env('LDAP_TEST_PASSWORD'),
-    
+
+    /*
+    |--------------------------------------------------------------------------
+    | A.A.
+    |--------------------------------------------------------------------------
+    |
+    | year user for Web Services
+    |
+    */
+    'VAR_AA' => env('VAR_AA', date('Y')),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -202,7 +212,7 @@ return [
          * Package Service Providers...
          */
         App\Providers\BootstrapServiceProvider::class,
-        
+
         //Laravel Soap Provider
         'Artisaninweb\SoapWrapper\ServiceProvider',
 
@@ -214,10 +224,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        
+
         //Form & Html Provider
         Collective\Html\HtmlServiceProvider::class,
-        
+
     ],
 
     /*
@@ -265,13 +275,13 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        
+
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        
+
         //'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facades\SoapWrapper',
         'SoapWrapper' => 'Artisaninweb\SoapWrapper\Facade',
-        
+
     ],
 
 ];

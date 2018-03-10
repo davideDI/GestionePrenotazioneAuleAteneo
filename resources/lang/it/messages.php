@@ -239,12 +239,12 @@
         'soap_error' => 'Errore: problema con servizi esterni. Contatta l\'amministratore',
 
         //LDAP ERRORS
-        'ldap_error_invalid_username' => 'Username non trovato!',
+        'ldap_error_invalid_username' => 'Utente non trovato!',
         'ldap_error_wrong_password' => 'Password errata!',
         'ldap_error_password_length' => 'Lunghezza password non valida!',
         'ldap_error_dn_not_found' => 'Utente DN non trovato!',
         'ldap_error_enough_attribute_user' => 'Ldap non restituisce abbastanza attributi per l\'utente',
-        'ldap_error_user_not_found' => 'Username not found',
+        'ldap_error_user_not_found' => 'Username non trovato',
         'ldap_error_multiple_username' => 'Più utenti trovati per lo stesso username',
         'ldap_error_unable_find_in_ldap' => 'Impossibile ricercare in LDAP',
         'ldap_error_admin_credentials_wrong' => 'Credenziali da amministratore non valide',
@@ -252,6 +252,7 @@
         'ldap_error_ssl_protocol' => 'Impossibile comunicare con Ldap utilizzando un protocollo SSL',
         'ldap_error_no_ssl_protocol' => 'Impossibile comunicare con Ldap utilizzando un protocollo non-SSL',
         'ldap_error_no_login' => 'Impossibile effettuare il login. Contattare l\'amministratore',
+        'ldap_error_invalid_credentials' => 'Credenziali non valide',
 
         //Response code
         //WS LOGIN

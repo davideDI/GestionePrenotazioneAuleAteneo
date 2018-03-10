@@ -117,7 +117,7 @@ class SoapController extends Controller {
         return redirect('/');
 
     }
-    
+
     private function checkFakeUsersForLogin($request) {
 
         $username = $request['username'];
@@ -219,8 +219,7 @@ class SoapController extends Controller {
 
         if(session('ruolo') == TipUser::ROLE_TEACHER) {
 
-            //TODO gestione parametro a.a.
-            $year = '2016';
+            $year = Config::get(APP.'.'.VAR_AA);
             Log::info('SoapController - wsGetUdDocPart(username: '.$matricolaDocente.', year: '.$year.')');
 
             $this->soapWrapper->add('GenericWSEsse3', function ($service) {
@@ -249,6 +248,7 @@ class SoapController extends Controller {
                 for($i = 0; $i < count($list); $i++) {
                     //Come chiave è inserito anche l'indice del ciclo per
                     //evitare che ci siano chiavi duplicate e quindi meno elementi nella lista
+                    Log::info((array)$list[$i]);
                     $idTemp = (string)$list[$i]->UD_COD.'-'.(string)$list[$i]->AA_ORD_ID.'-'.$i;
                     $temp = (string)$list[$i]->CDS_COD." - ".(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID;
                     Log::info('SoapController - wsGetUdDocPart('.(string)$list[$i]->UD_COD.':'.$temp.')');
@@ -288,7 +288,6 @@ class SoapController extends Controller {
 
     }
 
-    //TODO terminare gestione errori con scrittura messaggi
     public function login(Request $request) {
 
         Log::info('SoapController - login()');
@@ -330,7 +329,6 @@ class SoapController extends Controller {
 
                 if (($LDAP_username_get !== null) && ($LDAP_password_get !== null)) { /* CHECK if Parameters was passed via unsecure GET request but is usefull for testing */
                     Log::error('SoapController - login(): LDAP_error -> Invalid call method. Use POST instead of GET.'.LDAP_WARNING);
-                    //LDAP_replyError("Invalid call method. Use POST instead of GET.", LDAP_WARNING);
                 }
 
                 if ($ldap_useSSL) {
@@ -376,7 +374,6 @@ class SoapController extends Controller {
                                                                                                                 case "whenChanged":
                                                                                                                         $ldap_reply["data"][strtoupper($key)] = LDAP_dateStringReFormat($val[0]);
                                                                                                                 break;
-                                                                                                            //TODO verificare i due campi
                                                                                                                 case "employeeID":
                                                                                                                         $ldap_reply["data"][$key] = isset($val[0])?$val[0]:$val;
                                                                                                                         $ldap_reply["data"]['MATRICOLA'] = isset($val[0])?$val[0]:$val;
@@ -447,28 +444,12 @@ class SoapController extends Controller {
                                                                                                 $_SESSION['loggedin'] = false; /* User is not legged in */
                                                                                         }
 
-                                                                                } else {
-                                                                                    Log::error('SoapController - login(): LDAP_error -> Wrong password.');
-                                                                                    //return redirect()->back()->with('customError', 'ldap_error_wrong_password');
-                                                                                    //LDAP_replyError("Wrong password");
                                                                                 }
-                                                                        } else {
-                                                                            Log::error('SoapController - login(): LDAP_error -> Invalid password length.');
-                                                                            //return redirect()->back()->with('customError', 'ldap_error_password_length');
-                                                                            //LDAP_replyError("Invalid password length");
                                                                         }
-                                                                } else {
-                                                                    Log::error('SoapController - login(): LDAP_error -> User DN not found.');
-                                                                    //return redirect()->back()->with('customError', 'ldap_error_dn_not_found');
-                                                                    //LDAP_replyError("User DN not found");
                                                                 }
-                                                        } else {
-                                                            Log::error('SoapController - login(): LDAP_error -> LDAP does not return enough attributes for the selected user.');
-                                                            //return redirect()->back()->with('customError', 'ldap_error_enough_attribute_user');
-                                                            //LDAP_replyError("LDAP does not return enough attributes for the selected user");
                                                         }
                                                 } else {
-                                                        if ($ldap_result_count <= 0) {
+                                                  if ($ldap_result_count <= 0) {
                                                             Log::error('SoapController - login(): LDAP_error -> Username not found.');
                                                             return redirect()->back()->with('customError', 'ldap_error_user_not_found');
                                                         }
@@ -477,38 +458,19 @@ class SoapController extends Controller {
                                                             return redirect()->back()->with('customError', 'ldap_error_multiple_username');
                                                         }
                                                 }
-                                        } else {
-                                            Log::error('SoapController - login(): LDAP_error -> Unable to find in LDAP.');
-                                            //return redirect()->back()->with('customError', 'ldap_error_unable_find_in_ldap');
-                                            //LDAP_replyError("Unable to find in LDAP");
                                         }
-                                } else {
-                                    Log::error('SoapController - login(): LDAP_error -> Administrative username or password are wrong.');
-                                    //return redirect()->back()->with('customError', 'ldap_error_admin_credentials_wrong');
-                                    //LDAP_replyError("Administrative username or password are wrong");
                                 }
-                        } else {
-                            Log::error('SoapController - login(): LDAP_error -> Unable to speak with LDAP using protocol version 3.');
-                            //return redirect()->back()->with('customError', 'ldap_error_protocol_worng');
-                            //LDAP_replyError("Unable to speak with LDAP using protocol version 3");
-                        }
-                } else {
-                        if ($ldap_useSSL) {
-                            Log::error('SoapController - login(): LDAP_error -> Cannot connect to LDAP using the SSL protocol.');
-                            //return redirect()->back()->with('customError', 'ldap_error_ssl_protocol');
-                            //LDAP_replyError("Cannot connect to LDAP using the SSL protocol");
-                        } else {
-                            Log::error('SoapController - login(): LDAP_error -> Cannot connect to LDAP using a non-SSL protocol.');
-                            //return redirect()->back()->with('customError', 'ldap_error_no_ssl_protocol');
-                            //LDAP_replyError("Cannot connect to LDAP using a non-SSL protocol");
                         }
                 }
+
                 $LDAP_error = ldap_err2str(ldap_errno($ldap_connection));
                 if ($LDAP_error !== "Success") LDAP_replyError('LDAP::'.$LDAP_error);
                 ldap_close($ldap_connection);
+
             }
 
         } catch (Exception $e) {
+
             $ldap_reply["data"]=null;
             Log::error('SoapController - login(): LDAP_error -> '.$e->getMessage().'.');
 
@@ -524,7 +486,41 @@ class SoapController extends Controller {
             session(['group_id_to_manage' => null]);
             session(['matricola' => null]);
 
+
+            if (strpos($e->getMessage(), 'Invalid credentials') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_wrong_password');
+            }
+
+            if (strpos($e->getMessage(), 'User DN not found') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_dn_not_found');
+            }
+
+            if (strpos($e->getMessage(), 'LDAP does not return enough attributes for the selected user') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_enough_attribute_user');
+            }
+
+            if (strpos($e->getMessage(), 'Unable to find in LDAP') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_unable_find_in_ldap');
+            }
+
+            if (strpos($e->getMessage(), 'Administrative username or password are wrong') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_admin_credentials_wrong');
+            }
+
+            if (strpos($e->getMessage(), 'Unable to speak with LDAP using protocol version 3') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_protocol_worng');
+            }
+
+            if (strpos($e->getMessage(), 'Cannot connect to LDAP using the SSL protocol') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_ssl_protocol');
+            }
+
+            if (strpos($e->getMessage(), 'Cannot connect to LDAP using a non-SSL protocol') == true) {
+                return redirect()->back()->with('customError', 'ldap_error_no_ssl_protocol');
+            }
+
             return redirect()->back()->with('customError', 'ldap_error_no_login');
+
         }
 
         return redirect('/');

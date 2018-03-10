@@ -236,12 +236,12 @@
         'soap_error' => 'Error: problem with external services. Contact admin',
 
         //LDAP ERRORS
-        'ldap_error_invalid_username' => 'Username not found!',
+        'ldap_error_invalid_username' => 'User not found!',
         'ldap_error_wrong_password' => 'Wrong password!',
         'ldap_error_password_length' => 'Invalid password length!',
         'ldap_error_dn_not_found' => 'User DN not found!',
         'ldap_error_enough_attribute_user' => 'LDAP does not return enough attributes for the selected user',
-        'ldap_error_user_not_found' => 'Username non trovato',
+        'ldap_error_user_not_found' => 'Username not found',
         'ldap_error_multiple_username' => 'Multiple Username match found',
         'ldap_error_unable_find_in_ldap' => 'Unable to find in LDAP',
         'ldap_error_admin_credentials_wrong' => 'Administrative username or password are wrong',
@@ -249,6 +249,7 @@
         'ldap_error_ssl_protocol' => 'Cannot connect to LDAP using the SSL protocol',
         'ldap_error_no_ssl_protocol' => 'Cannot connect to LDAP using a non-SSL protocol',
         'ldap_error_no_login' => 'No login is possible. Contact the admin.',
+        'ldap_error_invalid_credentials' => 'Invalid credentials',
 
         //Response code
         //WS LOGIN
