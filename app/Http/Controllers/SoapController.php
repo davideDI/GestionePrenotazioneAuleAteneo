@@ -123,63 +123,73 @@ class SoapController extends Controller {
         $username = $request['username'];
         Log::info('SoapController - checkFakeUsersForLogin(username: '.$username.')');
 
-        if($username == 'davide@davide.it') {
+        if($username == 'admin@admin.it') {
             session(['session_id' => '999ooo888iii']);
-            session(['source_id'  => '000001']); //Look at UserTableSeed.php
-            session(['nome'       => 'DAVIDE']);
-            session(['cognome'    => 'DAVIDE']);
-            session(['cod_fis'    => 'DAVIDEDAVIDE33']);
-            session(['ruolo'      => TipUser::ROLE_ADMIN_DIP]);
-            session(['matricola'  => 'davide@davide']);
-
+            session(['nome'       => 'ADMIN']);
+            session(['cognome'    => 'ADMIN']);
+            session(['cod_fis'    => 'ADNADN00X00X000X']);
+            session(['ruolo'      =>  TipUser::ROLE_ADMIN_DIP]);
+            session(['matricola'  => null]);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => true]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => null]);
             return true;
         }
 
         else if($username == 'ateneo@ateneo.it') {
             session(['session_id' => '222eee333rrr']);
-            session(['source_id'  => '000003']); //Look at UserTableSeed.php
             session(['nome'       => 'ATENEO']);
             session(['cognome'    => 'ATENEO']);
-            session(['cod_fis'    => 'ATENEOATENEO33']);
-            session(['ruolo'      => TipUser::ROLE_ADMIN_ATENEO]);
-            session(['matricola'  => 'ateneo@ateneo.it']);
-
+            session(['cod_fis'    => 'ATNATN00X00X000X']);
+            session(['ruolo'      =>  TipUser::ROLE_ADMIN_ATENEO]);
+            session(['matricola'  => 'admin@admin.it']);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => true]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => 1]);
             return true;
         }
 
-        else if($username == 'usciere@ateneo.it') {
-            session(['session_id' => '444eee555rrr']);
-            session(['source_id'  => '000004']); //Look at UserTableSeed.php
-            session(['nome'       => 'Aldo']);
-            session(['cognome'    => 'Usciere']);
-            session(['cod_fis'    => 'STAFFSTAFF3']);
-            session(['ruolo'      => TipUser::ROLE_INQUIRER]);
-            session(['matricola'  => 'usciere@ateneo.it']);
-
+        else if($username == 'usciere@usciere.it') {
+            session(['session_id' => '555eee111rr']);
+            session(['nome'       => 'USCIERE']);
+            session(['cognome'    => 'USCIERE']);
+            session(['cod_fis'    => 'USRUSR00X00X000X']);
+            session(['ruolo'      =>  TipUser::ROLE_INQUIRER]);
+            session(['matricola'  => 'usciere@usciere.it']);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => false]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => null]);
             return true;
         }
 
-        else if($username == 'usciere2@ateneo.it') {
+        else if($username == 'usciere2@usciere2.it') {
             session(['session_id' => '555eee666rrr']);
-            session(['source_id'  => '000005']); //Look at UserTableSeed.php
-            session(['nome'       => 'Maria']);
-            session(['cognome'    => 'Usciere']);
-            session(['cod_fis'    => 'STAFFSTAFF34']);
-            session(['ruolo'      => TipUser::ROLE_INQUIRER]);
-            session(['matricola'  => 'usciere2@ateneo.it']);
-
+            session(['nome'       => 'USCIERE2']);
+            session(['cognome'    => 'USCIERE2']);
+            session(['cod_fis'    => 'USRUSR00X00X111X']);
+            session(['ruolo'      =>  TipUser::ROLE_INQUIRER]);
+            session(['matricola'  => 'usciere2@usciere2.it']);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => false]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => null]);
             return true;
         }
 
-        else if($username == 'segreteria@ateneo.it') {
+        else if($username == 'segreteria@segreteria.it') {
             session(['session_id' => '666eee777rrr']);
-            session(['source_id'  => '000006']); //Look at UserTableSeed.php
-            session(['nome'       => 'Anna']);
-            session(['cognome'    => 'Bianchi']);
-            session(['cod_fis'    => 'STAFFSTAFF88']);
-            session(['ruolo'      => TipUser::ROLE_SECRETARY]);
-            session(['matricola'  => 'segreteria@ateneo.it']);
-
+            session(['nome'       => 'SEGRETERIA']);
+            session(['cognome'    => 'SEGRETERIA']);
+            session(['cod_fis'    => 'SGRSGR00X00X111X']);
+            session(['ruolo'      =>  TipUser::ROLE_SECRETARY]);
+            session(['matricola'  => 'segreteria@segreteria.it']);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => true]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => null]);
             return true;
         }
 
