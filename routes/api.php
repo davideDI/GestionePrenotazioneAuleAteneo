@@ -8,6 +8,7 @@ use App\Resource;
 use App\User;
 use App\TipUser;
 use App\Repeat;
+use App\Booking;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +52,9 @@ function getResponse($error, $errorCode, $errorMessage, $data, $statusCode) {
         'error_message' => $errorMessage,
         'data'          => $data,
         'status_code'   => $statusCode
-    ));
+        ),
+        $statusCode
+    );
 
 }
 
@@ -83,31 +86,34 @@ function getSupportedFormat() {
 
 }
 
-function manageJsonToHtml($repeatsList) {
+function manageJsonToHtml($bookingsList) {
 
-    $numOfElements = count($repeatsList);
+    $numOfElements = count($bookingsList);
 
     if($numOfElements == 0) {
         return 0;
     } else {
         $htmlResult = "<table>";
         $htmlResult .= "<tr><td>Name</td><td>Description</td><td>Event start</td><td>Event end</td><td>Materia</td><td>Risorsa</td><td>Gruppo</td></tr>";
-        foreach ($repeatsList as $repeat) {
-            $htmlResult .=  "<tr><td>"
-                                .$repeat->booking->name.
-                            "</td><td>"
-                                .$repeat->booking->description.
-                            "</td><td>"
-                                .$repeat->event_date_start.
-                            "</td><td>"
-                                .$repeat->event_date_end.
-                            "</td><td>"
-                                .$repeat->booking->subject_id.
-                            "</td><td>"
-                                .$repeat->booking->resource->name.
-                            "</td><td>"
-                                .$repeat->booking->resource->group->name.
-                            "</td></tr>";
+        foreach ($bookingsList as $booking) {
+            foreach ($booking->repeats as $repeat) {
+              $htmlResult .=  "<tr><td>"
+                                  .$booking->name.
+                              "</td><td>"
+                                  .$booking->description.
+                              "</td><td>"
+                                  .$repeat->event_date_start.
+                              "</td><td>"
+                                  .$repeat->event_date_end.
+                              "</td><td>"
+                                  .$booking->subject_id.
+                              "</td><td>"
+                                  .$booking->resource->name.
+                              "</td><td>"
+                                  .$booking->resource->group->name.
+                              "</td></tr>";
+            }
+
         }
         $htmlResult .= "</table>";
         return $htmlResult;
@@ -128,19 +134,21 @@ function manageJsonToQr($url) {
 
 }
 
-function manageJsonToTxt($repeatsList) {
+function manageJsonToTxt($bookingsList) {
 
-    $numOfElements = count($repeatsList);
+    $numOfElements = count($bookingsList);
 
     if($numOfElements == 0) {
         return 0;
     } else {
         $txtResult = "";
-        foreach ($repeatsList as $repeat) {
-            $txtResult .=  $repeat->booking->name.' '.$repeat->booking->description.' '.$repeat->event_date_start.' '.
-                           $repeat->event_date_end.' '.$repeat->booking->subject_id.' '.$repeat->booking->resource->name.' '.
-                           $repeat->booking->resource->group->name.PHP_EOL;
-        }
+        foreach ($bookingsList as $booking) {
+            foreach ($booking->repeats as $repeat) {
+                $txtResult .=  $booking->name.' '.$booking->description.' '.$repeat->event_date_start.' '.
+                               $repeat->event_date_end.' '.$booking->subject_id.' '.$booking->resource->name.' '.
+                               $booking->resource->group->name.PHP_EOL;
+            }
+          }
         return $txtResult;
     }
 
@@ -163,7 +171,8 @@ function manageJsonToTxt($repeatsList) {
                     {...},
                 ],
         "status_code": 200
-    }
+    },
+    200
 
     Example of a KO response
     {
@@ -172,7 +181,9 @@ function manageJsonToTxt($repeatsList) {
         "error_message": "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'group.name' in 'where clause'",
         "data": [],
         "status_code": 400
-    }
+    },
+    400
+
  */
 
 /*
@@ -281,7 +292,7 @@ WHERE
 {filter} -> Mandatory. String. The name of a specific teacher or the description of an event
 {group}  -> Optional. String. The name of a specific group
 
-The list of results are ordered by date_start, from the current date.
+The list of results are ordered by creation date.
 
 */
 
@@ -290,41 +301,21 @@ Route::get('/v1/filter/{filter}/{group?}', function($filter = null, $group = nul
 
     Log::info('Api - /v1/filter/'.$filter.'/'.$group);
 
-    if(is_numeric($filter)) {
-
-        return getResponse(true, ERROR_CODE_INVALID_PARAMETER, ERROR_MESSAGE_NO_MESSAGE, null, 400);
-
-    }
-
-    if($group != null && is_numeric($group)) {
-
-        return getResponse(true, ERROR_CODE_INVALID_PARAMETER, ERROR_MESSAGE_NO_MESSAGE, null, 400);
-
-    }
-
     try {
 
-        $repeatsList = Repeat::with('booking', 'booking.user', 'booking.resource', 'booking.resource.group')
-                            ->where('event_date_start', '>=', getToday())
+        $bookingList = Booking::with('repeats', 'resource', 'resource.group')
+                                ->where(function($filterUserOrDescription) use($filter) {
+                                            $filterUserOrDescription->where('teacher_id', 'like', '%'.$filter.'%')
+                                                                    ->orWhere('subject_id', 'like', '%'.$filter.'%');
+                                        })
+                                ->whereHas('resource.group', function($filterGroup) use ($group) {
+                                    if($group != null && $group != '') {
+                                        $filterGroup->where('name', 'like', '%'.$group.'%');
+                                    }
+                                })
 
-                            ->where(function($filterUserOrDescription) use($filter) {
-                                $filterUserOrDescription->whereHas('booking.user', function($filterUser) use ($filter) {
-                                                            $filterUser->where('name', 'like', '%'.$filter.'%')
-                                                                       ->orWhere('surname', 'like', '%'.$filter.'%');
-                                                        })
-                                                        ->orWhereHas('booking', function($filterDescription) use ($filter) {
-                                                            $filterDescription->where('subject_id', 'like', '%'.$filter.'%');
-                                                        });
-                            })
-
-                            ->whereHas('booking.resource.group', function($filterGroup) use ($group) {
-                                if($group != null && $group != '') {
-                                    $filterGroup->where('name', 'like', '%'.$group.'%');
-                                }
-                            })
-
-                            ->orderBy('event_date_start', 'ASC')
-                            ->get();
+                                ->orderBy('created_at', 'ASC')
+                                ->get();
 
     } catch (PDOException $pdoEx) {
 
@@ -336,7 +327,7 @@ Route::get('/v1/filter/{filter}/{group?}', function($filter = null, $group = nul
 
     }
 
-    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $bookingList, 200);
 
 });
 
@@ -355,7 +346,7 @@ WHERE
 {group}    -> Mandatory. String. The name of a specific group.
 {format}   -> Optional. String. The specific type of return. Possible values [json | html | txt | qr]
 
-The list of results are ordered by date_start, from the current date.
+The list of results are ordered by creation date.
 
 */
 
@@ -371,36 +362,33 @@ Route::get('/v1/repeats/resource/{resource}/{format?}', function($resource = nul
 
     try {
 
-        $repeatsList = Repeat::with('booking', 'booking.user', 'booking.resource', 'booking.resource.group')
-                            ->where('event_date_start', '>=', getToday())
-
-                            ->whereHas('booking.resource', function($filterResource) use ($resource) {
-                                $filterResource->where('name', 'like', '%'.$resource.'%');
-                            })
-
-                            ->orderBy('event_date_start', 'ASC')
-                            ->get();
+        $bookingList = Booking::with('repeats', 'resource', 'resource.group')
+                               ->whereHas('resource', function($filterResource) use ($resource) {
+                                             $filterResource->where('name', 'like', '%'.$resource.'%');
+                                         })
+                               ->orderBy('created_at', 'ASC')
+                               ->get();
 
         if($format != null) {
 
             switch ($format) {
                 case FORMAT_JSON:
-                    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+                    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $bookingList, 200);
 
                 case FORMAT_HTML:
-                    return manageJsonToHtml($repeatsList);
+                    return manageJsonToHtml($bookingList);
 
                 case FORMAT_QR:
                     return manageJsonToQr(Request::url());
 
                 case FORMAT_TXT:
-                    return manageJsonToTxt($repeatsList);
+                    return manageJsonToTxt($bookingList);
 
             }
 
         }
 
-        return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+        return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $bookingList, 200);
 
     } catch (PDOException $pdoEx) {
 
@@ -432,40 +420,36 @@ Route::get('/v1/repeats/group/{group}/resource/{resource}/{format?}', function($
 
     try {
 
-        $repeatsList = Repeat::with('booking', 'booking.user', 'booking.resource', 'booking.resource.group')
-                            ->where('event_date_start', '>=', getToday())
-
-                            ->whereHas('booking.resource', function($filterResource) use ($resource) {
-                                $filterResource->where('name', 'like', '%'.$resource.'%');
-                            })
-
-                            ->whereHas('booking.resource.group', function($filterGroup) use ($group) {
-                                $filterGroup->where('name', 'like', '%'.$group.'%');
-                            })
-
-                            ->orderBy('event_date_start', 'ASC')
+        $bookingList = Booking::with('repeats', 'resource', 'resource.group')
+                             ->whereHas('resource', function($filterResource) use ($resource) {
+                                           $filterResource->where('name', 'like', '%'.$resource.'%');
+                                       })
+                             ->whereHas('resource.group', function($filterGroup) use ($group) {
+                                 $filterGroup->where('name', 'like', '%'.$group.'%');
+                             })
+                            ->orderBy('created_at', 'ASC')
                             ->get();
 
         if($format != null) {
 
             switch ($format) {
                 case FORMAT_JSON:
-                    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+                    return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $bookingList, 200);
 
                 case FORMAT_HTML:
-                    return manageJsonToHtml($repeatsList);
+                    return manageJsonToHtml($bookingList);
 
                 case FORMAT_QR:
                     return manageJsonToQr(Request::url());
 
                 case FORMAT_TXT:
-                    return manageJsonToTxt($repeatsList);
+                    return manageJsonToTxt($bookingList);
 
             }
 
         }
 
-        return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $repeatsList, 200);
+        return getResponse(false, ERROR_CODE_NONE, ERROR_MESSAGE_NO_MESSAGE, $bookingList, 200);
 
     } catch (PDOException $pdoEx) {
 

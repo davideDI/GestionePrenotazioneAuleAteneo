@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\Request;
 use Exception;
 use PDOException;
 use ErrorException;
@@ -9,6 +10,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -20,7 +22,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         \Illuminate\Auth\AuthenticationException::class,
         \Illuminate\Auth\Access\AuthorizationException::class,
-        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        // \Symfony\Component\HttpKernel\Exception\HttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
         \Illuminate\Session\TokenMismatchException::class,
         \Illuminate\Validation\ValidationException::class,
@@ -46,12 +48,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
-
-//        if ($exception instanceof \SoapFault){
-//            return redirect('/')->withErrors([-1]);
-//        }
+    public function render($request, Exception $exception) {
 
         if ($exception instanceof TokenMismatchException){
             Log::error('Handler - TokenMismatchException : ['.$exception->getMessage().']');
@@ -68,7 +65,40 @@ class Handler extends ExceptionHandler
             return redirect('/')->with('customError', -1);
         }
 
+        if ($exception instanceof NotFoundHttpException){
+            Log::error('Handler - NotFoundHttpException : ['.$exception->getMessage().']');
+
+            if ($this->isApiCall($request)) {
+                return $this->getResponse(true, 'ERROR_CODE_HTTP_EXCEPTION', 'The server responded with a status of 404 (Not Found)', null, 404, $request);
+            }
+
+            return response()->view('errors.404', [], 404);
+
+        }
+
         return parent::render($request, $exception);
+
+    }
+
+    //Used to manage error 404 in Api Rest
+    public function isApiCall(Request $request) {
+        return strpos($request->getUri(), '/api/v') !== false;
+    }
+
+    function getResponse($error, $errorCode, $errorMessage, $data, $statusCode, $request) {
+
+        if($error == true) {
+            Log::error('Api: '.$request->getUri().'. Exception: '.$errorCode.'. Error Message: '.$errorMessage);
+        }
+
+        return response()->json(array(
+            'error'         => $error,
+            'error_code'    => $errorCode,
+            'error_message' => $errorMessage,
+            'data'          => $data,
+            'status_code'   => $statusCode
+        ), $statusCode);
+
     }
 
     /**
