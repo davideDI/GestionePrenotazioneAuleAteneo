@@ -14,7 +14,7 @@ button.btn.btn-primary.marginRight5px{
 
 .univaq_menu_div {
     background-color: #822627;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .univaq_menu_navbar {
@@ -69,4 +69,10 @@ button.btn.btn-primary.marginRight5px{
     color: #fff;
     padding: 50px;
     box-shadow: 0px 0px 10px 0px #2f2f2f;
+}
+a.navbar-brand{
+  background-color: white;
+}
+a.navbar-brand > img{
+  width: 50px;
 }
