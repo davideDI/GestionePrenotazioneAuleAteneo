@@ -97,7 +97,7 @@
 
                     <div class="col-md-12" id="searchResult">
 
-                        <img src="{{URL::asset('lib/images/lente_ingrandimento.png')}}" width="150" height="95" style="margin-left: 45%; margin-top: 30%;" alt="lente">
+                        <img src="{{URL::asset('lib/images/lente_ingrandimento.png')}}" width="100" style="margin-left: 45%; margin-top: 30%;" alt="lente">
 
                     </div>
 

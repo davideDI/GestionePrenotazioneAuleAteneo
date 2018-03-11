@@ -71,6 +71,7 @@ button.btn.btn-primary.marginRight5px{
     color: #2f2f2f;
     height: 200px;
     padding: 10px 0px 50px 0px;
+    margin-top: 80px;
 }
 .box-home:nth-of-type(2n+2){
   background-color: #e6e6e6;
@@ -97,4 +98,16 @@ button.btn.btn-primary.marginRight5px{
 }
 .box-home:nth-of-type(3) > .icon-home{
   background-image: url(../images/speech-bubbles.png);
+}
+table th > a{
+  color:#2f2f2f
+}
+.table, thead tr th{
+  text-align: center;;
+}
+.table-hover>tbody>tr:hover{
+  background-color: transparent;
+}
+.table tbody tr td {
+  padding: 15px !important;
 }

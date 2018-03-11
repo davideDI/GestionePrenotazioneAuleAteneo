@@ -55,20 +55,24 @@
                             <legend>{{ trans('messages.index_calendar_booking_status')}}</legend>
                             @foreach($bookingsStatus as $bookingStatus)
                                 @if($bookingStatus->id == 1)
-                                    <p>{{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
+                                    <p>
                                         <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
+                                        {{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($bookingStatus->id == 2)
-                                    <p>{{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
+                                    <p>
                                         <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
+                                        {{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($bookingStatus->id == 3)
-                                    <p>{{ trans('messages.index_calendar_managed')}}&nbsp;&nbsp;
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" />
+                                    <p>
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/checked.png')}}" />
+                                        {{ trans('messages.index_calendar_managed')}}&nbsp;&nbsp;
                                     </p>
                                 @else
-                                    <p>{{ trans('messages.index_calendar_rejected')}}&nbsp;&nbsp;
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" />
+                                    <p>
+                                      <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/x-button.png')}}" />
+                                      {{ trans('messages.index_calendar_rejected')}}&nbsp;&nbsp;
                                     </p>
                                 @endif
                             @endforeach
