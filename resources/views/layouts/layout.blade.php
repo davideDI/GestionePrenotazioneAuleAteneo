@@ -84,10 +84,9 @@
 
           </div>
 
+          <!-- Footer pagina -->
+          @include('layouts.layout-footer')
 
-                        <!-- Footer pagina -->
-                        @include('layouts.layout-footer')
     </body>
-
 
 </html>

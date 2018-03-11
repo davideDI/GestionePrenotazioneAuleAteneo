@@ -324,7 +324,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="confirm_repeat_events" class="btn btn-primary">{{ trans('messages.booking_confirm_repeat') }}</button>
+                            <button type="button" id="confirm_repeat_events" class="btn btn-primary univaq_button">{{ trans('messages.booking_confirm_repeat') }}</button>
                             <button type="button" id="close_confirm_repeat_events" class="btn btn-default" data-dismiss="modal">{{ trans('messages.common_close') }}</button>
                         </div>
                     </div>
