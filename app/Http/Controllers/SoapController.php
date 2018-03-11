@@ -124,6 +124,7 @@ class SoapController extends Controller {
         Log::info('SoapController - checkFakeUsersForLogin(username: '.$username.')');
 
         if($username == 'admin@admin.it') {
+            session(['source_id' => 1]);
             session(['session_id' => '999ooo888iii']);
             session(['nome'       => 'ADMIN']);
             session(['cognome'    => 'ADMIN']);
@@ -138,6 +139,7 @@ class SoapController extends Controller {
         }
 
         else if($username == 'ateneo@ateneo.it') {
+            session(['source_id' => 1]);
             session(['session_id' => '222eee333rrr']);
             session(['nome'       => 'ATENEO']);
             session(['cognome'    => 'ATENEO']);
@@ -152,6 +154,7 @@ class SoapController extends Controller {
         }
 
         else if($username == 'usciere@usciere.it') {
+            session(['source_id' => 1]);
             session(['session_id' => '555eee111rr']);
             session(['nome'       => 'USCIERE']);
             session(['cognome'    => 'USCIERE']);
@@ -166,6 +169,7 @@ class SoapController extends Controller {
         }
 
         else if($username == 'usciere2@usciere2.it') {
+            session(['source_id' => 1]);
             session(['session_id' => '555eee666rrr']);
             session(['nome'       => 'USCIERE2']);
             session(['cognome'    => 'USCIERE2']);
@@ -180,6 +184,7 @@ class SoapController extends Controller {
         }
 
         else if($username == 'segreteria@segreteria.it') {
+            session(['source_id' => 1]);
             session(['session_id' => '666eee777rrr']);
             session(['nome'       => 'SEGRETERIA']);
             session(['cognome'    => 'SEGRETERIA']);
@@ -194,14 +199,34 @@ class SoapController extends Controller {
         }
 
         else if($username == '001642') {
-
+            session(['source_id' => 1]);
+            session(['session_id' => '777eee888rrr']);
+            session(['nome'       => 'PROF']);
+            session(['cognome'    => 'PROF']);
+            session(['cod_fis'    => 'PRFPRF00X00X111X']);
+            session(['ruolo'      =>  TipUser::ROLE_TEACHER]);
+            session(['matricola'  => '001642']);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => true]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => 1]);
             $this->wsGetUdDocPart($request);
             return true;
 
         }
 
         else if($username == '000099') {
-
+            session(['source_id' => 1]);
+            session(['session_id' => '888eee999rrr']);
+            session(['nome'       => 'PROF2']);
+            session(['cognome'    => 'PROF2']);
+            session(['cod_fis'    => 'PRFPRF00X00X222X']);
+            session(['ruolo'      =>  TipUser::ROLE_TEACHER]);
+            session(['matricola'  => '000099']);
+            session(['loggedin'  => true]);
+            session(['enable_crud' => true]);
+            session(['enable_access' => true]);
+            session(['group_id_to_manage' => 1]);
             $this->wsGetUdDocPart($request);
             return true;
 

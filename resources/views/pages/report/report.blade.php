@@ -7,26 +7,20 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 80px">
 
             <!-- Graphs 1 -->
-            <div class="col-md-6 col-sm-6 col-xs-6" style="width: 45%;">
+            <div class="col-md-4 col-sm-4 col-xs-4" style="width: 33%;">
                 <canvas id="pie1"></canvas>
             </div>
 
             <!-- Graphs 2 -->
-            <div class="col-md-6 col-sm-6 col-xs-6" style="width: 45%;">
+            <div class="col-md-4 col-sm-4 col-xs-4" style="width: 33%;">
                 <canvas id="pie2"></canvas>
             </div>
 
-        </div>
-
-        <hr>
-
-        <div class="row">
-
             <!-- Graphs 3 -->
-            <div class="col-md-6 col-sm-6 col-xs-6" style="width: 45%;">
+            <div class="col-md-4 col-sm-4 col-xs-4" style="width: 33%;">
                 <canvas id="pie3"></canvas>
             </div>
 
@@ -46,9 +40,8 @@
                         labels: ["{{ trans('messages.report_bookings') }}", "{{ trans('messages.report_surveys') }}"],
                         datasets: [{
                             label: "{{ trans('messages.report_title1') }}",
-                            backgroundColor:  ['rgba(255, 99, 132, 0.2)',
-                                               'rgba(54, 162, 235, 0.2)'],
-                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor:  ['#ccc',
+                                               '#822627'],
                             data: [{{$numRepeats}}, {{$numSurveys}}],
                         }]
                     },
@@ -69,9 +62,8 @@
                         labels: ["{{ trans('messages.report_checked') }}", "{{ trans('messages.report_unchecked') }}"],
                         datasets: [{
                             label: "{{ trans('messages.report_title1') }}",
-                            backgroundColor:  ['rgba(255, 99, 132, 0.2)',
-                                               'rgba(54, 162, 235, 0.2)'],
-                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor:  ['#ccc',
+                                               '#822627'],
                             data: [{{$surveyStatus2}}, {{$surveyStatus1}}],
                         }]
                     },
@@ -92,9 +84,8 @@
                         labels: ["{{ trans('messages.report_real_use') }}", "{{ trans('messages.report_waste') }}"],
                         datasets: [{
                             label: "{{ trans('messages.report_title1') }}",
-                            backgroundColor:  ['rgba(255, 99, 132, 0.2)',
-                                               'rgba(54, 162, 235, 0.2)'],
-                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor:  ['#ccc',
+                                               '#822627'],
                             data: [{{$tot1}}, {{$tot2}}],
                         }]
                     },

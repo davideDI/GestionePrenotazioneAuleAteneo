@@ -56,22 +56,22 @@
                             @foreach($bookingsStatus as $bookingStatus)
                                 @if($bookingStatus->id == 1)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/richiesta.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/richiesta.png')}}" />
                                         {{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($bookingStatus->id == 2)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/elaborazione.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/elaborazione.png')}}" />
                                         {{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($bookingStatus->id == 3)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/checked.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/checked.png')}}" />
                                         {{ trans('messages.index_calendar_managed')}}&nbsp;&nbsp;
                                     </p>
                                 @else
                                     <p>
-                                      <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/x-button.png')}}" />
+                                      <img width="30" class="img-circle" src="{{URL::asset('lib/images/x-button.png')}}" />
                                       {{ trans('messages.index_calendar_rejected')}}&nbsp;&nbsp;
                                     </p>
                                 @endif
@@ -82,22 +82,22 @@
                             @foreach($eventsType as $eventType)
                                 @if($eventType->id == 1)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/esame.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/esame.png')}}" />
                                         {{ trans('messages.index_calendar_exam')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($eventType->id == 2)
                                      <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/lezione.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/lezione.png')}}" />
                                         {{ trans('messages.index_calendar_lesson')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($eventType->id == 3)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/seminario.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/seminario.png')}}" />
                                         {{ trans('messages.index_calendar_seminary')}}&nbsp;&nbsp;
                                     </p>
                                 @else
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/generico.png')}}" />
+                                        <img width="30" class="img-circle" src="{{URL::asset('lib/images/generico.png')}}" />
                                         {{ trans('messages.index_calendar_generic')}}&nbsp;&nbsp;
                                     </p>
                                 @endif
