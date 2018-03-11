@@ -56,12 +56,12 @@
                             @foreach($bookingsStatus as $bookingStatus)
                                 @if($bookingStatus->id == 1)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/richiesta.png')}}" />
                                         {{ trans('messages.index_calendar_requested')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($bookingStatus->id == 2)
                                     <p>
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/elaborazione.png')}}" />
                                         {{ trans('messages.index_calendar_in_process')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($bookingStatus->id == 3)
@@ -81,20 +81,24 @@
                             <legend>{{ trans('messages.index_calendar_types_event')}}</legend>
                             @foreach($eventsType as $eventType)
                                 @if($eventType->id == 1)
-                                    <p>{{ trans('messages.index_calendar_exam')}}&nbsp;&nbsp;
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_verde.jpg')}}" />
+                                    <p>
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/esame.png')}}" />
+                                        {{ trans('messages.index_calendar_exam')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($eventType->id == 2)
-                                     <p>{{ trans('messages.index_calendar_lesson')}}&nbsp;&nbsp;
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_rossa.jpg')}}" />
+                                     <p>
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/lezione.png')}}" />
+                                        {{ trans('messages.index_calendar_lesson')}}&nbsp;&nbsp;
                                     </p>
                                 @elseif($eventType->id == 3)
-                                    <p>{{ trans('messages.index_calendar_seminary')}}&nbsp;&nbsp;
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_gialla.jpg')}}" />
+                                    <p>
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/seminario.png')}}" />
+                                        {{ trans('messages.index_calendar_seminary')}}&nbsp;&nbsp;
                                     </p>
                                 @else
-                                    <p>{{ trans('messages.index_calendar_generic')}}&nbsp;&nbsp;
-                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/palla_blu.jpg')}}" />
+                                    <p>
+                                        <img width="17" height="17" class="img-circle" src="{{URL::asset('lib/images/generico.png')}}" />
+                                        {{ trans('messages.index_calendar_generic')}}&nbsp;&nbsp;
                                     </p>
                                 @endif
                             @endforeach
@@ -189,13 +193,13 @@
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
                                             @if($booking->tip_event_id == \App\TipEvent::TIP_EVENT_EXAM)
-                                                color : '#00FF00'
+                                                color : '#6ac259'
                                             @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_LESSON)
-                                                color : '#FF0000'
+                                                color : '#e21b1b'
                                             @elseif($booking->tip_event_id == \App\TipEvent::TIP_EVENT_SEMINARY)
-                                                color : '#FFFF00'
+                                                color : '#dbba05'
                                             @else
-                                                color : '#0000FF'
+                                                color : '#4a73c5'
                                             @endif
                                         },
                                     @endif
@@ -209,13 +213,13 @@
                                             start      : '{{$repeat->event_date_start}}',
                                             end        : '{{$repeat->event_date_end}}',
                                             @if($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_REQUESTED)
-                                                color : '#0000FF'
+                                                color : '#4a73c5'
                                             @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_WORKING)
-                                                color : '#FFFF00'
+                                                color : '#dbba05'
                                             @elseif($repeat->tip_booking_status_id == \App\TipBookingStatus::TIP_BOOKING_STATUS_OK)
-                                                color : '#00FF00'
+                                                color : '#6ac259'
                                             @else
-                                                color : '#FF0000'
+                                                color : '#e21b1b'
                                             @endif
                                         },
                                 @endif
