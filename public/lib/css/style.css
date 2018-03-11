@@ -1,5 +1,8 @@
 /*File Css per la creazione di specifiche classi*/
-
+body{
+  height: 100%;
+  font-family: 'Arimo', sans-serif;
+}
 .marginBottom5px{
     margin-bottom:5px;
 }
@@ -60,19 +63,38 @@ button.btn.btn-primary.marginRight5px{
     background-color: #FFFFFF !important;
     color: #822627 !important;
 }
-
 .form-control:focus {
     border-color: #C0C0C0;
 }
 .box-home{
-    background-color: #2f2f2f;
-    color: #fff;
-    padding: 50px;
-    box-shadow: 0px 0px 10px 0px #2f2f2f;
+    background-color: #f2f2f2;
+    color: #2f2f2f;
+    height: 200px;
+    padding: 10px 0px 50px 0px;
 }
-a.navbar-brand{
-  background-color: white;
+.box-home:nth-of-type(2n+2){
+  background-color: #e6e6e6;
 }
-a.navbar-brand > img{
-  width: 50px;
+.title-box-home{
+  color: #2f2f2f;
+  font-size: 20px;
+}
+.title-box-home:hover, .title-box-home:focus{
+  text-decoration: none;
+  color: #76787A;
+}
+.icon-home{
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  margin: 20px 0px 20px 45%;
+}
+.box-home:nth-of-type(1) > .icon-home{
+  background-image: url(../images/calculator.png);
+}
+.box-home:nth-of-type(2) > .icon-home{
+  background-image: url(../images/students-teacher-and-blackboard.png);
+}
+.box-home:nth-of-type(3) > .icon-home{
+  background-image: url(../images/speech-bubbles.png);
 }

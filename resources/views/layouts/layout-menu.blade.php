@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="{{URL::to('/')}}">
-                <img src="{{URL::asset('lib/images/Logo_Top_Left.png')}}" width="94%" height="194%" style="margin-top: -10;" alt="Univaq">
+                <img src="{{URL::asset('lib/images/Logo_Top_Left.png')}}" width="40" style="margin-top: -13px; float:left" alt="Univaq">
             </a>
         </div>
 

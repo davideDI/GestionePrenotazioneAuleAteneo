@@ -5,6 +5,7 @@
 <script src="{{URL::asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
 <link rel="stylesheet" href="{{URL::asset('lib/bootstrap/css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{URL::asset('lib/bootstrap/css/bootstrap-theme.css')}}" media="screen">
+<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
