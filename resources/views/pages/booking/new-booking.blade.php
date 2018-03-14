@@ -1,7 +1,7 @@
 @extends('layouts.layout')
     @section('content')
 
-        <div class="row">
+        <div class="row" style="margin-bottom: 150px;">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <h3>{{ trans('messages.booking_title')}}</h3>

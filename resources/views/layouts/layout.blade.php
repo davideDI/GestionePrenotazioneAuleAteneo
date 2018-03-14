@@ -60,7 +60,7 @@
 
     <body>
 
-          <div class="container-liquid" style="min-height: 100%;  height: 100%; margin: 0 auto -150px; ">
+          <div class="container-liquid" style="min-height: 100%;  height: auto; margin: 0 auto -150px; ">
 
               <!-- Sezione Menu -->
               @include('layouts.layout-menu')
