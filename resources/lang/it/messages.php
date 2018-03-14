@@ -278,6 +278,7 @@
         'acl_check_user' => 'Verifica utente',
         'acl_get_ldap_user' => 'Importa dati utente',
         'acl_user_not_found' => 'Utente non trovato',
+        'acl_user_already_present' => 'Utente già presente in procedura',
         'acl_no_autorized_users' => 'Nessun Utente autorizzato',
         'acl_confirm_delete_text' => 'L\'utente non avrà più nessun ruolo all\'interno dell\'applicazione',
         'acl_no_enable_access' => 'Non sei abilitato ad effettuare l\'accesso. Contatta l\'amministratore',

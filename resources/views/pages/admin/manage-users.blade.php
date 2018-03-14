@@ -15,6 +15,13 @@
                     </div>
                 @endif
 
+                @if(isset($userAlreadyPresent) && $userAlreadyPresent)
+                    <div class="alert alert-danger" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{ trans('messages.acl_user_already_present') }}
+                    </div>
+                @endif
+
                 @if(!$checkSearchTrue)
                     <form method="POST" action="{{ url('/get-ldap-user-info') }}">
                         {{ csrf_field() }}

@@ -275,6 +275,7 @@
         'acl_check_user' => 'Check User',
         'acl_get_ldap_user' => 'Import data',
         'acl_user_not_found' => 'User not found',
+        'acl_user_already_present' => 'User already present',
         'acl_no_autorized_users' => 'No authorized Users',
         'acl_confirm_delete_text' => 'The user will no longer have any role within the application',
         'acl_no_enable_access' => 'You dont\' have any ermission to login. Contact the admin',

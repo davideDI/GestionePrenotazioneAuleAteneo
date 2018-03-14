@@ -10,31 +10,31 @@ use App\TipUser;
 use App\User;
 
 class AclController extends Controller {
-    
+
     public function getUsersList() {
-        
+
         Log::info('AclController - getUserList()');
         $listOfAcl = Acl::with('group', 'user')->get();
         return view('pages/admin/users-list', ['listOfAcl' => $listOfAcl]);
-        
+
     }
-    
+
     public function getManageUserView() {
-        
+
         Log::info('AclController - getManageUserView()');
         return view('pages/admin/manage-users', ['checkSearchTrue' => false]);
-        
+
     }
-    
+
     public function getLdapUserInfo(Request $request) {
-        
+
         Log::info('AclController - getLdapUserInfo()');
-        
+
         $ldap_params_username = $request['cn'];
         $checkUserSearch = true;
-         
+
         require_once 'LdapConfigUtility.php';
-        
+
         $ldap_useSSL = (isset($ldap['proto']) && (strtolower($ldap['proto'])=='ssl')) || (isset($ldap['port']) && (intval($ldap['port']) == 636));
         if ($ldap_useSSL) {
                 putenv('LDAPTLS_REQCERT=never');
@@ -139,72 +139,79 @@ class AclController extends Controller {
         }
 
         if($checkUserSearch) {
+
+            $checkUser = User::where('cn', 'like', '%'.$ldap_reply["data"]["cn"].'%')->get();
+            if($checkUser != null) {
+                Log::info('AclController - getLdapUserInfo() - user already present');
+                return view('pages/admin/manage-users', ['checkSearchTrue' => false, 'userAlreadyPresent' => true]);
+            }
+
             $user = new User;
             $user->email = $ldap_reply["data"]["mail"];
             $user->cn = $ldap_reply["data"]["cn"];
             $user->registration_number = $ldap_reply["data"]['employeeNumber'];
             $user->name = $ldap_reply["data"]['NOME'];
             $user->surname = $ldap_reply["data"]['COGNOME'];
-            
+
             $listOfGroups = Group::pluck('name', 'id');
             $listOfTipUser = TipUser::pluck('name', 'id');
-        
+
             return view('pages/admin/manage-users', ['user' => $user, 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser, 'checkSearchTrue' => $checkUserSearch]);
-            
+
         }
-        
+
         return view('pages/admin/manage-users', ['checkSearchTrue' => $checkUserSearch, 'userFinded' => true]);
 
     }
-    
+
     public function insertUser(Request $request) {
-        
+
         Log::info('AclController - insertUser()');
         $user = new User;
         $user->fill($request->all());
         $user->save();
-        
+
         $acl = new Acl;
         $acl->user_id = $user->id;
         $acl->group_id = $request['group_id'];
         $acl->enable_crud = $request->enable_crud ? 1 : 0;
         $acl->enable_access = $request->enable_access ? 1 : 0;
         $acl->save();
-        
+
         return redirect()->route('users-list')->with('success', 'common_insert_ok');
-        
+
     }
-    
+
     public function updateAclView($idAcl) {
-        
+
         Log::info('AclController - updateAclView('.$idAcl.')');
         $acl = Acl::where('id', $idAcl)->with('user')->get();
         $listOfGroups = Group::pluck('name', 'id');
         $listOfTipUser = TipUser::pluck('name', 'id');
         return view('pages/admin/acl', ['acl' => $acl[0], 'listOfGroups' => $listOfGroups, 'listOfTipUser' => $listOfTipUser]);
-        
+
     }
-    
+
     public function updateAcl(Request $request) {
-        
+
         Log::info('AclController - updateAcl()');
-        
+
         $acl = Acl::find($request->id);
         $acl->group_id = $request->group_id;
         $acl->enable_crud = $request->enable_crud ? 1 : 0;
         $acl->enable_access = $request->enable_access ? 1 : 0;
         $acl->save();
-        
+
         $user = User::find($acl->user_id);
         $user->tip_user_id = $request->tip_user_id;
         $user->save();
-        
+
         return redirect()->route('users-list')->with('success', 'common_update_ok');
-        
+
     }
-    
+
     public function deleteAcl(Request $request) {
-        
+
         Log::info('AclController - deleteAcl()');
         $acl = Acl::find($request->id);
         $idUser = $acl->user_id;
@@ -212,7 +219,7 @@ class AclController extends Controller {
         $user->delete();
         $acl->delete();
         return redirect()->route('users-list')->with('success', 'common_update_ok');
-        
+
     }
-    
+
 }

@@ -147,7 +147,9 @@ class BookingController extends Controller {
 
         $idGroup = $request['idGroup'];
         Log::info('BookingController - getListOfResourcesByIdGroup(idGroup: '.$idGroup.')');
-        return Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
+        $resourcesList = Resource::where('group_id', '=', $idGroup)->select('name as text', 'id')->get();
+        Log::info($resourcesList);
+        return $resourcesList;
 
     }
 
@@ -171,6 +173,8 @@ class BookingController extends Controller {
         $year = Config::get(APP.'.'.VAR_AA);
         $params = 'aa_id='.$year.';tipo_corso='.WS_TIP_CORSO_LIST.';fac_id='.$idDepartment;
 
+        Log::info('BookingController - getCDSFromDepartment($params: '.$params.')');
+
         $fn_retrieve_xml_p = $this->soapWrapper->call('GenericWSEsse3.fn_retrieve_xml_p', [
             'retrieve' => 'CDS_FACOLTA',
             'params' => $params
@@ -183,19 +187,17 @@ class BookingController extends Controller {
         if($responseCode == 1) {
             $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
             $list = $xml->children()->children();
-            $result = array();
-            $result[] = array('' => '');
+            $return_arr = array();
+            $row_array = array();
             for($i = 0; $i < count($list); $i++) {
                 $idTemp = (string)$list[$i]->p06_cds_cod;
                 $desTemp = (string)$list[$i]->p06_cds_cod.' - '.(string)$list[$i]->p06_cds_des.' - '.(string)$list[$i]->tipi_corso_tipo_corso_des;
-                $result[] = array(
-                    'id' => $idTemp, 'text' => $desTemp
-                );
+                $row_array['id'] = $idTemp;
+                $row_array['text'] = $desTemp;
+                array_push($return_arr,$row_array);
             }
         }
-        $cdsList = json_encode($result);
-
-        return $cdsList;
+        return json_encode($return_arr);
 
     }
 
@@ -225,16 +227,16 @@ class BookingController extends Controller {
             $xml = new \SimpleXMLElement($fn_retrieve_xml_p['xml']);
             $list = $xml->children()->children();
 
-            $result = array();
-            $result[] = array('' => '');
+            $return_arr = array();
+            $row_array = array();
             for($i = 0; $i < count($list); $i++) {
                 $idTemp = (string)$list[$i]->CDS_COD.' - '.(string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID.'***'.(string)$list[$i]->DOCENTE_MATRICOLA.'***'.(string)$list[$i]->CDS_COD.'***'.$i;
                 $desTemp = (string)$list[$i]->UD_DES.' - '.(string)$list[$i]->UD_COD.' - '.(string)$list[$i]->AA_ORD_ID.' - '.(string)$list[$i]->DOCENTE_COGNOME.' ('.(string)$list[$i]->PDS_DES.')';
-                $result[] = array(
-                    'id' => $idTemp, 'text' => $desTemp
-                );
+                $row_array['id'] = $idTemp;
+                $row_array['text'] = $desTemp;
+                array_push($return_arr,$row_array);
             }
-            return $result;
+            return json_encode($return_arr);
 
         }
 

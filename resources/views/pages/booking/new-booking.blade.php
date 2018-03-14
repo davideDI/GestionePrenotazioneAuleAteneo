@@ -538,20 +538,17 @@
 
             function getCDSFromDepartment(idDepartment) {
                 var selectedDepartment = { 'idDepartment' : idDepartment};
-                $('#cds_id').select2({
-                    placeholder: "{{ trans('messages.booking_date_select_cds') }}",
-                    ajax : {
+                $.ajax({
                         type: 'post',
                         url: "{{URL::to('/cds')}}",
                         dataType: 'json',
                         data: selectedDepartment,
-                        processResults: function (data) {
-                            return {
-                                results: data
-                            };
-                        },
-                        cache: false
-                    }
+                    }).then(function (response) {
+                        $("#cds_id").select2({
+                            placeholder : "{{ trans('messages.booking_date_select_cds') }}",
+                            data: response,
+                            cache : false
+                        });
                 });
             }
 
@@ -562,20 +559,17 @@
 
             function getSubjectsFromCds(cds) {
                 var selectedCds = { 'cds' : cds};
-                $('#subject_id').select2({
-                    placeholder: "{{ trans('messages.booking_date_select_subject') }}",
-                    ajax : {
+                $.ajax({
                         type: 'post',
                         url: "{{URL::to('/subjects')}}",
                         dataType: 'json',
                         data: selectedCds,
-                        processResults: function (data) {
-                            return {
-                                results: data
-                            };
-                        },
-                        cache: false
-                    }
+                    }).then(function (response) {
+                        $("#subject_id").select2({
+                            placeholder : "{{ trans('messages.booking_date_select_subject') }}",
+                            data: response,
+                            cache : false
+                        });
                 });
             }
 
