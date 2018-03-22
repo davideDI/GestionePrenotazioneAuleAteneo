@@ -141,8 +141,9 @@ class AclController extends Controller {
         if($checkUserSearch) {
 
             $checkUser = User::where('cn', 'like', '%'.$ldap_reply["data"]["cn"].'%')->get();
-            if($checkUser != null) {
+            if(!$checkUser->isEmpty()) {
                 Log::info('AclController - getLdapUserInfo() - user already present');
+                Log::info($checkUser);
                 return view('pages/admin/manage-users', ['checkSearchTrue' => false, 'userAlreadyPresent' => true]);
             }
 

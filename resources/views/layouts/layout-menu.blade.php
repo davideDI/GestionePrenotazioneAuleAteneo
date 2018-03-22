@@ -67,9 +67,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{URL::to('/help')}}">{{ trans('messages.home_help') }}</a></li>
                         <li><a href="{{URL::to('/search')}}">{{ trans('messages.home_search') }}</a></li>
-                        @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
-                            <li><a href="{{ url('/manage-resources') }}">{{ trans('messages.home_manage_resources') }}</a></li>
-                        @endif
                     </ul>
                 </li>
 
@@ -110,6 +107,10 @@
                                         {{ trans('messages.home_acl') }}
                                     </a>
                                 </li>
+                                @endif
+
+                                @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_ADMIN_ATENEO)
+                                    <li><a href="{{ url('/manage-resources') }}">{{ trans('messages.home_manage_resources') }}</a></li>
                                 @endif
 
                                 @if(Session::has('ruolo') && Session::get('ruolo') == \App\TipUser::ROLE_INQUIRER)
